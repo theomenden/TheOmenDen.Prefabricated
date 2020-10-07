@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "prefab",
+  "version": "${version}",
+
+  "name": "Prefab",
+  "description": "Prefab is a mod which contains multiple pre-designed building for you to place in the world",
+  "authors": [
+    "WuestMan",
+    "Kaojinn"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab",
+    "sources": "https://github.com/Brian-Wuest/MC-Prefab"
+  },
+
+  "license": "MIT",
+  "icon": "assets/prefab/prefabthumb.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.wuest.prefab.Prefab"
+    ],
+    "client": [
+      "com.wuest.prefab.PrefabClient"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

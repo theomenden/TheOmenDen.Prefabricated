@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Pile of Bricks"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "group": "Pile of Bricks",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/pile_of_bricks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:brick",
+    "count": 9
+  }
+}

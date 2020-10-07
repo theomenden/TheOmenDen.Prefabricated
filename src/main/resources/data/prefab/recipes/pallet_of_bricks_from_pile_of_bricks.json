@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Pile of Bricks"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "Pile of Bricks",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:storage_blocks/pile_of_bricks"
+    }
+  },
+  "result": {
+    "item": "prefab:item_pallet_of_bricks",
+    "count": 1
+  }
+}

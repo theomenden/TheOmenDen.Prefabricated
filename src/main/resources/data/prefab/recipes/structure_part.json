@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "StructurePart"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "StructurePart",
+  "pattern": [
+    "ccc",
+    "bbc",
+    "abc"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:storage_blocks/double_compressed_stone"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/compressed_stone"
+    },
+    "c": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "item": "prefab:item_structure_part",
+    "count": 1
+  }
+}

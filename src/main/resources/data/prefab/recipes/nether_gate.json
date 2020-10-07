@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Nether Gate"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "Nether Gate",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:storage_blocks/double_compressed_stone"
+    },
+    "b": {
+      "tag": "forge:storage_blocks/compressed_obsidian"
+    },
+    "c": {
+      "item": "minecraft:flint_and_steel"
+    }
+  },
+  "result": {
+    "item": "prefab:item_nether_gate",
+    "count": 1
+  }
+}

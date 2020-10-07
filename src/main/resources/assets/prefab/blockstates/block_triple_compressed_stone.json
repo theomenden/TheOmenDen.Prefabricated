@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "prefab:block/block_triple_compressed_stone"
+    }
+  }
+}

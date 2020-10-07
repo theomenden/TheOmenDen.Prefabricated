@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Compressed Stone"
+    }
+  ],
+  "_comment": [
+    "Compressed Stone to normal stone"
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "group": "Compressed Stone",
+  "ingredients": [
+    {
+      "tag": "forge:storage_blocks/compressed_stone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stone",
+    "count": 9
+  }
+}

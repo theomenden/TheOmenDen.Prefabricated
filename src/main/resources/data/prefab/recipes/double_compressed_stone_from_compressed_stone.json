@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Compressed Stone"
+    }
+  ],
+  "_comment": [
+    "double compressed stone from compressed stone"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "Compressed Stone",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "tag": "forge:storage_blocks/compressed_stone"
+      }
+    ]
+  },
+  "result": {
+    "item": "prefab:block_double_compressed_stone",
+    "count": 1
+  }
+}
