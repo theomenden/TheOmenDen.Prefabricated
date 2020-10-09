@@ -18,7 +18,6 @@ import net.minecraft.util.registry.Registry;
  *
  * @author WuestMan
  */
-@SuppressWarnings({"unused", "ConstantConditions"})
 public class ModRegistry {
 
 	/* *********************************** Blocks *********************************** */
@@ -49,7 +48,7 @@ public class ModRegistry {
 	public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
-	/**
+	/*
 	 * Deferred registry for items.
 	 */
 	/*	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Prefab.MODID);*/
