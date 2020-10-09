@@ -2,6 +2,11 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.BlockCompressedObsidian;
 import com.wuest.prefab.blocks.BlockCompressedStone;
+import com.wuest.prefab.blocks.BlockGlassSlab;
+import com.wuest.prefab.blocks.BlockGlassStairs;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -25,9 +30,10 @@ public class ModRegistry {
 	public static final BlockCompressedStone DoubleCompressedDirt = new BlockCompressedStone(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT);
 	public static final BlockCompressedStone CompressedGlowstone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE);
 	public static final BlockCompressedStone DoubleCompressedGlowstone = new BlockCompressedStone(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE);
-
 	public static final BlockCompressedObsidian CompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN);
 	public static final BlockCompressedObsidian DoubleCompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN);
+	public static final BlockGlassSlab GlassSlab = new BlockGlassSlab(AbstractBlock.Settings.copy(Blocks.GLASS));
+	public static final BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.GLASS));
 
 	/* *********************************** Item Blocks *********************************** */
 
@@ -40,6 +46,8 @@ public class ModRegistry {
 	public static final BlockItem DoubleCompressedGlowstoneItem = new BlockItem(ModRegistry.DoubleCompressedGlowstone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem CompressedObsidianItem = new BlockItem(ModRegistry.CompressedObsidian, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem DoubleCompressedObsidianItem = new BlockItem(ModRegistry.DoubleCompressedObsidian, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+	public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+	public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
 	/**
 	 * Deferred registry for items.
@@ -146,15 +154,17 @@ public class ModRegistry {
 	}
 
 	private static void registerBlocks() {
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.CompressedStone);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.DoubleCompressedStone);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.TripleCompressedStone);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_DIRT.getUnlocalizedName()), ModRegistry.CompressedDirt);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName()), ModRegistry.DoubleCompressedDirt);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName()), ModRegistry.CompressedGlowstone);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName()), ModRegistry.DoubleCompressedGlowstone);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString()), ModRegistry.CompressedObsidian);
-		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString()), ModRegistry.DoubleCompressedObsidian);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.CompressedStone);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.DoubleCompressedStone);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.TripleCompressedStone);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.CompressedDirt);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.DoubleCompressedDirt);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.CompressedGlowstone);
+		ModRegistry.registerBlock(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.DoubleCompressedGlowstone);
+		ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString(), ModRegistry.CompressedObsidian);
+		ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidian);
+		ModRegistry.registerBlock("block_glass_slab", ModRegistry.GlassSlab);
+		ModRegistry.registerBlock("block_glass_stairs", ModRegistry.GlassStairs);
 	}
 
 	private static void registerItems() {
@@ -166,16 +176,17 @@ public class ModRegistry {
 	}
 
 	private static void registerItemBlocks() {
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.CompressedStoneItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.DoubleCompressedStoneItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE.getUnlocalizedName()), ModRegistry.TripleCompressedStoneItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_DIRT.getUnlocalizedName()), ModRegistry.CompressedDirtItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName()), ModRegistry.DoubleCompressedDirtItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName()), ModRegistry.CompressedGlowstoneItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName()), ModRegistry.DoubleCompressedGlowstoneItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString()), ModRegistry.CompressedObsidianItem);
-		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString()), ModRegistry.DoubleCompressedObsidianItem);
-
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.CompressedStoneItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.DoubleCompressedStoneItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE.getUnlocalizedName(), ModRegistry.TripleCompressedStoneItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.CompressedDirtItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.DoubleCompressedDirtItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.CompressedGlowstoneItem);
+		ModRegistry.registerItem(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.DoubleCompressedGlowstoneItem);
+		ModRegistry.registerItem(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString(), ModRegistry.CompressedObsidianItem);
+		ModRegistry.registerItem(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidianItem);
+		ModRegistry.registerItem("block_glass_slab", ModRegistry.GlassSlabItem);
+		ModRegistry.registerItem("block_glass_stairs", ModRegistry.GlassStairsItem);
 	}
 
 	/**
@@ -210,5 +221,13 @@ public class ModRegistry {
 	 * This is where mod capabilities are registered.
 	 */
 	public static void RegisterCapabilities() {
+	}
+
+	private static void registerBlock(String registryName, Block block) {
+		Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, registryName), block);
+	}
+
+	private static void registerItem(String registryName, Item item) {
+		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, registryName), item);
 	}
 }
