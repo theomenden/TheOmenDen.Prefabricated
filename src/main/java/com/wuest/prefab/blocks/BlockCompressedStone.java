@@ -20,7 +20,7 @@ public class BlockCompressedStone extends Block {
 	public BlockCompressedStone(EnumType typeOfStone) {
 		super(AbstractBlock.Settings.of(Material.AGGREGATE)
 				.strength(1.5F, 10.0F)
-				.sounds(BlockSoundGroup.STONE.STONE)
+				.sounds(BlockSoundGroup.STONE)
 				.luminance(value -> typeOfStone == EnumType.COMPRESSED_GLOWSTONE || typeOfStone == EnumType.DOUBLE_COMPRESSED_GLOWSTONE ? 15 : 0));
 
 		this.typeofStone = typeOfStone;
