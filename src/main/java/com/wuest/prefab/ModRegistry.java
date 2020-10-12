@@ -1,9 +1,6 @@
 package com.wuest.prefab;
 
-import com.wuest.prefab.blocks.BlockCompressedObsidian;
-import com.wuest.prefab.blocks.BlockCompressedStone;
-import com.wuest.prefab.blocks.BlockGlassSlab;
-import com.wuest.prefab.blocks.BlockGlassStairs;
+import com.wuest.prefab.blocks.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -33,6 +30,7 @@ public class ModRegistry {
 	public static final BlockCompressedObsidian DoubleCompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN);
 	public static final BlockGlassSlab GlassSlab = new BlockGlassSlab(AbstractBlock.Settings.copy(Blocks.GLASS));
 	public static final BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.GLASS));
+	public static final BlockPaperLantern PaperLantern = new BlockPaperLantern();
 
 	/* *********************************** Item Blocks *********************************** */
 
@@ -47,6 +45,7 @@ public class ModRegistry {
 	public static final BlockItem DoubleCompressedObsidianItem = new BlockItem(ModRegistry.DoubleCompressedObsidian, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+	public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
 	/*
 	 * Deferred registry for items.
@@ -164,6 +163,7 @@ public class ModRegistry {
 		ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidian);
 		ModRegistry.registerBlock("block_glass_slab", ModRegistry.GlassSlab);
 		ModRegistry.registerBlock("block_glass_stairs", ModRegistry.GlassStairs);
+		ModRegistry.registerBlock("block_paper_lantern", ModRegistry.PaperLantern);
 	}
 
 	private static void registerItems() {
@@ -186,6 +186,7 @@ public class ModRegistry {
 		ModRegistry.registerItem(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidianItem);
 		ModRegistry.registerItem("block_glass_slab", ModRegistry.GlassSlabItem);
 		ModRegistry.registerItem("block_glass_stairs", ModRegistry.GlassStairsItem);
+		ModRegistry.registerItem("block_paper_lantern", ModRegistry.PaperLanternItem);
 	}
 
 	/**
