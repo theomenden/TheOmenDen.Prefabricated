@@ -1,5 +1,8 @@
 package com.wuest.prefab;
 
+import com.wuest.prefab.config.ModConfiguration;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
@@ -26,6 +29,8 @@ public class Prefab implements ModInitializer {
 	 */
 	public static boolean useScanningMode = false;
 
+	public static ModConfiguration configuration;
+
 	/**
 	 * Simulates an air block that blocks movement and cannot be moved.
 	 */
@@ -48,5 +53,9 @@ public class Prefab implements ModInitializer {
 	public void onInitialize() {
 		Prefab.logger.info("Registering Mod Components");
 		ModRegistry.registerModComponents();
+
+		AutoConfig.register(ModConfiguration.class, GsonConfigSerializer::new);
+
+		Prefab.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
 	}
 }

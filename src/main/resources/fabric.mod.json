@@ -24,6 +24,9 @@
     ],
     "client": [
       "com.wuest.prefab.PrefabClient"
+    ],
+    "modmenu": [
+      "com.wuest.prefab.config.PrefabModMenuIntegration"
     ]
   },
   "mixins": [

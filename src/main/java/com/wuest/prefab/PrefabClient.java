@@ -1,5 +1,9 @@
 package com.wuest.prefab;
 
+import com.wuest.prefab.config.ModConfiguration;
+import com.wuest.prefab.config.RecipeMapGuiProvider;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.gui.registry.GuiRegistry;
 import net.fabricmc.api.ClientModInitializer;
 
 /**
@@ -11,6 +15,13 @@ public class PrefabClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		Prefab.logger.info("Registering client-side components");
 		ClientModRegistry.registerModComponents();
-	}
 
+		GuiRegistry registry = AutoConfig.getGuiRegistry(ModConfiguration.class);
+		RecipeMapGuiProvider providerMap = new RecipeMapGuiProvider();
+		//registry.registerTypeProvider(providerMap, HashMap.class);
+
+
+		registry.registerPredicateProvider(providerMap, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName() == "recipes");
+
+	}
 }

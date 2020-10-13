@@ -2,8 +2,8 @@ package com.wuest.prefab;
 
 public class Tuple<A, B> {
 
-	private A first;
-	private B second;
+	public A first;
+	public B second;
 
 	public Tuple(A first, B second) {
 		this.first = first;
