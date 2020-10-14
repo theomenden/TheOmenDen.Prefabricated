@@ -18,10 +18,8 @@ public class PrefabClient implements ClientModInitializer {
 
 		GuiRegistry registry = AutoConfig.getGuiRegistry(ModConfiguration.class);
 		RecipeMapGuiProvider providerMap = new RecipeMapGuiProvider();
-		//registry.registerTypeProvider(providerMap, HashMap.class);
 
-
-		registry.registerPredicateProvider(providerMap, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName() == "recipes");
+		registry.registerPredicateProvider(providerMap, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName().equals("recipes"));
 
 	}
 }
