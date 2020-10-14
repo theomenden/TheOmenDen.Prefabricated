@@ -1,12 +1,17 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.config.ModConfiguration;
+import com.wuest.prefab.events.ServerEvents;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.block.Material;
 import net.minecraft.block.MaterialColor;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +35,8 @@ public class Prefab implements ModInitializer {
 	public static boolean useScanningMode = false;
 
 	public static ModConfiguration configuration;
+
+	public static ModConfiguration serverConfiguration;
 
 	/**
 	 * Simulates an air block that blocks movement and cannot be moved.
@@ -56,6 +63,9 @@ public class Prefab implements ModInitializer {
 
 		AutoConfig.register(ModConfiguration.class, GsonConfigSerializer::new);
 
+		Prefab.serverConfiguration = new ModConfiguration();
 		Prefab.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
+
+		ServerEvents.RegisterServerEvents();
 	}
 }

@@ -47,15 +47,9 @@ public class ModRegistry {
 	public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
-	/*
-	 * Deferred registry for items.
-	 */
-	/*	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Prefab.MODID);*/
 
-	/**
-	 * Deferred registry for blocks.
-	 */
-	/*	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Prefab.MODID);*/
+	/* *********************************** Messages *********************************** */
+	public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 
 	/* *********************************** Blocks *********************************** */
 
