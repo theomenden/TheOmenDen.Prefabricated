@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Tree Farm"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Tree Farm",
   "group": "Tree Farm",
   "pattern": [
     "aba",
@@ -14,10 +9,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/pallet_of_bricks"
+      "tag": "c:pallet_of_bricks"
     },
     "b": {
-      "tag": "forge:storage_blocks/double_compressed_dirt"
+      "tag": "c:double_compressed_dirt"
     },
     "c": {
       "item": "minecraft:flower_pot"

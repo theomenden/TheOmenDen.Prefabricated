@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Green House"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Green House",
   "group": "Green House",
   "pattern": [
     "bcb",
@@ -17,7 +12,7 @@
       "item": "minecraft:water_bucket"
     },
     "b": {
-      "tag": "forge:storage_blocks/double_compressed_stone"
+      "tag": "c:double_compressed_stone"
     },
     "c": {
       "item": "minecraft:glass_pane"
@@ -26,7 +21,7 @@
       "item": "prefab:item_string_of_lanterns"
     },
     "e": {
-      "tag": "forge:storage_blocks/double_compressed_dirt"
+      "tag": "c:double_compressed_dirt"
     }
   },
   "result": {

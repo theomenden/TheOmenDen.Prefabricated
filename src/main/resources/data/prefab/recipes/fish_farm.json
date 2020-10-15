@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Fish Farm"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Fish Farm",
   "group": "Fish Farm",
   "pattern": [
     "abc",
@@ -29,7 +24,7 @@
       "item": "minecraft:fishing_rod"
     },
     "f": {
-      "tag": "forge:storage_blocks/double_compressed_dirt"
+      "tag": "c:double_compressed_dirt"
     },
     "g": {
       "tag": "minecraft:fishes"

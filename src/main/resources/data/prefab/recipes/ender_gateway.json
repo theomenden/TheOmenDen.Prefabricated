@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Ender Gateway"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Ender Gateway",
   "group": "Ender Gateway",
   "pattern": [
     "aba",
@@ -20,10 +15,10 @@
       "item": "minecraft:quartz_block"
     },
     "c": {
-      "tag": "forge:storage_blocks/double_compressed_obsidian"
+      "tag": "c:double_compressed_obsidian"
     },
     "d": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     }
   },
   "result": {

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Starting House"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Starting House",
   "group": "Starting House",
   "pattern": [
     "abc",
@@ -23,7 +18,7 @@
       "item": "minecraft:furnace"
     },
     "d": {
-      "tag": "forge:storage_blocks/compressed_stone"
+      "tag": "c:compressed_stone"
     },
     "e": {
       "tag": "minecraft:beds"

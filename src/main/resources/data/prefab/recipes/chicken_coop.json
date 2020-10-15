@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Chicken Coop"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Chicken Coop",
   "group": "Chicken Coop",
   "pattern": [
     "aaa",
@@ -23,7 +18,7 @@
       "item": "minecraft:egg"
     },
     "d": {
-      "tag": "forge:storage_blocks/compressed_dirt"
+      "tag": "c:compressed_dirt"
     },
     "e": {
       "item": "minecraft:hay_block"

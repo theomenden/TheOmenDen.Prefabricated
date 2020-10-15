@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Windmill"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Windmill",
   "group": "Windmill",
   "pattern": [
     " a ",
@@ -17,10 +12,10 @@
       "item": "prefab:item_bundle_of_timber"
     },
     "b": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     },
     "c": {
-      "tag": "forge:storage_blocks/double_compressed_dirt"
+      "tag": "c:double_compressed_dirt"
     },
     "d": {
       "item": "minecraft:hay_block"

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Watch Tower"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Watch Tower",
   "group": "Watch Tower",
   "pattern": [
     "bbb",
@@ -14,10 +9,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/compressed_stone"
+      "tag": "c:compressed_stone"
     },
     "b": {
-      "tag": "forge:storage_blocks/double_compressed_stone"
+      "tag": "c:double_compressed_stone"
     }
   },
   "result": {

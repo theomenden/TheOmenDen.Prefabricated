@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Glass Stairs"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Glass Stairs",
   "group": "Glass Stairs",
   "pattern": [
     "#  ",
@@ -15,7 +10,7 @@
   "key": {
     "#": [
       {
-        "tag": "prefab:impermeable"
+        "tag": "c:glass"
       }
     ]
   },

@@ -1,18 +1,13 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Advanced Chicken Coop"
-    }
-  ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Advanced Chicken Coop",
   "group": "Advanced Chicken Coop",
   "ingredients": [
     {
       "item": "prefab:item_chicken_coop"
     },
     {
-      "tag": "forge:storage_blocks/pallet_of_bricks"
+      "tag": "c:pallet_of_bricks"
     }
   ],
   "result": {

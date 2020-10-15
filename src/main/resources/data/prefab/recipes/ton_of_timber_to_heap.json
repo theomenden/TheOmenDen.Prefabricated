@@ -1,14 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Ton of Timber"
-    }
-  ],
   "_comment": [
     "Ton of timber to heap of timber"
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "config": "Ton of Timber",
   "group": "Ton of Timber",
   "ingredients": [
     {

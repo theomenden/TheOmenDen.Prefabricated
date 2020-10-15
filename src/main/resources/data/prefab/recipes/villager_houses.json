@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Villager Houses"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Villager Houses",
   "group": "Villager Houses",
   "pattern": [
     "aaa",
@@ -17,7 +12,7 @@
       "item": "prefab:item_bundle_of_timber"
     },
     "b": {
-      "tag": "forge:storage_blocks/compressed_stone"
+      "tag": "c:compressed_stone"
     }
   },
   "result": {

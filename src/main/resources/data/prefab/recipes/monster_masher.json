@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Monster Masher"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Monster Masher",
   "group": "Monster Masher",
   "pattern": [
     "abe",
@@ -29,13 +24,13 @@
       "item": "minecraft:zombie_head"
     },
     "f": {
-      "tag": "forge:storage_blocks/double_compressed_stone"
+      "tag": "c:double_compressed_stone"
     },
     "g": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     },
     "h": {
-      "tag": "forge:storage_blocks/double_compressed_glow_stone"
+      "tag": "c:double_compressed_glow_stone"
     }
   },
   "result": {

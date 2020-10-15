@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Defense Bunker"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Defense Bunker",
   "group": "Defense Bunker",
   "pattern": [
     "aba",
@@ -20,10 +15,10 @@
       "item": "prefab:item_coil_of_lanterns"
     },
     "c": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     },
     "d": {
-      "tag": "forge:storage_blocks/double_compressed_obsidian"
+      "tag": "c:double_compressed_obsidian"
     }
   },
   "result": {

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "StructurePart"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "StructurePart",
   "group": "StructurePart",
   "pattern": [
     "ccc",
@@ -14,10 +9,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/double_compressed_stone"
+      "tag": "c:double_compressed_stone"
     },
     "b": {
-      "tag": "forge:storage_blocks/compressed_stone"
+      "tag": "c:compressed_stone"
     },
     "c": {
       "item": "minecraft:cobblestone"

@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Mineshaft Entrance"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Mineshaft Entrance",
   "group": "Mineshaft Entrance",
   "pattern": [
     "aba",
@@ -20,7 +15,7 @@
       "item": "prefab:item_bundle_of_timber"
     },
     "c": {
-      "tag": "forge:storage_blocks/compressed_stone"
+      "tag": "c:compressed_stone"
     },
     "d": {
       "tag": "minecraft:beds"

@@ -1,14 +1,9 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Compressed Dirt"
-    }
-  ],
   "_comment": [
     "Double Compressed Dirt from compressed dirt"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Compressed Dirt",
   "group": "Compressed Dirt",
   "pattern": [
     "###",
@@ -18,7 +13,7 @@
   "key": {
     "#": [
       {
-        "tag": "forge:storage_blocks/compressed_dirt"
+        "tag": "c:compressed_dirt"
       }
     ]
   },

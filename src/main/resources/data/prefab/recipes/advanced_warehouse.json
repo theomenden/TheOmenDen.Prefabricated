@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Advanced Warehouse"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Advanced Warehouse",
   "group": "Advanced Warehouse",
   "pattern": [
     "aba",
@@ -14,7 +9,7 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/double_compressed_stone"
+      "tag": "c:double_compressed_stone"
     },
     "b": {
       "item": "prefab:item_warehouse_upgrade"
@@ -23,10 +18,10 @@
       "item": "prefab:item_compressed_chest"
     },
     "d": {
-      "tag": "forge:storage_blocks/double_compressed_glow_stone"
+      "tag": "c:double_compressed_glow_stone"
     },
     "e": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     }
   },
   "result": {

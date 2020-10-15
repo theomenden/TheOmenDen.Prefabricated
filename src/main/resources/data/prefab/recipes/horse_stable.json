@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Horse Stable"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Horse Stable",
   "group": "Horse Stable",
   "pattern": [
     "aaa",
@@ -23,10 +18,10 @@
       "item": "minecraft:hay_block"
     },
     "d": {
-      "tag": "forge:fences"
+      "tag": "minecraft:fences"
     },
     "e": {
-      "tag": "forge:fence_gates"
+      "tag": "minecraft:fence_gates"
     }
   },
   "result": {

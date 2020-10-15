@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Produce Farm"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Produce Farm",
   "group": "Produce Farm",
   "pattern": [
     "aba",
@@ -14,10 +9,10 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/pallet_of_bricks"
+      "tag": "c:pallet_of_bricks"
     },
     "b": {
-      "tag": "forge:storage_blocks/double_compressed_dirt"
+      "tag": "c:double_compressed_dirt"
     },
     "c": {
       "item": "minecraft:water_bucket"

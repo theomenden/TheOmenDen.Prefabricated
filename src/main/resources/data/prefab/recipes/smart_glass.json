@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Smart Glass"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Smart Glass",
   "group": "Smart Glass",
   "pattern": [
     "aaa",
@@ -14,7 +9,7 @@
   ],
   "key": {
     "a": {
-      "tag": "prefab:impermeable"
+      "tag": "c:glass"
     },
     "b": {
       "item": "minecraft:ender_pearl"

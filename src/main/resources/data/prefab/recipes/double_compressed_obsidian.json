@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Compressed Obsidian"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Compressed Obsidian",
   "group": "Compressed Obsidian",
   "pattern": [
     "aaa",
@@ -14,7 +9,7 @@
   ],
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/compressed_obsidian"
+      "tag": "c:compressed_obsidian"
     }
   },
   "result": {

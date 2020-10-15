@@ -1,6 +1,8 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
+import com.wuest.prefab.recipe.ConditionedShapedRecipe;
+import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -143,6 +145,8 @@ public class ModRegistry {
 		ModRegistry.registerItemBlocks();
 
 		ModRegistry.RegisterClientToServerMessageHandlers();
+
+		ModRegistry.RegisterRecipeSerializers();
 	}
 
 	private static void registerBlocks() {
@@ -207,14 +211,9 @@ public class ModRegistry {
 				.add();*/
 	}
 
-	private static void RegisterServerToClientMessages() {
-
-	}
-
-	/**
-	 * This is where mod capabilities are registered.
-	 */
-	public static void RegisterCapabilities() {
+	private static void RegisterRecipeSerializers() {
+		Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Prefab.MODID, "condition_crafting_shaped"), new ConditionedShapedRecipe.Serializer());
+		Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Prefab.MODID, "condition_crafting_shapeless"), new ConditionedShaplessRecipe.Serializer());
 	}
 
 	private static void registerBlock(String registryName, Block block) {

@@ -1,18 +1,13 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Compressed Glowstone"
-    }
-  ],
   "_comment": [
     "Compressed Glowstone to glowstone"
   ],
-  "type": "minecraft:crafting_shapeless",
+  "type": "prefab:condition_crafting_shapeless",
+  "config": "Compressed Glowstone",
   "group": "Compressed Glowstone",
   "ingredients": [
     {
-      "tag": "forge:storage_blocks/compressed_glow_stone"
+      "tag": "c:compressed_glow_stone"
     }
   ],
   "result": {

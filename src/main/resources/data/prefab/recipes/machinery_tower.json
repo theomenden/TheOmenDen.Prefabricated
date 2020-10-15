@@ -1,11 +1,6 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Machinery Tower"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Machinery Tower",
   "group": "Machinery Tower",
   "pattern": [
     "aaa",
@@ -20,7 +15,7 @@
       "item": "prefab:item_string_of_lanterns"
     },
     "c": {
-      "tag": "forge:storage_blocks/triple_compressed_stone"
+      "tag": "c:triple_compressed_stone"
     }
   },
   "result": {
