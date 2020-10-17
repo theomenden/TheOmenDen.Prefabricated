@@ -1,5 +1,6 @@
 package com.wuest.prefab;
 
+import com.wuest.prefab.blocks.BlockBoundary;
 import com.wuest.prefab.network.message.ConfigSyncMessage;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -31,5 +32,7 @@ public class ClientModRegistry {
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassStairs, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassSlab, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.PaperLantern, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Boundary, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Phasic, RenderLayer.getTranslucent());
 	}
 }

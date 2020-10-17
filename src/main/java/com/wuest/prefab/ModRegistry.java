@@ -33,6 +33,8 @@ public class ModRegistry {
 	public static final BlockGlassSlab GlassSlab = new BlockGlassSlab(AbstractBlock.Settings.copy(Blocks.GLASS));
 	public static final BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.GLASS));
 	public static final BlockPaperLantern PaperLantern = new BlockPaperLantern();
+	public static final BlockPhasic Phasic = new BlockPhasic();
+	public static final BlockBoundary Boundary = new BlockBoundary();
 
 	/* *********************************** Item Blocks *********************************** */
 
@@ -48,39 +50,27 @@ public class ModRegistry {
 	public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 	public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+	public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+	public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
 
 	/* *********************************** Messages *********************************** */
+
 	public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 
 	/* *********************************** Blocks *********************************** */
 
 /*
-
-	public static final RegistryObject<BlockPhasing> BlockPhasing = BLOCKS.register("block_phasing", com.wuest.prefab.Blocks.BlockPhasing::new);
 	public static final RegistryObject<BlockBoundary> BlockBoundary = BLOCKS.register("block_boundary", com.wuest.prefab.Blocks.BlockBoundary::new);
-	public static final RegistryObject<BlockPaperLantern> PaperLantern = BLOCKS.register("block_paper_lantern", BlockPaperLantern::new);
-	public static final RegistryObject<BlockGlassStairs> GlassStairs = BLOCKS.register("block_glass_stairs", () -> new BlockGlassStairs(Blocks.GLASS.getDefaultState(), Block.Properties.from(Blocks.GLASS)));
-	public static final RegistryObject<BlockGlassSlab> GlassSlab = BLOCKS.register("block_glass_slab", () -> new BlockGlassSlab(Block.Properties.from(Blocks.GLASS)));
 */
 
 	/* *********************************** Item Blocks *********************************** */
 
 /*
-	public static final RegistryObject<BlockItem> CompressedStoneItem = ITEMS.register(BlockCompressedStone.EnumType.COMPRESSED_STONE.getUnlocalizedName(), () -> new BlockItem(CompressedStone.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> DoubleCompressedStoneItem = ITEMS.register(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE.getUnlocalizedName(), () -> new BlockItem(DoubleCompressedStone.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> TripleCompressedStoneItem = ITEMS.register(BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE.getUnlocalizedName(), () -> new BlockItem(TripleCompressedStone.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> CompressedGlowStoneItem = ITEMS.register(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName(), () -> new BlockItem(CompressedGlowStone.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> DoubleCompressedGlowStoneItem = ITEMS.register(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName(), () -> new BlockItem(DoubleCompressedGlowStone.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> CompressedDirtItem = ITEMS.register(BlockCompressedStone.EnumType.COMPRESSED_DIRT.getUnlocalizedName(), () -> new BlockItem(CompressedDirt.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> DoubleCompressedDirtItem = ITEMS.register(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName(), () -> new BlockItem(DoubleCompressedDirt.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> CompressedObsidianItem = ITEMS.register(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.getString(), () -> new BlockItem(CompressedObsidian.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> DoubleCompressedObsidianItem = ITEMS.register(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.getString(), () -> new BlockItem(DoubleCompressedObsidian.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
+
 	public static final RegistryObject<BlockItem> BlockPhasingItem = ITEMS.register("block_phasing", () -> new BlockItem(BlockPhasing.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
 	public static final RegistryObject<BlockItem> BlockBoundaryItem = ITEMS.register("block_boundary", () -> new BlockItem(BlockBoundary.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> PaperLanternItem = ITEMS.register("block_paper_lantern", () -> new BlockItem(PaperLantern.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> GlassStairsItem = ITEMS.register("block_glass_stairs", () -> new BlockItem(GlassStairs.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> GlassSlabItem = ITEMS.register("block_glass_slab", () -> new BlockItem(GlassSlab.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
+
 */
 
 	/* *********************************** Items *********************************** */
@@ -98,43 +88,43 @@ public class ModRegistry {
 
 	/* *********************************** Blueprint Items *********************************** */
 
-/*
-	public static final RegistryObject<ItemStartHouse> StartHouse = ITEMS.register("item_start_house", ItemStartHouse::new);
-	public static final RegistryObject<ItemWareHouse> WareHouse = ITEMS.register("item_warehouse", com.wuest.prefab.Structures.Items.ItemWareHouse::new);
-	public static final RegistryObject<ItemChickenCoop> ChickenCoop = ITEMS.register("item_chicken_coop", com.wuest.prefab.Structures.Items.ItemChickenCoop::new);
-	public static final RegistryObject<ItemProduceFarm> ProduceFarm = ITEMS.register("item_produce_farm", com.wuest.prefab.Structures.Items.ItemProduceFarm::new);
-	public static final RegistryObject<ItemTreeFarm> TreeFarm = ITEMS.register("item_tree_farm", com.wuest.prefab.Structures.Items.ItemTreeFarm::new);
-	public static final RegistryObject<ItemFishPond> FishPond = ITEMS.register("item_fish_pond", com.wuest.prefab.Structures.Items.ItemFishPond::new);
-	public static final RegistryObject<ItemAdvancedWareHouse> AdvancedWareHouse = ITEMS.register("item_advanced_warehouse", com.wuest.prefab.Structures.Items.ItemAdvancedWareHouse::new);
-	public static final RegistryObject<ItemMonsterMasher> MonsterMasher = ITEMS.register("item_monster_masher", com.wuest.prefab.Structures.Items.ItemMonsterMasher::new);
-	public static final RegistryObject<ItemWarehouseUpgrade> WarehouseUpgrade = ITEMS.register("item_warehouse_upgrade", com.wuest.prefab.Items.ItemWarehouseUpgrade::new);
-	public static final RegistryObject<ItemHorseStable> HorseStable = ITEMS.register("item_horse_stable", com.wuest.prefab.Structures.Items.ItemHorseStable::new);
-	public static final RegistryObject<ItemInstantBridge> InstantBridge = ITEMS.register("item_instant_bridge", com.wuest.prefab.Structures.Items.ItemInstantBridge::new);
-	public static final RegistryObject<ItemModerateHouse> ModerateHouse = ITEMS.register("item_moderate_house", com.wuest.prefab.Structures.Items.ItemModerateHouse::new);
-	public static final RegistryObject<ItemBulldozer> Bulldozer = ITEMS.register("item_bulldozer", com.wuest.prefab.Structures.Items.ItemBulldozer::new);
-	public static final RegistryObject<ItemStructurePart> StructurePart = ITEMS.register("item_structure_part", com.wuest.prefab.Structures.Items.ItemStructurePart::new);
-	public static final RegistryObject<ItemVillagerHouses> VillagerHouses = ITEMS.register("item_villager_houses", com.wuest.prefab.Structures.Items.ItemVillagerHouses::new);
+	/*
+		public static final RegistryObject<ItemStartHouse> StartHouse = ITEMS.register("item_start_house", ItemStartHouse::new);
+		public static final RegistryObject<ItemWareHouse> WareHouse = ITEMS.register("item_warehouse", com.wuest.prefab.Structures.Items.ItemWareHouse::new);
+		public static final RegistryObject<ItemChickenCoop> ChickenCoop = ITEMS.register("item_chicken_coop", com.wuest.prefab.Structures.Items.ItemChickenCoop::new);
+		public static final RegistryObject<ItemProduceFarm> ProduceFarm = ITEMS.register("item_produce_farm", com.wuest.prefab.Structures.Items.ItemProduceFarm::new);
+		public static final RegistryObject<ItemTreeFarm> TreeFarm = ITEMS.register("item_tree_farm", com.wuest.prefab.Structures.Items.ItemTreeFarm::new);
+		public static final RegistryObject<ItemFishPond> FishPond = ITEMS.register("item_fish_pond", com.wuest.prefab.Structures.Items.ItemFishPond::new);
+		public static final RegistryObject<ItemAdvancedWareHouse> AdvancedWareHouse = ITEMS.register("item_advanced_warehouse", com.wuest.prefab.Structures.Items.ItemAdvancedWareHouse::new);
+		public static final RegistryObject<ItemMonsterMasher> MonsterMasher = ITEMS.register("item_monster_masher", com.wuest.prefab.Structures.Items.ItemMonsterMasher::new);
+		public static final RegistryObject<ItemWarehouseUpgrade> WarehouseUpgrade = ITEMS.register("item_warehouse_upgrade", com.wuest.prefab.Items.ItemWarehouseUpgrade::new);
+		public static final RegistryObject<ItemHorseStable> HorseStable = ITEMS.register("item_horse_stable", com.wuest.prefab.Structures.Items.ItemHorseStable::new);
+		public static final RegistryObject<ItemInstantBridge> InstantBridge = ITEMS.register("item_instant_bridge", com.wuest.prefab.Structures.Items.ItemInstantBridge::new);
+		public static final RegistryObject<ItemModerateHouse> ModerateHouse = ITEMS.register("item_moderate_house", com.wuest.prefab.Structures.Items.ItemModerateHouse::new);
+		public static final RegistryObject<ItemBulldozer> Bulldozer = ITEMS.register("item_bulldozer", com.wuest.prefab.Structures.Items.ItemBulldozer::new);
+		public static final RegistryObject<ItemStructurePart> StructurePart = ITEMS.register("item_structure_part", com.wuest.prefab.Structures.Items.ItemStructurePart::new);
+		public static final RegistryObject<ItemVillagerHouses> VillagerHouses = ITEMS.register("item_villager_houses", com.wuest.prefab.Structures.Items.ItemVillagerHouses::new);
 
-	public static final RegistryObject<ItemBasicStructure> Barn = ITEMS.register(EnumBasicStructureName.Barn.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Barn));
-	public static final RegistryObject<ItemBasicStructure> AdvancedCoop = ITEMS.register(EnumBasicStructureName.AdvancedCoop.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AdvancedCoop));
-	public static final RegistryObject<ItemBasicStructure> AdvancedHorseStable = ITEMS.register(EnumBasicStructureName.AdvancedHorseStable.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AdvancedHorseStable));
-	public static final RegistryObject<ItemBasicStructure> MachineryTower = ITEMS.register(EnumBasicStructureName.MachineryTower.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MachineryTower));
-	public static final RegistryObject<ItemBasicStructure> DefenseBunker = ITEMS.register(EnumBasicStructureName.DefenseBunker.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.DefenseBunker));
-	public static final RegistryObject<ItemBasicStructure> MineshaftEntrance = ITEMS.register(EnumBasicStructureName.MineshaftEntrance.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MineshaftEntrance));
-	public static final RegistryObject<ItemBasicStructure> EnderGateway = ITEMS.register(EnumBasicStructureName.EnderGateway.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.EnderGateway));
-	public static final RegistryObject<ItemBasicStructure> AquaBase = ITEMS.register(EnumBasicStructureName.AquaBase.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AquaBase));
-	public static final RegistryObject<ItemBasicStructure> GrassyPlain = ITEMS.register(EnumBasicStructureName.GrassyPlain.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.GrassyPlain));
-	public static final RegistryObject<ItemBasicStructure> MagicTemple = ITEMS.register(EnumBasicStructureName.MagicTemple.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MagicTemple));
-	public static final RegistryObject<ItemBasicStructure> GreenHouse = ITEMS.register(EnumBasicStructureName.GreenHouse.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.GreenHouse));
-	public static final RegistryObject<ItemBasicStructure> WatchTower = ITEMS.register(EnumBasicStructureName.WatchTower.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WatchTower));
-	public static final RegistryObject<ItemBasicStructure> WelcomeCenter = ITEMS.register(EnumBasicStructureName.WelcomeCenter.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WelcomeCenter));
-	public static final RegistryObject<ItemBasicStructure> Jail = ITEMS.register(EnumBasicStructureName.Jail.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Jail));
-	public static final RegistryObject<ItemBasicStructure> Saloon = ITEMS.register(EnumBasicStructureName.Saloon.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Saloon));
-	public static final RegistryObject<ItemBasicStructure> SkiLodge = ITEMS.register(EnumBasicStructureName.SkiLodge.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.SkiLodge));
-	public static final RegistryObject<ItemBasicStructure> WindMill = ITEMS.register(EnumBasicStructureName.WindMill.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WindMill));
-	public static final RegistryObject<ItemBasicStructure> TownHall = ITEMS.register(EnumBasicStructureName.TownHall.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.TownHall));
-	public static final RegistryObject<ItemBasicStructure> NetherGate = ITEMS.register(EnumBasicStructureName.NetherGate.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.NetherGate));
-*/
+		public static final RegistryObject<ItemBasicStructure> Barn = ITEMS.register(EnumBasicStructureName.Barn.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Barn));
+		public static final RegistryObject<ItemBasicStructure> AdvancedCoop = ITEMS.register(EnumBasicStructureName.AdvancedCoop.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AdvancedCoop));
+		public static final RegistryObject<ItemBasicStructure> AdvancedHorseStable = ITEMS.register(EnumBasicStructureName.AdvancedHorseStable.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AdvancedHorseStable));
+		public static final RegistryObject<ItemBasicStructure> MachineryTower = ITEMS.register(EnumBasicStructureName.MachineryTower.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MachineryTower));
+		public static final RegistryObject<ItemBasicStructure> DefenseBunker = ITEMS.register(EnumBasicStructureName.DefenseBunker.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.DefenseBunker));
+		public static final RegistryObject<ItemBasicStructure> MineshaftEntrance = ITEMS.register(EnumBasicStructureName.MineshaftEntrance.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MineshaftEntrance));
+		public static final RegistryObject<ItemBasicStructure> EnderGateway = ITEMS.register(EnumBasicStructureName.EnderGateway.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.EnderGateway));
+		public static final RegistryObject<ItemBasicStructure> AquaBase = ITEMS.register(EnumBasicStructureName.AquaBase.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.AquaBase));
+		public static final RegistryObject<ItemBasicStructure> GrassyPlain = ITEMS.register(EnumBasicStructureName.GrassyPlain.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.GrassyPlain));
+		public static final RegistryObject<ItemBasicStructure> MagicTemple = ITEMS.register(EnumBasicStructureName.MagicTemple.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.MagicTemple));
+		public static final RegistryObject<ItemBasicStructure> GreenHouse = ITEMS.register(EnumBasicStructureName.GreenHouse.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.GreenHouse));
+		public static final RegistryObject<ItemBasicStructure> WatchTower = ITEMS.register(EnumBasicStructureName.WatchTower.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WatchTower));
+		public static final RegistryObject<ItemBasicStructure> WelcomeCenter = ITEMS.register(EnumBasicStructureName.WelcomeCenter.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WelcomeCenter));
+		public static final RegistryObject<ItemBasicStructure> Jail = ITEMS.register(EnumBasicStructureName.Jail.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Jail));
+		public static final RegistryObject<ItemBasicStructure> Saloon = ITEMS.register(EnumBasicStructureName.Saloon.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.Saloon));
+		public static final RegistryObject<ItemBasicStructure> SkiLodge = ITEMS.register(EnumBasicStructureName.SkiLodge.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.SkiLodge));
+		public static final RegistryObject<ItemBasicStructure> WindMill = ITEMS.register(EnumBasicStructureName.WindMill.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.WindMill));
+		public static final RegistryObject<ItemBasicStructure> TownHall = ITEMS.register(EnumBasicStructureName.TownHall.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.TownHall));
+		public static final RegistryObject<ItemBasicStructure> NetherGate = ITEMS.register(EnumBasicStructureName.NetherGate.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.NetherGate));
+	*/
 	public static void registerModComponents() {
 		ModRegistry.registerBlocks();
 
@@ -162,6 +152,8 @@ public class ModRegistry {
 		ModRegistry.registerBlock("block_glass_slab", ModRegistry.GlassSlab);
 		ModRegistry.registerBlock("block_glass_stairs", ModRegistry.GlassStairs);
 		ModRegistry.registerBlock("block_paper_lantern", ModRegistry.PaperLantern);
+		ModRegistry.registerBlock("block_phasic", ModRegistry.Phasic);
+		ModRegistry.registerBlock("block_boundary", ModRegistry.Boundary);
 	}
 
 	private static void registerItems() {
@@ -185,6 +177,8 @@ public class ModRegistry {
 		ModRegistry.registerItem("block_glass_slab", ModRegistry.GlassSlabItem);
 		ModRegistry.registerItem("block_glass_stairs", ModRegistry.GlassStairsItem);
 		ModRegistry.registerItem("block_paper_lantern", ModRegistry.PaperLanternItem);
+		ModRegistry.registerItem("block_phasic", ModRegistry.PhasicItem);
+		ModRegistry.registerItem("block_boundary", ModRegistry.BoundaryItem);
 	}
 
 	/**

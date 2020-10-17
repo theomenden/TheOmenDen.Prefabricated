@@ -1,7 +1,7 @@
 {
   "type": "prefab:condition_crafting_shaped",
-  "configName": "Smart Glass",
-  "group": "Smart Glass",
+  "configName": "Boundary Block",
+  "group": "Boundary Block",
   "pattern": [
     "aaa",
     "aba",

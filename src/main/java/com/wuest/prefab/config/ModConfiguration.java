@@ -224,7 +224,7 @@ public class ModConfiguration implements ConfigData {
 		public static String compressedObsidianKey = "Compressed Obsidian";
 		public static String villagerHousesKey = "Villager Houses";
 		public static String phasicBlockKey = "Phasic Block";
-		public static String smartGlassKey = "Smart Glass";
+		public static String smartGlassKey = "Boundary Block";
 		public static String greenHouseKey = "Green House";
 		public static String startingHouseKey = "Starting House";
 		public static String glassStairsKey = "Glass Stairs";

@@ -10,8 +10,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
 
 public class ServerEvents {
+	/**
+	 * Determines the affected blocks by redstone power.
+	 */
+	public static ArrayList<BlockPos> RedstoneAffectedBlockPositions = new ArrayList<>();
+
+	static {
+		ServerEvents.RedstoneAffectedBlockPositions = new ArrayList<>();
+	}
 
 	public static void RegisterServerEvents() {
 		ServerEvents.PlayerJoinedServer();
