@@ -1,0 +1,80 @@
+package com.wuest.prefab.structures.items;
+
+import com.wuest.prefab.Prefab;
+import com.wuest.prefab.structures.predefined.StructureAlternateStart;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Direction;
+
+/**
+ * @author WuestMan
+ */
+@SuppressWarnings("ALL")
+public class ItemStartHouse extends StructureItem {
+	public ItemStartHouse( ) {
+		super();
+	}
+
+	/**
+	 * Does something when the item is right-clicked.
+	 */
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext context) {
+		if (context.getWorld().isClient) {
+			if (context.getSide() == Direction.UP) {
+				if (!Prefab.useScanningMode) {
+					// Open the client side gui to determine the house options.
+					Prefab.proxy.openGuiForItem(context);
+				} else {
+					this.scanningMode(context);
+				}
+				return ActionResult.PASS;
+			}
+		}
+
+		return ActionResult.FAIL;
+	}
+
+	@Override
+	public void scanningMode(ItemUsageContext context) {
+		StructureAlternateStart.ScanBasicHouseStructure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing());
+
+        /*StructureAlternateStart.ScanRanchStructure(
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing());*/
+
+		/*StructureAlternateStart.ScanLoftStructure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing());*/
+
+        /*StructureAlternateStart.ScanHobbitStructure(
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing());*/
+
+        /*StructureAlternateStart.ScanStructure(
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing(), "desert_house", false, false);*/
+
+		/*StructureAlternateStart.ScanDesert2Structure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing());*/
+
+		/*StructureAlternateStart.ScanSubAquaticStructure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing());*/
+
+		/*StructureAlternateStart.ScanStructure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing(), "snowy_house", false, false);*/
+	}
+}
