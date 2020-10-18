@@ -1,7 +1,7 @@
 package com.wuest.prefab.structures.config;
 
-import com.wuest.prefab.Structures.Items.ItemBasicStructure;
 import com.wuest.prefab.structures.config.enums.*;
+import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.predefined.StructureBasic;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

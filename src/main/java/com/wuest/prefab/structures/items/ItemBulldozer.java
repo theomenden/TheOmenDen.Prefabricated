@@ -58,7 +58,7 @@ public class ItemBulldozer extends StructureItem {
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
-	@Environment(EnvType.CLIENT.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World worldIn, List<Text> tooltip, TooltipContext flagIn) {
 		super.appendTooltip(stack, worldIn, tooltip, flagIn);
@@ -84,7 +84,7 @@ public class ItemBulldozer extends StructureItem {
 	 * Note that if you override this method, you generally want to also call the super version (on {@link Item}) to get
 	 * the glint for enchanted items. Of course, that is unnecessary if the overwritten version always returns true.
 	 */
-	@Environment(EnvType.CLIENT.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean hasGlint(ItemStack stack) {
 		return this.getPoweredValue(stack) || super.hasGlint(stack);
@@ -97,7 +97,7 @@ public class ItemBulldozer extends StructureItem {
 	}
 
 	private boolean getPoweredValue(ItemStack stack) {
-		if (stack.getItem() == ModRegistry.Bulldozer.get()) {
+		if (stack.getItem() == ModRegistry.Bulldozer) {
 			if (stack.getTag() == null
 					|| stack.getTag().isEmpty()) {
 				stack.setTag(stack.toTag(new CompoundTag()));
@@ -120,7 +120,7 @@ public class ItemBulldozer extends StructureItem {
 	public void setPoweredValue(ItemStack stack, boolean value) {
 		if (stack.getTag() == null
 				|| stack.getTag().isEmpty()) {
-			stack.setTag(stack.toTag(new CompoundTag())));
+			stack.setTag(stack.toTag(new CompoundTag()));
 		}
 
 		CompoundTag prefabTag = new CompoundTag();

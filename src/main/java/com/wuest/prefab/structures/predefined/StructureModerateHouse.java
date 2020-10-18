@@ -1,17 +1,25 @@
 package com.wuest.prefab.structures.predefined;
 
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.config.EntityPlayerConfiguration;
+import com.wuest.prefab.network.message.ConfigSyncMessage;
+import com.wuest.prefab.network.message.PlayerEntityTagMessage;
 import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.base.BuildClear;
 import com.wuest.prefab.structures.base.BuildingMethods;
 import com.wuest.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.ModerateHouseConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -115,7 +123,7 @@ public class StructureModerateHouse extends Structure {
 	@Override
 	public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
 		ModerateHouseConfiguration houseConfig = (ModerateHouseConfiguration) configuration;
-		EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntityData(player);
+		EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
 
 		BuildingMethods.FillFurnaces(world, this.furnacePosition);
 
@@ -137,12 +145,16 @@ public class StructureModerateHouse extends Structure {
 
 		// Make sure to set this value so the player cannot fill the chest a second time.
 		playerConfig.builtStarterHouse = true;
-		playerConfig.saveToPlayer(player);
+
+		PlayerEntityTagMessage message = new PlayerEntityTagMessage();
+		message.setMessageTag(playerConfig.createPlayerTag());
+		PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+
+		PlayerEntityTagMessage.encode(message, byteBuf);
 
 		// Make sure to send a message to the client to sync up the server player information and the client player
 		// information.
-		Prefab.network.sendTo(new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)), ((ServerPlayerEntity) player).connection.netManager,
-				NetworkDirection.PLAY_TO_CLIENT);
+		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ModRegistry.PlayerConfigSync, byteBuf);
 	}
 
 }

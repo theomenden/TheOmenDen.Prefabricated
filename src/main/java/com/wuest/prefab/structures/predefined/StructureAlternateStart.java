@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.predefined;
 
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.structures.base.*;
 import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
@@ -236,7 +237,7 @@ public class StructureAlternateStart extends Structure {
 	@Override
 	public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
 		HouseConfiguration houseConfig = (HouseConfiguration) configuration;
-		EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntityData(player);
+		EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
 
 		ArrayList<BlockPos> furnacePositions = new ArrayList<>();
 
@@ -279,7 +280,6 @@ public class StructureAlternateStart extends Structure {
 
 		// Make sure to set this value so the player cannot fill the chest a second time.
 		playerConfig.builtStarterHouse = true;
-		playerConfig.saveToPlayer(player);
 
 		// Make sure to send a message to the client to sync up the server player information and the client player
 		// information.

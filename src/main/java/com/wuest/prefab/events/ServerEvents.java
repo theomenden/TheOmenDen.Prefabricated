@@ -29,19 +29,16 @@ public class ServerEvents {
 	}
 
 	private static void PlayerJoinedServer() {
-		ServerEntityEvents.ENTITY_LOAD.register(new ServerEntityEvents.Load() {
-			@Override
-			public void onLoad(Entity entity, ServerWorld serverWorld) {
-				if (entity instanceof ServerPlayerEntity) {
-					// Send the message to the client.
-					ConfigSyncMessage message = new ConfigSyncMessage();
-					message.setMessageTag(Prefab.configuration.writeCompoundTag());
-					PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+		ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
+			if (entity instanceof ServerPlayerEntity) {
+				// Send the message to the client.
+				ConfigSyncMessage message = new ConfigSyncMessage();
+				message.setMessageTag(Prefab.configuration.writeCompoundTag());
+				PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
 
-					ConfigSyncMessage.encode(message, byteBuf);
+				ConfigSyncMessage.encode(message, byteBuf);
 
-					ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayerEntity) entity, ModRegistry.ConfigSync, byteBuf);
-				}
+				ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayerEntity) entity, ModRegistry.ConfigSync, byteBuf);
 			}
 		});
 	}

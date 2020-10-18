@@ -49,12 +49,12 @@ public class BulldozerConfiguration extends StructureConfiguration {
 			ItemStack stack = player.getOffHandStack();
 			Hand hand = Hand.OFF_HAND;
 
-			if (stack.getItem() != ModRegistry.Bulldozer.get()) {
-				stack = player.getMainHandStack()
+			if (stack.getItem() != ModRegistry.Bulldozer) {
+				stack = player.getMainHandStack();
 				hand = Hand.MAIN_HAND;
 			}
 
-			if (stack.getItem() == ModRegistry.Bulldozer.get()) {
+			if (stack.getItem() == ModRegistry.Bulldozer) {
 				Hand hand1 = hand;
 				stack.damage(1, player, (player1) ->
 				{
