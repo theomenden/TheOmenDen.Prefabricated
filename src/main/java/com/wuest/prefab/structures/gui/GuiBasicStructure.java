@@ -1,24 +1,25 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.BasicStructureConfiguration;
-import com.wuest.prefab.Structures.Config.Enums.BaseOption;
-import com.wuest.prefab.Structures.Items.ItemBasicStructure;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureBasic;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.item.DyeColor;
+
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.structures.config.enums.BaseOption;
+import com.wuest.prefab.structures.items.ItemBasicStructure;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureBasic;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.Direction;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 /**
  * This class is used as the gui for all basic structures.
@@ -35,7 +36,7 @@ public class GuiBasicStructure extends GuiStructure {
 
 	public GuiBasicStructure() {
 		super("Basic Structure");
-		this.structureConfiguration = EnumStructureConfiguration.Basic;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.Basic;
 		this.modifiedInitialXAxis = 213;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -138,7 +139,7 @@ public class GuiBasicStructure extends GuiStructure {
 	 */
 	private boolean doesPictureExist() {
 		try {
-			this.getMinecraft().getResourceManager().getResource(this.configuration.chosenOption.getPictureLocation());
+			this.client.getResourceManager().getResource(this.configuration.chosenOption.getPictureLocation());
 			return true;
 		} catch (IOException e) {
 			return false;
@@ -147,7 +148,7 @@ public class GuiBasicStructure extends GuiStructure {
 
 
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnVisualize) {
@@ -156,7 +157,7 @@ public class GuiBasicStructure extends GuiStructure {
 			this.closeScreen();
 		} else if (button == this.btnBedColor) {
 			this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-			this.btnBedColor.setMessage(new StringTextComponent(GuiLangKeys.translateDye(this.configuration.bedColor)));
+			this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
 		} else if (button == this.btnStructureOptions) {
 			for (int i = 0; i < this.availableOptions.size(); i++) {
 				BaseOption option = this.availableOptions.get(i);
@@ -173,7 +174,7 @@ public class GuiBasicStructure extends GuiStructure {
 
 				if (chosenOption != null) {
 					this.configuration.chosenOption = chosenOption;
-					this.btnStructureOptions.setMessage(new StringTextComponent(GuiLangKeys.translateString(chosenOption.getTranslationString())));
+					this.btnStructureOptions.setMessage(new LiteralText(GuiLangKeys.translateString(chosenOption.getTranslationString())));
 					break;
 				}
 			}

@@ -1,33 +1,32 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.Controls.GuiCheckBox;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Base.EnumStructureMaterial;
-import com.wuest.prefab.Structures.Config.InstantBridgeConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureInstantBridge;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
-import net.minecraftforge.fml.client.gui.widget.Slider;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.gui.controls.GuiCheckBox;
+import com.wuest.prefab.gui.controls.GuiSlider;
+import com.wuest.prefab.structures.base.EnumStructureMaterial;
+import com.wuest.prefab.structures.config.InstantBridgeConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureInstantBridge;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class GuiInstantBridge extends GuiStructure {
-	private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/instant_bridge_top_down.png");
+	private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/instant_bridge_top_down.png");
 	protected InstantBridgeConfiguration configuration;
 	private ExtendedButton btnMaterialType;
-	private Slider sldrBridgeLength;
+	private GuiSlider sldrBridgeLength;
 	private GuiCheckBox chckIncludeRoof;
-	private Slider sldrInteriorHeight;
+	private GuiSlider sldrInteriorHeight;
 
 	public GuiInstantBridge() {
 		super("Instant Bridge");
-		this.structureConfiguration = EnumStructureConfiguration.InstantBridge;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.InstantBridge;
 		this.modifiedInitialXAxis = 210;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -84,7 +83,7 @@ public class GuiInstantBridge extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		int sliderValue = this.sldrBridgeLength.getValueInt();
 
 		if (sliderValue > 75) {
@@ -117,7 +116,7 @@ public class GuiInstantBridge extends GuiStructure {
 		}
 		if (button == this.btnMaterialType) {
 			this.configuration.bridgeMaterial = EnumStructureMaterial.getMaterialByNumber(this.configuration.bridgeMaterial.getNumber() + 1);
-			this.btnMaterialType.setMessage(new StringTextComponent(this.configuration.bridgeMaterial.getTranslatedName()));
+			this.btnMaterialType.setMessage(new LiteralText(this.configuration.bridgeMaterial.getTranslatedName()));
 		} else if (button == this.btnVisualize) {
 			StructureInstantBridge structure = new StructureInstantBridge();
 			structure.getClearSpace().getShape().setDirection(Direction.SOUTH);

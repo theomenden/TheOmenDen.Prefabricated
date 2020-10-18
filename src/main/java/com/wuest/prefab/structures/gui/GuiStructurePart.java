@@ -1,21 +1,20 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Base.EnumStairsMaterial;
-import com.wuest.prefab.Structures.Base.EnumStructureMaterial;
-import com.wuest.prefab.Structures.Config.StructurePartConfiguration;
-import com.wuest.prefab.Structures.Config.StructurePartConfiguration.EnumStyle;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructurePart;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
-import net.minecraftforge.fml.client.gui.widget.Slider;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.gui.controls.GuiSlider;
+import com.wuest.prefab.structures.base.EnumStairsMaterial;
+import com.wuest.prefab.structures.base.EnumStructureMaterial;
+import com.wuest.prefab.structures.config.StructurePartConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructurePart;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.math.Direction;
+
 
 /**
  * This class is used as the gui for structure parts.
@@ -25,17 +24,17 @@ import net.minecraftforge.fml.client.gui.widget.Slider;
 @SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"})
 public class GuiStructurePart extends GuiStructure {
 	protected StructurePartConfiguration configuration;
-	private Slider sldrStairWidth;
-	private Slider sldrStairHeight;
-	private Slider sldrGeneralWidth;
-	private Slider sldrGeneralHeight;
+	private GuiSlider sldrStairWidth;
+	private GuiSlider sldrStairHeight;
+	private GuiSlider sldrGeneralWidth;
+	private GuiSlider sldrGeneralHeight;
 	private ExtendedButton btnPartStyle;
 	private ExtendedButton btnMaterialType;
 	private ExtendedButton btnStairsMaterialType;
 
 	public GuiStructurePart() {
 		super("Structure Part");
-		this.structureConfiguration = EnumStructureConfiguration.Parts;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.Parts;
 		this.modifiedInitialXAxis = 213;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -88,9 +87,9 @@ public class GuiStructurePart extends GuiStructure {
 		this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.STYLE), x + 10, y + 10, this.textColor);
 		this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.MATERIAL), x + 147, y + 10, this.textColor);
 
-		if (this.configuration.style == EnumStyle.Stairs
-				|| this.configuration.style == EnumStyle.Roof) {
-			this.sldrStairHeight.visible = this.configuration.style != EnumStyle.Roof;
+		if (this.configuration.style == StructurePartConfiguration.EnumStyle.Stairs
+				|| this.configuration.style == StructurePartConfiguration.EnumStyle.Roof) {
+			this.sldrStairHeight.visible = this.configuration.style != StructurePartConfiguration.EnumStyle.Roof;
 			this.sldrStairWidth.visible = true;
 			this.sldrGeneralHeight.visible = false;
 			this.sldrGeneralWidth.visible = false;
@@ -105,15 +104,15 @@ public class GuiStructurePart extends GuiStructure {
 			this.sldrGeneralWidth.visible = true;
 		}
 
-		if (this.configuration.style != EnumStyle.Roof) {
-			if (this.configuration.style == EnumStyle.Floor) {
+		if (this.configuration.style != StructurePartConfiguration.EnumStyle.Roof) {
+			if (this.configuration.style == StructurePartConfiguration.EnumStyle.Floor) {
 				this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.LENGTH), x + 147, y + 90, this.textColor);
 			} else {
 				this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HEIGHT), x + 147, y + 90, this.textColor);
 			}
 		}
 
-		if (this.configuration.style == EnumStyle.Roof) {
+		if (this.configuration.style == StructurePartConfiguration.EnumStyle.Roof) {
 			this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HEIGHT), x + 147, y + 50, this.textColor);
 		} else {
 			this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.WIDTH), x + 147, y + 50, this.textColor);
@@ -124,8 +123,8 @@ public class GuiStructurePart extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
-		this.configuration.houseFacing = this.minecraft.player.getHorizontalFacing().getOpposite();
+	public void buttonClicked(AbstractButtonWidget button) {
+		this.configuration.houseFacing = this.client.player.getHorizontalFacing().getOpposite();
 		this.configuration.stairHeight = this.sldrStairHeight.getValueInt();
 		this.configuration.stairWidth = this.sldrStairWidth.getValueInt();
 		this.configuration.generalHeight = this.sldrGeneralHeight.getValueInt();
@@ -135,18 +134,18 @@ public class GuiStructurePart extends GuiStructure {
 
 		if (button == this.btnMaterialType) {
 			this.configuration.partMaterial = EnumStructureMaterial.getMaterialByNumber(this.configuration.partMaterial.getNumber() + 1);
-			this.btnMaterialType.setMessage(new StringTextComponent(this.configuration.partMaterial.getTranslatedName()));
+			this.btnMaterialType.setMessage(new LiteralText(this.configuration.partMaterial.getTranslatedName()));
 		}
 		if (button == this.btnStairsMaterialType) {
 			this.configuration.stairsMaterial = EnumStairsMaterial.getByOrdinal(this.configuration.stairsMaterial.ordinal() + 1);
-			this.btnStairsMaterialType.setMessage(new StringTextComponent(this.configuration.stairsMaterial.getTranslatedName()));
+			this.btnStairsMaterialType.setMessage(new LiteralText(this.configuration.stairsMaterial.getTranslatedName()));
 		} else if (button == this.btnPartStyle) {
-			this.configuration.style = EnumStyle.getByOrdinal(this.configuration.style.ordinal() + 1);
-			this.btnPartStyle.setMessage(new StringTextComponent(GuiLangKeys.translateString(this.configuration.style.translateKey)));
+			this.configuration.style = StructurePartConfiguration.EnumStyle.getByOrdinal(this.configuration.style.ordinal() + 1);
+			this.btnPartStyle.setMessage(new LiteralText(GuiLangKeys.translateString(this.configuration.style.translateKey)));
 		} else if (button == this.btnVisualize) {
 			StructurePart structure = new StructurePart();
 			structure.getClearSpace().getShape().setDirection(Direction.NORTH);
-			structure.setupStructure(this.minecraft.world, this.configuration, this.pos);
+			structure.setupStructure(this.client.world, this.configuration, this.pos);
 
 			StructureRenderHandler.setStructure(structure, Direction.SOUTH, this.configuration);
 			this.closeScreen();

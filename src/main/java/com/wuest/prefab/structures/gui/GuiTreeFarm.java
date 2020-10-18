@@ -1,26 +1,26 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.TreeFarmConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureTreeFarm;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.structures.config.TreeFarmConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureTreeFarm;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiTreeFarm extends GuiStructure {
-	private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/tree_farm_top_down.png");
+	private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/tree_farm_top_down.png");
 	protected TreeFarmConfiguration configuration;
 
 	public GuiTreeFarm() {
 		super("Tree Farm");
-		this.structureConfiguration = EnumStructureConfiguration.TreeFarm;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.TreeFarm;
 		this.modifiedInitialXAxis = 213;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -43,7 +43,7 @@ public class GuiTreeFarm extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnVisualize) {

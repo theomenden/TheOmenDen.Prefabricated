@@ -1,22 +1,20 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.wuest.prefab.Gui.GuiBase;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Proxy.CommonProxy;
-import com.wuest.prefab.Structures.Config.StructureConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import com.wuest.prefab.gui.GuiBase;
+import com.wuest.prefab.structures.config.StructureConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import net.minecraft.util.math.Direction;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -29,11 +27,11 @@ import java.awt.*;
 public abstract class GuiStructure extends GuiBase {
 	public BlockPos pos;
 	protected PlayerEntity player;
-	protected ExtendedButton btnCancel;
-	protected ExtendedButton btnBuild;
-	protected ExtendedButton btnVisualize;
+	protected ButtonWidget btnCancel;
+	protected ButtonWidget btnBuild;
+	protected ButtonWidget btnVisualize;
 	protected int textColor = Color.DARK_GRAY.getRGB();
-	protected EnumStructureConfiguration structureConfiguration;
+	protected StructureTagMessage.EnumStructureConfiguration structureConfiguration;
 	private Direction structureFacing;
 
 	public GuiStructure(String title) {
@@ -63,23 +61,18 @@ public abstract class GuiStructure extends GuiBase {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder vertexBuffer = tessellator.getBuffer();
 
-		vertexBuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-
-		// This was the "pos" and "tex" method.
-		vertexBuffer.pos(x, y + height, z).tex(u * f, (v + height) * f1).endVertex();
-
-		vertexBuffer.pos(x + width, y + height, z).tex((u + width) * f, (v + height) * f1).endVertex();
-
-		vertexBuffer.pos(x + width, y, z).tex((u + width) * f, v * f1).endVertex();
-
-		vertexBuffer.pos(x, y, z).tex(u * f, v * f1).endVertex();
+		vertexBuffer.begin(7, VertexFormats.POSITION_TEXTURE);
+		vertexBuffer.vertex(x, y + height, z).texture(u * f, (v + height) * f1).next();
+		vertexBuffer.vertex(x + width, y + height, z).texture((u + width) * f, (v + height) * f1).next();
+		vertexBuffer.vertex(x + width, y, z).texture((u + width) * f, v * f1).next();
+		vertexBuffer.vertex(x, y, z).texture(u * f, v * f1).next();
 
 		tessellator.draw();
 	}
 
 	@Override
 	public void init() {
-		this.player = this.getMinecraft().player;
+		this.player = this.client.player;
 		this.structureFacing = this.player.getHorizontalFacing().getOpposite();
 		this.Initialize();
 	}
@@ -121,7 +114,7 @@ public abstract class GuiStructure extends GuiBase {
 	/**
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
-	protected void performCancelOrBuildOrHouseFacing(StructureConfiguration configuration, AbstractButton button) {
+	protected void performCancelOrBuildOrHouseFacing(StructureConfiguration configuration, AbstractButtonWidget button) {
 		configuration.houseFacing = this.structureFacing;
 
 		if (button == this.btnCancel) {

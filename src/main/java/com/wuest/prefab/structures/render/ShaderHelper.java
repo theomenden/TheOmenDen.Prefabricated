@@ -1,12 +1,9 @@
-package com.wuest.prefab.Structures.Render;
+package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.wuest.prefab.Events.ClientEventHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.IReloadableResourceManager;
-import net.minecraft.resources.IResourceManagerReloadListener;
-import net.minecraftforge.fml.ModList;
+
+import net.minecraft.client.MinecraftClient;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
@@ -38,8 +35,8 @@ public class ShaderHelper {
 	private static boolean checkedIncompatibility = false;
 
 	public static void Initialize() {
-		if (Minecraft.getInstance().getResourceManager() instanceof IReloadableResourceManager) {
-			((IReloadableResourceManager) Minecraft.getInstance().getResourceManager()).addReloadListener(
+		if (MinecraftClient.getInstance().getResourceManager() instanceof IReloadableResourceManager) {
+			((IReloadableResourceManager) MinecraftClient.getInstance().getResourceManager()).addReloadListener(
 					(IResourceManagerReloadListener) manager -> {
 						ShaderHelper.checkIncompatibleMods();
 

@@ -1,19 +1,18 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Gui.GuiTabScreen;
-import com.wuest.prefab.Structures.Config.VillagerHouseConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureVillagerHouses;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.structures.config.VillagerHouseConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureVillagerHouses;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
@@ -26,7 +25,7 @@ public class GuiVillagerHouses extends GuiStructure {
 
 	public GuiVillagerHouses() {
 		super("Villager Houses");
-		this.structureConfiguration = EnumStructureConfiguration.VillagerHouses;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.VillagerHouses;
 		this.modifiedInitialXAxis = 205;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -84,7 +83,7 @@ public class GuiVillagerHouses extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.configuration.houseStyle = this.houseStyle;
 
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
@@ -93,7 +92,7 @@ public class GuiVillagerHouses extends GuiStructure {
 			int id = this.houseStyle.getValue() + 1;
 			this.houseStyle = VillagerHouseConfiguration.HouseStyle.ValueOf(id);
 
-			this.btnHouseStyle.setMessage(new StringTextComponent(this.houseStyle.getDisplayName()));
+			this.btnHouseStyle.setMessage(new LiteralText(this.houseStyle.getDisplayName()));
 
 			this.btnBedColor.visible = this.houseStyle == VillagerHouseConfiguration.HouseStyle.LONG_HOUSE;
 		} else if (button == this.btnVisualize) {
@@ -103,7 +102,7 @@ public class GuiVillagerHouses extends GuiStructure {
 			this.closeScreen();
 		} else if (button == this.btnBedColor) {
 			this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-			this.btnBedColor.setMessage(new StringTextComponent(GuiLangKeys.translateDye(this.configuration.bedColor)));
+			this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
 		}
 	}
 }

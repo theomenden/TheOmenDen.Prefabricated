@@ -1,27 +1,26 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.FishPondConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureFishPond;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.structures.config.FishPondConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureFishPond;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiFishPond extends GuiStructure {
-	private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/fish_pond_top_down.png");
+	private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/fish_pond_top_down.png");
 	protected FishPondConfiguration configuration;
 
 	public GuiFishPond() {
 		super("Fish Pond");
-		this.structureConfiguration = EnumStructureConfiguration.FishPond;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.FishPond;
 		this.modifiedInitialXAxis = 188;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -44,7 +43,7 @@ public class GuiFishPond extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnVisualize) {

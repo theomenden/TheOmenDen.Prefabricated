@@ -1,27 +1,26 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.ChickenCoopConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureChickenCoop;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.structures.config.ChickenCoopConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureChickenCoop;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiChickenCoop extends GuiStructure {
-	private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/chicken_coop_top_down.png");
+	private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/chicken_coop_top_down.png");
 	protected ChickenCoopConfiguration configuration;
 
 	public GuiChickenCoop() {
 		super("Chicken Coop");
-		this.structureConfiguration = EnumStructureConfiguration.ChickenCoop;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.ChickenCoop;
 		this.modifiedInitialXAxis = 213;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -43,7 +42,7 @@ public class GuiChickenCoop extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnVisualize) {

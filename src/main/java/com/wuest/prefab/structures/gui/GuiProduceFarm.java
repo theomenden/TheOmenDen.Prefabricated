@@ -1,31 +1,30 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.ProduceFarmConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureProduceFarm;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.structures.config.ProduceFarmConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureProduceFarm;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiProduceFarm extends GuiStructure {
-	private static final ResourceLocation houseTopDown = new ResourceLocation("prefab", "textures/gui/produce_farm_top_down.png");
+	private static final Identifier houseTopDown = new Identifier("prefab", "textures/gui/produce_farm_top_down.png");
 	protected ProduceFarmConfiguration configuration;
 	private ExtendedButton btnGlassColor;
 
 	public GuiProduceFarm() {
 		super("Produce Farm");
-		this.structureConfiguration = EnumStructureConfiguration.ProduceFarm;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.ProduceFarm;
 		this.modifiedInitialXAxis = 210;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -77,12 +76,12 @@ public class GuiProduceFarm extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnGlassColor) {
 			this.configuration.dyeColor = DyeColor.byId(this.configuration.dyeColor.getId() + 1);
-			this.btnGlassColor.setMessage(new StringTextComponent(GuiLangKeys.translateDye(this.configuration.dyeColor)));
+			this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.dyeColor)));
 		} else if (button == this.btnVisualize) {
 			StructureProduceFarm structure = StructureProduceFarm.CreateInstance(StructureProduceFarm.ASSETLOCATION, StructureProduceFarm.class);
 			StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);

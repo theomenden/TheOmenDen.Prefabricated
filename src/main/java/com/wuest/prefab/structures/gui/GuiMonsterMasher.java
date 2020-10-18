@@ -1,32 +1,30 @@
-package com.wuest.prefab.Structures.Gui;
+package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Structures.Config.MonsterMasherConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureMonsterMasher;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
 import com.wuest.prefab.Tuple;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
-
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.structures.config.MonsterMasherConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureMonsterMasher;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiMonsterMasher extends GuiStructure {
-	private static final ResourceLocation houseTopDown = new ResourceLocation("prefab", "textures/gui/monster_masher_top_down.png");
+	private static final Identifier houseTopDown = new Identifier("prefab", "textures/gui/monster_masher_top_down.png");
 	protected MonsterMasherConfiguration configuration;
 	private ExtendedButton btnGlassColor;
 
 	public GuiMonsterMasher() {
 		super("Monster Masher");
-		this.structureConfiguration = EnumStructureConfiguration.MonsterMasher;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.MonsterMasher;
 		this.modifiedInitialXAxis = 210;
 		this.modifiedInitialYAxis = 83;
 	}
@@ -72,12 +70,12 @@ public class GuiMonsterMasher extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.performCancelOrBuildOrHouseFacing(this.configuration, button);
 
 		if (button == this.btnGlassColor) {
 			this.configuration.dyeColor = DyeColor.byId(this.configuration.dyeColor.getId() + 1);
-			this.btnGlassColor.setMessage(new StringTextComponent( GuiLangKeys.translateDye(this.configuration.dyeColor)));
+			this.btnGlassColor.setMessage(new LiteralText( GuiLangKeys.translateDye(this.configuration.dyeColor)));
 		} else if (button == this.btnVisualize) {
 			StructureMonsterMasher structure = StructureMonsterMasher.CreateInstance(StructureMonsterMasher.ASSETLOCATION, StructureMonsterMasher.class);
 			StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);

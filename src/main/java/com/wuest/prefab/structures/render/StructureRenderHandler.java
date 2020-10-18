@@ -1,36 +1,31 @@
-package com.wuest.prefab.Structures.Render;
+package com.wuest.prefab.structures.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Proxy.CommonProxy;
-import com.wuest.prefab.Structures.Base.BuildBlock;
-import com.wuest.prefab.Structures.Base.Structure;
-import com.wuest.prefab.Structures.Config.StructureConfiguration;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.structures.base.BuildBlock;
+import com.wuest.prefab.structures.base.Structure;
+import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+
+import net.minecraft.block.Material;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
+
+import net.minecraft.text.Style;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelDataManager;
-import net.minecraftforge.client.model.data.IModelData;
 
 import java.util.ArrayList;
 
@@ -64,7 +59,7 @@ public class StructureRenderHandler {
 		StructureRenderHandler.currentConfiguration = configuration;
 		StructureRenderHandler.showedMessage = false;
 
-		Minecraft mc = Minecraft.getInstance();
+		MinecraftClient mc = MinecraftClient.getInstance();
 
 		if (mc.world != null) {
 			// TODO: This was the "getDimension" and "getID" methods.
@@ -87,7 +82,7 @@ public class StructureRenderHandler {
 			rendering = true;
 			boolean didAny = false;
 
-			IRenderTypeBuffer.Impl entityVertexConsumer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+			IRenderTypeBuffer.Impl entityVertexConsumer = MinecraftClient.getInstance().getRenderTypeBuffers().getBufferSource();
 			ArrayList<Tuple<BlockState, BlockPos>> entityModels = new ArrayList<>();
 
 			for (BuildBlock buildBlock : StructureRenderHandler.currentStructure.getBlocks()) {
@@ -208,7 +203,7 @@ public class StructureRenderHandler {
 	}
 
 	private static void renderBlock(MatrixStack matrixStack, Vector3d pos, BlockState state, IRenderTypeBuffer entityVertexConsumer, BlockRenderType blockRenderType) {
-		Minecraft minecraft = Minecraft.getInstance();
+		MinecraftClient minecraft = MinecraftClient.getInstance();
 		Vector3d projectedView = minecraft.getRenderManager().info.getProjectedView();
 		double renderPosX = projectedView.getX();
 		double renderPosY = projectedView.getY();
@@ -225,7 +220,7 @@ public class StructureRenderHandler {
 		// Translate.
 		matrixStack.translate(pos.getX(), pos.getY(), pos.getZ());
 
-		ClientWorld world = Minecraft.getInstance().world;
+		ClientWorld world = MinecraftClient.getInstance().world;
 		IModelData model = renderer.getModelForState(state).getModelData(world, new BlockPos(pos), state, ModelDataManager.getModelData(world, new BlockPos(pos)));
 		IBakedModel bakedModel = renderer.getModelForState(state);
 
