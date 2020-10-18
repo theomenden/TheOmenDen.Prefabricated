@@ -1,5 +1,9 @@
 package com.wuest.prefab;
 
+import com.wuest.prefab.network.message.TagMessage;
+import io.netty.buffer.Unpooled;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.LiteralText;
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -24,7 +28,7 @@ public class Utils {
 	}
 
 	public static ArrayList<LiteralText> WrapStringToLiterals(String value) {
-		return Utils.WrapStringToLiterals(value,50);
+		return Utils.WrapStringToLiterals(value, 50);
 	}
 
 	public static ArrayList<LiteralText> WrapStringToLiterals(String value, int width) {
@@ -36,5 +40,13 @@ public class Utils {
 		}
 
 		return returnValue;
+	}
+
+	public static PacketByteBuf createMessageBuffer(CompoundTag tag) {
+		TagMessage message = new TagMessage(tag);
+		PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+		TagMessage.encode(message, byteBuf);
+
+		return byteBuf;
 	}
 }

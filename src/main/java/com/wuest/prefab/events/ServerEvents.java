@@ -2,7 +2,9 @@ package com.wuest.prefab.events;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.network.message.ConfigSyncMessage;
+import com.wuest.prefab.structures.events.StructureEventHandler;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -25,20 +27,18 @@ public class ServerEvents {
 	}
 
 	public static void RegisterServerEvents() {
-		ServerEvents.PlayerJoinedServer();
+		ServerEvents.playerJoinedServer();
+
+		StructureEventHandler.registerStructureServerSideEvents();
 	}
 
-	private static void PlayerJoinedServer() {
+	private static void playerJoinedServer() {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, serverWorld) -> {
 			if (entity instanceof ServerPlayerEntity) {
 				// Send the message to the client.
-				ConfigSyncMessage message = new ConfigSyncMessage();
-				message.setMessageTag(Prefab.configuration.writeCompoundTag());
-				PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+				PacketByteBuf messagePacket = Utils.createMessageBuffer(Prefab.configuration.writeCompoundTag());
 
-				ConfigSyncMessage.encode(message, byteBuf);
-
-				ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayerEntity) entity, ModRegistry.ConfigSync, byteBuf);
+				ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayerEntity) entity, ModRegistry.ConfigSync, messagePacket);
 			}
 		});
 	}
