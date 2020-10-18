@@ -1,6 +1,7 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
+import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import net.minecraft.block.AbstractBlock;
@@ -58,34 +59,18 @@ public class ModRegistry {
 
 	public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 
-	/* *********************************** Blocks *********************************** */
-
-/*
-	public static final RegistryObject<BlockBoundary> BlockBoundary = BLOCKS.register("block_boundary", com.wuest.prefab.Blocks.BlockBoundary::new);
-*/
-
-	/* *********************************** Item Blocks *********************************** */
-
-/*
-
-	public static final RegistryObject<BlockItem> BlockPhasingItem = ITEMS.register("block_phasing", () -> new BlockItem(BlockPhasing.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-	public static final RegistryObject<BlockItem> BlockBoundaryItem = ITEMS.register("block_boundary", () -> new BlockItem(BlockBoundary.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
-
-*/
-
 	/* *********************************** Items *********************************** */
 
-/*
-	public static final RegistryObject<ItemPileOfBricks> ItemPileOfBricks = ITEMS.register("item_pile_of_bricks", com.wuest.prefab.Items.ItemPileOfBricks::new);
-	public static final RegistryObject<ItemPalletOfBricks> ItemPalletOfBricks = ITEMS.register("item_pallet_of_bricks", com.wuest.prefab.Items.ItemPalletOfBricks::new);
-	public static final RegistryObject<ItemBundleOfTimber> ItemBundleOfTimber = ITEMS.register("item_bundle_of_timber", com.wuest.prefab.Items.ItemBundleOfTimber::new);
-	public static final RegistryObject<ItemBundleOfTimber> ItemHeapOfTimber = ITEMS.register("item_heap_of_timber", com.wuest.prefab.Items.ItemBundleOfTimber::new);
-	public static final RegistryObject<ItemBundleOfTimber> ItemTonOfTimber = ITEMS.register("item_ton_of_timber", com.wuest.prefab.Items.ItemBundleOfTimber::new);
-	public static final RegistryObject<ItemCompressedChest> ItemCompressedChest = ITEMS.register("item_compressed_chest", com.wuest.prefab.Items.ItemCompressedChest::new);
-	public static final RegistryObject<ItemStringOfLanterns> ItemStringOfLanterns = ITEMS.register("item_string_of_lanterns", com.wuest.prefab.Items.ItemStringOfLanterns::new);
-	public static final RegistryObject<ItemCoilOfLanterns> ItemCoilOfLanterns = ITEMS.register("item_coil_of_lanterns", com.wuest.prefab.Items.ItemCoilOfLanterns::new);
-*/
+	public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item PalletofBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item BundleOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item HeapOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item TonOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item StringOfLanterns = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item CoilOfLanterns = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final ItemCompressedChest CompressedChest = new ItemCompressedChest();
 
+	public static final Item WarehouseUpgrade = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 	/* *********************************** Blueprint Items *********************************** */
 
 	/*
@@ -97,7 +82,7 @@ public class ModRegistry {
 		public static final RegistryObject<ItemFishPond> FishPond = ITEMS.register("item_fish_pond", com.wuest.prefab.Structures.Items.ItemFishPond::new);
 		public static final RegistryObject<ItemAdvancedWareHouse> AdvancedWareHouse = ITEMS.register("item_advanced_warehouse", com.wuest.prefab.Structures.Items.ItemAdvancedWareHouse::new);
 		public static final RegistryObject<ItemMonsterMasher> MonsterMasher = ITEMS.register("item_monster_masher", com.wuest.prefab.Structures.Items.ItemMonsterMasher::new);
-		public static final RegistryObject<ItemWarehouseUpgrade> WarehouseUpgrade = ITEMS.register("item_warehouse_upgrade", com.wuest.prefab.Items.ItemWarehouseUpgrade::new);
+
 		public static final RegistryObject<ItemHorseStable> HorseStable = ITEMS.register("item_horse_stable", com.wuest.prefab.Structures.Items.ItemHorseStable::new);
 		public static final RegistryObject<ItemInstantBridge> InstantBridge = ITEMS.register("item_instant_bridge", com.wuest.prefab.Structures.Items.ItemInstantBridge::new);
 		public static final RegistryObject<ItemModerateHouse> ModerateHouse = ITEMS.register("item_moderate_house", com.wuest.prefab.Structures.Items.ItemModerateHouse::new);
@@ -125,6 +110,7 @@ public class ModRegistry {
 		public static final RegistryObject<ItemBasicStructure> TownHall = ITEMS.register(EnumBasicStructureName.TownHall.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.TownHall));
 		public static final RegistryObject<ItemBasicStructure> NetherGate = ITEMS.register(EnumBasicStructureName.NetherGate.getResourceLocation().getPath(), () ->new ItemBasicStructure(EnumBasicStructureName.NetherGate));
 	*/
+	
 	public static void registerModComponents() {
 		ModRegistry.registerBlocks();
 
@@ -157,7 +143,15 @@ public class ModRegistry {
 	}
 
 	private static void registerItems() {
-
+		ModRegistry.registerItem("item_pile_of_bricks", ModRegistry.PileOfBricks);
+		ModRegistry.registerItem("item_pallet_of_bricks", ModRegistry.PalletofBricks);
+		ModRegistry.registerItem("item_bundle_of_timber", ModRegistry.BundleOfTimber);
+		ModRegistry.registerItem("item_heap_of_timber", ModRegistry.HeapOfTimber);
+		ModRegistry.registerItem("item_ton_of_timber", ModRegistry.TonOfTimber);
+		ModRegistry.registerItem("item_string_of_lanterns", ModRegistry.StringOfLanterns);
+		ModRegistry.registerItem("item_coil_of_lanterns", ModRegistry.CoilOfLanterns);
+		ModRegistry.registerItem("item_compressed_chest", ModRegistry.CompressedChest);
+		ModRegistry.registerItem("item_warehouse_upgrade", ModRegistry.WarehouseUpgrade);
 	}
 
 	private static void registerBluePrints() {

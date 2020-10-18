@@ -145,8 +145,6 @@ public class BlockBoundary extends Block {
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
 		super.appendTooltip(stack, world, tooltip, options);
-
-		// TODO: When the mappings are updated, this was the "hasShiftDown" method.
 		boolean advancedKeyDown = Screen.hasShiftDown();
 
 		if (!advancedKeyDown) {
