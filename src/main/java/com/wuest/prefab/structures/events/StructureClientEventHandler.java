@@ -1,30 +1,37 @@
 package com.wuest.prefab.structures.events;
 
-import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.Direction;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
-@SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = Prefab.MODID, value = Dist.CLIENT)
 public final class StructureClientEventHandler {
+
+	public static void registerStructureServerSideEvents() {
+
+		StructureClientEventHandler.registerPlayerUseItemEvent();
+	}
+
+	public static void registerPlayerUseItemEvent() {
+		StructureClientEventHandler.onPlayerUseBlock();
+	}
+
 	/**
 	 * The player right-click block event. This is used to stop the structure rendering for the preview.
-	 *
-	 * @param event The event object.
 	 */
-	@SubscribeEvent
-	public static void onPlayerInteract(PlayerInteractEvent.RightClickBlock event) {
-		if (StructureRenderHandler.currentStructure != null && event.getPlayer() == Minecraft.getInstance().player) {
-			StructureRenderHandler.setStructure(null, Direction.NORTH, null);
-			event.setCanceled(true);
-		}
+	public static void onPlayerUseBlock() {
+		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+			if (StructureRenderHandler.currentStructure != null && player == MinecraftClient.getInstance().player) {
+				StructureRenderHandler.setStructure(null, Direction.NORTH, null);
+
+				return ActionResult.FAIL;
+			}
+			
+			return ActionResult.PASS;
+		});
 	}
 }

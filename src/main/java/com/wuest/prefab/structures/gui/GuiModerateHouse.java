@@ -1,29 +1,27 @@
 package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.wuest.prefab.Config.ServerModConfiguration;
-import com.wuest.prefab.Events.ClientEventHandler;
-import com.wuest.prefab.Gui.Controls.GuiCheckBox;
-import com.wuest.prefab.Gui.GuiLangKeys;
-import com.wuest.prefab.Gui.GuiTabScreen;
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Structures.Config.ModerateHouseConfiguration;
-import com.wuest.prefab.Structures.Messages.StructureTagMessage.EnumStructureConfiguration;
-import com.wuest.prefab.Structures.Predefined.StructureModerateHouse;
-import com.wuest.prefab.Structures.Render.StructureRenderHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.controls.ExtendedButton;
+import com.wuest.prefab.gui.controls.GuiCheckBox;
+import com.wuest.prefab.structures.config.ModerateHouseConfiguration;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import com.wuest.prefab.structures.predefined.StructureModerateHouse;
+import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
  */
 public class GuiModerateHouse extends GuiStructure {
 	protected ModerateHouseConfiguration configuration;
-	protected ServerModConfiguration serverConfiguration;
 	private ExtendedButton btnHouseStyle;
 	private GuiCheckBox btnAddChest;
 	private GuiCheckBox btnAddChestContents;
@@ -34,19 +32,18 @@ public class GuiModerateHouse extends GuiStructure {
 	public GuiModerateHouse() {
 		super("Moderate House");
 
-		this.structureConfiguration = EnumStructureConfiguration.ModerateHouse;
+		this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.ModerateHouse;
 		this.modifiedInitialXAxis = 212;
 		this.modifiedInitialYAxis = 83;
 	}
 
 	@Override
 	protected void Initialize() {
-		if (!Minecraft.getInstance().player.isCreative()) {
-			this.allowItemsInChestAndFurnace = !ClientEventHandler.playerConfig.builtStarterHouse;
+		if (!MinecraftClient.getInstance().player.isCreative()) {
+			this.allowItemsInChestAndFurnace = !ClientModRegistry.playerConfig.builtStarterHouse;
 		}
 
-		this.serverConfiguration = Prefab.proxy.getServerConfiguration();
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("Moderate Houses", ModerateHouseConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("Moderate Houses", ModerateHouseConfiguration.class);
 		this.configuration.pos = this.pos;
 
 		// Get the upper left hand corner of the GUI box.
@@ -91,9 +88,9 @@ public class GuiModerateHouse extends GuiStructure {
 
 	@Override
 	protected void postButtonRender(MatrixStack matrixStack, int x, int y) {
-		this.btnAddChest.visible = this.serverConfiguration.addChests;
-		this.btnAddChestContents.visible = this.allowItemsInChestAndFurnace && this.serverConfiguration.addChestContents;
-		this.btnAddMineShaft.visible = this.serverConfiguration.addMineshaft;
+		this.btnAddChest.visible = Prefab.serverConfiguration.starterHouseOptions.addChests;
+		this.btnAddChestContents.visible = this.allowItemsInChestAndFurnace && Prefab.serverConfiguration.starterHouseOptions.addChestContents;
+		this.btnAddMineShaft.visible = Prefab.serverConfiguration.starterHouseOptions.addMineshaft;
 
 		// Draw the text here.
 		this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_STYLE), x + 10, y + 10, this.textColor);
@@ -105,7 +102,7 @@ public class GuiModerateHouse extends GuiStructure {
 	 * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 	 */
 	@Override
-	public void buttonClicked(AbstractButton button) {
+	public void buttonClicked(AbstractButtonWidget button) {
 		this.configuration.addChests = this.btnAddChest.visible && this.btnAddChest.isChecked();
 		this.configuration.addChestContents = this.allowItemsInChestAndFurnace && (this.btnAddChestContents.visible && this.btnAddChestContents.isChecked());
 		this.configuration.addMineshaft = this.btnAddMineShaft.visible && this.btnAddMineShaft.isChecked();
@@ -116,14 +113,14 @@ public class GuiModerateHouse extends GuiStructure {
 			int id = this.configuration.houseStyle.getValue() + 1;
 			this.configuration.houseStyle = ModerateHouseConfiguration.HouseStyle.ValueOf(id);
 
-			this.btnHouseStyle.setMessage(new StringTextComponent(this.configuration.houseStyle.getDisplayName()));
+			this.btnHouseStyle.setMessage(new LiteralText(this.configuration.houseStyle.getDisplayName()));
 		} else if (button == this.btnVisualize) {
 			StructureModerateHouse structure = StructureModerateHouse.CreateInstance(this.configuration.houseStyle.getStructureLocation(), StructureModerateHouse.class);
 			StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);
 			this.closeScreen();
 		} else if (button == this.btnBedColor) {
 			this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-			this.btnBedColor.setMessage(new StringTextComponent(GuiLangKeys.translateDye(this.configuration.bedColor)));
+			this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
 		}
 	}
 }

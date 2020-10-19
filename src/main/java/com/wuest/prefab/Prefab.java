@@ -66,6 +66,6 @@ public class Prefab implements ModInitializer {
 		Prefab.serverConfiguration = new ModConfiguration();
 		Prefab.configuration = AutoConfig.getConfigHolder(ModConfiguration.class).getConfig();
 
-		ServerEvents.RegisterServerEvents();
+		ServerEvents.registerServerEvents();
 	}
 }

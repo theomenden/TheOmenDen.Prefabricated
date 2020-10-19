@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.WareHouseConfiguration;
@@ -36,7 +37,7 @@ public class GuiWareHouse extends GuiStructure {
 
 	@Override
 	public void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig(this.clientGUIIdentifier, WareHouseConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig(this.clientGUIIdentifier, WareHouseConfiguration.class);
 		this.configuration.pos = this.pos;
 		this.configuration.houseFacing = Direction.NORTH;
 

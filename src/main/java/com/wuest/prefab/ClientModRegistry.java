@@ -15,6 +15,8 @@ import java.util.UUID;
 
 public class ClientModRegistry {
 
+	public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
+
 	public static void registerModComponents() {
 		ClientModRegistry.registerBlockLayers();
 

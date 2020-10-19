@@ -1,11 +1,14 @@
 package com.wuest.prefab.structures.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.BufferBuilder;
@@ -13,6 +16,7 @@ import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import org.lwjgl.opengl.GL11;
@@ -84,7 +88,7 @@ public abstract class GuiStructure extends GuiBase {
 	}
 
 	public void checkVisualizationSetting() {
-		if (!CommonProxy.proxyConfiguration.serverConfiguration.enableStructurePreview) {
+		if (!Prefab.serverConfiguration.enableStructurePreview) {
 			this.btnVisualize.visible = false;
 		}
 	}
@@ -120,7 +124,9 @@ public abstract class GuiStructure extends GuiBase {
 		if (button == this.btnCancel) {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
-			Prefab.network.sendToServer(new StructureTagMessage(configuration.WriteToCompoundNBT(), this.structureConfiguration));
+			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(configuration.WriteToCompoundNBT(), this.structureConfiguration);
+			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuildMesasge, messagePacket);
+
 			this.closeScreen();
 		}
 	}

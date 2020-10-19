@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -83,7 +84,7 @@ public class GuiBasicStructure extends GuiStructure {
 
 		if (stack != null) {
 			ItemBasicStructure item = (ItemBasicStructure) stack.getItem();
-			this.configuration = ClientEventHandler.playerConfig.getClientConfig(item.structureType.getName(), BasicStructureConfiguration.class);
+			this.configuration = ClientModRegistry.playerConfig.getClientConfig(item.structureType.getName(), BasicStructureConfiguration.class);
 			this.configuration.basicStructureName = item.structureType;
 			this.configuration.chosenOption = item.structureType.getBaseOption();
 			this.includePicture = this.doesPictureExist();

@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
 import com.wuest.prefab.structures.config.HorseStableConfiguration;
@@ -58,7 +59,7 @@ public class GuiHorseStable extends GuiStructure {
 
 	@Override
 	protected void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("Horse Stable", HorseStableConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("Horse Stable", HorseStableConfiguration.class);
 		this.configuration.pos = this.pos;
 
 		// Get the upper left hand corner of the GUI box.

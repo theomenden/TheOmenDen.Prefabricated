@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.gui;
 
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.TreeFarmConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
@@ -55,7 +56,7 @@ public class GuiTreeFarm extends GuiStructure {
 
 	@Override
 	protected void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("Tree Farm", TreeFarmConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("Tree Farm", TreeFarmConfiguration.class);
 		this.configuration.pos = this.pos;
 		this.configuration.houseFacing = Direction.NORTH;
 

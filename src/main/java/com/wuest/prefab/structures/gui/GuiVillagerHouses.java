@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
@@ -32,7 +33,7 @@ public class GuiVillagerHouses extends GuiStructure {
 
 	@Override
 	public void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("Villager Houses", VillagerHouseConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("Villager Houses", VillagerHouseConfiguration.class);
 		this.configuration.pos = this.pos;
 		this.configuration.houseFacing = Direction.NORTH;
 		this.houseStyle = this.configuration.houseStyle;

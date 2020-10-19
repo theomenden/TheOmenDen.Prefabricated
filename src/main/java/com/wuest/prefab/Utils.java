@@ -1,6 +1,7 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.network.message.TagMessage;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
 import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
@@ -46,6 +47,14 @@ public class Utils {
 		TagMessage message = new TagMessage(tag);
 		PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
 		TagMessage.encode(message, byteBuf);
+
+		return byteBuf;
+	}
+
+	public static PacketByteBuf createStructureMessageBuffer(CompoundTag tag, StructureTagMessage.EnumStructureConfiguration structureConfiguration) {
+		StructureTagMessage message = new StructureTagMessage(tag, structureConfiguration);
+		PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
+		StructureTagMessage.encode(message, byteBuf);
 
 		return byteBuf;
 	}

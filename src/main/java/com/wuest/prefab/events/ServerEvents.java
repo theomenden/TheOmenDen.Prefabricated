@@ -26,7 +26,7 @@ public class ServerEvents {
 		ServerEvents.RedstoneAffectedBlockPositions = new ArrayList<>();
 	}
 
-	public static void RegisterServerEvents() {
+	public static void registerServerEvents() {
 		ServerEvents.playerJoinedServer();
 
 		StructureEventHandler.registerStructureServerSideEvents();

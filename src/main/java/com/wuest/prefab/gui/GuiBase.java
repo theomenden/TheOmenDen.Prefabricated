@@ -7,7 +7,6 @@ import com.wuest.prefab.gui.controls.GuiSlider;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
@@ -99,8 +98,8 @@ public abstract class GuiBase extends Screen {
 	}
 
 	public GuiSlider createAndAddSlider(int xPos, int yPos, int width, int height, String prefix, String suf,
-										   double minVal, double maxVal, double currentVal, boolean showDec, boolean drawStr,
-										   ButtonWidget.PressAction handler) {
+										double minVal, double maxVal, double currentVal, boolean showDec, boolean drawStr,
+										ButtonWidget.PressAction handler) {
 		GuiSlider slider = new GuiSlider(xPos, yPos, width, height, new LiteralText(prefix), new LiteralText(suf), minVal, maxVal, currentVal, showDec,
 				drawStr, handler);
 

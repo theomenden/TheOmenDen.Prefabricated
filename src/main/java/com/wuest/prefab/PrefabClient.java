@@ -2,6 +2,7 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.config.RecipeMapGuiProvider;
+import com.wuest.prefab.events.ClientEvents;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.gui.registry.GuiRegistry;
 import net.fabricmc.api.ClientModInitializer;
@@ -21,5 +22,6 @@ public class PrefabClient implements ClientModInitializer {
 
 		registry.registerPredicateProvider(providerMap, (field) -> field.getDeclaringClass() == ModConfiguration.class && field.getName().equals("recipes"));
 
+		ClientEvents.registerClientEvents();
 	}
 }

@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
@@ -33,7 +34,7 @@ public class GuiInstantBridge extends GuiStructure {
 
 	@Override
 	protected void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("InstantBridge", InstantBridgeConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("InstantBridge", InstantBridgeConfiguration.class);
 		this.configuration.pos = this.pos;
 
 		// Get the upper left hand corner of the GUI box.

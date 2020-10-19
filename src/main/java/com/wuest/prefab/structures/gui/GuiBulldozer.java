@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.BulldozerConfiguration;
@@ -27,7 +28,7 @@ public class GuiBulldozer extends GuiStructure {
 
 	@Override
 	protected void Initialize() {
-		this.configuration = ClientEventHandler.playerConfig.getClientConfig("Bulldozer", BulldozerConfiguration.class);
+		this.configuration = ClientModRegistry.playerConfig.getClientConfig("Bulldozer", BulldozerConfiguration.class);
 		this.configuration.pos = this.pos;
 
 		// Get the upper left hand corner of the GUI box.

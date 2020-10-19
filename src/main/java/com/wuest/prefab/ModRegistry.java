@@ -61,6 +61,7 @@ public class ModRegistry {
 
 	public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 	public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
+	public static final Identifier StructureBuildMesasge = new Identifier(Prefab.MODID, "structure_build");
 
 	/* *********************************** Items *********************************** */
 
