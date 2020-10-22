@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.items;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import net.minecraft.item.ItemUsageContext;
@@ -24,7 +25,7 @@ public class ItemStartHouse extends StructureItem {
 			if (context.getSide() == Direction.UP) {
 				if (!Prefab.useScanningMode) {
 					// Open the client side gui to determine the house options.
-					Prefab.proxy.openGuiForItem(context);
+					ClientModRegistry.openGuiForItem(context);
 				} else {
 					this.scanningMode(context);
 				}

@@ -180,7 +180,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
 			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(this.houseConfiguration.WriteToCompoundNBT(), this.structureConfiguration);
-			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuildMesasge, messagePacket);
+			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuild, messagePacket);
 
 			this.closeScreen();
 		} else if (button == this.btnHouseStyle) {

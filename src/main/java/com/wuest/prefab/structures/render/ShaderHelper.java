@@ -3,7 +3,10 @@ package com.wuest.prefab.structures.render;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import com.wuest.prefab.events.ClientEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.resource.ReloadableResourceManager;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
@@ -15,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -35,16 +39,18 @@ public class ShaderHelper {
 	private static boolean checkedIncompatibility = false;
 
 	public static void Initialize() {
-		if (MinecraftClient.getInstance().getResourceManager() instanceof IReloadableResourceManager) {
-			((IReloadableResourceManager) MinecraftClient.getInstance().getResourceManager()).addReloadListener(
-					(IResourceManagerReloadListener) manager -> {
-						ShaderHelper.checkIncompatibleMods();
+		if (MinecraftClient.getInstance().getResourceManager() instanceof ReloadableResourceManager) {
 
-						ShaderHelper.deleteShader(alphaShader);
-						ShaderHelper.alphaShader = 0;
+			ReloadableResourceManager manager = (ReloadableResourceManager) MinecraftClient.getInstance().getResourceManager();
+			manager.registerListener((synchronizer, resourceManager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor )-> {
+				ShaderHelper.checkIncompatibleMods();
 
-						ShaderHelper.alphaShader = ShaderHelper.createProgram("/assets/prefab/shader/alpha.vert", "/assets/prefab/shader/alpha.frag");
-					});
+				ShaderHelper.deleteShader(alphaShader);
+				ShaderHelper.alphaShader = 0;
+
+				ShaderHelper.alphaShader = ShaderHelper.createProgram("/assets/prefab/shader/alpha.vert", "/assets/prefab/shader/alpha.frag");
+				return new CompletableFuture<>();
+			});
 		}
 	}
 
@@ -66,8 +72,12 @@ public class ShaderHelper {
 			// getUniformLocation
 			int time = GlStateManager.getUniformLocation(shader, "time");
 
+			if (Integer.MAX_VALUE - 100 <= ClientEvents.ticksInGame) {
+				ClientEvents.ticksInGame = 1;
+			}
+
 			// uniform1
-			GlStateManager.uniform1i(time, ClientEventHandler.ticksInGame);
+			GlStateManager.uniform1(time, ClientEvents.ticksInGame++);
 
 			if (callback != null)
 				callback.call(shader);
@@ -178,7 +188,7 @@ public class ShaderHelper {
 
 	private static boolean checkIncompatibleMods() {
 		if (!checkedIncompatibility) {
-			hasIncompatibleMods = ModList.get().isLoaded("optifine");
+			hasIncompatibleMods = FabricLoader.getInstance().isModLoaded("optifabric");
 			checkedIncompatibility = true;
 		}
 

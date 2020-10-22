@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.items;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Utils;
@@ -47,7 +48,7 @@ public class ItemBulldozer extends StructureItem {
 		if (context.getWorld().isClient) {
 			if (context.getSide() == Direction.UP && this.getPoweredValue(context.getPlayer(), context.getHand())) {
 				// Open the client side gui to determine the house options.
-				Prefab.proxy.openGuiForItem(context);
+				ClientModRegistry.openGuiForItem(context);
 				return ActionResult.PASS;
 			}
 		}

@@ -2,16 +2,21 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.items.ItemCompressedChest;
+import com.wuest.prefab.network.message.ConfigSyncMessage;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.items.*;
+import com.wuest.prefab.structures.messages.StructureTagMessage;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -61,7 +66,7 @@ public class ModRegistry {
 
 	public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 	public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
-	public static final Identifier StructureBuildMesasge = new Identifier(Prefab.MODID, "structure_build");
+	public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
 
 	/* *********************************** Items *********************************** */
 
@@ -213,24 +218,8 @@ public class ModRegistry {
 	 * This is where the mod messages are registered.
 	 */
 	private static void RegisterClientToServerMessageHandlers() {
-		/*AtomicInteger index = new AtomicInteger();
-		Prefab.network.messageBuilder(ConfigSyncMessage.class, index.getAndIncrement())
-				.encoder(ConfigSyncMessage::encode)
-				.decoder(ConfigSyncMessage::decode)
-				.consumer(ConfigSyncHandler::handle)
-				.add();
 
-		Prefab.network.messageBuilder(PlayerEntityTagMessage.class, index.getAndIncrement())
-				.encoder(PlayerEntityTagMessage::encode)
-				.decoder(PlayerEntityTagMessage::decode)
-				.consumer(PlayerEntityHandler::handle)
-				.add();
-
-		Prefab.network.messageBuilder(StructureTagMessage.class, index.getAndIncrement())
-				.encoder(StructureTagMessage::encode)
-				.decoder(StructureTagMessage::decode)
-				.consumer(StructureHandler::handle)
-				.add();*/
+		ModRegistry.registerStructureBuilderMessageHandler();
 	}
 
 	private static void RegisterRecipeSerializers() {
@@ -244,5 +233,23 @@ public class ModRegistry {
 
 	private static void registerItem(String registryName, Item item) {
 		Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, registryName), item);
+	}
+
+	private static void registerStructureBuilderMessageHandler() {
+		ServerSidePacketRegistry.INSTANCE.register(ModRegistry.StructureBuild,
+				(packetContext, attachedData) -> {
+					// Can only access the "attachedData" on the "network thread" which is here.
+					StructureTagMessage message = StructureTagMessage.decode(attachedData);
+					StructureTagMessage.EnumStructureConfiguration structureConfig = message.getStructureConfig();
+
+					packetContext.getTaskQueue().execute(() -> {
+						ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)packetContext.getPlayer();
+						// This is now on the "main" server thread and things can be done in the world!
+						StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundNBT(message.getMessageTag());
+
+						configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getServerWorld());
+					});
+				}
+		);
 	}
 }

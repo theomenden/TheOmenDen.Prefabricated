@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.items;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -37,7 +38,7 @@ public class StructureItem extends Item {
 					this.scanningMode(context);
 				} else {
 					// Open the client side gui to determine the house options.
-					Prefab.proxy.openGuiForItem(context);
+					ClientModRegistry.openGuiForItem(context);
 				}
 
 				return ActionResult.PASS;

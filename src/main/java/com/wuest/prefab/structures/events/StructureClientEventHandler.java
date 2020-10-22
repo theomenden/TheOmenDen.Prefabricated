@@ -11,7 +11,7 @@ import net.minecraft.util.math.Direction;
  */
 public final class StructureClientEventHandler {
 
-	public static void registerStructureServerSideEvents() {
+	public static void registerStructureClientSideEvents() {
 
 		StructureClientEventHandler.registerPlayerUseItemEvent();
 	}
@@ -30,7 +30,7 @@ public final class StructureClientEventHandler {
 
 				return ActionResult.FAIL;
 			}
-			
+
 			return ActionResult.PASS;
 		});
 	}

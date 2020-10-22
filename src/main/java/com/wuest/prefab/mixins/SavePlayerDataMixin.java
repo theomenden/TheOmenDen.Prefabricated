@@ -5,7 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -15,8 +17,9 @@ public class SavePlayerDataMixin {
 
 	public static HashMap<UUID, EntityPlayerConfiguration> playerTagData = new HashMap<>();
 
-	@ModifyVariable(method = "writeCustomDataToTag(L)V", at = @At("TAIL"), ordinal = 0)
-	private void saveCustomTagData(CompoundTag tag) {
+	//@ModifyVariable(method = "writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), ordinal = 0)
+	@Inject(method = "saveCustomTagData", at = @At("TAIL"))
+	private void saveCustomTagData(CompoundTag tag, CallbackInfo ci) {
 		UUID playerTag = tag.getUuid("UUID");
 		EntityPlayerConfiguration configuration;
 
@@ -30,8 +33,9 @@ public class SavePlayerDataMixin {
 		tag.put("PrefabTag", configuration.createPlayerTag());
 	}
 
-	@ModifyVariable(method = "readCustomDataFromTag(L)V", at = @At("TAIL"), ordinal = 0)
-	private void readCustomTagData(CompoundTag tag) {
+	//@ModifyVariable(method = "readCustomDataFromTag(L)V", at = @At("TAIL"), ordinal = 0)
+	@Inject(method = "readCustomTagData", at = @At("TAIL"))
+	private void readCustomTagData(CompoundTag tag, CallbackInfo ci) {
 		UUID playerTag = tag.getUuid("UUID");
 
 		EntityPlayerConfiguration configuration = new EntityPlayerConfiguration();

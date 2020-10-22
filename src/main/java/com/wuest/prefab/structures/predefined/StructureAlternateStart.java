@@ -1,10 +1,13 @@
 package com.wuest.prefab.structures.predefined;
 
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.structures.base.*;
 import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.SignBlockEntity;
@@ -283,7 +286,6 @@ public class StructureAlternateStart extends Structure {
 
 		// Make sure to send a message to the client to sync up the server player information and the client player
 		// information.
-		Prefab.network.sendTo(new PlayerEntityTagMessage(playerConfig.getModIsPlayerNewTag(player)), ((ServerPlayerEntity) player).connection.netManager,
-				NetworkDirection.PLAY_TO_CLIENT);
+		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ModRegistry.PlayerConfigSync, Utils.createMessageBuffer(playerConfig.createPlayerTag()));
 	}
 }

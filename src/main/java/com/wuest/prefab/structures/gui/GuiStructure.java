@@ -125,7 +125,7 @@ public abstract class GuiStructure extends GuiBase {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
 			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(configuration.WriteToCompoundNBT(), this.structureConfiguration);
-			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuildMesasge, messagePacket);
+			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuild, messagePacket);
 
 			this.closeScreen();
 		}

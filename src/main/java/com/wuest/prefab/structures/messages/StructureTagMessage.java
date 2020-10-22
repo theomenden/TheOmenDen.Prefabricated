@@ -48,7 +48,7 @@ public class StructureTagMessage extends TagMessage {
 		buf.writeCompoundTag(tag);
 	}
 
-	EnumStructureConfiguration getStructureConfig() {
+	public EnumStructureConfiguration getStructureConfig() {
 		return this.structureConfig;
 	}
 

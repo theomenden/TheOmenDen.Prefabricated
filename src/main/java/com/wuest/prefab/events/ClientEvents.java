@@ -3,8 +3,12 @@ package com.wuest.prefab.events;
 import com.wuest.prefab.structures.events.StructureClientEventHandler;
 
 public class ClientEvents {
-	public static void registerClientEvents() {
+	/**
+	 * Determines how long a shader has been running.
+	 */
+	public static int ticksInGame;
 
-		StructureClientEventHandler.registerStructureServerSideEvents();
+	public static void registerClientEvents() {
+		StructureClientEventHandler.registerStructureClientSideEvents();
 	}
 }
