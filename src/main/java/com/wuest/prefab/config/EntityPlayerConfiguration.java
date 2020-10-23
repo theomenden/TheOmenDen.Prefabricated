@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class EntityPlayerConfiguration {
+	public static HashMap<UUID, EntityPlayerConfiguration> playerTagData = new HashMap<>();
+
 	public static final String PLAYER_ENTITY_TAG = "IsPlayerNew";
 	public static final String GIVEN_HOUSEBUILDER_TAG = "givenHousebuilder";
 	public static final String Built_Starter_house_Tag = "builtStarterHouse";
@@ -22,10 +24,10 @@ public class EntityPlayerConfiguration {
 	public static EntityPlayerConfiguration loadFromEntity(PlayerEntity playerEntity) {
 		EntityPlayerConfiguration returnValue = new EntityPlayerConfiguration();
 
-		if (SavePlayerDataMixin.playerTagData.containsKey(playerEntity.getUuid())) {
-			returnValue = SavePlayerDataMixin.playerTagData.get(playerEntity.getUuid());
+		if (EntityPlayerConfiguration.playerTagData.containsKey(playerEntity.getUuid())) {
+			returnValue = EntityPlayerConfiguration.playerTagData.get(playerEntity.getUuid());
 		} else {
-			SavePlayerDataMixin.playerTagData.put(playerEntity.getUuid(),returnValue);
+			EntityPlayerConfiguration.playerTagData.put(playerEntity.getUuid(),returnValue);
 		}
 
 		return returnValue;
@@ -36,10 +38,10 @@ public class EntityPlayerConfiguration {
 
 		returnValue.loadFromNBTTagCompound(tag);
 
-		if (SavePlayerDataMixin.playerTagData.containsKey(playerUUID)) {
-			SavePlayerDataMixin.playerTagData.replace(playerUUID, returnValue);
+		if (EntityPlayerConfiguration.playerTagData.containsKey(playerUUID)) {
+			EntityPlayerConfiguration.playerTagData.replace(playerUUID, returnValue);
 		} else {
-			SavePlayerDataMixin.playerTagData.put(playerUUID,returnValue);
+			EntityPlayerConfiguration.playerTagData.put(playerUUID,returnValue);
 		}
 
 		return returnValue;

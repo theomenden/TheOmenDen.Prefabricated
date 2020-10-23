@@ -7,14 +7,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class ClientWorldMixin {
-
-	//@ModifyVariable(method = "renderWorld(FJLnet/minecraft/client/util/math/MatrixStack;)V", at = @At("TAIL"), ordinal = 2)
-	@Inject(method = "renderWorld", at = @At("Tail"))
+	@Inject(method = "renderWorld", at = @At("TAIL"))
 	public void renderWorldLast(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
 		MinecraftClient mc = MinecraftClient.getInstance();
 

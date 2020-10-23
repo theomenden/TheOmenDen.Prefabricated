@@ -14,28 +14,23 @@ import java.util.UUID;
 
 @Mixin(PlayerEntity.class)
 public class SavePlayerDataMixin {
-
-	public static HashMap<UUID, EntityPlayerConfiguration> playerTagData = new HashMap<>();
-
-	//@ModifyVariable(method = "writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), ordinal = 0)
-	@Inject(method = "saveCustomTagData", at = @At("TAIL"))
-	private void saveCustomTagData(CompoundTag tag, CallbackInfo ci) {
+	@Inject(method = "writeCustomDataToTag", at = @At("TAIL"))
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
 		UUID playerTag = tag.getUuid("UUID");
 		EntityPlayerConfiguration configuration;
 
-		if (!SavePlayerDataMixin.playerTagData.containsKey(playerTag)) {
+		if (!EntityPlayerConfiguration.playerTagData.containsKey(playerTag)) {
 			configuration = new EntityPlayerConfiguration();
 
 		} else {
-			configuration = SavePlayerDataMixin.playerTagData.get(playerTag);
+			configuration = EntityPlayerConfiguration.playerTagData.get(playerTag);
 		}
 
 		tag.put("PrefabTag", configuration.createPlayerTag());
 	}
 
-	//@ModifyVariable(method = "readCustomDataFromTag(L)V", at = @At("TAIL"), ordinal = 0)
-	@Inject(method = "readCustomTagData", at = @At("TAIL"))
-	private void readCustomTagData(CompoundTag tag, CallbackInfo ci) {
+	@Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
 		UUID playerTag = tag.getUuid("UUID");
 
 		EntityPlayerConfiguration configuration = new EntityPlayerConfiguration();
@@ -44,10 +39,10 @@ public class SavePlayerDataMixin {
 			configuration.loadFromNBTTagCompound(tag.getCompound("PrefabTag"));
 		}
 
-		if (!SavePlayerDataMixin.playerTagData.containsKey(playerTag)) {
-			SavePlayerDataMixin.playerTagData.put(playerTag, configuration);
+		if (!EntityPlayerConfiguration.playerTagData.containsKey(playerTag)) {
+			EntityPlayerConfiguration.playerTagData.put(playerTag, configuration);
 		} else {
-			SavePlayerDataMixin.playerTagData.replace(playerTag, configuration);
+			EntityPlayerConfiguration.playerTagData.replace(playerTag, configuration);
 		}
 	}
 }

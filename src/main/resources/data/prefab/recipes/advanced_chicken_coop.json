@@ -1,5 +1,5 @@
 {
-  "type": "prefab:condition_crafting_shaped",
+  "type": "prefab:condition_crafting_shapeless",
   "configName": "Advanced Chicken Coop",
   "group": "Advanced Chicken Coop",
   "ingredients": [

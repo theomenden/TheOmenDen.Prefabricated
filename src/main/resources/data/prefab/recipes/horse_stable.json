@@ -21,7 +21,7 @@
       "tag": "minecraft:fences"
     },
     "e": {
-      "tag": "minecraft:fence_gates"
+      "tag": "c:fence_gates"
     }
   },
   "result": {
