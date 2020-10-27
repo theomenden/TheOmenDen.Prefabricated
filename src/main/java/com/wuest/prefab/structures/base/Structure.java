@@ -374,7 +374,7 @@ public class Structure {
 					checkResult.getThird().getZ());
 
 			message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
-			player.sendMessage(message, true);
+			player.sendMessage(message, false);
 			return false;
 		}
 

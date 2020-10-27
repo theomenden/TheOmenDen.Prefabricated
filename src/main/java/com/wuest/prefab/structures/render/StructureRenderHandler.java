@@ -13,6 +13,7 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -151,13 +152,13 @@ public class StructureRenderHandler {
 
 				TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_COMPLETE);
 				message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
-				player.sendMessage(message, true);
+				player.sendMessage(message, false);
 
 			} else if (!StructureRenderHandler.showedMessage) {
 				TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_NOTICE);
 				message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
 
-				player.sendMessage(message, true);
+				player.sendMessage(message, false);
 				StructureRenderHandler.showedMessage = true;
 			}
 		}
@@ -205,7 +206,8 @@ public class StructureRenderHandler {
 
 	private static void renderBlock(MatrixStack matrixStack, Vec3d pos, BlockState state, VertexConsumerProvider entityVertexConsumer, BlockRenderType blockRenderType) {
 		MinecraftClient minecraft = MinecraftClient.getInstance();
-		Vec3d projectedView = minecraft.getEntityRenderDispatcher().camera.getPos();
+		Camera camera = minecraft.getEntityRenderDispatcher().camera;
+		Vec3d projectedView = camera.getPos();
 		double renderPosX = projectedView.getX();
 		double renderPosY = projectedView.getY();
 		double renderPosZ = projectedView.getZ();

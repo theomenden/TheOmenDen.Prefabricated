@@ -179,7 +179,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
 		if (button == this.btnCancel) {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
-			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(this.houseConfiguration.WriteToCompoundNBT(), this.structureConfiguration);
+			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(this.houseConfiguration.WriteToCompoundNBT(), StructureTagMessage.EnumStructureConfiguration.StartHouse);
 			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuild, messagePacket);
 
 			this.closeScreen();

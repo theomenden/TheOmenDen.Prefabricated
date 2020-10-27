@@ -230,7 +230,7 @@ public class BuildingMethods {
 				}
 
 				if (!world.isAir(currentPos)) {
-					if (PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, currentPos, world.getBlockState(currentPos), null)) {
+					if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, currentPos, world.getBlockState(currentPos), null)) {
 						return new Triple<>(false, blockState, currentPos);
 					}
 				}

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class ClientWorldMixin {
-	@Inject(method = "renderWorld", at = @At("TAIL"))
+	@Inject(method = "renderWorld", at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/GameRenderer;renderHand:Z"))
 	public void renderWorldLast(float tickDelta, long limitTime, MatrixStack matrix, CallbackInfo ci) {
 		MinecraftClient mc = MinecraftClient.getInstance();
 
