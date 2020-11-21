@@ -12,7 +12,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab",
-    "sources": "https://github.com/Brian-Wuest/MC-Prefab"
+    "sources": "https://github.com/Brian-Wuest/MC-Prefab-Fabric"
   },
 
   "license": "MIT",

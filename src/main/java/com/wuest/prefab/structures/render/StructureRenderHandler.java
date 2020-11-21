@@ -233,7 +233,6 @@ public class StructureRenderHandler {
 
 			renderer.getModelRenderer().render(
 					matrixStack.peek(),
-					// TODO: This used to be "getTranslucentBlockType"
 					entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull()),
 					state,
 					bakedModel,
