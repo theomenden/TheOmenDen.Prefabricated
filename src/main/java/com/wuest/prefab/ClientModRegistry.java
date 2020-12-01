@@ -101,6 +101,7 @@ public class ClientModRegistry {
 		ClientModRegistry.ModGuis.put(ModRegistry.VillagerHouses, new GuiVillagerHouses());
 		ClientModRegistry.ModGuis.put(ModRegistry.ModerateHouse, new GuiModerateHouse());
 		ClientModRegistry.ModGuis.put(ModRegistry.Bulldozer, new GuiBulldozer());
+		ClientModRegistry.ModGuis.put(ModRegistry.CreativeBulldozer, new GuiBulldozer());
 		ClientModRegistry.ModGuis.put(ModRegistry.InstantBridge, new GuiInstantBridge());
 		ClientModRegistry.ModGuis.put(ModRegistry.StructurePart, new GuiStructurePart());
 

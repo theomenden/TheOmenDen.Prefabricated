@@ -2,10 +2,14 @@ package com.wuest.prefab.structures.predefined;
 
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.base.BuildClear;
+import com.wuest.prefab.structures.base.BuildingMethods;
 import com.wuest.prefab.structures.base.Structure;
+import com.wuest.prefab.structures.config.BulldozerConfiguration;
 import net.fabricmc.fabric.impl.tool.attribute.ToolManagerImpl;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FluidBlock;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -44,6 +48,7 @@ public class StructureBulldozer extends Structure {
 	@Override
 	public void BeforeClearSpaceBlockReplaced(BlockPos pos) {
 		BlockState state = this.world.getBlockState(pos);
+		BulldozerConfiguration configuration = (BulldozerConfiguration) this.configuration;
 
 		// Only harvest up to diamond level and non-indestructable blocks.
 		//Tag<Item> blah = new Tag.Identified<Item>();
@@ -51,8 +56,14 @@ public class StructureBulldozer extends Structure {
 		boolean pickAxeEffective = ToolManagerImpl.handleIsEffectiveOnIgnoresVanilla(state, new ItemStack(Items.DIAMOND_PICKAXE), null, false);
 		boolean axeEffective = ToolManagerImpl.handleIsEffectiveOnIgnoresVanilla(state, new ItemStack(Items.DIAMOND_AXE), null, false);
 		boolean shovelEffective = ToolManagerImpl.handleIsEffectiveOnIgnoresVanilla(state, new ItemStack(Items.DIAMOND_SHOVEL), null, false);
-		if (Prefab.serverConfiguration.allowBulldozerToCreateDrops && (pickAxeEffective || axeEffective || shovelEffective) && state.getHardness(world, pos) >= 0.0f) {
+
+		if (!configuration.creativeMode && Prefab.serverConfiguration.allowBulldozerToCreateDrops && (pickAxeEffective || axeEffective || shovelEffective) && state.getHardness(world, pos) >= 0.0f) {
 			Block.dropStacks(state, this.world, pos);
+		}
+
+		if (configuration.creativeMode && state.getBlock() instanceof FluidBlock) {
+			// This is a fluid block, replace it with stone so it can be cleared.
+			BuildingMethods.ReplaceBlock(this.world, pos, Blocks.STONE);
 		}
 	}
 

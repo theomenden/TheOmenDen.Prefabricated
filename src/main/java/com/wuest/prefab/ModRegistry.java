@@ -71,7 +71,7 @@ public class ModRegistry {
 	/* *********************************** Items *********************************** */
 
 	public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-	public static final Item PalletofBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+	public static final Item PalletOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 	public static final Item BundleOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 	public static final Item HeapOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 	public static final Item TonOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -94,6 +94,7 @@ public class ModRegistry {
 	public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
 	public static final ItemStartHouse StartHouse = new ItemStartHouse();
 	public static final ItemBulldozer Bulldozer = new ItemBulldozer();
+	public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
 	public static final ItemStructurePart StructurePart = new ItemStructurePart();
 	public static final ItemVillagerHouses VillagerHouses = new ItemVillagerHouses();
 
@@ -150,7 +151,7 @@ public class ModRegistry {
 
 	private static void registerItems() {
 		ModRegistry.registerItem("item_pile_of_bricks", ModRegistry.PileOfBricks);
-		ModRegistry.registerItem("item_pallet_of_bricks", ModRegistry.PalletofBricks);
+		ModRegistry.registerItem("item_pallet_of_bricks", ModRegistry.PalletOfBricks);
 		ModRegistry.registerItem("item_bundle_of_timber", ModRegistry.BundleOfTimber);
 		ModRegistry.registerItem("item_heap_of_timber", ModRegistry.HeapOfTimber);
 		ModRegistry.registerItem("item_ton_of_timber", ModRegistry.TonOfTimber);
@@ -173,6 +174,7 @@ public class ModRegistry {
 		ModRegistry.registerItem("item_instant_bridge", ModRegistry.InstantBridge);
 		ModRegistry.registerItem("item_moderate_house", ModRegistry.ModerateHouse);
 		ModRegistry.registerItem("item_bulldozer", ModRegistry.Bulldozer);
+		ModRegistry.registerItem("item_creative_bulldozer", ModRegistry.CreativeBulldozer);
 		ModRegistry.registerItem("item_structure_part", ModRegistry.StructurePart);
 		ModRegistry.registerItem("item_villager_houses", ModRegistry.VillagerHouses);
 

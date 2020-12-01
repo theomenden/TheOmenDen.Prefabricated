@@ -31,6 +31,8 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class ItemBulldozer extends StructureItem {
 
+	private boolean creativePowered = false;
+
 	/**
 	 * Initializes a new instance of the {@link ItemBulldozer} class.
 	 */
@@ -38,6 +40,17 @@ public class ItemBulldozer extends StructureItem {
 		super(new Item.Settings()
 				.group(ItemGroup.MISC)
 				.maxDamage(4));
+	}
+
+	/**
+	 * Initializes a new instance of the {@link ItemBulldozer} class
+	 * @param creativePowered - Set this to true to create an always powered bulldozer.
+	 */
+	public ItemBulldozer(boolean creativePowered) {
+		super(new Item.Settings()
+				.group(ItemGroup.MISC));
+
+		this.creativePowered = creativePowered;
 	}
 
 	/**
@@ -98,6 +111,10 @@ public class ItemBulldozer extends StructureItem {
 	}
 
 	private boolean getPoweredValue(ItemStack stack) {
+		if (this.creativePowered) {
+			return true;
+		}
+
 		if (stack.getItem() == ModRegistry.Bulldozer) {
 			if (stack.getTag() == null
 					|| stack.getTag().isEmpty()) {

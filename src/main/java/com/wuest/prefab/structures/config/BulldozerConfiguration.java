@@ -15,6 +15,8 @@ import net.minecraft.util.math.Direction;
  */
 public class BulldozerConfiguration extends StructureConfiguration {
 
+	public boolean creativeMode = false;
+
 	/**
 	 * Initializes a new instance of the {@link BulldozerConfiguration} class.
 	 */
@@ -45,9 +47,17 @@ public class BulldozerConfiguration extends StructureConfiguration {
 	protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
 		StructureBulldozer structure = new StructureBulldozer();
 
+		if (player.isCreative()) {
+			this.creativeMode = true;
+		}
+
 		if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
 			ItemStack stack = player.getOffHandStack();
 			Hand hand = Hand.OFF_HAND;
+
+			if (stack.getItem() == ModRegistry.CreativeBulldozer) {
+				this.creativeMode = true;
+			}
 
 			if (stack.getItem() != ModRegistry.Bulldozer) {
 				stack = player.getMainHandStack();
