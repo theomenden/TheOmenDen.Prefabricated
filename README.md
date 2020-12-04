@@ -5,7 +5,7 @@ Like the Forge-Based mod but based on Fabric Mod Launcher instead
 Run the following command: `./gradlew genSources`
 
 ## Update mappings
-Run the following command: `gradlew migrateMappings --mappings "1.16.3+build.47"`
+Run the following command: `gradlew migrateMappings --mappings "1.16.4+build.7"`
 Note: This will update based on the mappings build.
 
 ## Build the mod for distribution
