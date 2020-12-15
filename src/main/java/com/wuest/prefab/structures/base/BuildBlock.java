@@ -140,7 +140,10 @@ public class BuildBlock {
 											Optional<?> propertyValue, Direction vineFacing, Direction.Axis logFacing, Direction.Axis boneFacing, Direction leverOrientation,
 											Structure structure,
 											Map<Direction, Boolean> fourWayFacings) {
-		if (property.getName().equals("facing") && !(foundBlock instanceof HorizontalFacingBlock)) {
+		if (property.getName().equals("facing") && foundBlock instanceof WallMountedBlock) {
+			comparable = leverOrientation;
+			block.setHasFacing(true);
+		} else if (property.getName().equals("facing")) {
 			// Facing properties should be relative to the configuration facing.
 			Direction facing = Direction.byName(propertyValue.get().toString());
 
@@ -149,9 +152,6 @@ public class BuildBlock {
 
 			comparable = facing;
 
-			block.setHasFacing(true);
-		} else if (property.getName().equals("facing") && foundBlock instanceof HorizontalFacingBlock) {
-			comparable = leverOrientation;
 			block.setHasFacing(true);
 		} else if (property.getName().equals("rotation")) {
 			// 0 = South
