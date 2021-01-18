@@ -367,6 +367,11 @@ public class BuildingMethods {
 		Direction facingDirection = direction.getOpposite();
 		bedFoot = bedFoot.with(BedBlock.FACING, facingDirection);
 
+		// Remove the bed blocks before setting the new color bed bocks.
+		// This way a bed item entity doesn't get generated.
+		world.setBlockState(bedHeadPos, Blocks.AIR.getDefaultState(), 35);
+		world.setBlockState(bedFootPos, Blocks.AIR.getDefaultState(), 35);
+
 		BuildingMethods.ReplaceBlock(world, bedFootPos, bedFoot);
 		bedBlock.onPlaced(world,bedFootPos,bedFoot,null, ItemStack.EMPTY);
 	}

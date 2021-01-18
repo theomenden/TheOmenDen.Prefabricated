@@ -12,36 +12,36 @@ import net.minecraft.util.math.Direction;
  */
 @SuppressWarnings("ALL")
 public class ItemStartHouse extends StructureItem {
-	public ItemStartHouse( ) {
-		super();
-	}
+    public ItemStartHouse() {
+        super();
+    }
 
-	/**
-	 * Does something when the item is right-clicked.
-	 */
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext context) {
-		if (context.getWorld().isClient) {
-			if (context.getSide() == Direction.UP) {
-				if (!Prefab.useScanningMode) {
-					// Open the client side gui to determine the house options.
-					ClientModRegistry.openGuiForItem(context);
-				} else {
-					this.scanningMode(context);
-				}
-				return ActionResult.PASS;
-			}
-		}
+    /**
+     * Does something when the item is right-clicked.
+     */
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (context.getWorld().isClient) {
+            if (context.getSide() == Direction.UP) {
+                if (!Prefab.useScanningMode) {
+                    // Open the client side gui to determine the house options.
+                    ClientModRegistry.openGuiForItem(context);
+                } else {
+                    this.scanningMode(context);
+                }
+                return ActionResult.PASS;
+            }
+        }
 
-		return ActionResult.FAIL;
-	}
+        return ActionResult.FAIL;
+    }
 
-	@Override
-	public void scanningMode(ItemUsageContext context) {
-		StructureAlternateStart.ScanBasicHouseStructure(
+    @Override
+    public void scanningMode(ItemUsageContext context) {
+		/*StructureAlternateStart.ScanBasicHouseStructure(
 				context.getWorld(),
 				context.getBlockPos(),
-				context.getPlayer().getHorizontalFacing());
+				context.getPlayer().getHorizontalFacing());*/
 
         /*StructureAlternateStart.ScanRanchStructure(
                 context.getWorld(),
@@ -61,21 +61,27 @@ public class ItemStartHouse extends StructureItem {
         /*StructureAlternateStart.ScanStructure(
                 context.getWorld(),
                 context.getBlockPos(),
-                context.getPlayer().getHorizontalFacing(), "desert_house", false, false);*/
+                context.getPlayer().getHorizontalFacing(),
+                "desert_house",
+                false,
+                false);*/
+
+		/*StructureAlternateStart.ScanStructure(
+				context.getWorld(),
+				context.getBlockPos(),
+				context.getPlayer().getHorizontalFacing(),
+				"snowy_house",
+				false,
+				false);*/
 
 		/*StructureAlternateStart.ScanDesert2Structure(
 				context.getWorld(),
 				context.getBlockPos(),
 				context.getPlayer().getHorizontalFacing());*/
 
-		/*StructureAlternateStart.ScanSubAquaticStructure(
-				context.getWorld(),
-				context.getBlockPos(),
-				context.getPlayer().getHorizontalFacing());*/
-
-		/*StructureAlternateStart.ScanStructure(
-				context.getWorld(),
-				context.getBlockPos(),
-				context.getPlayer().getHorizontalFacing(), "snowy_house", false, false);*/
-	}
+        StructureAlternateStart.ScanSubAquaticStructure(
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing());
+    }
 }

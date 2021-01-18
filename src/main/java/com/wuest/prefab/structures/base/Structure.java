@@ -206,7 +206,7 @@ public class Structure {
 
 		Box axis = new Box(cornerPos1, cornerPos2);
 
-		for (Entity entity : world.getEntitiesIncludingUngeneratedChunks(null, axis)) {
+		for (Entity entity : world.getOtherEntities(null, axis)) {
 			// TODO: This was the "getPosition" method.
 			BlockPos entityPos = entity.getBlockPos();
 

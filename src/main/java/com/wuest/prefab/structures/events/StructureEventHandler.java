@@ -189,7 +189,7 @@ public final class StructureEventHandler {
 				structure.BeforeClearSpaceBlockReplaced(currentPos);
 
 				for (Direction adjacentBlock : Direction.values()) {
-					BlockPos tempPos = currentPos.offset(adjacentBlock);
+ 					BlockPos tempPos = currentPos.offset(adjacentBlock);
 					BlockState foundState = structure.world.getBlockState(tempPos);
 					Block foundBlock = foundState.getBlock();
 
