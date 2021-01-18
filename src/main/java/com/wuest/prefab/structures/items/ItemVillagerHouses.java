@@ -24,6 +24,6 @@ public class ItemVillagerHouses extends StructureItem {
 				context.getWorld(),
 				context.getBlockPos(),
 				context.getPlayer().getHorizontalFacing(),
-				VillagerHouseConfiguration.HouseStyle.BLACKSMITH);
+				VillagerHouseConfiguration.HouseStyle.LONG_HOUSE);
 	}
 }
