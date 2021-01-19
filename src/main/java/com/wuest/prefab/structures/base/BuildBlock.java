@@ -145,7 +145,7 @@ public class BuildBlock {
             block.setHasFacing(true);
         } else if (property.getName().equals("facing")) {
             // Facing properties should be relative to the configuration facing.
-            Direction facing = Direction.byName(propertyValue.get().toString());
+            Direction facing = BuildBlock.getDirectionByName(propertyValue.get().toString());
 
             // Cannot rotate verticals.
             facing = BuildBlock.getHorizontalFacing(facing, configuration.houseFacing, structure.getClearSpace().getShape().getDirection());

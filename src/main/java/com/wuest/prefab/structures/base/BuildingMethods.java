@@ -413,7 +413,7 @@ public class BuildingMethods {
 
 				Identifier name = new Identifier("repurpose", "item_swift_blade_stone");
 
-				if (Registry.ITEM.containsId(name)) {
+				if (Registry.ITEM.getIds().contains(name)) {
 					sword = Registry.ITEM.get(name);
 				}
 
