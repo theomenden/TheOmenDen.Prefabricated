@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.config;
 
+import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.items.StructureItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -97,7 +98,7 @@ public class StructureConfiguration {
 			}
 
 			if (messageTag.contains(StructureConfiguration.houseFacingTag)) {
-				config.houseFacing = Direction.byName(messageTag.getString(StructureConfiguration.houseFacingTag));
+				config.houseFacing = BuildBlock.getDirectionByName(messageTag.getString(StructureConfiguration.houseFacingTag));
 			}
 
 			this.CustomReadFromNBTTag(messageTag, config);

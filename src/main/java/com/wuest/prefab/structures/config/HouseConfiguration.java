@@ -5,6 +5,7 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.network.message.PlayerEntityTagMessage;
+import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -145,7 +146,7 @@ public class HouseConfiguration extends StructureConfiguration {
 			}
 
 			if (tag.contains(HouseConfiguration.houseFacingTag)) {
-				config.houseFacing = Direction.byName(tag.getString(HouseConfiguration.houseFacingTag));
+				config.houseFacing = BuildBlock.getDirectionByName(tag.getString(HouseConfiguration.houseFacingTag));
 			}
 
 			if (tag.contains(HouseConfiguration.houseStyleTag)) {
