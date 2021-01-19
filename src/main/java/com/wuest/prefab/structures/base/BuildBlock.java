@@ -6,6 +6,7 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.block.enums.WallShape;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.StringNbtReader;
@@ -59,6 +60,7 @@ public class BuildBlock {
             Direction.Axis boneFacing = BuildBlock.getBoneFacing(configuration, foundBlock, block, structure.getClearSpace().getShape().getDirection());
             Direction leverOrientation = BuildBlock.getLeverOrientation(configuration, foundBlock, block, structure.getClearSpace().getShape().getDirection());
             Map<Direction, Boolean> fourWayFacings = BuildBlock.getFourWayBlockFacings(configuration, foundBlock, block, structure.getClearSpace().getShape().getDirection());
+            Map<Direction, WallShape> wallShapes = BuildBlock.getWallFacings(configuration, foundBlock, block, structure.getClearSpace().getShape().getDirection());
 
             // If this block has custom processing for block state just continue onto the next block. The sub-class is
             // expected to place the block.
@@ -87,7 +89,7 @@ public class BuildBlock {
                             Comparable<?> comparable = property.getType().cast(propertyValue.get());
 
                             comparable = BuildBlock.setComparable(comparable, foundBlock, property, configuration, block, propertyValue, vineFacing, logFacing,
-                                    boneFacing, leverOrientation, structure, fourWayFacings);
+                                    boneFacing, leverOrientation, structure, fourWayFacings, wallShapes);
 
                             if (comparable == null) {
                                 continue;
@@ -139,7 +141,8 @@ public class BuildBlock {
     private static Comparable setComparable(Comparable<?> comparable, Block foundBlock, Property<?> property, StructureConfiguration configuration, BuildBlock block,
                                             Optional<?> propertyValue, Direction vineFacing, Direction.Axis logFacing, Direction.Axis boneFacing, Direction leverOrientation,
                                             Structure structure,
-                                            Map<Direction, Boolean> fourWayFacings) {
+                                            Map<Direction, Boolean> fourWayFacings,
+                                            Map<Direction, WallShape> wallShapes) {
         if (property.getName().equals("facing") && foundBlock instanceof WallMountedBlock) {
             comparable = leverOrientation;
             block.setHasFacing(true);
@@ -186,12 +189,10 @@ public class BuildBlock {
                     comparable = entry.getValue();
                 }
             }
-        } else if (foundBlock instanceof WallBlock) {
-            if (!property.getName().equals("variant")) {
-                if (property.getName().equals(vineFacing.getName())
-                        || property.getName().equals(vineFacing.getOpposite().getName())) {
-                    comparable = true;
-                    block.setHasFacing(true);
+        } else if (foundBlock instanceof WallBlock && !property.getName().equals("waterlogged")) {
+            for (Map.Entry<Direction, WallShape> entry : wallShapes.entrySet()) {
+                if (property.getName().equals(entry.getKey().getName())) {
+                    comparable = entry.getValue();
                 }
             }
         } else if (foundBlock instanceof PillarBlock) {
@@ -233,6 +234,46 @@ public class BuildBlock {
         }
 
         return vineFacing;
+    }
+
+    private static Map<Direction, WallShape> getWallFacings(StructureConfiguration configuration, Block foundBlock, BuildBlock block, Direction assumedNorth) {
+        Map<Direction, WallShape> facings = new HashMap<>();
+
+        if (foundBlock instanceof WallBlock) {
+            // Valid states can be any two directions at a time, not just opposites but adjacents as well (for corners).
+            WallShape northValue = BuildBlock.getShapeByName(block.getProperty("north").getValue());
+            WallShape eastValue = BuildBlock.getShapeByName(block.getProperty("east").getValue());
+            WallShape westValue = BuildBlock.getShapeByName(block.getProperty("west").getValue());
+            WallShape southValue = BuildBlock.getShapeByName(block.getProperty("south").getValue());
+            WallShape originalNorth = northValue;
+            WallShape originalEast = eastValue;
+            WallShape originalWest = westValue;
+            WallShape originalSouth = southValue;
+
+            if (configuration.houseFacing.rotateYClockwise() == assumedNorth) {
+                northValue = originalWest;
+                eastValue = originalNorth;
+                southValue = originalEast;
+                westValue = originalSouth;
+            } else if (configuration.houseFacing == assumedNorth) {
+                northValue = originalSouth;
+                eastValue = originalWest;
+                southValue = originalNorth;
+                westValue = originalEast;
+            } else if (configuration.houseFacing.rotateYCounterclockwise() == assumedNorth) {
+                northValue = originalEast;
+                eastValue = originalSouth;
+                southValue = originalWest;
+                westValue = originalNorth;
+            }
+
+            facings.put(Direction.NORTH, northValue);
+            facings.put(Direction.EAST, eastValue);
+            facings.put(Direction.WEST, westValue);
+            facings.put(Direction.SOUTH, southValue);
+        }
+
+        return facings;
     }
 
     private static Map<Direction, Boolean> getFourWayBlockFacings(StructureConfiguration configuration, Block foundBlock, BuildBlock block, Direction assumedNorth) {
@@ -378,6 +419,16 @@ public class BuildBlock {
         }
 
         return Direction.NORTH;
+    }
+
+    public static WallShape getShapeByName(String name) {
+        for (WallShape shape : WallShape.values()) {
+            if (shape.asString().toLowerCase().equals(name.toLowerCase())) {
+                return shape;
+            }
+        }
+
+        return WallShape.NONE;
     }
 
     public String getBlockDomain() {
