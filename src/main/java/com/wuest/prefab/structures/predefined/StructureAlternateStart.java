@@ -219,7 +219,15 @@ public class StructureAlternateStart extends Structure {
 		} else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
 				&& foundBlockIdentifier.getPath().endsWith("stained_glass_pane")) {
 			blockState = this.getStainedGlassPaneBlock(houseConfig.glassColor);
-			block.setBlockState(blockState);
+
+			BuildBlock.SetBlockState(
+					configuration,
+					world,
+					originalPos,
+					assumedNorth,
+					block,
+					foundBlock,
+					blockState, this);
 
 			this.priorityOneBlocks.add(block);
 			return true;

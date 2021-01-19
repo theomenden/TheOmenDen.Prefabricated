@@ -74,14 +74,14 @@ public class ItemStartHouse extends StructureItem {
 				false,
 				false);*/
 
-		/*StructureAlternateStart.ScanDesert2Structure(
+		StructureAlternateStart.ScanDesert2Structure(
 				context.getWorld(),
 				context.getBlockPos(),
-				context.getPlayer().getHorizontalFacing());*/
+				context.getPlayer().getHorizontalFacing());
 
-        StructureAlternateStart.ScanSubAquaticStructure(
+        /*StructureAlternateStart.ScanSubAquaticStructure(
                 context.getWorld(),
                 context.getBlockPos(),
-                context.getPlayer().getHorizontalFacing());
+                context.getPlayer().getHorizontalFacing());*/
     }
 }
