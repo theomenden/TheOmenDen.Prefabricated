@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.api.EnvType;
@@ -11,10 +12,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeFinder;
-import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -22,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Iterator;
 
-public class ConditionedShaplessRecipe implements CraftingRecipe {
+public class ConditionedShaplessRecipe extends ShapelessRecipe {
 	private final Identifier id;
 	private final String group;
 	private final ItemStack output;
@@ -30,6 +28,8 @@ public class ConditionedShaplessRecipe implements CraftingRecipe {
 	private final String configName;
 
 	public ConditionedShaplessRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input, String configName) {
+	    super(id, group, output, input);
+
 		this.id = id;
 		this.group = group;
 		this.output = output;
@@ -42,7 +42,7 @@ public class ConditionedShaplessRecipe implements CraftingRecipe {
 	}
 
 	public RecipeSerializer<?> getSerializer() {
-		return RecipeSerializer.SHAPELESS;
+		return ModRegistry.ConditionedShapelessRecipeSeriaizer;
 	}
 
 	@Environment(EnvType.CLIENT)

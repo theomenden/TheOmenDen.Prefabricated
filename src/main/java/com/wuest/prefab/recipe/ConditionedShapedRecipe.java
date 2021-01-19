@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,6 +16,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -25,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class ConditionedShapedRecipe implements CraftingRecipe {
+public class ConditionedShapedRecipe extends ShapedRecipe {
 
 	private final int width;
 	private final int height;
@@ -36,6 +38,8 @@ public class ConditionedShapedRecipe implements CraftingRecipe {
 	private final String configName;
 
 	public ConditionedShapedRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output, String configName) {
+	    super(id, group, width, height, ingredients, output);
+
 		this.id = id;
 		this.group = group;
 		this.width = width;
@@ -50,7 +54,7 @@ public class ConditionedShapedRecipe implements CraftingRecipe {
 	}
 
 	public RecipeSerializer<?> getSerializer() {
-		return RecipeSerializer.SHAPED;
+		return ModRegistry.ConditionedShapedRecipeSeriaizer;
 	}
 
 	@Environment(EnvType.CLIENT)
