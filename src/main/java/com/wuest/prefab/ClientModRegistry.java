@@ -7,10 +7,14 @@ import com.wuest.prefab.structures.gui.*;
 import com.wuest.prefab.structures.items.StructureItem;
 import com.wuest.prefab.structures.render.ShaderHelper;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.ItemUsageContext;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +23,7 @@ import java.util.UUID;
 public class ClientModRegistry {
 
 	public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
+	public static KeyBinding keyBinding;
 
 	/**
 	 * The hashmap of mod guis.
@@ -26,6 +31,8 @@ public class ClientModRegistry {
 	public static HashMap<StructureItem, GuiStructure> ModGuis = new HashMap<>();
 
 	public static void registerModComponents() {
+		ClientModRegistry.registerKeyBindings();
+
 		ClientModRegistry.registerBlockLayers();
 
 		ClientModRegistry.registerServerToClientMessageHandlers();
@@ -123,5 +130,14 @@ public class ClientModRegistry {
 		ClientModRegistry.ModGuis.put(ModRegistry.SkiLodge, new GuiBasicStructure());
 		ClientModRegistry.ModGuis.put(ModRegistry.WindMill, new GuiBasicStructure());
 		ClientModRegistry.ModGuis.put(ModRegistry.TownHall, new GuiBasicStructure());
+	}
+
+	private static void registerKeyBindings() {
+		keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+				"Build Current Structure", // The translation key of the keybinding's name
+				InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_B,
+				"Prefab - Structure Preview" // The translation key of the keybinding's category.
+		));
 	}
 }

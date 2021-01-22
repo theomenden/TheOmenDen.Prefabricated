@@ -11,6 +11,7 @@ import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -180,7 +181,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
 			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(this.houseConfiguration.WriteToCompoundNBT(), StructureTagMessage.EnumStructureConfiguration.StartHouse);
-			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuild, messagePacket);
+			ClientPlayNetworking.send(ModRegistry.StructureBuild, messagePacket);
 
 			this.closeScreen();
 		} else if (button == this.btnHouseStyle) {

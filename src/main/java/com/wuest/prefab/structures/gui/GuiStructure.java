@@ -8,6 +8,7 @@ import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -125,7 +126,7 @@ public abstract class GuiStructure extends GuiBase {
 			this.closeScreen();
 		} else if (button == this.btnBuild) {
 			PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(configuration.WriteToCompoundNBT(), this.structureConfiguration);
-			ClientSidePacketRegistry.INSTANCE.sendToServer(ModRegistry.StructureBuild, messagePacket);
+			ClientPlayNetworking.send(ModRegistry.StructureBuild, messagePacket);
 
 			this.closeScreen();
 		}
