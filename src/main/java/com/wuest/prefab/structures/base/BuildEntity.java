@@ -22,7 +22,7 @@ public class BuildEntity {
 	@Expose
 	public double entityZAxisOffset;
 	@Expose
-	public Direction entityFacing;
+	public String entityFacing;
 	@Expose
 	private int entityId;
 	@Expose
@@ -93,7 +93,7 @@ public class BuildEntity {
 		this.entityXAxisOffset = 0;
 		this.entityYAxisOffset = 0;
 		this.entityZAxisOffset = 0;
-		this.entityFacing = Direction.NORTH;
+		this.entityFacing = Direction.NORTH.asString();
 	}
 
 	public CompoundTag getEntityDataTag() {

@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.base;
 
 import com.google.gson.annotations.Expose;
+import com.wuest.prefab.Utils;
 import net.minecraft.util.math.Direction;
 
 /**
@@ -19,7 +20,7 @@ public class BuildShape {
 	private int length;
 
 	@Expose
-	private Direction direction;
+	private String direction;
 
 	public BuildShape() {
 		this.Initialize();
@@ -50,18 +51,22 @@ public class BuildShape {
 	}
 
 	public Direction getDirection() {
-		return this.direction;
+		if (this.direction != null && !this.direction.trim().isEmpty()) {
+			return Utils.getDirectionByName(this.direction);
+		}
+
+		return Direction.DOWN;
 	}
 
 	public void setDirection(Direction value) {
-		this.direction = value;
+		this.direction = value.asString();
 	}
 
 	public void Initialize() {
 		this.width = 0;
 		this.height = 0;
 		this.length = 0;
-		this.direction = Direction.NORTH;
+		this.direction = Direction.NORTH.asString();
 	}
 
 	/**
@@ -71,7 +76,7 @@ public class BuildShape {
 	 */
 	public BuildShape Clone() {
 		BuildShape clone = new BuildShape();
-		clone.setDirection(this.direction);
+		clone.direction = this.direction;
 		clone.setHeight(this.height);
 		clone.setLength(this.length);
 		clone.setWidth(this.width);

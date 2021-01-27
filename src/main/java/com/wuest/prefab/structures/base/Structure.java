@@ -229,7 +229,7 @@ public class Structure {
 
 
 				if (entity instanceof AbstractDecorationEntity) {
-					buildEntity.entityFacing = entity.getHorizontalFacing();
+					buildEntity.entityFacing = entity.getHorizontalFacing().asString();
 				}
 
 				CompoundTag entityTagCompound = new CompoundTag();
