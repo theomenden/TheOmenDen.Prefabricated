@@ -11,7 +11,7 @@
     "NerdySpider"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab-fabric",
     "sources": "https://github.com/Brian-Wuest/MC-Prefab-Fabric"
   },
 
@@ -30,6 +30,7 @@
       "com.wuest.prefab.config.PrefabModMenuIntegration"
     ]
   },
+  "accessWidener": "prefab.accesswidener",
   "mixins": [
     "prefab.mixins.json"
   ],
@@ -41,12 +42,5 @@
   },
   "suggests": {
     "flamingo": "*"
-  },
-  "jars": [{
-    "file": "META-INF/jars/modmenu-1.14.13+build.19.jar"
-  },{
-    "file": "META-INF/jars/autoconfig1u-3.3.1.jar"
-  },{
-    "file": "META-INF/jars/config-2-4.8.3.jar"
-  }]
+  }
 }

@@ -15,10 +15,6 @@ public class ModConfiguration implements ConfigData {
     @Comment("Item provided to new players when joining a world.")
     public StartingItemOptions startingItem = StartingItemOptions.StartingHouse;
 
-    @ConfigEntry.BoundedDiscrete(min = 5, max = 16)
-    @Comment("Max starter house size")
-    public int maximumStartingHouseSize = 16;
-
     @Comment("Enables the loft starter house.")
     public boolean enableLoftHouse = false;
 
@@ -55,7 +51,6 @@ public class ModConfiguration implements ConfigData {
         CompoundTag tag = new CompoundTag();
 
         tag.putString(ConfigKeyNames.startingItemName, this.startingItem.toString());
-        tag.putInt(ConfigKeyNames.maximumHouseSizeName, this.maximumStartingHouseSize);
         tag.putBoolean(ConfigKeyNames.enableLoftHouseName, this.enableLoftHouse);
         tag.putBoolean(ConfigKeyNames.includeSpawnersInMasherName, this.includeSpawnersInMasher);
         tag.putBoolean(ConfigKeyNames.enableStructurePreviewName, this.enableStructurePreview);
@@ -93,17 +88,10 @@ public class ModConfiguration implements ConfigData {
         this.startingItem = StartingItemOptions.getByName(tag.getString(ConfigKeyNames.startingItemName));
 
         this.enableLoftHouse = tag.getBoolean(ConfigKeyNames.enableLoftHouseName);
-        this.maximumStartingHouseSize = tag.getInt(ConfigKeyNames.maximumHouseSizeName);
         this.includeSpawnersInMasher = tag.getBoolean(ConfigKeyNames.includeSpawnersInMasherName);
         this.enableStructurePreview = tag.getBoolean(ConfigKeyNames.enableStructurePreviewName);
         this.includeMineshaftChest = tag.getBoolean(ConfigKeyNames.includeMineshaftChestName);
         this.allowBulldozerToCreateDrops = tag.getBoolean(ConfigKeyNames.allowBulldozerToCreateDropsName);
-
-        // Make sure the server admin didn't set the maximum starting size to an
-        // invalid value from the configuration file.
-        if (this.maximumStartingHouseSize < 5 || this.maximumStartingHouseSize > 16) {
-            this.maximumStartingHouseSize = 16;
-        }
 
         this.chestOptions.addSword = tag.getBoolean(ConfigKeyNames.addSwordName);
         this.chestOptions.addAxe = tag.getBoolean(ConfigKeyNames.addAxeName);
@@ -224,7 +212,6 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.bulldozerKey, ConfigKeyNames.structurePartKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
                         ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey};
         // Config file option names.
-        static String maximumHouseSizeName = "Maximum Starting House Size";
         static String enableLoftHouseName = "Enable Loft House";
         static String includeSpawnersInMasherName = "Include Spawners in Monster Masher";
         static String enableStructurePreviewName = "Include Structure Previews";
