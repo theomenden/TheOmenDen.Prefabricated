@@ -3,6 +3,10 @@ plugins {
 	id 'maven-publish'
 }
 
+minecraft {
+	accessWidener = file("src/main/resources/prefab.accesswidener")
+}
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 

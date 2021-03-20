@@ -4,7 +4,8 @@
   "package": "com.wuest.prefab.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "SavePlayerDataMixin"
+    "SavePlayerDataMixin",
+    "AnvilScreenHandlerMixin"
   ],
   "client": [
     "ClientWorldMixin"
