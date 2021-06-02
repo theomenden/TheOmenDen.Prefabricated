@@ -42,7 +42,7 @@ public class ShaderHelper {
 		if (MinecraftClient.getInstance().getResourceManager() instanceof ReloadableResourceManager) {
 
 			ReloadableResourceManager manager = (ReloadableResourceManager) MinecraftClient.getInstance().getResourceManager();
-			manager.registerListener((synchronizer, resourceManager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor )-> {
+			manager.registerReloader((synchronizer, resourceManager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor )-> {
 				ShaderHelper.checkIncompatibleMods();
 
 				ShaderHelper.deleteShader(alphaShader);
@@ -63,21 +63,21 @@ public class ShaderHelper {
 		lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
 
 		// disableLighting
-		GlStateManager.disableLighting();
+		// GlStateManager.disableLighting();
 
 		// useProgram
-		GlStateManager.useProgram(shader);
+		GlStateManager._glUseProgram(shader);
 
 		if (shader != 0) {
 			// getUniformLocation
-			int time = GlStateManager.getUniformLocation(shader, "time");
+			int time = GlStateManager._glGetUniformLocation(shader, "time");
 
 			if (Integer.MAX_VALUE - 100 <= ClientEvents.ticksInGame) {
 				ClientEvents.ticksInGame = 1;
 			}
 
 			// uniform1
-			GlStateManager.uniform1(time, ClientEvents.ticksInGame++);
+			GlStateManager._glUniform1i(time, ClientEvents.ticksInGame++);
 
 			if (callback != null)
 				callback.call(shader);
@@ -89,10 +89,6 @@ public class ShaderHelper {
 	}
 
 	public static void releaseShader() {
-		if (lighting) {
-			RenderSystem.enableLighting();
-		}
-
 		ShaderHelper.useShader(0);
 	}
 

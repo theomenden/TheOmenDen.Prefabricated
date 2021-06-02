@@ -22,9 +22,9 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.decoration.painting.PaintingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtDouble;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -118,7 +118,7 @@ public final class StructureEventHandler {
             if (!stack.isEmpty()) {
                 System.out.println(player.getDisplayName().getString() + " joined the game for the first time. Giving them starting item.");
 
-                player.inventory.insertStack(stack);
+                player.getInventory().insertStack(stack);
                 player.currentScreenHandler.sendContentUpdates();
 
                 // Make sure to set the tag for this player so they don't get the item again.
@@ -161,7 +161,7 @@ public final class StructureEventHandler {
                                         structure.BeforeHangingEntityRemoved((AbstractDecorationEntity) entity);
                                     }
 
-                                    structure.world.removeEntity(entity);
+                                    entity.remove(Entity.RemovalReason.DISCARDED);
                                 }
                             }
                         }
@@ -330,11 +330,11 @@ public final class StructureEventHandler {
                 BlockState tileBlock = structure.world.getBlockState(tileEntityPos);
 
                 if (tileEntity == null) {
-                    tileEntity = BlockEntity.createFromTag(tileBlock, buildTileEntity.getEntityDataTag());
+                    tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
                 } else {
                     structure.world.removeBlockEntity(tileEntityPos);
-                    tileEntity = BlockEntity.createFromTag(tileBlock, buildTileEntity.getEntityDataTag());
-                    structure.world.setBlockEntity(tileEntityPos, tileEntity);
+                    tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+                    structure.world.addBlockEntity(tileEntity);
                     structure.world.getChunk(tileEntityPos).setShouldSave(true);
                     tileEntity.markDirty();
                     BlockEntityUpdateS2CPacket packet = tileEntity.toUpdatePacket();
@@ -354,7 +354,7 @@ public final class StructureEventHandler {
                     Entity entity = entityType.get().create(structure.world);
 
                     if (entity != null) {
-                        CompoundTag tagCompound = buildEntity.getEntityDataTag();
+                        NbtCompound tagCompound = buildEntity.getEntityDataTag();
                         BlockPos entityPos = buildEntity.getStartingPosition().getRelativePosition(structure.originalPos,
                                 structure.getClearSpace().getShape().getDirection(), structure.configuration.houseFacing);
 
@@ -363,16 +363,14 @@ public final class StructureEventHandler {
                                 tagCompound.putUuid("UUID", UUID.randomUUID());
                             }
 
-                            ListTag nbttaglist = new ListTag();
-                            nbttaglist.add(DoubleTag.of(entityPos.getX()));
-                            nbttaglist.add(DoubleTag.of(entityPos.getY()));
-                            nbttaglist.add(DoubleTag.of(entityPos.getZ()));
+                            NbtList nbttaglist = new NbtList();
+                            nbttaglist.add(NbtDouble.of(entityPos.getX()));
+                            nbttaglist.add(NbtDouble.of(entityPos.getY()));
+                            nbttaglist.add(NbtDouble.of(entityPos.getZ()));
                             tagCompound.put("Pos", nbttaglist);
 
-                            entity.fromTag(tagCompound);
+                            entity.readNbt(tagCompound);
                         }
-
-                        entity.teleporting = true;
 
                         // Set item frame facing and rotation here.
                         if (entity instanceof ItemFrameEntity) {
@@ -413,7 +411,7 @@ public final class StructureEventHandler {
     }
 
     private static Entity setPaintingFacingAndRotation(PaintingEntity entity, BuildEntity buildEntity, BlockPos entityPos, Structure structure) {
-        float yaw = entity.yaw;
+        float yaw = entity.getYaw();
         BlockRotation rotation = BlockRotation.NONE;
         double x_axis_offset = buildEntity.entityXAxisOffset;
         double z_axis_offset = buildEntity.entityZAxisOffset;
@@ -458,14 +456,14 @@ public final class StructureEventHandler {
         yaw = entity.applyRotation(rotation);
 
         AbstractDecorationEntity hangingEntity = entity;
-        CompoundTag compound = new CompoundTag();
-        hangingEntity.writeCustomDataToTag(compound);
+        NbtCompound compound = new NbtCompound();
+        hangingEntity.writeCustomDataToNbt(compound);
         compound.putByte("Facing", (byte) facing.getHorizontal());
-        hangingEntity.readCustomDataFromTag(compound);
+        hangingEntity.writeCustomDataToNbt(compound);
         StructureEventHandler.updateEntityHangingBoundingBox(hangingEntity);
 
         entity.refreshPositionAndAngles(entityPos.getX() + x_axis_offset, entityPos.getY() + y_axis_offset, entityPos.getZ() + z_axis_offset, yaw,
-                entity.pitch);
+                entity.getPitch());
 
         StructureEventHandler.updateEntityHangingBoundingBox(entity);
         Chunk chunk = structure.world.getChunk(entityPos);
@@ -476,7 +474,7 @@ public final class StructureEventHandler {
     }
 
     private static Entity setItemFrameFacingAndRotation(ItemFrameEntity frame, BuildEntity buildEntity, BlockPos entityPos, Structure structure) {
-        float yaw = frame.yaw;
+        float yaw = frame.getYaw();
         BlockRotation rotation = BlockRotation.NONE;
         double x_axis_offset = buildEntity.entityXAxisOffset;
         double z_axis_offset = buildEntity.entityZAxisOffset;
@@ -512,14 +510,14 @@ public final class StructureEventHandler {
         yaw = frame.applyRotation(rotation);
 
         AbstractDecorationEntity hangingEntity = frame;
-        CompoundTag compound = new CompoundTag();
-        hangingEntity.writeCustomDataToTag(compound);
+        NbtCompound compound = new NbtCompound();
+        hangingEntity.writeCustomDataToNbt(compound);
         compound.putByte("Facing", (byte) facing.getId());
-        hangingEntity.readCustomDataFromTag(compound);
+        hangingEntity.writeCustomDataToNbt(compound);
         StructureEventHandler.updateEntityHangingBoundingBox(hangingEntity);
 
         frame.refreshPositionAndAngles(entityPos.getX() + x_axis_offset, entityPos.getY() + y_axis_offset, entityPos.getZ() + z_axis_offset, yaw,
-                frame.pitch);
+                frame.getPitch());
 
         StructureEventHandler.updateEntityHangingBoundingBox(frame);
         Chunk chunk = structure.world.getChunk(entityPos);
@@ -530,7 +528,7 @@ public final class StructureEventHandler {
     }
 
     private static Entity setEntityFacingAndRotation(Entity entity, BuildEntity buildEntity, BlockPos entityPos, Structure structure) {
-        float yaw = entity.yaw;
+        float yaw = entity.getYaw();
         BlockRotation rotation = BlockRotation.NONE;
         double x_axis_offset = buildEntity.entityXAxisOffset;
         double z_axis_offset = buildEntity.entityZAxisOffset;
@@ -560,7 +558,7 @@ public final class StructureEventHandler {
         yaw = entity.applyRotation(rotation);
 
         entity.refreshPositionAndAngles(entityPos.getX() + x_axis_offset, entityPos.getY() + y_axis_offset, entityPos.getZ() + z_axis_offset, yaw,
-                entity.pitch);
+                entity.getPitch());
 
         return entity;
     }

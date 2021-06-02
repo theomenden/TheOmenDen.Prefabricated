@@ -127,12 +127,12 @@ public class StructureRenderHandler {
 
             ShaderHelper.useShader(ShaderHelper.alphaShader, shader -> {
                 // getUniformLocation
-                int alpha = GlStateManager.getUniformLocation(shader, "alpha");
+                int alpha = GlStateManager._glGetUniformLocation(shader, "alpha");
                 ShaderHelper.FLOAT_BUF.position(0);
                 ShaderHelper.FLOAT_BUF.put(0, 0.4F);
 
                 // uniform1
-                GlStateManager.uniform1(alpha, ShaderHelper.FLOAT_BUF);
+                GlStateManager._glUniform1(alpha, ShaderHelper.FLOAT_BUF);
             });
 
             // Draw function.
@@ -266,15 +266,17 @@ public class StructureRenderHandler {
     }
 
     private static void drawBox(MatrixStack matrixStack, double blockXOffset, double blockZOffset, double blockStartYOffset, double blockEndYOffset) {
-        RenderSystem.pushMatrix();
-        RenderSystem.multMatrix(matrixStack.peek().getModel());
+        //RenderSystem._pushMatrix();
+        //RenderSystem.multMatrix(matrixStack.peek().getModel());
 
         final Vec3d view = MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos();
 
         RenderSystem.enableDepthTest();
-        RenderSystem.shadeModel(7425);
-        RenderSystem.enableAlphaTest();
-        RenderSystem.defaultAlphaFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
+        // RenderSystem.shadeModel(7425);
+        // RenderSystem.enableAlphaTest();
+        // RenderSystem.defaultAlphaFunc();
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder vertexBuffer = tessellator.getBuffer();
@@ -287,7 +289,7 @@ public class StructureRenderHandler {
         double translatedYEnd = translatedY + 1;
         double translatedZ = blockZOffset - view.getZ();
 
-        vertexBuffer.begin(GL11.GL_LINES, VertexFormats.POSITION_COLOR);
+        vertexBuffer.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
 
         RenderSystem.lineWidth(2.0f);
 
@@ -329,8 +331,8 @@ public class StructureRenderHandler {
         RenderSystem.lineWidth(1.0F);
         RenderSystem.enableBlend();
         RenderSystem.enableTexture();
-        RenderSystem.shadeModel(7424);
 
-        RenderSystem.popMatrix();
+        // RenderSystem.shadeModel(7424);
+        // RenderSystem.popMatrix();
     }
 }

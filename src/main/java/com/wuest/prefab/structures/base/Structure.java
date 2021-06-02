@@ -19,7 +19,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.Style;
@@ -186,8 +186,8 @@ public class Structure {
                 }
 
                 Identifier resourceLocation = Registry.BLOCK_ENTITY_TYPE.getId(tileEntity.getType());
-                CompoundTag tagCompound = new CompoundTag();
-                tagCompound = tileEntity.toTag(tagCompound);
+                NbtCompound tagCompound = new NbtCompound();
+                tagCompound = tileEntity.writeNbt(tagCompound);
 
                 BuildTileEntity buildTileEntity = new BuildTileEntity();
                 assert resourceLocation != null;
@@ -234,8 +234,8 @@ public class Structure {
                     buildEntity.entityFacing = entity.getHorizontalFacing().asString();
                 }
 
-                CompoundTag entityTagCompound = new CompoundTag();
-                entityTagCompound = entity.toTag(entityTagCompound);
+                NbtCompound entityTagCompound = new NbtCompound();
+                entityTagCompound = entity.writeNbt(entityTagCompound);
                 buildEntity.setEntityNBTData(entityTagCompound);
                 scannedStructure.entities.add(buildEntity);
             }

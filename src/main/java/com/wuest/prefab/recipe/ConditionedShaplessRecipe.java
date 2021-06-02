@@ -59,18 +59,18 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 	}
 
 	public boolean matches(CraftingInventory craftingInventory, World world) {
-		RecipeFinder recipeFinder = new RecipeFinder();
+		RecipeMatcher recipeFinder = new RecipeMatcher();
 		int i = 0;
 
 		for (int j = 0; j < craftingInventory.size(); ++j) {
 			ItemStack itemStack = craftingInventory.getStack(j);
 			if (!itemStack.isEmpty()) {
 				++i;
-				recipeFinder.method_20478(itemStack, 1);
+				recipeFinder.addInput(itemStack, 1);
 			}
 		}
 
-		return i == this.input.size() && recipeFinder.findRecipe(this, (IntList) null);
+		return i == this.input.size() && recipeFinder.match(this, (IntList) null);
 	}
 
 	public ItemStack craft(CraftingInventory craftingInventory) {
@@ -93,7 +93,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 			} else if (defaultedList.size() > 9) {
 				throw new JsonParseException("Too many ingredients for shapeless recipe");
 			} else {
-				ItemStack itemStack = this.validateRecipeOutput(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result")), configName);
+				ItemStack itemStack = this.validateRecipeOutput(new ItemStack(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"))), configName);
 				return new ConditionedShaplessRecipe(identifier, groupName, itemStack, defaultedList, configName);
 			}
 		}

@@ -10,6 +10,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -145,12 +146,12 @@ public class BlockGlassSlab extends GlassBlock implements Waterloggable {
 	}
 
 	@Override
-	public Fluid tryDrainFluid(WorldAccess worldIn, BlockPos pos, BlockState state) {
+	public ItemStack tryDrainFluid(WorldAccess worldIn, BlockPos pos, BlockState state) {
 		if (state.get(Properties.WATERLOGGED) && state.get(SlabBlock.TYPE) != SlabType.DOUBLE) {
 			worldIn.setBlockState(pos, state.with(Properties.WATERLOGGED, Boolean.FALSE), 3);
-			return Fluids.WATER;
+			return new ItemStack(Items.WATER_BUCKET);
 		} else {
-			return Fluids.EMPTY;
+			return ItemStack.EMPTY;
 		}
 	}
 

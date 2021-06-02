@@ -23,13 +23,10 @@ hs_err_pid*
 
 # gradle
 
-.gradle/
+.gradle
 build/
 out/
 classes/
-gradlew
-gradlew.bat
-gradle-wrapper.properties
 
 # eclipse
 

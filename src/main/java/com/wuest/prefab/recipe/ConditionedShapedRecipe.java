@@ -13,7 +13,6 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShapedRecipe;
@@ -248,16 +247,17 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 		return map;
 	}
 
-	public static ItemStack getItemStack(JsonObject json) {
+	public static Item getItemStack(JsonObject json) {
 		String string = JsonHelper.getString(json, "item");
+
 		Item item = (Item) Registry.ITEM.getOrEmpty(new Identifier(string)).orElseThrow(() -> {
 			return new JsonSyntaxException("Unknown item '" + string + "'");
 		});
+
 		if (json.has("data")) {
 			throw new JsonParseException("Disallowed data tag found");
 		} else {
-			int i = JsonHelper.getInt(json, "count", 1);
-			return new ItemStack(item, i);
+			return item;
 		}
 	}
 
@@ -270,7 +270,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 			int width = strings[0].length();
 			int height = strings.length;
 			DefaultedList<Ingredient> defaultedList = ConditionedShapedRecipe.getIngredients(strings, map, width, height);
-			ItemStack itemStack = this.validateRecipeOutput(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result")), configName);
+			ItemStack itemStack = this.validateRecipeOutput(new ItemStack(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"))), configName);
 			return new ConditionedShapedRecipe(identifier, groupName, width, height, defaultedList, itemStack, configName);
 		}
 
