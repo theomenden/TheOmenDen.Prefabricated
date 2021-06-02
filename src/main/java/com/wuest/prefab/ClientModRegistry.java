@@ -19,6 +19,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class ClientModRegistry {
 
@@ -95,41 +96,9 @@ public class ClientModRegistry {
 	 * Adds all of the Mod Guis to the HasMap.
 	 */
 	private static void RegisterGuis() {
-		ClientModRegistry.ModGuis.put(ModRegistry.Warehouse, new GuiWareHouse());
-		ClientModRegistry.ModGuis.put(ModRegistry.ChickenCoop, new GuiChickenCoop());
-		ClientModRegistry.ModGuis.put(ModRegistry.ProduceFarm, new GuiProduceFarm());
-		ClientModRegistry.ModGuis.put(ModRegistry.TreeFarm, new GuiTreeFarm());
-		ClientModRegistry.ModGuis.put(ModRegistry.FishPond, new GuiFishPond());
-		ClientModRegistry.ModGuis.put(ModRegistry.StartHouse, new GuiStartHouseChooser());
-		ClientModRegistry.ModGuis.put(ModRegistry.AdvancedWareHouse, new GuiAdvancedWareHouse());
-		ClientModRegistry.ModGuis.put(ModRegistry.MonsterMasher, new GuiMonsterMasher());
-		ClientModRegistry.ModGuis.put(ModRegistry.HorseStable, new GuiHorseStable());
-		ClientModRegistry.ModGuis.put(ModRegistry.NetherGate, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.VillagerHouses, new GuiVillagerHouses());
-		ClientModRegistry.ModGuis.put(ModRegistry.ModerateHouse, new GuiModerateHouse());
-		ClientModRegistry.ModGuis.put(ModRegistry.Bulldozer, new GuiBulldozer());
-		ClientModRegistry.ModGuis.put(ModRegistry.CreativeBulldozer, new GuiBulldozer());
-		ClientModRegistry.ModGuis.put(ModRegistry.InstantBridge, new GuiInstantBridge());
-		ClientModRegistry.ModGuis.put(ModRegistry.StructurePart, new GuiStructurePart());
-
-		ClientModRegistry.ModGuis.put(ModRegistry.Barn, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.AdvancedCoop, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.AdvancedHorseStable, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.MachineryTower, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.DefenseBunker, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.MineshaftEntrance, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.EnderGateway, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.AquaBase, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.GrassyPlain, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.MagicTemple, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.GreenHouse, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.WatchTower, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.WelcomeCenter, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.Jail, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.Saloon, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.SkiLodge, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.WindMill, new GuiBasicStructure());
-		ClientModRegistry.ModGuis.put(ModRegistry.TownHall, new GuiBasicStructure());
+		for (Consumer<Object> consumer : ModRegistry.guiRegistrations) {
+			consumer.accept(null);
+		}
 	}
 
 	private static void registerKeyBindings() {

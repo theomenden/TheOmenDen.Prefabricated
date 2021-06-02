@@ -7,11 +7,13 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.block.enums.WallShape;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -121,6 +123,25 @@ public class BuildBlock {
             System.out.println("Error setting block state for block [" + block.getBlockName() + "] for structure configuration class [" + configuration.getClass().getName() + "]");
             throw ex;
         }
+    }
+
+    private static boolean neighborHaveWater(BlockPos originalPos, World world) {
+        boolean returnValue = false;
+
+        for (Direction direction : Direction.values()) {
+            if (direction == Direction.DOWN) {
+                continue;
+            }
+
+            FluidState fluidState = world.getFluidState(originalPos.offset(direction));
+
+            if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8) {
+                returnValue = true;
+                break;
+            }
+        }
+
+        return returnValue;
     }
 
     public static Direction getHorizontalFacing(Direction currentFacing, Direction configurationFacing, Direction structureDirection) {

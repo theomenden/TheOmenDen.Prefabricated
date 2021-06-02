@@ -68,6 +68,7 @@
   "item.prefab.item_mineshaft_entrance": "Entrada pozo",
   "item.prefab.item_ender_gateway": "Pasarela de Ender",
   "item.prefab.item_aqua_base": "Base Aqua",
+  "item.prefab.item_advanced_aqua_base": "Base naval avanzada",
   "item.prefab.item_grassy_plain": "Llanuras cubiertas de hierba",
   "item.prefab.item_magic_temple": "templo magico",
   "item.prefab.item_green_house": "Conservatorio",
@@ -78,6 +79,8 @@
   "item.prefab.item_ski_lodge": "Albergue de esquí",
   "item.prefab.item_wind_mill": "Molino",
   "item.prefab.item_town_hall": "Ayuntamiento",
+  "item.prefab.item_sugar_cane_farm": "Granja de caña de azúcar",
+  "item.prefab.item_workshop": "Taller",
 
   "item.prefab.item_nether_gate_tree": "Árbol corrupto",
   "item.prefab.item_nether_gate_skull": "Calavera Antigua",

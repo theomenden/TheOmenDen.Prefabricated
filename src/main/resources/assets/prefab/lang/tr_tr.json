@@ -68,6 +68,7 @@
   "item.prefab.item_mineshaft_entrance": "Maden Kuyusu Girişi",
   "item.prefab.item_ender_gateway": "Ender Kapıyolu",
   "item.prefab.item_aqua_base": "Deniz Üssü",
+  "item.prefab.item_advanced_aqua_base": "Gelişmiş Deniz üssü",
   "item.prefab.item_grassy_plain": "Çimenlik Ova",
   "item.prefab.item_magic_temple": "Sihirli Tapınak",
   "item.prefab.item_green_house": "Sera",
@@ -78,6 +79,8 @@
   "item.prefab.item_ski_lodge": "Kayak emniyeti",
   "item.prefab.item_wind_mill": "fırıldak",
   "item.prefab.item_town_hall": "Belediye binası",
+  "item.prefab.item_sugar_cane_farm": "Şeker Kamışı Çiftliği",
+  "item.prefab.item_workshop": "atölye",
 
   "item.prefab.item_nether_gate_tree": "Bozuk ağaç",
   "item.prefab.item_nether_gate_skull": "Antik kurukafa",

@@ -4,12 +4,17 @@ import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiSlider;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.StringVisitable;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public abstract class GuiBase extends Screen {
 
@@ -64,11 +69,11 @@ public abstract class GuiBase extends Screen {
 	public void render(MatrixStack matrixStack, int x, int y, float f) {
 		Tuple<Integer, Integer> adjustedXYValue = this.getAdjustedXYValue();
 
-		this.preButtonRender(matrixStack, adjustedXYValue.getFirst(), adjustedXYValue.getSecond());
+		this.preButtonRender(matrixStack, adjustedXYValue.getFirst(), adjustedXYValue.getSecond(), x, y, f);
 
 		this.renderButtons(matrixStack, x, y);
 
-		this.postButtonRender(matrixStack, adjustedXYValue.getFirst(), adjustedXYValue.getSecond());
+		this.postButtonRender(matrixStack, adjustedXYValue.getFirst(), adjustedXYValue.getSecond(), x, y, f);
 	}
 
 	/**
@@ -141,7 +146,7 @@ public abstract class GuiBase extends Screen {
 	 * @return Some integer value.
 	 */
 	public int drawString(MatrixStack matrixStack, String text, float x, float y, int color) {
-		return this.client.textRenderer.draw(matrixStack, text, x, y, color);
+		return this.getMinecraft().textRenderer.draw(matrixStack, text, x, y, color);
 	}
 
 	/**
@@ -154,14 +159,22 @@ public abstract class GuiBase extends Screen {
 	 * @param textColor The color of the text.
 	 */
 	public void drawSplitString(String str, int x, int y, int wrapWidth, int textColor) {
-		this.client.textRenderer.drawTrimmed(new LiteralText(str), x, y, wrapWidth, textColor);
+		this.getMinecraft().textRenderer.drawTrimmed(new LiteralText(str), x, y, wrapWidth, textColor);
+	}
+
+	public List<OrderedText> getSplitString(String str, int wrapWidth) {
+		return this.getMinecraft().textRenderer.wrapLines(new LiteralText(str), wrapWidth);
+	}
+
+	public List<OrderedText> getSplitString(StringVisitable str, int wrapWidth) {
+		return this.getMinecraft().textRenderer.wrapLines(str, wrapWidth);
 	}
 
 	/**
 	 * Closes the current screen.
 	 */
 	public void closeScreen() {
-		this.client.openScreen(null);
+		this.getMinecraft().openScreen(null);
 	}
 
 	/**
@@ -170,7 +183,11 @@ public abstract class GuiBase extends Screen {
 	 * @param resourceLocation The resource location to bind.
 	 */
 	public void bindTexture(Identifier resourceLocation) {
-		this.client.getTextureManager().bindTexture(resourceLocation);
+		this.getMinecraft().getTextureManager().bindTexture(resourceLocation);
+	}
+
+	public MinecraftClient getMinecraft() {
+		return this.client;
 	}
 
 	/**
@@ -180,7 +197,7 @@ public abstract class GuiBase extends Screen {
 	 */
 	public abstract void buttonClicked(AbstractButtonWidget button);
 
-	protected abstract void preButtonRender(MatrixStack matrixStack, int x, int y);
+	protected abstract void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks);
 
-	protected abstract void postButtonRender(MatrixStack matrixStack, int x, int y);
+	protected abstract void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks);
 }

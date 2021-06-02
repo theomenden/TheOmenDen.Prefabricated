@@ -68,6 +68,7 @@
   "item.prefab.item_mineshaft.entrance": "坑道入口",
   "item.prefab.item_ender_gateway": "エンダーゲートウェイ",
   "item.prefab.item_aqua_base": "アクアベース",
+  "item.prefab.item_advanced_aqua_base": "高度な海軍基地",
   "item.prefab.item_grassy_plain": "草が茂った平原",
   "item.prefab.item_magic_temple": "マジックテンプル",
   "item.prefab.item_green_house": "温室",
@@ -78,6 +79,8 @@
   "item.prefab.item_ski_lodge": "スキーロッジ",
   "item.prefab.item_wind_mill": "風車",
   "item.prefab.item_town_hall": "町役場",
+  "item.prefab.item_sugar_cane_farm": "サトウキビ農場",
+  "item.prefab.item_workshop": "ワークショップ",
 
   "item.prefab.item_nether_gate_tree": "壊れた木",
   "item.prefab.item_nether_gate_skull": "古代の頭蓋骨",

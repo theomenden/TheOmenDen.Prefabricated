@@ -5,6 +5,7 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.structures.gui.GuiBulldozer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
@@ -31,118 +32,127 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class ItemBulldozer extends StructureItem {
 
-	private boolean creativePowered = false;
+    private boolean creativePowered = false;
 
-	/**
-	 * Initializes a new instance of the {@link ItemBulldozer} class.
-	 */
-	public ItemBulldozer() {
-		super(new Item.Settings()
-				.group(ItemGroup.MISC)
-				.maxDamage(4));
-	}
+    /**
+     * Initializes a new instance of the {@link ItemBulldozer} class.
+     */
+    public ItemBulldozer() {
+        super(new Item.Settings()
+                .group(ItemGroup.MISC)
+                .maxDamage(4));
+    }
 
-	/**
-	 * Initializes a new instance of the {@link ItemBulldozer} class
-	 * @param creativePowered - Set this to true to create an always powered bulldozer.
-	 */
-	public ItemBulldozer(boolean creativePowered) {
-		super(new Item.Settings()
-				.group(ItemGroup.MISC));
+    /**
+     * Initializes a new instance of the {@link ItemBulldozer} class
+     *
+     * @param creativePowered - Set this to true to create an always powered bulldozer.
+     */
+    public ItemBulldozer(boolean creativePowered) {
+        super(new Item.Settings()
+                .group(ItemGroup.MISC));
 
-		this.creativePowered = creativePowered;
-	}
+        this.creativePowered = creativePowered;
+    }
 
-	/**
-	 * Does something when the item is right-clicked.
-	 */
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext context) {
-		if (context.getWorld().isClient) {
-			if (context.getSide() == Direction.UP && this.getPoweredValue(context.getPlayer(), context.getHand())) {
-				// Open the client side gui to determine the house options.
-				ClientModRegistry.openGuiForItem(context);
-				return ActionResult.PASS;
-			}
-		}
+    /**
+     * Does something when the item is right-clicked.
+     */
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (context.getWorld().isClient) {
+            if (context.getSide() == Direction.UP && this.getPoweredValue(context.getPlayer(), context.getHand())) {
+                // Open the client side gui to determine the house options.
+                ClientModRegistry.openGuiForItem(context);
+                return ActionResult.PASS;
+            }
+        }
 
-		return ActionResult.FAIL;
-	}
+        return ActionResult.FAIL;
+    }
 
-	/**
-	 * allows items to add custom lines of information to the mouseover description
-	 */
-	@Environment(EnvType.CLIENT)
-	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World worldIn, List<Text> tooltip, TooltipContext flagIn) {
-		super.appendTooltip(stack, worldIn, tooltip, flagIn);
+    /**
+     * allows items to add custom lines of information to the mouseover description
+     */
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World worldIn, List<Text> tooltip, TooltipContext flagIn) {
+        super.appendTooltip(stack, worldIn, tooltip, flagIn);
 
-		boolean advancedKeyDown = Screen.hasShiftDown();
+        boolean advancedKeyDown = Screen.hasShiftDown();
 
-		if (!advancedKeyDown) {
-			tooltip.add(new LiteralText(GuiLangKeys.translateString(GuiLangKeys.SHIFT_TOOLTIP)));
-		} else {
-			if (this.getPoweredValue(stack)) {
-				tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BULLDOZER_POWERED_TOOLTIP)));
-			} else {
-				tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BULLDOZER_UNPOWERED_TOOLTIP)));
-			}
-		}
-	}
+        if (!advancedKeyDown) {
+            tooltip.add(new LiteralText(GuiLangKeys.translateString(GuiLangKeys.SHIFT_TOOLTIP)));
+        } else {
+            if (this.getPoweredValue(stack)) {
+                tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BULLDOZER_POWERED_TOOLTIP)));
+            } else {
+                tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BULLDOZER_UNPOWERED_TOOLTIP)));
+            }
+        }
+    }
 
-	/**
-	 * Returns true if this item has an enchantment glint. By default, this returns
-	 * <code>stack.isItemEnchanted()</code>, but other items can override it (for instance, written books always return
-	 * true).
-	 * <p>
-	 * Note that if you override this method, you generally want to also call the super version (on {@link Item}) to get
-	 * the glint for enchanted items. Of course, that is unnecessary if the overwritten version always returns true.
-	 */
-	@Environment(EnvType.CLIENT)
-	@Override
-	public boolean hasGlint(ItemStack stack) {
-		return this.getPoweredValue(stack) || super.hasGlint(stack);
-	}
+    /**
+     * Returns true if this item has an enchantment glint. By default, this returns
+     * <code>stack.isItemEnchanted()</code>, but other items can override it (for instance, written books always return
+     * true).
+     * <p>
+     * Note that if you override this method, you generally want to also call the super version (on {@link Item}) to get
+     * the glint for enchanted items. Of course, that is unnecessary if the overwritten version always returns true.
+     */
+    @Environment(EnvType.CLIENT)
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return this.getPoweredValue(stack) || super.hasGlint(stack);
+    }
 
-	private boolean getPoweredValue(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getStackInHand(hand);
+    /**
+     * Initializes common fields/properties for this structure item.
+     */
+    @Override
+    protected void Initialize() {
+        ModRegistry.guiRegistrations.add(x -> this.RegisterGui(GuiBulldozer.class));
+    }
 
-		return this.getPoweredValue(stack);
-	}
+    private boolean getPoweredValue(PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
 
-	private boolean getPoweredValue(ItemStack stack) {
-		if (this.creativePowered) {
-			return true;
-		}
+        return this.getPoweredValue(stack);
+    }
 
-		if (stack.getItem() == ModRegistry.Bulldozer) {
-			if (stack.getTag() == null
-					|| stack.getTag().isEmpty()) {
-				stack.setTag(stack.toTag(new CompoundTag()));
-			} else {
-				CompoundTag tag = stack.getTag();
+    private boolean getPoweredValue(ItemStack stack) {
+        if (this.creativePowered) {
+            return true;
+        }
 
-				if (tag.contains(Prefab.MODID)) {
-					CompoundTag prefabTag = tag.getCompound(Prefab.MODID);
+        if (stack.getItem() == ModRegistry.Bulldozer) {
+            if (stack.getTag() == null
+                    || stack.getTag().isEmpty()) {
+                stack.setTag(stack.toTag(new CompoundTag()));
+            } else {
+                CompoundTag tag = stack.getTag();
 
-					if (prefabTag.contains("powered")) {
-						return prefabTag.getBoolean("powered");
-					}
-				}
-			}
-		}
+                if (tag.contains(Prefab.MODID)) {
+                    CompoundTag prefabTag = tag.getCompound(Prefab.MODID);
 
-		return false;
-	}
+                    if (prefabTag.contains("powered")) {
+                        return prefabTag.getBoolean("powered");
+                    }
+                }
+            }
+        }
 
-	public void setPoweredValue(ItemStack stack, boolean value) {
-		if (stack.getTag() == null
-				|| stack.getTag().isEmpty()) {
-			stack.setTag(stack.toTag(new CompoundTag()));
-		}
+        return false;
+    }
 
-		CompoundTag prefabTag = new CompoundTag();
-		prefabTag.putBoolean("powered", value);
-		stack.getTag().put(Prefab.MODID, prefabTag);
-	}
+    public void setPoweredValue(ItemStack stack, boolean value) {
+        if (stack.getTag() == null
+                || stack.getTag().isEmpty()) {
+            stack.setTag(stack.toTag(new CompoundTag()));
+        }
+
+        CompoundTag prefabTag = new CompoundTag();
+        prefabTag.putBoolean("powered", value);
+        stack.getTag().put(Prefab.MODID, prefabTag);
+    }
 }

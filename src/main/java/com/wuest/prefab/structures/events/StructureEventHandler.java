@@ -82,9 +82,9 @@ public final class StructureEventHandler {
     }
 
     private static void serverStopped() {
-		ServerLifecycleEvents.SERVER_STOPPED.register((server) -> {
-			EntityPlayerConfiguration.playerTagData.clear();
-		});
+        ServerLifecycleEvents.SERVER_STOPPED.register((server) -> {
+            EntityPlayerConfiguration.playerTagData.clear();
+        });
     }
 
     /**
@@ -170,6 +170,10 @@ public final class StructureEventHandler {
                     structure.entitiesRemoved = true;
                 }
 
+                if (structure.airBlocks.size() > 0) {
+                    structure.hasAirBlocks = true;
+                }
+
                 for (int i = 0; i < 100; i++) {
                     i = StructureEventHandler.setBlock(i, structure, structuresToRemove);
                 }
@@ -195,7 +199,9 @@ public final class StructureEventHandler {
 
     private static int setBlock(int i, Structure structure, ArrayList<Structure> structuresToRemove) {
         // Structure clearing happens before anything else.
-        if (structure.clearedBlockPos.size() > 0) {
+        // Don't bother clearing the area for water-based structures
+        // Anything which should be air will be air
+        if (structure.clearedBlockPos.size() > 0 && !structure.hasAirBlocks) {
             BlockPos currentPos = structure.clearedBlockPos.get(0);
             structure.clearedBlockPos.remove(0);
 
@@ -228,7 +234,8 @@ public final class StructureEventHandler {
                             || foundBlock instanceof RedstoneWireBlock
                             || foundBlock instanceof AbstractRedstoneGateBlock
                             || foundBlock instanceof AbstractBannerBlock
-                            || foundBlock instanceof LanternBlock) {
+                            || foundBlock instanceof LanternBlock
+                            || foundBlock instanceof AbstractRailBlock) {
                         structure.BeforeClearSpaceBlockReplaced(currentPos);
 
                         if (!(foundBlock instanceof BedBlock)) {
@@ -280,10 +287,15 @@ public final class StructureEventHandler {
         } else if (structure.airBlocks.size() > 0) {
             currentBlock = structure.airBlocks.get(0);
             structure.airBlocks.remove(0);
-            structure.hasAirBlocks = true;
         } else if (structure.priorityThreeBlocks.size() > 0) {
             currentBlock = structure.priorityThreeBlocks.get(0);
             structure.priorityThreeBlocks.remove(0);
+        } else if (structure.priorityFourBlocks.size() > 0) {
+            currentBlock = structure.priorityFourBlocks.get(0);
+            structure.priorityFourBlocks.remove(0);
+        } else if (structure.priorityFiveBlocks.size() > 0) {
+            currentBlock = structure.priorityFiveBlocks.get(0);
+            structure.priorityFiveBlocks.remove(0);
         } else {
             // There are no more blocks to set.
             structuresToRemove.add(structure);
@@ -292,8 +304,10 @@ public final class StructureEventHandler {
 
         BlockState state = currentBlock.getBlockState();
 
-        BuildingMethods.ReplaceBlock(structure.world, currentBlock.getStartingPosition().getRelativePosition(structure.originalPos,
-                structure.getClearSpace().getShape().getDirection(), structure.configuration.houseFacing), state);
+        BlockPos setBlockPos = currentBlock.getStartingPosition().getRelativePosition(structure.originalPos,
+                structure.getClearSpace().getShape().getDirection(), structure.configuration.houseFacing);
+
+        BuildingMethods.ReplaceBlock(structure.world, setBlockPos, state);
 
         // After placing the initial block, set the sub-block. This needs to happen as the list isn't always in the
         // correct order.

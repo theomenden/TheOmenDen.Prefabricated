@@ -1,7 +1,9 @@
 package com.wuest.prefab.structures.items;
 
 import com.wuest.prefab.ClientModRegistry;
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.structures.gui.GuiStartHouseChooser;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
@@ -74,14 +76,22 @@ public class ItemStartHouse extends StructureItem {
 				false,
 				false);*/
 
-		StructureAlternateStart.ScanDesert2Structure(
-				context.getWorld(),
-				context.getBlockPos(),
-				context.getPlayer().getHorizontalFacing());
+        StructureAlternateStart.ScanDesert2Structure(
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing());
 
         /*StructureAlternateStart.ScanSubAquaticStructure(
                 context.getWorld(),
                 context.getBlockPos(),
                 context.getPlayer().getHorizontalFacing());*/
+    }
+
+    /**
+     * Initializes common fields/properties for this structure item.
+     */
+    @Override
+    protected void Initialize() {
+        ModRegistry.guiRegistrations.add(x -> this.RegisterGui(GuiStartHouseChooser.class));
     }
 }

@@ -20,12 +20,16 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
 /**
  * This is the mod registry so there is a way to get to all instances of the blocks/items created by this mod.
  *
  * @author WuestMan
  */
 public class ModRegistry {
+    public static ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
 
     /* *********************************** Blocks *********************************** */
 
@@ -117,6 +121,9 @@ public class ModRegistry {
     public static final ItemBasicStructure WindMill = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WindMill);
     public static final ItemBasicStructure TownHall = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.TownHall);
     public static final ItemBasicStructure NetherGate = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.NetherGate);
+    public static final ItemBasicStructure SugarCaneFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm);
+    public static final ItemBasicStructure AdvancedAquaBase = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase);
+    public static final ItemBasicStructure WorkShop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WorkShop);
 
     /* *********************************** Recipe Serializers *********************************** */
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
@@ -182,25 +189,28 @@ public class ModRegistry {
         ModRegistry.registerItem("item_structure_part", ModRegistry.StructurePart);
         ModRegistry.registerItem("item_villager_houses", ModRegistry.VillagerHouses);
 
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Barn.getResourceLocation().getPath(), ModRegistry.Barn);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop.getResourceLocation().getPath(), ModRegistry.AdvancedCoop);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedHorseStable.getResourceLocation().getPath(), ModRegistry.AdvancedHorseStable);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower.getResourceLocation().getPath(), ModRegistry.MachineryTower);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker.getResourceLocation().getPath(), ModRegistry.DefenseBunker);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance.getResourceLocation().getPath(), ModRegistry.MineshaftEntrance);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.EnderGateway.getResourceLocation().getPath(), ModRegistry.EnderGateway);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AquaBase.getResourceLocation().getPath(), ModRegistry.AquaBase);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GrassyPlain.getResourceLocation().getPath(), ModRegistry.GrassyPlain);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MagicTemple.getResourceLocation().getPath(), ModRegistry.MagicTemple);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GreenHouse.getResourceLocation().getPath(), ModRegistry.GreenHouse);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WatchTower.getResourceLocation().getPath(), ModRegistry.WatchTower);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WelcomeCenter.getResourceLocation().getPath(), ModRegistry.WelcomeCenter);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Jail.getResourceLocation().getPath(), ModRegistry.Jail);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Saloon.getResourceLocation().getPath(), ModRegistry.Saloon);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.SkiLodge.getResourceLocation().getPath(), ModRegistry.SkiLodge);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WindMill.getResourceLocation().getPath(), ModRegistry.WindMill);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.TownHall.getResourceLocation().getPath(), ModRegistry.TownHall);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.NetherGate.getResourceLocation().getPath(), ModRegistry.NetherGate);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Barn.getItemTextureLocation().getPath(), ModRegistry.Barn);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop.getItemTextureLocation().getPath(), ModRegistry.AdvancedCoop);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedHorseStable.getItemTextureLocation().getPath(), ModRegistry.AdvancedHorseStable);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower.getItemTextureLocation().getPath(), ModRegistry.MachineryTower);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker.getItemTextureLocation().getPath(), ModRegistry.DefenseBunker);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance.getItemTextureLocation().getPath(), ModRegistry.MineshaftEntrance);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.EnderGateway.getItemTextureLocation().getPath(), ModRegistry.EnderGateway);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AquaBase.getItemTextureLocation().getPath(), ModRegistry.AquaBase);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GrassyPlain.getItemTextureLocation().getPath(), ModRegistry.GrassyPlain);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MagicTemple.getItemTextureLocation().getPath(), ModRegistry.MagicTemple);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GreenHouse.getItemTextureLocation().getPath(), ModRegistry.GreenHouse);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WatchTower.getItemTextureLocation().getPath(), ModRegistry.WatchTower);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WelcomeCenter.getItemTextureLocation().getPath(), ModRegistry.WelcomeCenter);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Jail.getItemTextureLocation().getPath(), ModRegistry.Jail);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Saloon.getItemTextureLocation().getPath(), ModRegistry.Saloon);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.SkiLodge.getItemTextureLocation().getPath(), ModRegistry.SkiLodge);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WindMill.getItemTextureLocation().getPath(), ModRegistry.WindMill);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.TownHall.getItemTextureLocation().getPath(), ModRegistry.TownHall);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.NetherGate.getItemTextureLocation().getPath(), ModRegistry.NetherGate);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm.getItemTextureLocation().getPath(), ModRegistry.SugarCaneFarm);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase.getItemTextureLocation().getPath(), ModRegistry.AdvancedAquaBase);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getItemTextureLocation().getPath(), ModRegistry.WorkShop);
     }
 
     private static void registerItemBlocks() {

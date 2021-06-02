@@ -200,6 +200,9 @@ public class ModConfiguration implements ConfigData {
         public static String townHallKey = "Town Hall";
         public static String heapOfTimberKey = "Heap of Timber";
         public static String tonOfTimberKey = "Ton of Timber";
+        public static String sugarCaneFarmKey = "Sugar Cane Farm";
+        private static final String workshopKey = "Workshop";
+
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
                         ConfigKeyNames.warehouseKey, ConfigKeyNames.produceFarmKey, ConfigKeyNames.treeFarmKey, ConfigKeyNames.chickenCoopKey, ConfigKeyNames.fishFarmKey,
@@ -210,7 +213,8 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.phasicBlockKey, ConfigKeyNames.smartGlassKey, ConfigKeyNames.greenHouseKey, ConfigKeyNames.startingHouseKey, ConfigKeyNames.glassStairsKey,
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
                         ConfigKeyNames.bulldozerKey, ConfigKeyNames.structurePartKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
-                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey};
+                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, sugarCaneFarmKey, workshopKey};
+
         // Config file option names.
         static String enableLoftHouseName = "Enable Loft House";
         static String includeSpawnersInMasherName = "Include Spawners in Monster Masher";

@@ -1,15 +1,20 @@
 {
-  "type": "prefab:condition_crafting_shaped",
-  "configName": "Aqua Base",
+  "conditions": [
+    {
+      "type": "prefab:config_recipe",
+      "recipeKey": "Aqua Base"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
   "group": "Aqua Base",
   "pattern": [
     "aaa",
     "bcb",
-    "bdb"
+    "ede"
   ],
   "key": {
     "a": {
-      "item": "minecraft:glass"
+      "tag": "c:glass"
     },
     "b": {
       "tag": "c:compressed_stone"
@@ -19,6 +24,9 @@
     },
     "d": {
       "item": "prefab:item_coil_of_lanterns"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
     }
   },
   "result": {

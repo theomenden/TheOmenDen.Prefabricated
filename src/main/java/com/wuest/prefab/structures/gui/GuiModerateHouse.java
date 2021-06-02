@@ -77,8 +77,8 @@ public class GuiModerateHouse extends GuiStructure {
 	}
 
 	@Override
-	protected void preButtonRender(MatrixStack matrixStack, int x, int y) {
-		super.preButtonRender(matrixStack, x, y);
+	protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+		super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
 		this.bindTexture(this.configuration.houseStyle.getHousePicture());
 		GuiTabScreen.drawModalRectWithCustomSizedTexture(x + 249, y, 1,
@@ -87,7 +87,7 @@ public class GuiModerateHouse extends GuiStructure {
 	}
 
 	@Override
-	protected void postButtonRender(MatrixStack matrixStack, int x, int y) {
+	protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
 		this.btnAddChest.visible = Prefab.serverConfiguration.starterHouseOptions.addChests;
 		this.btnAddChestContents.visible = this.allowItemsInChestAndFurnace && Prefab.serverConfiguration.starterHouseOptions.addChestContents;
 		this.btnAddMineShaft.visible = Prefab.serverConfiguration.starterHouseOptions.addMineshaft;
