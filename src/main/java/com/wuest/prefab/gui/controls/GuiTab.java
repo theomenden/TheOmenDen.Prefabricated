@@ -1,6 +1,8 @@
 package com.wuest.prefab.gui.controls;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -91,12 +93,12 @@ public class GuiTab extends ClickableWidget {
         this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 
         if (this.selected || this.hovered) {
-            mc.getTextureManager().bindTexture(TAB_TEXTURES_hovered);
+            RenderSystem.setShaderTexture(0, TAB_TEXTURES_hovered);
         } else {
-            mc.getTextureManager().bindTexture(TAB_TEXTURES);
+            RenderSystem.setShaderTexture(0, TAB_TEXTURES);
         }
 
-        GuiTabScreen.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, this.width, this.height, this.width, this.height);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, this.x, this.y, 0, this.width, this.height, this.width, this.height);
         int j = Color.LIGHT_GRAY.getRGB();
 
         int stringXPosition = ((this.x + this.width / 2) - (fontrenderer.getWidth(this.name)) / 2);

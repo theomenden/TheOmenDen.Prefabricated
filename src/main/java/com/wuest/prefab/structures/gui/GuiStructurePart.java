@@ -3,6 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiSlider;
 import com.wuest.prefab.structures.base.EnumStairsMaterial;
@@ -78,7 +79,7 @@ public class GuiStructurePart extends GuiStructure {
 
         this.bindTexture(this.configuration.style.getPictureLocation());
 
-        GuiStructure.drawModalRectWithCustomSizedTexture(x + 250, y, 1,
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
                 this.configuration.style.imageWidth, this.configuration.style.imageHeight,
                 this.configuration.style.imageWidth, this.configuration.style.imageHeight);
     }

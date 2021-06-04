@@ -3,6 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.ProduceFarmConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
@@ -61,7 +62,7 @@ public class GuiProduceFarm extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(houseTopDown);
-        GuiStructure.drawModalRectWithCustomSizedTexture(x + 250, y, 1, 170, 171, 170, 171);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, y, 1, 170, 171, 170, 171);
     }
 
     @Override

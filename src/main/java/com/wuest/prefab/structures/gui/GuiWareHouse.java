@@ -3,6 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.structures.config.WareHouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureWarehouse;
@@ -62,7 +63,7 @@ public class GuiWareHouse extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(wareHouseTopDown);
-        GuiStructure.drawModalRectWithCustomSizedTexture(x + 250, y, 1, 132, 153, 132, 153);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 132, 153, 132, 153);
     }
 
     @Override

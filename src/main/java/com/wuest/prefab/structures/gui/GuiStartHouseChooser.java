@@ -3,6 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.*;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiTab;
@@ -140,7 +141,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
             this.drawSplitString(this.houseConfiguration.houseStyle.getHouseNotes(), grayBoxX + 147, grayBoxY + 10, 95, color);
 
             this.bindTexture(this.houseConfiguration.houseStyle.getHousePicture());
-            GuiTabScreen.drawModalRectWithCustomSizedTexture(grayBoxX + 250, grayBoxY, 1,
+            GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, grayBoxY, 1,
                     this.houseConfiguration.houseStyle.getImageWidth(), this.houseConfiguration.houseStyle.getImageHeight(),
                     this.houseConfiguration.houseStyle.getImageWidth(), this.houseConfiguration.houseStyle.getImageHeight());
         } else if (this.getSelectedTab() == this.tabBlockTypes) {

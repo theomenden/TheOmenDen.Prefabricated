@@ -1,5 +1,6 @@
 package com.wuest.prefab.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
@@ -9,6 +10,7 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
@@ -114,7 +116,7 @@ public abstract class GuiBase extends Screen {
     }
 
     protected void drawControlBackground(MatrixStack matrixStack, int grayBoxX, int grayBoxY) {
-        this.client.getTextureManager().bindTexture(this.backgroundTextures);
+        this.bindTexture(this.backgroundTextures);
         this.drawTexture(matrixStack, grayBoxX, grayBoxY, 0, 0, 256, 256);
     }
 
@@ -186,7 +188,10 @@ public abstract class GuiBase extends Screen {
      * @param resourceLocation The resource location to bind.
      */
     public void bindTexture(Identifier resourceLocation) {
-        this.getMinecraft().getTextureManager().bindTexture(resourceLocation);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, resourceLocation);
+        //this.getMinecraft().getTextureManager().bindTexture(resourceLocation);
     }
 
     public MinecraftClient getMinecraft() {

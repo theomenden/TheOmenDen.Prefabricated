@@ -4,6 +4,7 @@ import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.structures.config.ModerateHouseConfiguration;
@@ -81,7 +82,7 @@ public class GuiModerateHouse extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(this.configuration.houseStyle.getHousePicture());
-        GuiTabScreen.drawModalRectWithCustomSizedTexture(x + 249, y, 1,
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 249, y, 1,
                 this.configuration.houseStyle.getImageWidth(), this.configuration.houseStyle.getImageHeight(),
                 this.configuration.houseStyle.getImageWidth(), this.configuration.houseStyle.getImageHeight());
     }

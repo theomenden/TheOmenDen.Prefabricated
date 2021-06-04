@@ -3,6 +3,7 @@ package com.wuest.prefab.structures.gui;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.config.enums.BaseOption;
@@ -49,7 +50,7 @@ public class GuiBasicStructure extends GuiStructure {
             // Draw the control background.
             this.bindTexture(this.configuration.chosenOption.getPictureLocation());
 
-            GuiBasicStructure.drawModalRectWithCustomSizedTexture(x + 250, y, 1,
+            GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
                     this.configuration.chosenOption.getImageWidth(), this.configuration.chosenOption.getImageHeight(),
                     this.configuration.chosenOption.getImageWidth(), this.configuration.chosenOption.getImageHeight());
         }

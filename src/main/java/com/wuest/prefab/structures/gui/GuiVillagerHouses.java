@@ -4,6 +4,7 @@ import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.VillagerHouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
@@ -66,7 +67,7 @@ public class GuiVillagerHouses extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(this.houseStyle.getHousePicture());
-        GuiTabScreen.drawModalRectWithCustomSizedTexture(x + 250, y, 1,
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
                 this.houseStyle.getImageWidth(), this.houseStyle.getImageHeight(),
                 this.houseStyle.getImageWidth(), this.houseStyle.getImageHeight());
     }

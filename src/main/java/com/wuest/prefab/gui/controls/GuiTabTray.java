@@ -1,6 +1,8 @@
 package com.wuest.prefab.gui.controls;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -89,8 +91,8 @@ public class GuiTabTray extends ClickableWidget {
     }
 
     public void DrawTabs(MinecraftClient mc, MatrixStack matrixStack, int mouseX, int mouseY) {
-        mc.getTextureManager().bindTexture(backgroundTextures);
-        GuiTabScreen.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, this.width, this.height, this.width, 35);
+        RenderSystem.setShaderTexture(0, backgroundTextures);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, this.x, this.y, 0, this.width, this.height, this.width, 35);
 
         for (GuiTab tab : this.tabs) {
             tab.drawTab(mc, matrixStack, mouseX, mouseY);

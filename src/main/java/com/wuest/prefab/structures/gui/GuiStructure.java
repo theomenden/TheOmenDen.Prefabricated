@@ -9,6 +9,7 @@ import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.render.BufferBuilder;
@@ -41,38 +42,6 @@ public abstract class GuiStructure extends GuiBase {
 
     public GuiStructure(String title) {
         super(title);
-    }
-
-    /**
-     * Draws a textured rectangle Args: x, y, z, width, height, textureWidth, textureHeight
-     *
-     * @param x             The X-Axis screen coordinate.
-     * @param y             The Y-Axis screen coordinate.
-     * @param z             The Z-Axis screen coordinate.
-     * @param width         The width of the rectangle.
-     * @param height        The height of the rectangle.
-     * @param textureWidth  The width of the texture.
-     * @param textureHeight The height of the texture.
-     */
-    public static void drawModalRectWithCustomSizedTexture(int x, int y, int z, int width, int height, float textureWidth, float textureHeight) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
-
-        float u = 0;
-        float v = 0;
-        float f = 1.0F / textureWidth;
-        float f1 = 1.0F / textureHeight;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder vertexBuffer = tessellator.getBuffer();
-
-        vertexBuffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-        vertexBuffer.vertex(x, y + height, z).texture(u * f, (v + height) * f1).next();
-        vertexBuffer.vertex(x + width, y + height, z).texture((u + width) * f, (v + height) * f1).next();
-        vertexBuffer.vertex(x + width, y, z).texture((u + width) * f, v * f1).next();
-        vertexBuffer.vertex(x, y, z).texture(u * f, v * f1).next();
-
-        tessellator.draw();
     }
 
     @Override
