@@ -57,7 +57,7 @@ public class GuiMonsterMasher extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(houseTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, y, 1, 108, 156, 108, 156);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 108, 156, 108, 156);
     }
 
     @Override

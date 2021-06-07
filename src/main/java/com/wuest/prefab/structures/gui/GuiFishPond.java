@@ -23,8 +23,6 @@ public class GuiFishPond extends GuiStructure {
     public GuiFishPond() {
         super("Fish Pond");
         this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.FishPond;
-        this.modifiedInitialXAxis = 188;
-        this.modifiedInitialYAxis = 83;
     }
 
     @Override
@@ -33,7 +31,7 @@ public class GuiFishPond extends GuiStructure {
 
         this.bindTexture(structureTopDown);
 
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, y, 1, 151, 149, 151, 149);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 256, y, 1, 151, 149, 151, 149);
     }
 
     @Override

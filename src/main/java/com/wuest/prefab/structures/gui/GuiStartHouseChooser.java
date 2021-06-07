@@ -56,8 +56,6 @@ public class GuiStartHouseChooser extends GuiTabScreen {
     public GuiStartHouseChooser() {
         super();
         this.Tabs.setWidth(256);
-        this.modifiedInitialXAxis = 198;
-        this.modifiedInitialYAxis = 83;
     }
 
     @Override
@@ -93,7 +91,6 @@ public class GuiStartHouseChooser extends GuiTabScreen {
 
         for (Element button : this.children()) {
             // Make all buttons invisible.
-
             if (button instanceof PressableWidget) {
                 PressableWidget currentButton = (PressableWidget) button;
                 currentButton.visible = false;
@@ -113,6 +110,8 @@ public class GuiStartHouseChooser extends GuiTabScreen {
         if (this.getSelectedTab() == this.tabGeneral) {
             this.btnHouseStyle.visible = true;
             this.btnVisualize.visible = true;
+            this.btnBuild.visible = true;
+            this.btnCancel.visible = true;
         } else if (this.getSelectedTab() == this.tabConfig) {
             this.btnAddTorches.visible = Prefab.serverConfiguration.chestOptions.addTorches;
             this.btnAddBed.visible = Prefab.serverConfiguration.starterHouseOptions.addBed;
@@ -141,7 +140,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
             this.drawSplitString(this.houseConfiguration.houseStyle.getHouseNotes(), grayBoxX + 147, grayBoxY + 10, 95, color);
 
             this.bindTexture(this.houseConfiguration.houseStyle.getHousePicture());
-            GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, grayBoxY, 1,
+            GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, grayBoxX + 256, grayBoxY, 1,
                     this.houseConfiguration.houseStyle.getImageWidth(), this.houseConfiguration.houseStyle.getImageHeight(),
                     this.houseConfiguration.houseStyle.getImageWidth(), this.houseConfiguration.houseStyle.getImageHeight());
         } else if (this.getSelectedTab() == this.tabBlockTypes) {
@@ -261,53 +260,53 @@ public class GuiStartHouseChooser extends GuiTabScreen {
         int secondColumnY = y;
         int secondColumnX = x + 137;
 
-        this.btnAddFurnace = this.createAndAddCheckBox(secondColumnX, secondColumnY, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_FURNACE), this.houseConfiguration.addFurnace, null);
+        this.btnAddFurnace = this.createAndAddCheckBox(secondColumnX - 10, secondColumnY, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_FURNACE), this.houseConfiguration.addFurnace, null);
         this.btnAddFurnace.visible = false;
 
         if (Prefab.serverConfiguration.starterHouseOptions.addFurnace) {
-            secondColumnY += 15;
+            secondColumnY += 20;
         }
 
-        this.btnAddBed = this.createAndAddCheckBox(secondColumnX, secondColumnY, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_BED), this.houseConfiguration.addBed, null);
+        this.btnAddBed = this.createAndAddCheckBox(secondColumnX - 10, secondColumnY, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_BED), this.houseConfiguration.addBed, null);
         this.btnAddBed.visible = false;
 
         if (Prefab.serverConfiguration.starterHouseOptions.addBed) {
-            secondColumnY += 15;
+            secondColumnY += 20;
         }
 
         this.btnAddCraftingTable = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_CRAFTING_TABLE), this.houseConfiguration.addCraftingTable, null);
         this.btnAddCraftingTable.visible = false;
 
         if (Prefab.serverConfiguration.starterHouseOptions.addCraftingTable) {
-            y += 15;
+            y += 20;
         }
 
         this.btnAddTorches = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_TORCHES), this.houseConfiguration.addTorches, null);
         this.btnAddTorches.visible = false;
 
         if (Prefab.serverConfiguration.chestOptions.addTorches) {
-            y += 15;
+            y += 20;
         }
 
         this.btnAddChest = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_CHEST), this.houseConfiguration.addChest, null);
         this.btnAddChest.visible = false;
 
         if (Prefab.serverConfiguration.starterHouseOptions.addChests) {
-            y += 15;
+            y += 20;
         }
 
         this.btnAddMineShaft = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_BUILD_MINESHAFT), this.houseConfiguration.addMineShaft, null);
         this.btnAddMineShaft.visible = false;
 
         if (Prefab.serverConfiguration.starterHouseOptions.addMineshaft) {
-            y += 15;
+            y += 20;
         }
 
         this.btnAddChestContents = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_CHEST_CONTENTS), this.houseConfiguration.addChestContents, null);
         this.btnAddChestContents.visible = false;
 
         if (this.allowItemsInChestAndFurnace) {
-            y += 15;
+            y += 20;
         }
 
         x = grayBoxX + 10;

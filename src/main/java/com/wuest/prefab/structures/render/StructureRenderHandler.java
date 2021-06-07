@@ -1,7 +1,6 @@
 package com.wuest.prefab.structures.render;
 
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
@@ -29,7 +28,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
@@ -58,6 +56,8 @@ public class StructureRenderHandler {
      * @param configuration The configuration for this structure.
      */
     public static void setStructure(Structure structure, Direction assumedNorth, StructureConfiguration configuration) {
+        VertexConsumerProvider.Immediate entityVertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+
         StructureRenderHandler.currentStructure = structure;
         StructureRenderHandler.assumedNorth = assumedNorth;
         StructureRenderHandler.currentConfiguration = configuration;
@@ -85,6 +85,7 @@ public class StructureRenderHandler {
             boolean didAny = false;
 
             VertexConsumerProvider.Immediate entityVertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+
             ArrayList<Tuple<BlockState, BlockPos>> entityModels = new ArrayList<>();
 
             for (BuildBlock buildBlock : StructureRenderHandler.currentStructure.getBlocks()) {
@@ -125,26 +126,6 @@ public class StructureRenderHandler {
                 }
             }
 
-            ShaderHelper.useShader(ShaderHelper.alphaShader, shader -> {
-                // getUniformLocation
-                int alpha = GlStateManager._glGetUniformLocation(shader, "alpha");
-                ShaderHelper.FLOAT_BUF.position(0);
-                ShaderHelper.FLOAT_BUF.put(0, 0.4F);
-
-                // uniform1
-                GlStateManager._glUniform1(alpha, ShaderHelper.FLOAT_BUF);
-            });
-
-            // Draw function.
-            entityVertexConsumer.draw(TexturedRenderLayers.getItemEntityTranslucentCull());
-
-            ShaderHelper.releaseShader();
-
-            for (Tuple<BlockState, BlockPos> pair : entityModels) {
-                BlockPos blockPos = pair.getSecond();
-                StructureRenderHandler.renderBlock(matrixStack, new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ()), pair.getFirst(), entityVertexConsumer, BlockRenderType.ENTITYBLOCK_ANIMATED);
-            }
-
             if (!didAny) {
                 // Nothing was generated, tell the user this through a chat message and re-set the structure information.
                 StructureRenderHandler.setStructure(null, Direction.NORTH, null);
@@ -162,7 +143,8 @@ public class StructureRenderHandler {
             }
 
             if (didAny) {
-                StructureRenderHandler.RenderTest(player.getEntityWorld(), matrixStack);
+                if (StructureRenderHandler.currentStructure != null) {
+                }
             }
         }
     }
@@ -174,7 +156,7 @@ public class StructureRenderHandler {
             return false;
         }
 
-        StructureRenderHandler.doRenderComponent(buildBlock, pos, entityVertexConsumer, matrixStack, blockRenderType);
+        StructureRenderHandler.doRenderComponent(world, buildBlock, pos, entityVertexConsumer, matrixStack, blockRenderType);
 
         if (buildBlock.getSubBlock() != null) {
             Block foundBlock = Registry.BLOCK.get(buildBlock.getSubBlock().getResourceLocation());
@@ -202,12 +184,12 @@ public class StructureRenderHandler {
         return true;
     }
 
-    private static void doRenderComponent(BuildBlock buildBlock, BlockPos pos, VertexConsumerProvider entityVertexConsumer, MatrixStack matrixStack, BlockRenderType blockRenderType) {
+    private static void doRenderComponent(World world, BuildBlock buildBlock, BlockPos pos, VertexConsumerProvider entityVertexConsumer, MatrixStack matrixStack, BlockRenderType blockRenderType) {
         BlockState state = buildBlock.getBlockState();
-        StructureRenderHandler.renderBlock(matrixStack, new Vec3d(pos.getX(), pos.getY(), pos.getZ()), state, entityVertexConsumer, blockRenderType);
+        StructureRenderHandler.renderBlock(world, matrixStack, new Vec3d(pos.getX(), pos.getY(), pos.getZ()), state, entityVertexConsumer, blockRenderType, pos);
     }
 
-    private static void renderBlock(MatrixStack matrixStack, Vec3d pos, BlockState state, VertexConsumerProvider entityVertexConsumer, BlockRenderType blockRenderType) {
+    private static void renderBlock(World world, MatrixStack matrixStack, Vec3d pos, BlockState state, VertexConsumerProvider entityVertexConsumer, BlockRenderType blockRenderType, BlockPos blockPos) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
         Camera camera = minecraft.getEntityRenderDispatcher().camera;
         Vec3d projectedView = camera.getPos();
@@ -229,21 +211,28 @@ public class StructureRenderHandler {
 
         if (blockRenderType == BlockRenderType.MODEL) {
             // getColor function.
-            int color = minecraft.getBlockColors().getColor(state, null, null, 0);
+            int color = minecraft.getBlockColors().getColor(state, world, blockPos, 50);
             float r = (float) (color >> 16 & 255) / 255.0F;
             float g = (float) (color >> 8 & 255) / 255.0F;
             float b = (float) (color & 255) / 255.0F;
 
+            int uvValue = OverlayTexture.DEFAULT_UV;
+            int lightLevel = 0xF000F0;
+
+            VertexConsumer consumer = entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull());
+
             renderer.getModelRenderer().render(
                     matrixStack.peek(),
-                    entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull()),
+                    consumer,
                     state,
                     bakedModel,
                     r,
                     g,
                     b,
-                    0xF000F0,
-                    OverlayTexture.DEFAULT_UV);
+                    lightLevel,
+                    uvValue);
+
+
         }
 
         // pop

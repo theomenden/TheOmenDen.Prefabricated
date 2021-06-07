@@ -32,7 +32,7 @@ public class GuiHorseStable extends GuiStructure {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
         this.bindTexture(structureTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, y, 1, 104, 166, 104, 166);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 104, 166, 104, 166);
     }
 
     @Override

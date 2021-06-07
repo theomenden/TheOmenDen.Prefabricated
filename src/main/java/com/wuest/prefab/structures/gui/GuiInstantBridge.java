@@ -67,7 +67,7 @@ public class GuiInstantBridge extends GuiStructure {
 
         this.bindTexture(structureTopDown);
 
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, + 250, y, 1, 165, 58, 165, 58);
+        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 165, 58, 165, 58);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class GuiInstantBridge extends GuiStructure {
         this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.BRIDGE_MATERIAL), x + 10, y + 10, this.textColor);
 
         if (this.chckIncludeRoof.isChecked()) {
-            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.INTERIOR_HEIGHT), x + 147, y + 80, this.textColor);
+            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.INTERIOR_HEIGHT), x + 144, y + 80, this.textColor);
         }
 
         this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.BRIDGE_LENGTH), x + 147, y + 10, this.textColor);
