@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.render;
 
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
@@ -46,8 +47,7 @@ public class StructureRenderHandler {
     public static boolean rendering = false;
     public static boolean showedMessage = false;
     private static int dimension;
-    private static int overlay = OverlayTexture.packUv(5, 10);
-
+ 
     /**
      * Resets the structure to show in the world.
      *
@@ -56,8 +56,6 @@ public class StructureRenderHandler {
      * @param configuration The configuration for this structure.
      */
     public static void setStructure(Structure structure, Direction assumedNorth, StructureConfiguration configuration) {
-        VertexConsumerProvider.Immediate entityVertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-
         StructureRenderHandler.currentStructure = structure;
         StructureRenderHandler.assumedNorth = assumedNorth;
         StructureRenderHandler.currentConfiguration = configuration;
@@ -126,6 +124,22 @@ public class StructureRenderHandler {
                 }
             }
 
+            // Need to keep this shader stuff, it keeps the blocks from bouncing around while the player moves.
+            ShaderHelper.useShader(ShaderHelper.alphaShader, shader -> {
+                // getUniformLocation
+                int alpha = GlStateManager._glGetUniformLocation(shader, "alpha");
+                ShaderHelper.FLOAT_BUF.position(0);
+                ShaderHelper.FLOAT_BUF.put(0, 0.4F);
+
+                // uniform1
+                GlStateManager._glUniform1(alpha, ShaderHelper.FLOAT_BUF);
+            });
+
+            // Draw function.
+            entityVertexConsumer.draw(TexturedRenderLayers.getItemEntityTranslucentCull());
+
+            ShaderHelper.releaseShader();
+
             if (!didAny) {
                 // Nothing was generated, tell the user this through a chat message and re-set the structure information.
                 StructureRenderHandler.setStructure(null, Direction.NORTH, null);
@@ -144,6 +158,7 @@ public class StructureRenderHandler {
 
             if (didAny) {
                 if (StructureRenderHandler.currentStructure != null) {
+                    StructureRenderHandler.RenderTest(player.getEntityWorld(), matrixStack);
                 }
             }
         }
@@ -209,6 +224,10 @@ public class StructureRenderHandler {
         matrixStack.translate(pos.x, pos.y, pos.z);
         BakedModel bakedModel = renderer.getModel(state);
 
+        VertexConsumer consumer = entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull());
+        /*RenderSystem.setShader(GameRenderer::getRenderTypeItemEntityTranslucentCullShader);
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 0.4f);*/
+
         if (blockRenderType == BlockRenderType.MODEL) {
             // getColor function.
             int color = minecraft.getBlockColors().getColor(state, world, blockPos, 50);
@@ -218,8 +237,6 @@ public class StructureRenderHandler {
 
             int uvValue = OverlayTexture.DEFAULT_UV;
             int lightLevel = 0xF000F0;
-
-            VertexConsumer consumer = entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull());
 
             renderer.getModelRenderer().render(
                     matrixStack.peek(),
@@ -231,8 +248,6 @@ public class StructureRenderHandler {
                     b,
                     lightLevel,
                     uvValue);
-
-
         }
 
         // pop
