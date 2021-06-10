@@ -2,6 +2,7 @@ package com.wuest.prefab.structures.config;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.network.message.PlayerEntityTagMessage;
@@ -50,7 +51,7 @@ public class HouseConfiguration extends StructureConfiguration {
 	public boolean addChestContents;
 	public boolean addMineShaft;
 	public HouseStyle houseStyle;
-	public DyeColor glassColor;
+	public FullDyeColor glassColor;
 	public DyeColor bedColor;
 
 	/**
@@ -64,7 +65,7 @@ public class HouseConfiguration extends StructureConfiguration {
 	public void Initialize() {
 		super.Initialize();
 		this.houseStyle = HouseStyle.BASIC;
-		this.glassColor = DyeColor.LIGHT_GRAY;
+		this.glassColor = FullDyeColor.LIGHT_GRAY;
 		this.bedColor = DyeColor.RED;
 		this.addTorches = true;
 		this.addBed = true;
@@ -154,7 +155,7 @@ public class HouseConfiguration extends StructureConfiguration {
 			}
 
 			if (tag.contains(HouseConfiguration.glassColorTag)) {
-				config.glassColor = DyeColor.valueOf(tag.getString(HouseConfiguration.glassColorTag));
+				config.glassColor = FullDyeColor.valueOf(tag.getString(HouseConfiguration.glassColorTag));
 			}
 
 			if (tag.contains(HouseConfiguration.bedColorTag)) {

@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.*;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiTabScreen;
 import com.wuest.prefab.gui.GuiUtils;
@@ -199,27 +200,27 @@ public class GuiStartHouseChooser extends GuiTabScreen {
 
             // Set the default glass colors for this style.
             if (this.houseConfiguration.houseStyle == HouseConfiguration.HouseStyle.HOBBIT) {
-                this.houseConfiguration.glassColor = DyeColor.GREEN;
+                this.houseConfiguration.glassColor = FullDyeColor.GREEN;
                 this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(DyeColor.GREEN)));
             } else if (this.houseConfiguration.houseStyle == HouseConfiguration.HouseStyle.LOFT) {
-                this.houseConfiguration.glassColor = DyeColor.BLACK;
+                this.houseConfiguration.glassColor = FullDyeColor.BLACK;
                 this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(DyeColor.BLACK)));
             } else if (this.houseConfiguration.houseStyle == HouseConfiguration.HouseStyle.BASIC) {
-                this.houseConfiguration.glassColor = DyeColor.LIGHT_GRAY;
+                this.houseConfiguration.glassColor = FullDyeColor.LIGHT_GRAY;
                 this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(DyeColor.LIGHT_GRAY)));
             } else if (this.houseConfiguration.houseStyle == HouseConfiguration.HouseStyle.DESERT2) {
-                this.houseConfiguration.glassColor = DyeColor.RED;
+                this.houseConfiguration.glassColor = FullDyeColor.RED;
                 this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(DyeColor.RED)));
             } else {
-                this.houseConfiguration.glassColor = DyeColor.CYAN;
+                this.houseConfiguration.glassColor = FullDyeColor.CYAN;
                 this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(DyeColor.CYAN)));
             }
 
             this.tabBlockTypes.visible = true;
 
         } else if (button == this.btnGlassColor) {
-            this.houseConfiguration.glassColor = DyeColor.byId(this.houseConfiguration.glassColor.getId() + 1);
-            this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.houseConfiguration.glassColor)));
+            this.houseConfiguration.glassColor = FullDyeColor.byId(this.houseConfiguration.glassColor.getId() + 1);
+            this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateFullDye(this.houseConfiguration.glassColor)));
         } else if (button == this.btnBedColor) {
             this.houseConfiguration.bedColor = DyeColor.byId(this.houseConfiguration.bedColor.getId() + 1);
             this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.houseConfiguration.bedColor)));
@@ -312,7 +313,7 @@ public class GuiStartHouseChooser extends GuiTabScreen {
         x = grayBoxX + 10;
         y = grayBoxY + 20;
 
-        this.btnGlassColor = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateDye(this.houseConfiguration.glassColor));
+        this.btnGlassColor = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateFullDye(this.houseConfiguration.glassColor));
 
         // Column 2:
         x = secondColumnX;

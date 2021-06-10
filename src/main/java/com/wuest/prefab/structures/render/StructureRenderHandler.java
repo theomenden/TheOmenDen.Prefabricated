@@ -1,6 +1,5 @@
 package com.wuest.prefab.structures.render;
 
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Prefab;

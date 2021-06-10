@@ -1,5 +1,6 @@
 package com.wuest.prefab.gui;
 
+import com.wuest.prefab.blocks.FullDyeColor;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
@@ -257,6 +258,9 @@ public class GuiLangKeys {
 	@Unlocalized(name = "black")
 	public static final String GUI_BLACK = "prefab.gui.black";
 
+	@Unlocalized(name = "clear")
+	public static final String GUI_CLEAR = "prefab.gui.clear";
+
 	@Unlocalized(name = "Flat Roof")
 	public static final String VILLAGER_HOUSE_FLAT_ROOF = "prefab.gui.villager.house.flat";
 
@@ -423,6 +427,10 @@ public class GuiLangKeys {
 
 	public static String translateDye(DyeColor dyeColor) {
 		return GuiLangKeys.translateString("prefab.gui." + dyeColor.asString());
+	}
+
+	public static String translateFullDye(FullDyeColor dyeColor) {
+		return GuiLangKeys.translateString("prefab.gui." + dyeColor.getName());
 	}
 
 	/**

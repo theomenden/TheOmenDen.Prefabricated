@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.config;
 
 import com.wuest.prefab.ModRegistry;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.structures.predefined.StructureProduceFarm;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -14,19 +15,19 @@ import net.minecraft.util.math.Direction;
  */
 public class ProduceFarmConfiguration extends StructureConfiguration {
 	private static String dyeColorTag = "dyeColor";
-	public DyeColor dyeColor;
+	public FullDyeColor dyeColor;
 
 	@Override
 	public void Initialize() {
 		super.Initialize();
 		this.houseFacing = Direction.NORTH;
-		this.dyeColor = DyeColor.CYAN;
+		this.dyeColor = FullDyeColor.CYAN;
 	}
 
 	@Override
 	protected void CustomReadFromNBTTag(NbtCompound messageTag, StructureConfiguration config) {
 		if (messageTag.contains(ProduceFarmConfiguration.dyeColorTag)) {
-			((ProduceFarmConfiguration) config).dyeColor = DyeColor.byId(messageTag.getInt(ProduceFarmConfiguration.dyeColorTag));
+			((ProduceFarmConfiguration) config).dyeColor = FullDyeColor.byId(messageTag.getInt(ProduceFarmConfiguration.dyeColorTag));
 		}
 	}
 

@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
 import com.wuest.prefab.ZipUtil;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.events.StructureEventHandler;
@@ -511,7 +512,7 @@ public class Structure {
     public void BeforeHangingEntityRemoved(AbstractDecorationEntity hangingEntity) {
     }
 
-    public BlockState getStainedGlassBlock(DyeColor color) {
+    public BlockState getStainedGlassBlock(FullDyeColor color) {
         switch (color) {
             case BLACK: {
                 return Blocks.BLACK_STAINED_GLASS.getDefaultState();
@@ -558,13 +559,16 @@ public class Structure {
             case YELLOW: {
                 return Blocks.YELLOW_STAINED_GLASS.getDefaultState();
             }
+            case CLEAR: {
+                return Blocks.GLASS.getDefaultState();
+            }
             default: {
                 return Blocks.CYAN_STAINED_GLASS.getDefaultState();
             }
         }
     }
 
-    public BlockState getStainedGlassPaneBlock(DyeColor color) {
+    public BlockState getStainedGlassPaneBlock(FullDyeColor color) {
         switch (color) {
             case BLACK: {
                 return Blocks.BLACK_STAINED_GLASS_PANE.getDefaultState();
@@ -610,6 +614,9 @@ public class Structure {
             }
             case YELLOW: {
                 return Blocks.YELLOW_STAINED_GLASS_PANE.getDefaultState();
+            }
+            case CLEAR: {
+                return Blocks.GLASS_PANE.getDefaultState();
             }
             default: {
                 return Blocks.CYAN_STAINED_GLASS_PANE.getDefaultState();
