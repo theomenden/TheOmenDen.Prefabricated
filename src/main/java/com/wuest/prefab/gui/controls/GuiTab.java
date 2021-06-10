@@ -101,8 +101,16 @@ public class GuiTab extends ClickableWidget {
         GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, this.x, this.y, 0, this.width, this.height, this.width, this.height);
         int j = Color.LIGHT_GRAY.getRGB();
 
-        int stringXPosition = ((this.x + this.width / 2) - (fontrenderer.getWidth(this.name)) / 2);
-        fontrenderer.draw(matrixStack, this.name, stringXPosition, this.y + (this.height - 8) / 2, j);
+        String buttonText = this.name;
+        int strWidth = fontrenderer.getWidth(this.name);
+        int ellipsisWidth = fontrenderer.getWidth("...");
+
+        if (strWidth > width - 6 && strWidth > ellipsisWidth) {
+            buttonText = fontrenderer.trimToWidth(new LiteralText(buttonText), width - 6 - ellipsisWidth).getString() + "...";
+        }
+
+        int stringXPosition = ((this.x + this.width / 2) - (fontrenderer.getWidth(buttonText)) / 2);
+        fontrenderer.draw(matrixStack, buttonText, stringXPosition, this.y + (this.height - 8) / 2, j);
     }
 
     /**
