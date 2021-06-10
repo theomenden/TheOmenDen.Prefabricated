@@ -22,7 +22,9 @@ public enum EnumStairsMaterial {
 	Birch("prefab.wall.block.type.birch", Blocks.BIRCH_STAIRS.getDefaultState()),
 	Jungle("prefab.wall.block.type.jungle", Blocks.JUNGLE_STAIRS.getDefaultState()),
 	Acacia("prefab.wall.block.type.acacia", Blocks.ACACIA_STAIRS.getDefaultState()),
-	DarkOak("prefab.wall.block.type.darkoak", Blocks.DARK_OAK_STAIRS.getDefaultState());
+	DarkOak("prefab.wall.block.type.darkoak", Blocks.DARK_OAK_STAIRS.getDefaultState()),
+	SandStone("prefab.ceiling.block.type.sand", Blocks.SANDSTONE_STAIRS.getDefaultState()),
+	RedSandStone("prefab.gui.material.red_sandstone", Blocks.RED_SANDSTONE_STAIRS.getDefaultState());
 
 	public final BlockState stairsState;
 	private String name;
@@ -94,6 +96,14 @@ public enum EnumStairsMaterial {
 
 			case Brick: {
 				return Blocks.BRICK_SLAB.getDefaultState();
+			}
+
+			case SandStone: {
+				return Blocks.SANDSTONE_SLAB.getDefaultState();
+			}
+
+			case RedSandStone: {
+				return Blocks.RED_SANDSTONE_SLAB.getDefaultState();
 			}
 
 			default: {
