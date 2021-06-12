@@ -1,6 +1,7 @@
 package com.wuest.prefab.gui.controls;
 
 
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,7 +9,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 
 import java.awt.*;
 
@@ -17,124 +17,124 @@ import java.awt.*;
  */
 @SuppressWarnings({"UnusedReturnValue", "unused"})
 public class GuiCheckBox extends CheckboxWidget {
-	protected int boxWidth;
-	protected int stringColor;
-	protected boolean withShadow;
-	protected MinecraftClient mineCraft;
-	protected String displayString;
-	protected PressAction handler;
-	protected int labelWidth;
+    protected int boxWidth;
+    protected int stringColor;
+    protected boolean withShadow;
+    protected MinecraftClient mineCraft;
+    protected String displayString;
+    protected PressAction handler;
+    protected int labelWidth;
 
-	public GuiCheckBox(int xPos, int yPos, String displayString, boolean isChecked, PressAction handler) {
-		super(xPos, yPos, 11, 12, new LiteralText(displayString), isChecked);
+    public GuiCheckBox(int xPos, int yPos, String displayString, boolean isChecked, PressAction handler) {
+        super(xPos, yPos, 11, 12, Utils.createTextComponent(displayString), isChecked);
 
-		this.boxWidth = 11;
-		this.mineCraft = MinecraftClient.getInstance();
-		this.displayString = displayString;
-		this.stringColor = Color.DARK_GRAY.getRGB();
-		this.handler = handler;
-		this.withShadow = false;
-		this.labelWidth = 98;
-	}
+        this.boxWidth = 11;
+        this.mineCraft = MinecraftClient.getInstance();
+        this.displayString = displayString;
+        this.stringColor = Color.DARK_GRAY.getRGB();
+        this.handler = handler;
+        this.withShadow = false;
+        this.labelWidth = 98;
+    }
 
-	/**
-	 * Gets the string color to write.
-	 *
-	 * @return The color used when writing the string value of this checkbox.
-	 */
-	public int getStringColor() {
-		return this.stringColor;
-	}
+    /**
+     * Gets the string color to write.
+     *
+     * @return The color used when writing the string value of this checkbox.
+     */
+    public int getStringColor() {
+        return this.stringColor;
+    }
 
-	/**
-	 * Sets the color used when writing the text for this checkbox.
-	 *
-	 * @param color The color used for the text.
-	 * @return An updated instance of this class.
-	 */
-	public GuiCheckBox setStringColor(int color) {
-		this.stringColor = color;
-		return this;
-	}
+    /**
+     * Sets the color used when writing the text for this checkbox.
+     *
+     * @param color The color used for the text.
+     * @return An updated instance of this class.
+     */
+    public GuiCheckBox setStringColor(int color) {
+        this.stringColor = color;
+        return this;
+    }
 
-	@Override
-	public void onPress() {
-		super.onPress();
+    @Override
+    public void onPress() {
+        super.onPress();
 
-		if (this.handler != null) {
-			this.handler.onPress(this);
-		}
-	}
+        if (this.handler != null) {
+            this.handler.onPress(this);
+        }
+    }
 
-	/**
-	 * Gets a value indicating whether a shadow is included with the checkbox text.
-	 *
-	 * @return The value of whether shadows are included when writing the text of this checkbox.
-	 */
-	public boolean getWithShadow() {
-		return this.withShadow;
-	}
+    /**
+     * Gets a value indicating whether a shadow is included with the checkbox text.
+     *
+     * @return The value of whether shadows are included when writing the text of this checkbox.
+     */
+    public boolean getWithShadow() {
+        return this.withShadow;
+    }
 
-	/**
-	 * Sets the value of whether shadows are included when writing the text of this checkbox.
-	 *
-	 * @param value The new value of the property.
-	 * @return An updated instance of this class
-	 */
-	public GuiCheckBox setWithShadow(boolean value) {
-		this.withShadow = value;
-		return this;
-	}
+    /**
+     * Sets the value of whether shadows are included when writing the text of this checkbox.
+     *
+     * @param value The new value of the property.
+     * @return An updated instance of this class
+     */
+    public GuiCheckBox setWithShadow(boolean value) {
+        this.withShadow = value;
+        return this;
+    }
 
-	public GuiCheckBox setLabelWidth(int value) {
-		this.labelWidth = value;
-		return this;
-	}
+    public GuiCheckBox setLabelWidth(int value) {
+        this.labelWidth = value;
+        return this;
+    }
 
-	/**
-	 * Draws this button to the screen.
-	 */
-	@Override
-	public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partial) {
-		if (this.visible) {
-			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.boxWidth && mouseY < this.y + this.height;
+    /**
+     * Draws this button to the screen.
+     */
+    @Override
+    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partial) {
+        if (this.visible) {
+            this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.boxWidth && mouseY < this.y + this.height;
 
-			GuiUtils.drawContinuousTexturedBox(
-					WIDGETS_TEXTURE,
-					this.x,
-					this.y,
-					0,
-					46,
-					this.boxWidth,
-					this.height,
-					200,
-					20,
-					2,
-					3,
-					2,
-					2,
-					this.getZOffset());
+            GuiUtils.drawContinuousTexturedBox(
+                    WIDGETS_TEXTURE,
+                    this.x,
+                    this.y,
+                    0,
+                    46,
+                    this.boxWidth,
+                    this.height,
+                    200,
+                    20,
+                    2,
+                    3,
+                    2,
+                    2,
+                    this.getZOffset());
 
-			int color = this.stringColor;
+            int color = this.stringColor;
 
-			if (!this.active) {
-				color = 10526880;
-			}
+            if (!this.active) {
+                color = 10526880;
+            }
 
-			if (this.isChecked()) {
-				DrawableHelper.drawCenteredText(matrixStack, this.mineCraft.textRenderer, "x", this.x + this.boxWidth / 2 + 1, this.y + 1, 14737632);
-			}
+            if (this.isChecked()) {
+                DrawableHelper.drawCenteredText(matrixStack, this.mineCraft.textRenderer, "x", this.x + this.boxWidth / 2 + 1, this.y + 1, 14737632);
+            }
 
-			if (this.withShadow) {
-				this.mineCraft.textRenderer.drawWithShadow(matrixStack, displayString, x + this.boxWidth + 2, y + 2, color);
-			} else {
-				this.mineCraft.textRenderer.drawTrimmed(new LiteralText(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
-			}
-		}
-	}
+            if (this.withShadow) {
+                this.mineCraft.textRenderer.drawWithShadow(matrixStack, displayString, x + this.boxWidth + 2, y + 2, color);
+            } else {
+                this.mineCraft.textRenderer.drawTrimmed(Utils.createTextComponent(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
+            }
+        }
+    }
 
-	@Environment(EnvType.CLIENT)
-	public interface PressAction {
-		void onPress(GuiCheckBox p_onPress_1_);
-	}
+    @Environment(EnvType.CLIENT)
+    public interface PressAction {
+        void onPress(GuiCheckBox p_onPress_1_);
+    }
 }

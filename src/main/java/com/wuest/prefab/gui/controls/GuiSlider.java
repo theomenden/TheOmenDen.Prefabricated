@@ -1,5 +1,6 @@
 package com.wuest.prefab.gui.controls;
 
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -58,16 +59,16 @@ public class GuiSlider extends ButtonWidget {
 			precision = 0;
 		}
 
-		setMessage(new LiteralText("").append(dispString).append(val).append(suffix));
+		setMessage(Utils.createTextComponent("").append(dispString).append(val).append(suffix));
 
 		drawString = drawStr;
 		if(!drawString)
-			setMessage(new LiteralText(""));
+			setMessage(Utils.createTextComponent (""));
 	}
 
 	public GuiSlider(int xPos, int yPos, Text displayStr, double minVal, double maxVal, double currentVal, PressAction handler, ISlider par)
 	{
-		this(xPos, yPos, 150, 20, displayStr, new LiteralText(""), minVal, maxVal, currentVal, true, true, handler, par);
+		this(xPos, yPos, 150, 20, displayStr, Utils.createTextComponent (""), minVal, maxVal, currentVal, true, true, handler, par);
 	}
 
 	/**
@@ -152,7 +153,7 @@ public class GuiSlider extends ButtonWidget {
 
 		if(drawString)
 		{
-			setMessage(new LiteralText("").append(dispString).append(val).append(suffix));
+			setMessage(Utils.createTextComponent ("").append(dispString).append(val).append(suffix));
 		}
 
 		if (parent != null)

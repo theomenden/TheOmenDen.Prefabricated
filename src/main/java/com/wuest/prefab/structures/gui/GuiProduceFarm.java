@@ -12,8 +12,6 @@ import com.wuest.prefab.structures.predefined.StructureProduceFarm;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -43,14 +41,14 @@ public class GuiProduceFarm extends GuiStructure {
         int grayBoxY = adjustedXYValue.getSecond();
 
         // Create the buttons.
-        this.btnGlassColor = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
+        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.dyeColor);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
@@ -62,8 +60,7 @@ public class GuiProduceFarm extends GuiStructure {
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(houseTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 170, 171, 170, 171);
+        GuiUtils.bindAndDrawTexture(houseTopDown, matrixStack, x + 250, y, 1, 170, 171, 170, 171);
     }
 
     @Override
@@ -84,7 +81,7 @@ public class GuiProduceFarm extends GuiStructure {
 
         if (button == this.btnGlassColor) {
             this.configuration.dyeColor = FullDyeColor.byId(this.configuration.dyeColor.getId() + 1);
-            this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateFullDye(this.configuration.dyeColor)));
+            GuiUtils.setButtonText(btnGlassColor, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
         } else if (button == this.btnVisualize) {
             StructureProduceFarm structure = StructureProduceFarm.CreateInstance(StructureProduceFarm.ASSETLOCATION, StructureProduceFarm.class);
             StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);

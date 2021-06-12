@@ -14,7 +14,6 @@ import com.wuest.prefab.structures.predefined.StructurePart;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.Direction;
 
 
@@ -52,11 +51,11 @@ public class GuiStructurePart extends GuiStructure {
         int grayBoxY = adjustedValue.getSecond();
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         this.sldrStairHeight = this.createAndAddSlider(grayBoxX + 147, grayBoxY + 100, 90, 20, "", "", 1, 9, this.configuration.stairHeight, false, true, this::buttonClicked);
 
@@ -66,20 +65,18 @@ public class GuiStructurePart extends GuiStructure {
 
         this.sldrGeneralWidth = this.createAndAddSlider(grayBoxX + 147, grayBoxY + 60, 90, 20, "", "", 3, 9, this.configuration.generalWidth, false, true, this::buttonClicked);
 
-        this.btnPartStyle = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.translateString(this.configuration.style.translateKey));
+        this.btnPartStyle = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.style.translateKey);
 
-        this.btnMaterialType = this.createAndAddButton(grayBoxX + 147, grayBoxY + 20, 90, 20, this.configuration.partMaterial.getTranslatedName());
+        this.btnMaterialType = this.createAndAddButton(grayBoxX + 147, grayBoxY + 20, 90, 20, this.configuration.partMaterial.getName());
 
-        this.btnStairsMaterialType = this.createAndAddButton(grayBoxX + 147, grayBoxY + 20, 90, 20, this.configuration.stairsMaterial.getTranslatedName());
+        this.btnStairsMaterialType = this.createAndAddButton(grayBoxX + 147, grayBoxY + 20, 90, 20, this.configuration.stairsMaterial.getTranslatedName(), false);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(this.configuration.style.getPictureLocation());
-
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
+        GuiUtils.bindAndDrawTexture(this.configuration.style.getPictureLocation(), matrixStack, x + 250, y, 1,
                 this.configuration.style.imageWidth, this.configuration.style.imageHeight,
                 this.configuration.style.imageWidth, this.configuration.style.imageHeight);
     }
@@ -136,14 +133,14 @@ public class GuiStructurePart extends GuiStructure {
 
         if (button == this.btnMaterialType) {
             this.configuration.partMaterial = EnumStructureMaterial.getMaterialByNumber(this.configuration.partMaterial.getNumber() + 1);
-            this.btnMaterialType.setMessage(new LiteralText(this.configuration.partMaterial.getTranslatedName()));
+            GuiUtils.setButtonText(btnMaterialType, this.configuration.partMaterial.getTranslatedName());
         }
         if (button == this.btnStairsMaterialType) {
             this.configuration.stairsMaterial = EnumStairsMaterial.getByOrdinal(this.configuration.stairsMaterial.ordinal() + 1);
-            this.btnStairsMaterialType.setMessage(new LiteralText(this.configuration.stairsMaterial.getTranslatedName()));
+            GuiUtils.setButtonText(btnStairsMaterialType, this.configuration.stairsMaterial.getTranslatedName());
         } else if (button == this.btnPartStyle) {
             this.configuration.style = StructurePartConfiguration.EnumStyle.getByOrdinal(this.configuration.style.ordinal() + 1);
-            this.btnPartStyle.setMessage(new LiteralText(GuiLangKeys.translateString(this.configuration.style.translateKey)));
+            GuiUtils.setButtonText(btnPartStyle, GuiLangKeys.translateString(this.configuration.style.translateKey));
         } else if (button == this.btnVisualize) {
             StructurePart structure = new StructurePart();
             structure.getClearSpace().getShape().setDirection(Direction.NORTH);

@@ -43,31 +43,29 @@ public class GuiInstantBridge extends GuiStructure {
         int grayBoxY = this.getCenteredYAxis() - 83;
 
         // Create the buttons.
-        this.btnMaterialType = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.bridgeMaterial.getTranslatedName());
+        this.btnMaterialType = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.bridgeMaterial.getName());
 
         this.sldrBridgeLength = this.createAndAddSlider(grayBoxX + 147, grayBoxY + 20, 90, 20, "", "", 25, 75, this.configuration.bridgeLength, false, true, this::buttonClicked);
 
-        this.chckIncludeRoof = this.createAndAddCheckBox(grayBoxX + 147, grayBoxY + 55, GuiLangKeys.translateString(GuiLangKeys.INCLUDE_ROOF), this.configuration.includeRoof, this::buttonClicked);
+        this.chckIncludeRoof = this.createAndAddCheckBox(grayBoxX + 147, grayBoxY + 55, GuiLangKeys.INCLUDE_ROOF, this.configuration.includeRoof, this::buttonClicked);
 
         this.sldrInteriorHeight = this.createAndAddSlider(grayBoxX + 147, grayBoxY + 90, 90, 20, "", "", 3, 8, this.configuration.interiorHeight, false, true, this::buttonClicked);
 
         this.sldrInteriorHeight.visible = this.chckIncludeRoof.isChecked();
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(structureTopDown);
-
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 165, 58, 165, 58);
+        GuiUtils.bindAndDrawTexture(structureTopDown, matrixStack, x + 250, y, 1, 165, 58, 165, 58);
     }
 
     @Override
@@ -118,7 +116,7 @@ public class GuiInstantBridge extends GuiStructure {
         }
         if (button == this.btnMaterialType) {
             this.configuration.bridgeMaterial = EnumStructureMaterial.getMaterialByNumber(this.configuration.bridgeMaterial.getNumber() + 1);
-            this.btnMaterialType.setMessage(new LiteralText(this.configuration.bridgeMaterial.getTranslatedName()));
+            GuiUtils.setButtonText(btnMaterialType, this.configuration.bridgeMaterial.getTranslatedName());
         } else if (button == this.btnVisualize) {
             StructureInstantBridge structure = new StructureInstantBridge();
             structure.getClearSpace().getShape().setDirection(Direction.SOUTH);

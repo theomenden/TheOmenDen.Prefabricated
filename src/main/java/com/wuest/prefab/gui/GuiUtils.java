@@ -1,16 +1,26 @@
 package com.wuest.prefab.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.Utils;
+import com.wuest.prefab.gui.controls.ExtendedButton;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
 public class GuiUtils {
+
+    /**
+     * Binds a texture to the texture manager for rendering.
+     *
+     * @param resourceLocation The resource location to bind.
+     */
+    public static void bindTexture(Identifier resourceLocation) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, resourceLocation);
+    }
 
     /**
      * Draws a textured rectangle Args: x, y, z, width, height, textureWidth, textureHeight
@@ -23,7 +33,7 @@ public class GuiUtils {
      * @param textureWidth  The width of the texture.
      * @param textureHeight The height of the texture.
      */
-    public static void drawModalRectWithCustomSizedTexture(MatrixStack matrixStack, int x, int y, int z, int width, int height, int textureWidth, int textureHeight) {
+    public static void drawTexture(MatrixStack matrixStack, int x, int y, int z, int width, int height, int textureWidth, int textureHeight) {
         DrawableHelper.drawTexture(matrixStack, x, y, z, 0, 0, width, height, textureHeight, textureWidth);
     }
 
@@ -72,7 +82,6 @@ public class GuiUtils {
      * @param rightBorder   the size of the box's right border
      * @param zLevel        the zLevel to draw at
      */
-    @SuppressWarnings("deprecation")
     public static void drawContinuousTexturedBox(int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
                                                  int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -136,4 +145,14 @@ public class GuiUtils {
         wr.vertex(x, y, zLevel).texture(u * uScale, (v * vScale)).next();
         tessellator.draw();
     }
+
+    public static void bindAndDrawTexture(Identifier resourceLocation, MatrixStack matrixStack, int x, int y, int z, int width, int height, int textureWidth, int textureHeight) {
+        GuiUtils.bindTexture(resourceLocation);
+        GuiUtils.drawTexture(matrixStack, x, y, z, width, height, textureWidth, textureHeight);
+    }
+
+    public static void setButtonText(ExtendedButton button, String message) {
+        button.setMessage(Utils.createTextComponent(message));
+    }
+
 }

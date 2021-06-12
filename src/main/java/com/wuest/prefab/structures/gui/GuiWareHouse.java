@@ -5,6 +5,7 @@ import com.wuest.prefab.Tuple;
 import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
+import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.WareHouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureWarehouse;
@@ -27,7 +28,7 @@ public class GuiWareHouse extends GuiStructure {
     private static final Identifier wareHouseTopDown = new Identifier("prefab", "textures/gui/warehouse_top_down.png");
     protected WareHouseConfiguration configuration;
     String clientGUIIdentifier;
-    private ButtonWidget btnGlassColor;
+    private ExtendedButton btnGlassColor;
 
     public GuiWareHouse() {
         super("Warehouse");
@@ -49,22 +50,21 @@ public class GuiWareHouse extends GuiStructure {
         int grayBoxY = adjustedXYValue.getSecond();
 
         // Create the buttons.
-        this.btnGlassColor = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
+        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.dyeColor);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(wareHouseTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 132, 153, 132, 153);
+        GuiUtils.bindAndDrawTexture(wareHouseTopDown, matrixStack, x + 250, y, 1, 132, 153, 132, 153);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class GuiWareHouse extends GuiStructure {
 
         if (button == this.btnGlassColor) {
             this.configuration.dyeColor = FullDyeColor.byId(this.configuration.dyeColor.getId() + 1);
-            this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateFullDye(this.configuration.dyeColor)));
+            GuiUtils.setButtonText(this.btnGlassColor, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
         } else if (button == this.btnVisualize) {
             if (this.configuration.advanced) {
                 StructureWarehouse structure = StructureWarehouse.CreateInstance(StructureWarehouse.ADVANCED_ASSET_LOCATION, StructureWarehouse.class);

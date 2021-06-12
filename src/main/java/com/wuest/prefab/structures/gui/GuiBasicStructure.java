@@ -2,6 +2,7 @@ package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
@@ -48,9 +49,7 @@ public class GuiBasicStructure extends GuiStructure {
 
         if (this.includePicture) {
             // Draw the control background.
-            this.bindTexture(this.configuration.chosenOption.getPictureLocation());
-
-            GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
+            GuiUtils.bindAndDrawTexture(this.configuration.chosenOption.getPictureLocation(), matrixStack, x + 250, y, 1,
                     this.configuration.chosenOption.getImageWidth(), this.configuration.chosenOption.getImageHeight(),
                     this.configuration.chosenOption.getImageWidth(), this.configuration.chosenOption.getImageHeight());
         }
@@ -107,7 +106,7 @@ public class GuiBasicStructure extends GuiStructure {
         int x = grayBoxX + 10;
         int y = grayBoxY + 20;
 
-        this.btnBedColor = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateDye(this.configuration.bedColor));
+        this.btnBedColor = this.createAndAddDyeButton(x, y, 90, 20, this.configuration.bedColor);
 
         if (this.configuration.basicStructureName == BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance
                 || this.configuration.basicStructureName == BasicStructureConfiguration.EnumBasicStructureName.WatchTower
@@ -119,19 +118,19 @@ public class GuiBasicStructure extends GuiStructure {
         }
 
         if (this.availableOptions.size() > 1) {
-            this.btnStructureOptions = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateString(this.configuration.chosenOption.getTranslationString()));
+            this.btnStructureOptions = this.createAndAddButton(x, y, 90, 20, this.configuration.chosenOption.getTranslationString());
             this.btnStructureOptions.visible = true;
             y += 40;
         } else if (this.btnStructureOptions != null) {
             this.btnStructureOptions.visible = false;
         }
 
-        this.btnVisualize = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     /**
@@ -159,7 +158,7 @@ public class GuiBasicStructure extends GuiStructure {
             this.closeScreen();
         } else if (button == this.btnBedColor) {
             this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-            this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
+            GuiUtils.setButtonText(btnBedColor, GuiLangKeys.translateDye(this.configuration.bedColor));
         } else if (button == this.btnStructureOptions) {
             for (int i = 0; i < this.availableOptions.size(); i++) {
                 BaseOption option = this.availableOptions.get(i);
@@ -176,7 +175,7 @@ public class GuiBasicStructure extends GuiStructure {
 
                 if (chosenOption != null) {
                     this.configuration.chosenOption = chosenOption;
-                    this.btnStructureOptions.setMessage(new LiteralText(GuiLangKeys.translateString(chosenOption.getTranslationString())));
+                    this.btnStructureOptions.setMessage(GuiLangKeys.translateToComponent(chosenOption.getTranslationString()));
                     break;
                 }
             }

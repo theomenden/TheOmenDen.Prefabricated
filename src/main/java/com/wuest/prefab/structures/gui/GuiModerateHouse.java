@@ -52,37 +52,36 @@ public class GuiModerateHouse extends GuiStructure {
         int grayBoxY = this.getCenteredYAxis() - 83;
 
         // Create the buttons.
-        this.btnHouseStyle = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.houseStyle.getDisplayName());
+        this.btnHouseStyle = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.houseStyle.getDisplayName(), false);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 50, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 50, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
 
         int x = grayBoxX + 130;
         int y = grayBoxY + 20;
 
-        this.btnBedColor = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateDye(this.configuration.bedColor));
+        this.btnBedColor = this.createAndAddDyeButton(x, y, 90, 20, this.configuration.bedColor);
 
         y += 30;
 
-        this.btnAddChest = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_CHEST), this.configuration.addChests, null);
+        this.btnAddChest = this.createAndAddCheckBox(x, y, GuiLangKeys.STARTER_HOUSE_ADD_CHEST, this.configuration.addChests, null);
         y += 15;
 
-        this.btnAddMineShaft = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_BUILD_MINESHAFT), this.configuration.addChestContents, null);
+        this.btnAddMineShaft = this.createAndAddCheckBox(x, y, GuiLangKeys.STARTER_HOUSE_BUILD_MINESHAFT, this.configuration.addChestContents, null);
         y += 15;
 
-        this.btnAddChestContents = this.createAndAddCheckBox(x, y, GuiLangKeys.translateString(GuiLangKeys.STARTER_HOUSE_ADD_CHEST_CONTENTS), this.configuration.addMineshaft, null);
+        this.btnAddChestContents = this.createAndAddCheckBox(x, y, GuiLangKeys.STARTER_HOUSE_ADD_CHEST_CONTENTS, this.configuration.addMineshaft, null);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(this.configuration.houseStyle.getHousePicture());
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 249, y, 1,
+        GuiUtils.bindAndDrawTexture(this.configuration.houseStyle.getHousePicture(), matrixStack, x + 249, y, 1,
                 this.configuration.houseStyle.getImageWidth(), this.configuration.houseStyle.getImageHeight(),
                 this.configuration.houseStyle.getImageWidth(), this.configuration.houseStyle.getImageHeight());
     }
@@ -114,14 +113,14 @@ public class GuiModerateHouse extends GuiStructure {
             int id = this.configuration.houseStyle.getValue() + 1;
             this.configuration.houseStyle = ModerateHouseConfiguration.HouseStyle.ValueOf(id);
 
-            this.btnHouseStyle.setMessage(new LiteralText(this.configuration.houseStyle.getDisplayName()));
+            GuiUtils.setButtonText(btnHouseStyle, this.configuration.houseStyle.getDisplayName());
         } else if (button == this.btnVisualize) {
             StructureModerateHouse structure = StructureModerateHouse.CreateInstance(this.configuration.houseStyle.getStructureLocation(), StructureModerateHouse.class);
             StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);
             this.closeScreen();
         } else if (button == this.btnBedColor) {
             this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-            this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
+            GuiUtils.setButtonText(btnBedColor, GuiLangKeys.translateDye(this.configuration.bedColor));
         }
     }
 }

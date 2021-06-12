@@ -47,27 +47,26 @@ public class GuiVillagerHouses extends GuiStructure {
         this.btnHouseStyle = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.houseStyle.getDisplayName());
 
         // Create the buttons.
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 60, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 60, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         int x = grayBoxX + 130;
         int y = grayBoxY + 20;
 
-        this.btnBedColor = this.createAndAddButton(x, y, 90, 20, GuiLangKeys.translateDye(this.configuration.bedColor));
+        this.btnBedColor = this.createAndAddDyeButton(x, y, 90, 20, this.configuration.bedColor);
 
         this.btnBedColor.visible = this.houseStyle == VillagerHouseConfiguration.HouseStyle.LONG_HOUSE;
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(this.houseStyle.getHousePicture());
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1,
+        GuiUtils.bindAndDrawTexture(this.houseStyle.getHousePicture(), matrixStack, x + 250, y, 1,
                 this.houseStyle.getImageWidth(), this.houseStyle.getImageHeight(),
                 this.houseStyle.getImageWidth(), this.houseStyle.getImageHeight());
     }
@@ -94,7 +93,7 @@ public class GuiVillagerHouses extends GuiStructure {
             int id = this.houseStyle.getValue() + 1;
             this.houseStyle = VillagerHouseConfiguration.HouseStyle.ValueOf(id);
 
-            this.btnHouseStyle.setMessage(new LiteralText(this.houseStyle.getDisplayName()));
+            GuiUtils.setButtonText(btnHouseStyle, this.houseStyle.getDisplayName());
 
             this.btnBedColor.visible = this.houseStyle == VillagerHouseConfiguration.HouseStyle.LONG_HOUSE;
         } else if (button == this.btnVisualize) {
@@ -104,7 +103,7 @@ public class GuiVillagerHouses extends GuiStructure {
             this.closeScreen();
         } else if (button == this.btnBedColor) {
             this.configuration.bedColor = DyeColor.byId(this.configuration.bedColor.getId() + 1);
-            this.btnBedColor.setMessage(new LiteralText(GuiLangKeys.translateDye(this.configuration.bedColor)));
+            GuiUtils.setButtonText(btnBedColor, GuiLangKeys.translateDye(this.configuration.bedColor));
         }
     }
 }

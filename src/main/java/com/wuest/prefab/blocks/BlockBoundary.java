@@ -148,7 +148,7 @@ public class BlockBoundary extends Block {
 		boolean advancedKeyDown = Screen.hasShiftDown();
 
 		if (!advancedKeyDown) {
-			tooltip.add(new LiteralText(GuiLangKeys.translateString(GuiLangKeys.SHIFT_TOOLTIP)));
+			tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SHIFT_TOOLTIP));
 		} else {
 			tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BOUNDARY_TOOLTIP)));
 		}

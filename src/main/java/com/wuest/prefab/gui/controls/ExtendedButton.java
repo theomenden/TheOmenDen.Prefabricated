@@ -1,6 +1,7 @@
 package com.wuest.prefab.gui.controls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -43,7 +44,7 @@ public class ExtendedButton extends ButtonWidget {
 			int ellipsisWidth = mc.textRenderer.getWidth("...");
 
 			if (strWidth > width - 6 && strWidth > ellipsisWidth) {
-				buttonText = new LiteralText(mc.textRenderer.trimToWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+				buttonText = Utils.createTextComponent(mc.textRenderer.trimToWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 			}
 
 			DrawableHelper.drawCenteredText(mStack, mc.textRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, this.getFGColor());

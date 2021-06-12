@@ -2,7 +2,6 @@ package com.wuest.prefab.structures.gui;
 
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.gui.GuiTabScreen;
 import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.structures.config.HorseStableConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
@@ -31,8 +30,7 @@ public class GuiHorseStable extends GuiStructure {
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(structureTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 104, 166, 104, 166);
+        GuiUtils.bindAndDrawTexture(structureTopDown, matrixStack, x + 250, y, 1, 104, 166, 104, 166);
     }
 
     @Override
@@ -68,11 +66,11 @@ public class GuiHorseStable extends GuiStructure {
         int grayBoxY = (this.height / 2) - 83;
 
         // Create the buttons.
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 }

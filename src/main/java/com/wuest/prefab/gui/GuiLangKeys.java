@@ -1,7 +1,9 @@
 package com.wuest.prefab.gui;
 
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.blocks.FullDyeColor;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Direction;
 
@@ -11,6 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
+@SuppressWarnings("unused")
 public class GuiLangKeys {
 	@Unlocalized(name = "Note: If you're facing north, choose south so the pier is going away from you. The white border is just to show the size.")
 	public static final String FISH_POND_STRUCTURE_FACING = "prefab.gui.fishpond.structure.facing";
@@ -387,6 +390,15 @@ public class GuiLangKeys {
 		} else {
 			return GuiLangKeys.getUnLocalized(translateKey);
 		}
+	}
+
+	/**
+	 * Translates a translation key and puts it in a text component.
+	 * @param translateKey The key to translate.
+	 * @return A StringTextComponent representing the translated text.
+	 */
+	public static LiteralText translateToComponent(String translateKey) {
+		return Utils.createTextComponent(GuiLangKeys.translateString(translateKey));
 	}
 
 	/**

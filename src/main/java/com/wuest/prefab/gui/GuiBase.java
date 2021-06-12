@@ -1,7 +1,8 @@
 package com.wuest.prefab.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.Utils;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiSlider;
@@ -10,11 +11,10 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public abstract class GuiBase extends Screen {
     private boolean pauseGame;
 
     public GuiBase(String title) {
-        super(new LiteralText(title));
+        super(Utils.createTextComponent(title));
         this.pauseGame = true;
     }
 
@@ -90,7 +90,57 @@ public abstract class GuiBase extends Screen {
      * @return A new button.
      */
     public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text) {
-        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, new LiteralText(text), this::buttonClicked);
+        return this.createAndAddButton(x, y, width, height, text, true);
+    }
+
+    /**
+     * Creates a button using the button clicked event as the handler. Then adds it to the buttons list and returns the created object.
+     *
+     * @param x      The x-axis position.
+     * @param y      The y-axis position.
+     * @param width  The width of the button.
+     * @param height The height of the button.
+     * @param text   The text of the button.
+     * @return A new button.
+     */
+    public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text, boolean translate) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked);
+
+        this.addDrawableChild(returnValue);
+
+        return returnValue;
+    }
+
+    /**
+     * Creates a button using the button clicked event as the handler. Then adds it to the buttons list and returns the created object.
+     *
+     * @param x      The x-axis position.
+     * @param y      The y-axis position.
+     * @param width  The width of the button.
+     * @param height The height of the button.
+     * @param color  The color to describe on the button.
+     * @return A new button.
+     */
+    public ExtendedButton createAndAddDyeButton(int x, int y, int width, int height, DyeColor color) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateDye(color)), this::buttonClicked);
+
+        this.addDrawableChild(returnValue);
+
+        return returnValue;
+    }
+
+    /**
+     * Creates a button using the button clicked event as the handler. Then adds it to the buttons list and returns the created object.
+     *
+     * @param x      The x-axis position.
+     * @param y      The y-axis position.
+     * @param width  The width of the button.
+     * @param height The height of the button.
+     * @param color  The color to describe on the button.
+     * @return A new button.
+     */
+    public ExtendedButton createAndAddFullDyeButton(int x, int y, int width, int height, FullDyeColor color) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateFullDye(color)), this::buttonClicked);
 
         this.addDrawableChild(returnValue);
 
@@ -99,7 +149,7 @@ public abstract class GuiBase extends Screen {
 
     public GuiCheckBox createAndAddCheckBox(int xPos, int yPos, String displayString, boolean isChecked,
                                             GuiCheckBox.PressAction handler) {
-        GuiCheckBox checkBox = new GuiCheckBox(xPos, yPos, displayString, isChecked, handler);
+        GuiCheckBox checkBox = new GuiCheckBox(xPos, yPos, GuiLangKeys.translateString(displayString), isChecked, handler);
 
         this.addDrawableChild(checkBox);
         return checkBox;
@@ -108,7 +158,7 @@ public abstract class GuiBase extends Screen {
     public GuiSlider createAndAddSlider(int xPos, int yPos, int width, int height, String prefix, String suf,
                                         double minVal, double maxVal, double currentVal, boolean showDec, boolean drawStr,
                                         ButtonWidget.PressAction handler) {
-        GuiSlider slider = new GuiSlider(xPos, yPos, width, height, new LiteralText(prefix), new LiteralText(suf), minVal, maxVal, currentVal, showDec,
+        GuiSlider slider = new GuiSlider(xPos, yPos, width, height, Utils.createTextComponent(prefix), Utils.createTextComponent(suf), minVal, maxVal, currentVal, showDec,
                 drawStr, handler);
 
         this.addDrawableChild(slider);
@@ -116,16 +166,13 @@ public abstract class GuiBase extends Screen {
     }
 
     protected void drawControlBackground(MatrixStack matrixStack, int grayBoxX, int grayBoxY) {
-        this.bindTexture(this.backgroundTextures);
-        this.drawTexture(matrixStack, grayBoxX, grayBoxY, 0, 0, 256, 256);
+        GuiUtils.bindAndDrawTexture(this.backgroundTextures, matrixStack, grayBoxX, grayBoxY, this.getZOffset(), 256, 256, 256, 256);
     }
 
     protected void renderButtons(MatrixStack matrixStack, int mouseX, int mouseY) {
         for (Element button : this.children()) {
-            if (button instanceof PressableWidget) {
-                PressableWidget currentButton = (PressableWidget) button;
-
-                if (currentButton != null && currentButton.visible) {
+            if (button instanceof PressableWidget currentButton) {
+                if (currentButton.visible) {
                     currentButton.renderButton(matrixStack, mouseX, mouseY, this.client.getTickDelta());
                 }
             }
@@ -164,11 +211,11 @@ public abstract class GuiBase extends Screen {
      * @param textColor The color of the text.
      */
     public void drawSplitString(String str, int x, int y, int wrapWidth, int textColor) {
-        this.getMinecraft().textRenderer.drawTrimmed(new LiteralText(str), x, y, wrapWidth, textColor);
+        this.getMinecraft().textRenderer.drawTrimmed(Utils.createTextComponent(str), x, y, wrapWidth, textColor);
     }
 
     public List<OrderedText> getSplitString(String str, int wrapWidth) {
-        return this.getMinecraft().textRenderer.wrapLines(new LiteralText(str), wrapWidth);
+        return this.getMinecraft().textRenderer.wrapLines(Utils.createTextComponent(str), wrapWidth);
     }
 
     public List<OrderedText> getSplitString(StringVisitable str, int wrapWidth) {
@@ -180,18 +227,6 @@ public abstract class GuiBase extends Screen {
      */
     public void closeScreen() {
         this.getMinecraft().openScreen(null);
-    }
-
-    /**
-     * Binds a texture to the texture manager for rendering.
-     *
-     * @param resourceLocation The resource location to bind.
-     */
-    public void bindTexture(Identifier resourceLocation) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, resourceLocation);
-        //this.getMinecraft().getTextureManager().bindTexture(resourceLocation);
     }
 
     public MinecraftClient getMinecraft() {

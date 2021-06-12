@@ -1,7 +1,7 @@
 package com.wuest.prefab.gui.controls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.wuest.prefab.gui.GuiTabScreen;
+import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -11,7 +11,6 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 
 import java.awt.*;
@@ -28,7 +27,7 @@ public class GuiTab extends ClickableWidget {
     private String name;
 
     public GuiTab(GuiTabTray parent, String name, int x, int y) {
-        super(x, y, 50, 20, new LiteralText(name));
+        super(x, y, 50, 20, Utils.createTextComponent(name));
 
         this.Initialize(parent, name);
     }
@@ -98,7 +97,7 @@ public class GuiTab extends ClickableWidget {
             RenderSystem.setShaderTexture(0, TAB_TEXTURES);
         }
 
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, this.x, this.y, 0, this.width, this.height, this.width, this.height);
+        GuiUtils.drawTexture(matrixStack, this.x, this.y, 0, this.width, this.height, this.width, this.height);
         int j = Color.LIGHT_GRAY.getRGB();
 
         String buttonText = this.name;
@@ -106,7 +105,7 @@ public class GuiTab extends ClickableWidget {
         int ellipsisWidth = fontrenderer.getWidth("...");
 
         if (strWidth > width - 6 && strWidth > ellipsisWidth) {
-            buttonText = fontrenderer.trimToWidth(new LiteralText(buttonText), width - 6 - ellipsisWidth).getString() + "...";
+            buttonText = fontrenderer.trimToWidth(Utils.createTextComponent(buttonText), width - 6 - ellipsisWidth).getString() + "...";
         }
 
         int stringXPosition = ((this.x + this.width / 2) - (fontrenderer.getWidth(buttonText)) / 2);
@@ -138,8 +137,8 @@ public class GuiTab extends ClickableWidget {
         soundHandlerIn.play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 
-	@Override
-	public void appendNarrations(NarrationMessageBuilder builder) {
-		this.method_37021(builder);
-	}
+    @Override
+    public void appendNarrations(NarrationMessageBuilder builder) {
+        this.method_37021(builder);
+    }
 }

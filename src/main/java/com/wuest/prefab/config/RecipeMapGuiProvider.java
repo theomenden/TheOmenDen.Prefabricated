@@ -1,5 +1,6 @@
 package com.wuest.prefab.config;
 
+import com.wuest.prefab.Utils;
 import me.sargunvohra.mcmods.autoconfig1u.gui.registry.api.GuiProvider;
 import me.sargunvohra.mcmods.autoconfig1u.gui.registry.api.GuiRegistryAccess;
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry;
@@ -35,9 +36,10 @@ public class RecipeMapGuiProvider implements GuiProvider {
 
 			ArrayList<AbstractConfigListEntry> entries = new ArrayList<>();
 			for (Map.Entry<String, Boolean> map : savedHashMap.entrySet()) {
-				BooleanListEntry entry = new BooleanListEntry(new LiteralText(map.getKey()), map.getValue(), new LiteralText("Reset"), () -> true, (value) -> {
+				BooleanListEntry entry = new BooleanListEntry(Utils.createTextComponent(map.getKey()), map.getValue(),
+						Utils.createTextComponent("Reset"), () -> true, (value) -> {
 					map.setValue(value);
-				}, () -> java.util.Optional.of(new Text[]{new LiteralText("Enables or disables recipes for " + map.getKey())}));
+				}, () -> java.util.Optional.of(new Text[]{Utils.createTextComponent("Enables or disables recipes for " + map.getKey())}));
 
 				entries.add(entry);
 			}

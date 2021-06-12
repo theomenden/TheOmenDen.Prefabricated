@@ -12,8 +12,6 @@ import com.wuest.prefab.structures.predefined.StructureMonsterMasher;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -43,22 +41,21 @@ public class GuiMonsterMasher extends GuiStructure {
         int grayBoxY = adjustedXYValue.getSecond();
 
         // Create the buttons.
-        this.btnGlassColor = this.createAndAddButton(grayBoxX + 10, grayBoxY + 20, 90, 20, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
+        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.dyeColor);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_PREVIEW));
+        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
 
         // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_BUILD));
+        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
 
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.translateString(GuiLangKeys.GUI_BUTTON_CANCEL));
+        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
 
-        this.bindTexture(houseTopDown);
-        GuiUtils.drawModalRectWithCustomSizedTexture(matrixStack, x + 250, y, 1, 108, 156, 108, 156);
+        GuiUtils.bindAndDrawTexture(houseTopDown, matrixStack, x + 250, y, 1, 108, 156, 108, 156);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class GuiMonsterMasher extends GuiStructure {
 
         if (button == this.btnGlassColor) {
             this.configuration.dyeColor = FullDyeColor.byId(this.configuration.dyeColor.getId() + 1);
-            this.btnGlassColor.setMessage(new LiteralText(GuiLangKeys.translateFullDye(this.configuration.dyeColor)));
+            GuiUtils.setButtonText(btnGlassColor, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
         } else if (button == this.btnVisualize) {
             StructureMonsterMasher structure = StructureMonsterMasher.CreateInstance(StructureMonsterMasher.ASSETLOCATION, StructureMonsterMasher.class);
             StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);

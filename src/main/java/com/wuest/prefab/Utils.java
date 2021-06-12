@@ -34,12 +34,21 @@ public class Utils {
         return Utils.WrapStringToLiterals(value, 50);
     }
 
+    /**
+     * This is a wrapper method to make sure that when minecraft changes the name of the StringTextComponent again it's a single place update.
+     * @param value The text to create the object from.
+     * @return A StringTextComponent object.
+     */
+    public static LiteralText createTextComponent(String value) {
+        return new LiteralText(value);
+    }
+
     public static ArrayList<LiteralText> WrapStringToLiterals(String value, int width) {
         String[] values = Utils.WrapString(value, width);
         ArrayList<LiteralText> returnValue = new ArrayList<>();
 
         for (String stringValue : values) {
-            returnValue.add(new LiteralText(stringValue));
+            returnValue.add(Utils.createTextComponent (stringValue));
         }
 
         return returnValue;

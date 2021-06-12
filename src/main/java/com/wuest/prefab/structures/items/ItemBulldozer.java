@@ -82,7 +82,7 @@ public class ItemBulldozer extends StructureItem {
         boolean advancedKeyDown = Screen.hasShiftDown();
 
         if (!advancedKeyDown) {
-            tooltip.add(new LiteralText(GuiLangKeys.translateString(GuiLangKeys.SHIFT_TOOLTIP)));
+            tooltip.add(GuiLangKeys.translateToComponent(GuiLangKeys.SHIFT_TOOLTIP));
         } else {
             if (this.getPoweredValue(stack)) {
                 tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.BULLDOZER_POWERED_TOOLTIP)));
