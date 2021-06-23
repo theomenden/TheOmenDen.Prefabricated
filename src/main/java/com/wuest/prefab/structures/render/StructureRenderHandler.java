@@ -1,7 +1,6 @@
 package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -17,7 +16,6 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.TranslatableText;
@@ -46,7 +44,7 @@ public class StructureRenderHandler {
     public static boolean rendering = false;
     public static boolean showedMessage = false;
     private static int dimension;
- 
+
     /**
      * Resets the structure to show in the world.
      *
@@ -154,12 +152,6 @@ public class StructureRenderHandler {
                 player.sendMessage(message, false);
                 StructureRenderHandler.showedMessage = true;
             }
-
-            if (didAny) {
-                if (StructureRenderHandler.currentStructure != null) {
-                    StructureRenderHandler.RenderTest(player.getEntityWorld(), matrixStack);
-                }
-            }
         }
     }
 
@@ -224,8 +216,6 @@ public class StructureRenderHandler {
         BakedModel bakedModel = renderer.getModel(state);
 
         VertexConsumer consumer = entityVertexConsumer.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull());
-        /*RenderSystem.setShader(GameRenderer::getRenderTypeItemEntityTranslucentCullShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 0.4f);*/
 
         if (blockRenderType == BlockRenderType.MODEL) {
             // getColor function.
@@ -251,91 +241,5 @@ public class StructureRenderHandler {
 
         // pop
         matrixStack.pop();
-    }
-
-    private static void renderModel(MatrixStack matrixStack, Vector3d pos, BlockState state, VertexConsumerProvider entityVertexConsumer) {
-
-    }
-
-    private static void RenderTest(World worldIn, MatrixStack matrixStack) {
-        BlockPos originalPos = StructureRenderHandler.currentConfiguration.pos.up();
-        // This makes the block north and in-line with the player's line of sight.
-        double blockXOffset = originalPos.getX();
-        double blockZOffset = originalPos.getZ();
-        double blockStartYOffset = originalPos.getY();
-        double blockEndYOffset = originalPos.up().getY();
-
-        StructureRenderHandler.drawBox(matrixStack, blockXOffset, blockZOffset, blockStartYOffset, blockEndYOffset);
-    }
-
-    private static void drawBox(MatrixStack matrixStack, double blockXOffset, double blockZOffset, double blockStartYOffset, double blockEndYOffset) {
-        //RenderSystem._pushMatrix();
-        //RenderSystem.multMatrix(matrixStack.peek().getModel());
-
-        final Vec3d view = MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos();
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-
-        // RenderSystem.shadeModel(7425);
-        // RenderSystem.enableAlphaTest();
-        // RenderSystem.defaultAlphaFunc();
-
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder vertexBuffer = tessellator.getBuffer();
-
-        RenderSystem.disableTexture();
-        RenderSystem.disableBlend();
-
-        double translatedX = blockXOffset - view.getX();
-        double translatedY = blockStartYOffset - view.getY();
-        double translatedYEnd = translatedY + 1;
-        double translatedZ = blockZOffset - view.getZ();
-
-        vertexBuffer.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION_COLOR);
-
-        RenderSystem.lineWidth(2.0f);
-
-        // Draw the verticals of the box.
-        for (int k = 1; k < 2; k += 1) {
-            vertexBuffer.vertex(translatedX, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            vertexBuffer.vertex(translatedX + (double) k, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX + (double) k, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            vertexBuffer.vertex(translatedX, translatedY, translatedZ + (double) k).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX, translatedYEnd, translatedZ + (double) k).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            vertexBuffer.vertex(translatedX + 1.0D, translatedY, translatedZ + (double) k).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX + 1.0D, translatedYEnd, translatedZ + (double) k).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-        }
-
-        // All horizontals.
-        for (double i1 = translatedY; i1 <= translatedYEnd; i1 += 1) {
-            // RED
-            vertexBuffer.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            vertexBuffer.vertex(translatedX + 1.0D, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX + 1.0D, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            // BLUE
-            vertexBuffer.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX + 1, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-
-            // Purple
-            vertexBuffer.vertex(translatedX + 1, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            vertexBuffer.vertex(translatedX, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-        }
-
-        tessellator.draw();
-
-        RenderSystem.lineWidth(1.0F);
-        RenderSystem.enableBlend();
-        RenderSystem.enableTexture();
-
-        // RenderSystem.shadeModel(7424);
-        // RenderSystem.popMatrix();
     }
 }
