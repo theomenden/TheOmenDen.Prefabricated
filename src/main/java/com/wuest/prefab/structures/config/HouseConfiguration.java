@@ -233,11 +233,11 @@ public class HouseConfiguration extends StructureConfiguration {
 				"assets/prefab/structures/desert_house2.zip"),
 		SUBAQUATIC(7,
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_DISPLAY,
-				new Identifier("prefab", "textures/gui/subaquatic_house.png"),
+				new Identifier("prefab", "textures/gui/subaqua_house.png"),
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_NOTES,
 				144,
 				162,
-				"assets/prefab/structures/subaquatic_house.zip");
+				"assets/prefab/structures/subaqua_house.zip");
 
 		private final int value;
 		private final String displayName;

@@ -3,10 +3,12 @@ package com.wuest.prefab.gui;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.blocks.FullDyeColor;
+import com.wuest.prefab.gui.controls.CustomButton;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiSlider;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -22,8 +24,16 @@ import java.util.List;
 public abstract class GuiBase extends Screen {
 
     private final Identifier backgroundTextures = new Identifier("prefab", "textures/gui/default_background.png");
-    protected int modifiedInitialXAxis = 213;
-    protected int modifiedInitialYAxis = 83;
+    private final Identifier narrowPanelTexture = new Identifier("prefab", "textures/gui/custom_background.png");
+    private final Identifier leftPanelTexture = new Identifier("prefab", "textures/gui/custom_left_panel.png");
+    private final Identifier middlePanelTexture = new Identifier("prefab", "textures/gui/custom_middle_panel.png");
+    private final Identifier rightPanelTexture = new Identifier("prefab", "textures/gui/custom_right_panel.png");
+    protected int modifiedInitialXAxis = 0;
+    protected int modifiedInitialYAxis = 0;
+    protected int imagePanelWidth = 0;
+    protected int imagePanelHeight = 0;
+    protected int shownImageHeight = 0;
+    protected int shownImageWidth = 0;
     private boolean pauseGame;
 
     public GuiBase(String title) {
@@ -40,6 +50,12 @@ public abstract class GuiBase extends Screen {
      * This method is used to initialize GUI specific items.
      */
     protected void Initialize() {
+        this.modifiedInitialXAxis = 160;
+        this.modifiedInitialYAxis = 120;
+        this.imagePanelWidth = 325;
+        this.imagePanelHeight = 300;
+        this.shownImageHeight = 150;
+        this.shownImageWidth = 268;
     }
 
     /**
@@ -106,9 +122,17 @@ public abstract class GuiBase extends Screen {
     public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text, boolean translate) {
         ExtendedButton returnValue = new ExtendedButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked);
 
-        this.addDrawableChild(returnValue);
+        return this.addDrawableChild(returnValue);
+    }
 
-        return returnValue;
+    public CustomButton createAndAddCustomButton(int x, int y, int width, int height, String text) {
+        return this.createAndAddCustomButton(x, y, width, height, text, true);
+    }
+
+    public CustomButton createAndAddCustomButton(int x, int y, int width, int height, String text, boolean translate) {
+        CustomButton returnValue = new CustomButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked);
+
+        return this.addDrawableChild(returnValue);
     }
 
     /**
@@ -124,9 +148,7 @@ public abstract class GuiBase extends Screen {
     public ExtendedButton createAndAddDyeButton(int x, int y, int width, int height, DyeColor color) {
         ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateDye(color)), this::buttonClicked);
 
-        this.addDrawableChild(returnValue);
-
-        return returnValue;
+        return this.addDrawableChild(returnValue);
     }
 
     /**
@@ -142,17 +164,14 @@ public abstract class GuiBase extends Screen {
     public ExtendedButton createAndAddFullDyeButton(int x, int y, int width, int height, FullDyeColor color) {
         ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateFullDye(color)), this::buttonClicked);
 
-        this.addDrawableChild(returnValue);
-
-        return returnValue;
+        return this.addDrawableChild(returnValue);
     }
 
     public GuiCheckBox createAndAddCheckBox(int xPos, int yPos, String displayString, boolean isChecked,
                                             GuiCheckBox.PressAction handler) {
         GuiCheckBox checkBox = new GuiCheckBox(xPos, yPos, GuiLangKeys.translateString(displayString), isChecked, handler);
 
-        this.addDrawableChild(checkBox);
-        return checkBox;
+        return this.addDrawableChild(checkBox);
     }
 
     public GuiSlider createAndAddSlider(int xPos, int yPos, int width, int height, String prefix, String suf,
@@ -161,12 +180,120 @@ public abstract class GuiBase extends Screen {
         GuiSlider slider = new GuiSlider(xPos, yPos, width, height, Utils.createTextComponent(prefix), Utils.createTextComponent(suf), minVal, maxVal, currentVal, showDec,
                 drawStr, handler);
 
-        this.addDrawableChild(slider);
-        return slider;
+        return this.addDrawableChild(slider);
     }
 
     protected void drawControlBackground(MatrixStack matrixStack, int grayBoxX, int grayBoxY) {
         GuiUtils.bindAndDrawTexture(this.backgroundTextures, matrixStack, grayBoxX, grayBoxY, this.getZOffset(), 256, 256, 256, 256);
+    }
+
+    protected void drawControlPanel(MatrixStack matrixStack, int grayBoxX, int grayBoxY, int width, int height) {
+        GuiUtils.drawContinuousTexturedBox(
+                this.narrowPanelTexture,
+                grayBoxX,
+                grayBoxY,
+                0,
+                0,
+                width,
+                height,
+                89,
+                233,
+                2,
+                2,
+                4,
+                4,
+                0);
+    }
+
+    protected void drawControlBackground(MatrixStack matrixStack,int grayBoxX, int grayBoxY, int width, int height) {
+        GuiUtils.bindAndDrawScaledTexture(
+                this.backgroundTextures,
+                matrixStack,
+                grayBoxX,
+                grayBoxY,
+                width,
+                height,
+                width,
+                height,
+                width,
+                height);
+    }
+
+    protected void drawControlLeftPanel(MatrixStack matrixStack, int grayBoxX, int grayBoxY, int width, int height) {
+        GuiUtils.drawContinuousTexturedBox(
+                this.leftPanelTexture,
+                grayBoxX,
+                grayBoxY,
+                0,
+                0,
+                width,
+                height,
+                89,
+                233,
+                2,
+                2,
+                4,
+                4,
+                0);
+    }
+
+    protected void drawControlMiddlePanel(MatrixStack matrixStack, int grayBoxX, int grayBoxY, int width, int height) {
+        GuiUtils.drawContinuousTexturedBox(
+                this.middlePanelTexture,
+                grayBoxX,
+                grayBoxY,
+                0,
+                0,
+                width,
+                height,
+                89,
+                233,
+                2,
+                2,
+                4,
+                4,
+                0);
+    }
+
+    protected void drawControlRightPanel(MatrixStack matrixStack, int grayBoxX, int grayBoxY, int width, int height) {
+        GuiUtils.drawContinuousTexturedBox(
+                this.rightPanelTexture,
+                grayBoxX,
+                grayBoxY,
+                0,
+                0,
+                width,
+                height,
+                89,
+                233,
+                2,
+                2,
+                4,
+                4,
+                0);
+    }
+
+    protected void drawStandardControlBoxAndImage(MatrixStack matrixStack, Identifier imageLocation, int x, int y, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        this.drawControlBackground(matrixStack, x, y, this.imagePanelWidth, this.imagePanelHeight);
+
+        if (imageLocation != null) {
+            int imagePanelMiddle = this.imagePanelWidth / 2;
+
+            int middleOfImage = this.shownImageWidth / 2;
+            int imagePos = x + (imagePanelMiddle - middleOfImage - 5);
+
+            GuiUtils.bindAndDrawTexture(
+                    imageLocation,
+                    matrixStack,
+                    imagePos,
+                    y + 10,
+                    1,
+                    this.shownImageWidth,
+                    this.shownImageHeight,
+                    this.shownImageWidth,
+                    this.shownImageHeight);
+        }
     }
 
     protected void renderButtons(MatrixStack matrixStack, int mouseX, int mouseY) {

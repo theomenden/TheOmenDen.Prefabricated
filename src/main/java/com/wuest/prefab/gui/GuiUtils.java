@@ -151,6 +151,15 @@ public class GuiUtils {
         GuiUtils.drawTexture(matrixStack, x, y, z, width, height, textureWidth, textureHeight);
     }
 
+    public static void bindAndDrawScaledTexture(Identifier resourceLocation, MatrixStack matrixStack, int x, int y, int width, int height, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+        GuiUtils.bindTexture(resourceLocation);
+        GuiUtils.bindAndDrawScaledTexture(matrixStack, x, y, width, height, regionWidth, regionHeight, textureWidth, textureHeight);
+    }
+
+    public static void bindAndDrawScaledTexture(MatrixStack matrixStack, int x, int y, int width, int height, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+        DrawableHelper.drawTexture(matrixStack, x, y, width, height, 0, 0, regionWidth, regionHeight, textureWidth, textureHeight);
+    }
+
     public static void setButtonText(ExtendedButton button, String message) {
         button.setMessage(Utils.createTextComponent(message));
     }
