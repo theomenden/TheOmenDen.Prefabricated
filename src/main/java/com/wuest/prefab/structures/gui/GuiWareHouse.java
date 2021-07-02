@@ -9,12 +9,8 @@ import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.config.WareHouseConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureWarehouse;
-import com.wuest.prefab.structures.render.StructureRenderHandler;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -25,8 +21,9 @@ import net.minecraft.util.math.Direction;
  * @author WuestMan
  */
 public class GuiWareHouse extends GuiStructure {
-    private static final Identifier wareHouseTopDown = new Identifier("prefab", "textures/gui/warehouse_top_down.png");
+    private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/warehouse_top_down.png");
     protected WareHouseConfiguration configuration;
+    protected String structureIdentifier;
     String clientGUIIdentifier;
     private ExtendedButton btnGlassColor;
 
@@ -34,12 +31,17 @@ public class GuiWareHouse extends GuiStructure {
         super("Warehouse");
         this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.WareHouse;
         this.clientGUIIdentifier = "Warehouse";
-        this.modifiedInitialXAxis = 180;
-        this.modifiedInitialYAxis = 83;
     }
 
     @Override
     public void Initialize() {
+        this.modifiedInitialXAxis = 212;
+        this.modifiedInitialYAxis = 117;
+        this.shownImageHeight = 150;
+        this.shownImageWidth = 268;
+        this.structureImageLocation = structureTopDown;
+        this.structureIdentifier = "item.prefab.item_warehouse";
+
         this.configuration = ClientModRegistry.playerConfig.getClientConfig(this.clientGUIIdentifier, WareHouseConfiguration.class);
         this.configuration.pos = this.pos;
         this.configuration.houseFacing = Direction.NORTH;
@@ -50,29 +52,47 @@ public class GuiWareHouse extends GuiStructure {
         int grayBoxY = adjustedXYValue.getSecond();
 
         // Create the buttons.
-        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 10, grayBoxY + 20, 90, 20, this.configuration.dyeColor);
+        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 15, grayBoxY + 45, 90, 20, this.configuration.dyeColor);
 
-        this.btnVisualize = this.createAndAddButton(grayBoxX + 10, grayBoxY + 90, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
-
-        // Create the done and cancel buttons.
-        this.btnBuild = this.createAndAddButton(grayBoxX + 10, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
-
-        this.btnCancel = this.createAndAddButton(grayBoxX + 147, grayBoxY + 136, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
+        // Create the standard buttons.
+        this.btnVisualize = this.createAndAddCustomButton(grayBoxX + 25, grayBoxY + 175, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
+        this.btnBuild = this.createAndAddCustomButton(grayBoxX + 310, grayBoxY + 175, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
+        this.btnCancel = this.createAndAddButton(grayBoxX + 150, grayBoxY + 175, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
     @Override
     protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-        super.preButtonRender(matrixStack, x, y, mouseX, mouseY, partialTicks);
+        int imagePanelUpperLeft = x + 132;
+        int imagePanelWidth = 285;
+        int imagePanelMiddle = imagePanelWidth / 2;
 
-        GuiUtils.bindAndDrawTexture(wareHouseTopDown, matrixStack, x + 250, y, 1, 132, 153, 132, 153);
+        this.renderBackground(matrixStack);
+
+        this.drawControlLeftPanel(matrixStack, x + 10, y + 10, 125, 190);
+        this.drawControlRightPanel(matrixStack, imagePanelUpperLeft, y + 10, imagePanelWidth, 190);
+
+        int middleOfImage = this.shownImageWidth / 2;
+        int imageLocation = imagePanelUpperLeft + (imagePanelMiddle - middleOfImage);
+
+        GuiUtils.bindAndDrawScaledTexture(
+                this.structureImageLocation,
+                matrixStack,
+                imageLocation,
+                y + 15,
+                this.shownImageWidth,
+                this.shownImageHeight,
+                this.shownImageWidth,
+                this.shownImageHeight,
+                this.shownImageWidth,
+                this.shownImageHeight);
     }
 
     @Override
     protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 10, y + 10, this.textColor);
-
         // Draw the text here.
-        this.drawSplitString(GuiLangKeys.translateString(GuiLangKeys.GUI_BLOCK_CLICKED), x + 147, y + 10, 95, this.textColor);
+        this.drawString(matrixStack, GuiLangKeys.translateString(this.structureIdentifier), x + 15, y + 17, this.textColor);
+
+        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 15, y + 35, this.textColor);
     }
 
     /**
@@ -86,15 +106,15 @@ public class GuiWareHouse extends GuiStructure {
             this.configuration.dyeColor = FullDyeColor.byId(this.configuration.dyeColor.getId() + 1);
             GuiUtils.setButtonText(this.btnGlassColor, GuiLangKeys.translateFullDye(this.configuration.dyeColor));
         } else if (button == this.btnVisualize) {
+            StructureWarehouse structure;
+
             if (this.configuration.advanced) {
-                StructureWarehouse structure = StructureWarehouse.CreateInstance(StructureWarehouse.ADVANCED_ASSET_LOCATION, StructureWarehouse.class);
-                StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);
+                structure = StructureWarehouse.CreateInstance(StructureWarehouse.ADVANCED_ASSET_LOCATION, StructureWarehouse.class);
             } else {
-                StructureWarehouse structure = StructureWarehouse.CreateInstance(StructureWarehouse.ASSETLOCATION, StructureWarehouse.class);
-                StructureRenderHandler.setStructure(structure, Direction.NORTH, this.configuration);
+                structure = StructureWarehouse.CreateInstance(StructureWarehouse.ASSETLOCATION, StructureWarehouse.class);
             }
 
-            this.closeScreen();
+            this.performPreview(structure, this.configuration);
         }
     }
 }

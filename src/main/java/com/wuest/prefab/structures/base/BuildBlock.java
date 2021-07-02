@@ -110,9 +110,6 @@ public class BuildBlock {
                                     + "] for block [" + block.getBlockName() + "]");
                             throw ex;
                         }
-                    } else {
-                        System.out.println("Property: [" + property.getName() + "] does not exist for Block: [" +
-                                block.getBlockName() + "] this is usually due to mods adding properties to vanilla blocks.");
                     }
                 }
             }

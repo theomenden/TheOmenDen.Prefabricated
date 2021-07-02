@@ -119,10 +119,10 @@ public class GuiBasicStructure extends GuiStructure {
 
             int middleOfImage = this.shownImageWidth / 2;
             int imageLocation = imagePanelUpperLeft + (imagePanelMiddle - middleOfImage);
-            GuiUtils.bindTexture(this.structureImageLocation);
 
             // Draw the picture.
             GuiUtils.bindAndDrawScaledTexture(
+                    this.structureImageLocation,
                     matrixStack,
                     imageLocation,
                     y + 15,
