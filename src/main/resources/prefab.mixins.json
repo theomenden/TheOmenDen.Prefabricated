@@ -8,7 +8,8 @@
     "AnvilScreenHandlerMixin"
   ],
   "client": [
-    "ClientWorldMixin"
+    "ClientWorldMixin",
+    "RenderIndicatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

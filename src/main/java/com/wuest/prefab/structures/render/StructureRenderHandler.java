@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -26,6 +27,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 
@@ -71,7 +73,7 @@ public class StructureRenderHandler {
      * @param player The player to render the structure for.
      * @param src    The ray trace for where the player is currently looking.
      */
-    public static void renderPlayerLook(PlayerEntity player, HitResult src, MatrixStack matrixStack) {
+    public static void renderPlayerLook(PlayerEntity player, HitResult src, MatrixStack matrixStack, CallbackInfo callbackInfo) {
         if (StructureRenderHandler.currentStructure != null
                 && StructureRenderHandler.dimension == player.world.getDimension().getLogicalHeight()
                 && StructureRenderHandler.currentConfiguration != null
@@ -144,12 +146,15 @@ public class StructureRenderHandler {
                 TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_COMPLETE);
                 message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
                 player.sendMessage(message, false);
-
             } else if (!StructureRenderHandler.showedMessage) {
                 TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_NOTICE);
                 message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
-
                 player.sendMessage(message, false);
+
+                message = new TranslatableText(GuiLangKeys.GUI_BLOCK_CLICKED);
+                message.setStyle(Style.EMPTY.withColor(Formatting.YELLOW));
+                player.sendMessage(message, false);
+
                 StructureRenderHandler.showedMessage = true;
             }
         }
@@ -241,5 +246,81 @@ public class StructureRenderHandler {
 
         // pop
         matrixStack.pop();
+    }
+
+    public static void RenderTest(World worldIn, MatrixStack matrixStack, double cameraX, double cameraY, double cameraZ) {
+        if (StructureRenderHandler.currentStructure != null
+                && StructureRenderHandler.dimension == MinecraftClient.getInstance().player.world.getDimension().getLogicalHeight()
+                && StructureRenderHandler.currentConfiguration != null
+                && Prefab.serverConfiguration.enableStructurePreview) {
+            BlockPos originalPos = StructureRenderHandler.currentConfiguration.pos.up();
+
+            double blockXOffset = originalPos.getX();
+            double blockZOffset = originalPos.getZ();
+            double blockStartYOffset = originalPos.getY();
+            double blockEndYOffset = originalPos.up().getY();
+
+            StructureRenderHandler.drawBox(matrixStack, blockXOffset, blockZOffset, blockStartYOffset, blockEndYOffset, cameraX, cameraY, cameraZ);
+        }
+    }
+
+    private static void drawBox(MatrixStack matrixStack, double blockXOffset, double blockZOffset, double blockStartYOffset, double blockEndYOffset, double cameraX, double cameraY, double cameraZ) {
+        RenderSystem.enableDepthTest();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
+
+        RenderSystem.disableTexture();
+        RenderSystem.disableBlend();
+
+        double translatedX = blockXOffset - cameraX;
+        double translatedY = blockStartYOffset - cameraY + .02;
+        double translatedYEnd = translatedY + 1.0D - .02D;
+        double translatedZ = blockZOffset - cameraZ;
+        RenderSystem.lineWidth(2.0f);
+
+        // Draw the verticals of the box.
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
+
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
+
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(translatedX + 1.0D, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + 1.0D, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
+
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        bufferBuilder.vertex(translatedX + 1.0D, translatedY, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + 1.0D, translatedYEnd, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
+
+        // All horizontals.
+        for (double i1 = translatedY; i1 <= translatedYEnd; i1 += .98D) {
+            bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+
+            bufferBuilder.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+            bufferBuilder.vertex(translatedX, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+            bufferBuilder.vertex(translatedX + 1.0D, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+            bufferBuilder.vertex(translatedX + 1.0D, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+            bufferBuilder.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+            bufferBuilder.vertex(translatedX + 1, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+            bufferBuilder.vertex(translatedX + 1, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+            bufferBuilder.vertex(translatedX, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+            tessellator.draw();
+        }
+
+        RenderSystem.lineWidth(1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.enableTexture();
     }
 }
