@@ -247,17 +247,23 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 		return map;
 	}
 
-	public static Item getItemStack(JsonObject json) {
+	public static ItemStack getItemStack(JsonObject json) {
 		String string = JsonHelper.getString(json, "item");
 
 		Item item = (Item) Registry.ITEM.getOrEmpty(new Identifier(string)).orElseThrow(() -> {
 			return new JsonSyntaxException("Unknown item '" + string + "'");
 		});
 
+		int stackCount = 1;
+
+		if (JsonHelper.hasNumber(json, "count")) {
+			stackCount = JsonHelper.getInt(json, "count");
+		}
+
 		if (json.has("data")) {
 			throw new JsonParseException("Disallowed data tag found");
 		} else {
-			return item;
+			return new ItemStack(item, stackCount);
 		}
 	}
 
@@ -270,7 +276,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 			int width = strings[0].length();
 			int height = strings.length;
 			DefaultedList<Ingredient> defaultedList = ConditionedShapedRecipe.getIngredients(strings, map, width, height);
-			ItemStack itemStack = this.validateRecipeOutput(new ItemStack(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"))), configName);
+			ItemStack itemStack = this.validateRecipeOutput(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result")), configName);
 			return new ConditionedShapedRecipe(identifier, groupName, width, height, defaultedList, itemStack, configName);
 		}
 

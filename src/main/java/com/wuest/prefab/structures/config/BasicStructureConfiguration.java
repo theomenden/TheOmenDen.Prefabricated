@@ -163,7 +163,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         Custom("custom", null, null, null),
         AdvancedCoop("advancedcoop", "item.prefab.item_advanced_chicken_coop", "item_advanced_chicken_coop", AdvancedCoopOptions.Default),
         AdvancedHorseStable("advanced_horse_stable", "item.prefab.item_advanced_horse_stable", "item_advanced_horse_stable", AdvancedHorseStableOptions.Default),
-        Barn("barn", "item.prefab.barn", "item_barn", BarnOptions.Default),
+        Barn("barn", "item.prefab.item_barn", "item_barn", BarnOptions.Default),
         MachineryTower("machinery_tower", "item.prefab.item_machinery_tower", "item_machinery_tower", MachineryTowerOptions.Default),
         DefenseBunker("defense_bunker", "item.prefab.item_defense_bunker", "item_defense_bunker", DefenseBunkerOptions.Default),
         MineshaftEntrance("mineshaft_entrance", "item.prefab.item_mineshaft_entrance", "item_mineshaft_entrance", MineshaftEntranceOptions.Default),
@@ -173,10 +173,6 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         MagicTemple("magic_temple", "item.prefab.item_magic_temple", "item_magic_temple", MagicTempleOptions.Default),
         GreenHouse("green_house", "item.prefab.item_green_house", "item_green_house", GreenHouseOptions.Default),
         WatchTower("watch_tower", "item.prefab.item_watch_tower", "item_watch_tower", WatchTowerOptions.Default),
-        /*
-         * Test("test", "item.prefab.test", "assets/prefab/structures/test.zip", "textures/gui/watch_tower_topdown.png",
-         * "item_test", 176, 133),
-         */
         WelcomeCenter("welcome_center", "item.prefab.item_welcome_center", "item_welcome_center", WelcomeCenterOptions.Default),
         Jail("jail", "item.prefab.item_jail", "item_jail", JailOptions.Default),
         Saloon("saloon", "item.prefab.item_saloon", "item_saloon", SaloonOptions.Default),

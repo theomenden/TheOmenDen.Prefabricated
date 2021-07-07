@@ -58,5 +58,4 @@ public class GuiBulldozer extends GuiStructure {
         this.configuration.houseFacing = this.getMinecraft().player.getHorizontalFacing().getOpposite();
         this.performCancelOrBuildOrHouseFacing(this.configuration, button);
     }
-
 }

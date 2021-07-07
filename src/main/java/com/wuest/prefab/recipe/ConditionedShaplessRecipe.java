@@ -93,7 +93,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 			} else if (defaultedList.size() > 9) {
 				throw new JsonParseException("Too many ingredients for shapeless recipe");
 			} else {
-				ItemStack itemStack = this.validateRecipeOutput(new ItemStack(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result"))), configName);
+				ItemStack itemStack = this.validateRecipeOutput(ConditionedShapedRecipe.getItemStack(JsonHelper.getObject(jsonObject, "result")), configName);
 				return new ConditionedShaplessRecipe(identifier, groupName, itemStack, defaultedList, configName);
 			}
 		}
