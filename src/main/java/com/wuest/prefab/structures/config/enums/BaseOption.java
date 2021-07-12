@@ -16,31 +16,31 @@ public abstract class BaseOption {
     private final String translationString;
     private final String assetLocation;
     private final Identifier pictureLocation;
-    private final int imageWidth;
-    private final int imageHeight;
     private final BuildShape clearShape;
     private final PositionOffset clearPositionOffset;
+    private final boolean hasBedColor;
+    private final boolean hasGlassColor;
 
     protected BaseOption(
             String translationString,
             String assetLocation,
             String pictureLocation,
-            int imageWidth,
-            int imageHeight,
             Direction direction,
             int height,
             int width,
             int length,
             int offsetParallelToPlayer,
             int offsetToLeftOfPlayer,
-            int heightOffset) {
+            int heightOffset,
+            boolean hasBedColor,
+            boolean hasGlassColor) {
         this.translationString = translationString;
         this.assetLocation = assetLocation;
         this.pictureLocation = new Identifier(Prefab.MODID, pictureLocation);
-        this.imageWidth = imageWidth;
-        this.imageHeight = imageHeight;
         this.clearShape = new BuildShape();
         this.clearPositionOffset = new PositionOffset();
+        this.hasBedColor = hasBedColor;
+        this.hasGlassColor = hasGlassColor;
 
         this.clearShape.setDirection(direction);
         this.clearShape.setHeight(height);
@@ -106,20 +106,6 @@ public abstract class BaseOption {
     }
 
     /**
-     * @return Get the image width when this option's picture is shown.
-     */
-    public int getImageWidth() {
-        return this.imageWidth;
-    }
-
-    /**
-     * @return Get the image height when this option's picture is shown.
-     */
-    public int getImageHeight() {
-        return this.imageHeight;
-    }
-
-    /**
      * @return Get the build shape for this option.
      */
     public BuildShape getClearShape() {
@@ -133,6 +119,20 @@ public abstract class BaseOption {
      */
     public PositionOffset getClearPositionOffset() {
         return this.clearPositionOffset;
+    }
+
+    /**
+     * @return A value indicating whether the current option has bed color options.
+     */
+    public boolean getHasBedColor() {
+        return this.hasBedColor;
+    }
+
+    /**
+     * @return A value indicating whether the current option has glass color options.
+     */
+    public boolean getHasGlassColor() {
+        return this.hasGlassColor;
     }
 
     public ArrayList<BaseOption> getSpecificOptions() {

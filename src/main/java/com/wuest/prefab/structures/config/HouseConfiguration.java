@@ -211,49 +211,39 @@ public class HouseConfiguration extends StructureConfiguration {
 				GuiLangKeys.STARTER_HOUSE_BASIC_DISPLAY,
 				new Identifier("prefab", "textures/gui/basic_house.png"),
 				GuiLangKeys.STARTER_HOUSE_BASIC_NOTES,
-				163,
-				146,
 				"assets/prefab/structures/basic_house.zip"),
-		RANCH(1, GuiLangKeys.STARTER_HOUSE_RANCH_DISPLAY, new Identifier("prefab", "textures/gui/ranch_house.png"), GuiLangKeys.STARTER_HOUSE_RANCH_NOTES, 152, 89,
+		RANCH(1, GuiLangKeys.STARTER_HOUSE_RANCH_DISPLAY, new Identifier("prefab", "textures/gui/ranch_house.png"), GuiLangKeys.STARTER_HOUSE_RANCH_NOTES,
 				"assets/prefab/structures/ranch_house.zip"),
-		LOFT(2, GuiLangKeys.STARTER_HOUSE_LOFT_DISPLAY, new Identifier("prefab", "textures/gui/loft_house.png"), GuiLangKeys.STARTER_HOUSE_LOFT_NOTES, 152, 87,
+		LOFT(2, GuiLangKeys.STARTER_HOUSE_LOFT_DISPLAY, new Identifier("prefab", "textures/gui/loft_house.png"), GuiLangKeys.STARTER_HOUSE_LOFT_NOTES,
 				"assets/prefab/structures/loft_house.zip"),
-		HOBBIT(3, GuiLangKeys.STARTER_HOUSE_HOBBIT_DISPLAY, new Identifier("prefab", "textures/gui/hobbit_house.png"), GuiLangKeys.STARTER_HOUSE_HOBBIT_NOTES, 151, 133,
+		HOBBIT(3, GuiLangKeys.STARTER_HOUSE_HOBBIT_DISPLAY, new Identifier("prefab", "textures/gui/hobbit_house.png"), GuiLangKeys.STARTER_HOUSE_HOBBIT_NOTES,
 				"assets/prefab/structures/hobbit_house.zip"),
-		DESERT(4, GuiLangKeys.STARTER_HOUSE_DESERT_DISPLAY, new Identifier("prefab", "textures/gui/desert_house.png"), GuiLangKeys.STARTER_HOUSE_DESERT_NOTES, 152, 131,
+		DESERT(4, GuiLangKeys.STARTER_HOUSE_DESERT_DISPLAY, new Identifier("prefab", "textures/gui/desert_house.png"), GuiLangKeys.STARTER_HOUSE_DESERT_NOTES,
 				"assets/prefab/structures/desert_house.zip"),
-		SNOWY(5, GuiLangKeys.STARTER_HOUSE_SNOWY_DISPLAY, new Identifier("prefab", "textures/gui/snowy_house.png"), GuiLangKeys.STARTER_HOUSE_SNOWY_NOTES, 150, 125,
+		SNOWY(5, GuiLangKeys.STARTER_HOUSE_SNOWY_DISPLAY, new Identifier("prefab", "textures/gui/snowy_house.png"), GuiLangKeys.STARTER_HOUSE_SNOWY_NOTES,
 				"assets/prefab/structures/snowy_house.zip"),
 		DESERT2(6,
 				GuiLangKeys.STARTER_HOUSE_DESERT_DISPLAY2,
 				new Identifier("prefab", "textures/gui/desert_house2.png"),
 				GuiLangKeys.STARTER_HOUSE_DESERT_NOTES2,
-				145,
-				153,
 				"assets/prefab/structures/desert_house2.zip"),
 		SUBAQUATIC(7,
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_DISPLAY,
 				new Identifier("prefab", "textures/gui/subaqua_house.png"),
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_NOTES,
-				144,
-				162,
 				"assets/prefab/structures/subaqua_house.zip");
 
 		private final int value;
 		private final String displayName;
 		private final Identifier housePicture;
 		private final String houseNotes;
-		private final int imageWidth;
-		private final int imageHeight;
 		private final String structureLocation;
 
-		HouseStyle(int newValue, String displayName, Identifier housePicture, String houseNotes, int imageWidth, int imageHeight, String structureLocation) {
+		HouseStyle(int newValue, String displayName, Identifier housePicture, String houseNotes, String structureLocation) {
 			this.value = newValue;
 			this.displayName = displayName;
 			this.housePicture = housePicture;
 			this.houseNotes = houseNotes;
-			this.imageWidth = imageWidth;
-			this.imageHeight = imageHeight;
 			this.structureLocation = structureLocation;
 		}
 
@@ -310,24 +300,6 @@ public class HouseConfiguration extends StructureConfiguration {
 		 */
 		public Identifier getHousePicture() {
 			return this.housePicture;
-		}
-
-		/**
-		 * Gets the width of the image to use with this style.
-		 *
-		 * @return An integer representing the image width.
-		 */
-		public int getImageWidth() {
-			return this.imageWidth;
-		}
-
-		/**
-		 * Gets the height of the image to use with this style.
-		 *
-		 * @return An integer representing the image height.
-		 */
-		public int getImageHeight() {
-			return this.imageHeight;
 		}
 
 		/**

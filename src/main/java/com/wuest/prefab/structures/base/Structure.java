@@ -210,8 +210,12 @@ public class Structure {
         Box axis = new Box(cornerPos1, cornerPos2);
 
         for (Entity entity : world.getOtherEntities(null, axis)) {
-            // TODO: This was the "getPosition" method.
             BlockPos entityPos = entity.getBlockPos();
+
+            if (entity instanceof AbstractDecorationEntity) {
+                // Use the AbstractDecorationEntity getDecorationBlockPos function instead since it is more accurate for itemframes and paintings.
+                entityPos = ((AbstractDecorationEntity)entity).getDecorationBlockPos();
+            }
 
             if (entityPos.getX() >= x_radiusRangeBegin && entityPos.getX() <= x_radiusRangeEnd
                     && entityPos.getZ() >= z_radiusRangeBegin && entityPos.getZ() <= z_radiusRangeEnd

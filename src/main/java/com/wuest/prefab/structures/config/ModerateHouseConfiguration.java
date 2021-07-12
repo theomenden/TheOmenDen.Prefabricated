@@ -137,24 +137,24 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
 	 * @author WuestMan
 	 */
 	public enum HouseStyle {
-		SPRUCE_HOME(0, GuiLangKeys.MODERATE_HOUSE_SPRUCE, new Identifier("prefab", "textures/gui/moderate_house_spruce_topdown.png"), 176, 154,
+		SPRUCE_HOME(0, GuiLangKeys.MODERATE_HOUSE_SPRUCE, new Identifier("prefab", "textures/gui/moderate_house_spruce_topdown.png"),
 				"assets/prefab/structures/moderate_house_spruce.zip", 31, 31, 23, 8, 1),
-		ACACIA_HOME(1, GuiLangKeys.MODERATE_HOUSE_ACACIA, new Identifier("prefab", "textures/gui/moderate_house_acacia_topdown.png"), 176, 154,
+		ACACIA_HOME(1, GuiLangKeys.MODERATE_HOUSE_ACACIA, new Identifier("prefab", "textures/gui/moderate_house_acacia_topdown.png"),
 				"assets/prefab/structures/moderate_house_acacia.zip", 31, 31, 21, 12, 6),
-		EARTHEN_HOME(2, GuiLangKeys.MODERATE_EARTHEN_HOME, new Identifier("prefab", "textures/gui/moderate_house_earthen_topdown.png"), 174, 146,
+		EARTHEN_HOME(2, GuiLangKeys.MODERATE_EARTHEN_HOME, new Identifier("prefab", "textures/gui/moderate_house_earthen_topdown.png"),
 				"assets/prefab/structures/moderate_house_earthen.zip", 16, 16, 16, 8, 6),
-		JUNGLE_TREE_HOME(3, GuiLangKeys.MODERATE_JUNGLE_HOME, new Identifier("prefab", "textures/gui/moderate_house_jungle_topdown.png"), 88, 164,
+		JUNGLE_TREE_HOME(3, GuiLangKeys.MODERATE_JUNGLE_HOME, new Identifier("prefab", "textures/gui/moderate_house_jungle_topdown.png"),
 				"assets/prefab/structures/moderate_house_jungle.zip", 16, 16, 41, 8, 1),
-		NETHER_HOME(4, GuiLangKeys.MODERATE_NETHER_HOME, new Identifier("prefab", "textures/gui/moderate_house_nether_topdown.png"), 141, 165,
+		NETHER_HOME(4, GuiLangKeys.MODERATE_NETHER_HOME, new Identifier("prefab", "textures/gui/moderate_house_nether_topdown.png"),
 				"assets/prefab/structures/moderate_house_nether.zip", 16, 15, 22, 0, 0),
-		MOUNTAIN_HOME(5, GuiLangKeys.MODERATE_MOUNTAIN_HOME, new Identifier("prefab", "textures/gui/moderate_house_mountain_topdown.png"), 174, 99,
-				"assets/prefab/structures/moderate_house_mountain.zip", 20, 21, 12, 10, 0);
+		MOUNTAIN_HOME(5, GuiLangKeys.MODERATE_MOUNTAIN_HOME, new Identifier("prefab", "textures/gui/moderate_house_mountain_topdown.png"),
+				"assets/prefab/structures/moderate_house_mountain.zip", 20, 21, 12, 10, 0),
+		ACACIA_HOME2(6, GuiLangKeys.MODERATE_HOUSE_ACACIA_2, new Identifier("prefab", "textures/gui/moderate_house_acacia_2_topdown.png"),
+				"assets/prefab/structures/moderate_house_acacia_2.zip", 31, 31, 21, 12, 6);
 
 		private final int value;
 		private final String displayName;
 		private final Identifier housePicture;
-		private final int imageWidth;
-		private final int imageHeight;
 		private final String structureLocation;
 		private final int width;
 		private final int length;
@@ -162,13 +162,11 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
 		private final int eastOffSet;
 		private final int downOffSet;
 
-		HouseStyle(int newValue, String displayName, Identifier housePicture, int imageWidth, int imageHeight, String structureLocation, int width, int length, int height,
+		HouseStyle(int newValue, String displayName, Identifier housePicture, String structureLocation, int width, int length, int height,
 				   int eastOffSet, int downOffSet) {
 			this.value = newValue;
 			this.displayName = displayName;
 			this.housePicture = housePicture;
-			this.imageWidth = imageWidth;
-			this.imageHeight = imageHeight;
 			this.structureLocation = structureLocation;
 			this.width = width;
 			this.length = length;
@@ -178,26 +176,13 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
 		}
 
 		public static HouseStyle ValueOf(int value) {
-			switch (value) {
-				case 1: {
-					return HouseStyle.ACACIA_HOME;
-				}
-				case 2: {
-					return HouseStyle.EARTHEN_HOME;
-				}
-				case 3: {
-					return HouseStyle.JUNGLE_TREE_HOME;
-				}
-				case 4: {
-					return HouseStyle.NETHER_HOME;
-				}
-				case 5: {
-					return HouseStyle.MOUNTAIN_HOME;
-				}
-				default: {
-					return HouseStyle.SPRUCE_HOME;
+			for (HouseStyle currentValue : HouseStyle.values()) {
+				if (currentValue.value == value) {
+					return currentValue;
 				}
 			}
+
+			return HouseStyle.SPRUCE_HOME;
 		}
 
 		public int getValue() {
@@ -210,14 +195,6 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
 
 		public Identifier getHousePicture() {
 			return this.housePicture;
-		}
-
-		public int getImageWidth() {
-			return this.imageWidth;
-		}
-
-		public int getImageHeight() {
-			return this.imageHeight;
 		}
 
 		public int getWidth() {

@@ -7,28 +7,40 @@ public class MachineryTowerOptions extends BaseOption {
             "item.prefab.machinery.tower",
             "assets/prefab/structures/machinery_tower.zip",
             "textures/gui/machinery_tower_topdown.png",
-            175,
-            153,
             Direction.SOUTH,
             12,
             16,
             16,
             1,
             8,
-            0);
+            0,
+            false,
+            false);
 
     protected MachineryTowerOptions(String translationString,
                                     String assetLocation,
                                     String pictureLocation,
-                                    int imageWidth,
-                                    int imageHeight,
                                     Direction direction,
                                     int height,
                                     int width,
                                     int length,
                                     int offsetParallelToPlayer,
                                     int offsetToLeftOfPlayer,
-                                    int heightOffset) {
-        super(translationString, assetLocation, pictureLocation, imageWidth, imageHeight, direction, height, width, length, offsetParallelToPlayer, offsetToLeftOfPlayer, heightOffset);
+                                    int heightOffset,
+                                    boolean hasBedColor,
+                                    boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                direction,
+                height,
+                width,
+                length,
+                offsetParallelToPlayer,
+                offsetToLeftOfPlayer,
+                heightOffset,
+                hasBedColor,
+                hasGlassColor);
     }
 }

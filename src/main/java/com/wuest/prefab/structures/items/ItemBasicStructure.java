@@ -2,10 +2,13 @@ package com.wuest.prefab.structures.items;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.structures.config.enums.ModernBuildingsOptions;
 import com.wuest.prefab.structures.config.enums.TownHallOptions;
 import com.wuest.prefab.structures.gui.GuiBasicStructure;
 import com.wuest.prefab.structures.predefined.StructureBasic;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 
@@ -21,6 +24,13 @@ public class ItemBasicStructure extends StructureItem {
     public ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName structureType) {
         super();
 
+        this.structureType = structureType;
+    }
+
+    public ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName structureType, int durability) {
+        super(new Item.Settings()
+                .group(ItemGroup.MISC)
+                .maxDamage(durability));
         this.structureType = structureType;
     }
 
@@ -57,7 +67,7 @@ public class ItemBasicStructure extends StructureItem {
         ItemStack stack = context.getPlayer().getStackInHand(context.getHand());
         BasicStructureConfiguration structureConfiguration = new BasicStructureConfiguration();
         structureConfiguration.basicStructureName = ((ItemBasicStructure) stack.getItem()).structureType;
-        structureConfiguration.chosenOption = TownHallOptions.Default;
+        structureConfiguration.chosenOption = ModernBuildingsOptions.Library;
 
         boolean isWaterStructure = structureConfiguration.basicStructureName == BasicStructureConfiguration.EnumBasicStructureName.AquaBase
                 || structureConfiguration.basicStructureName == BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase;

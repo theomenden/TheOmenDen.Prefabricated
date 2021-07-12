@@ -7,28 +7,40 @@ public class DefenseBunkerOptions extends BaseOption {
             "item.prefab.defense.bunker",
             "assets/prefab/structures/defense_bunker.zip",
             "textures/gui/defense_bunker_topdown.png",
-            156,
-            153,
             Direction.SOUTH,
             17,
             32,
             32,
             1,
             15,
-            0);
+            0,
+            false,
+            false);
 
     protected DefenseBunkerOptions(String translationString,
                                    String assetLocation,
                                    String pictureLocation,
-                                   int imageWidth,
-                                   int imageHeight,
                                    Direction direction,
                                    int height,
                                    int width,
                                    int length,
                                    int offsetParallelToPlayer,
                                    int offsetToLeftOfPlayer,
-                                   int heightOffset) {
-        super(translationString, assetLocation, pictureLocation, imageWidth, imageHeight, direction, height, width, length, offsetParallelToPlayer, offsetToLeftOfPlayer, heightOffset);
+                                   int heightOffset,
+                                   boolean hasBedColor,
+                                   boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                direction,
+                height,
+                width,
+                length,
+                offsetParallelToPlayer,
+                offsetToLeftOfPlayer,
+                heightOffset,
+                hasBedColor,
+                hasGlassColor);
     }
 }

@@ -4,31 +4,43 @@ import net.minecraft.util.math.Direction;
 
 public class BarnOptions extends BaseOption {
     public static BarnOptions Default = new BarnOptions(
-            "item.prefab.barn",
+            "item.prefab.item_barn",
             "assets/prefab/structures/barn.zip",
             "textures/gui/barn_topdown.png",
-            164,
-            160,
             Direction.SOUTH,
             10,
             30,
             25,
             1,
             15,
-            0);
+            0,
+            false,
+            false);
 
     protected BarnOptions(String translationString,
                           String assetLocation,
                           String pictureLocation,
-                          int imageWidth,
-                          int imageHeight,
                           Direction direction,
                           int height,
                           int width,
                           int length,
                           int offsetParallelToPlayer,
                           int offsetToLeftOfPlayer,
-                          int heightOffset) {
-        super(translationString, assetLocation, pictureLocation, imageWidth, imageHeight, direction, height, width, length, offsetParallelToPlayer, offsetToLeftOfPlayer, heightOffset);
+                          int heightOffset,
+                          boolean hasBedColor,
+                          boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                direction,
+                height,
+                width,
+                length,
+                offsetParallelToPlayer,
+                offsetToLeftOfPlayer,
+                heightOffset,
+                hasBedColor,
+                hasGlassColor);
     }
 }

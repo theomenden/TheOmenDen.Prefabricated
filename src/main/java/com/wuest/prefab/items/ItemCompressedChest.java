@@ -1,6 +1,7 @@
 package com.wuest.prefab.items;
 
 import com.wuest.prefab.Utils;
+import com.wuest.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -28,6 +29,6 @@ public class ItemCompressedChest extends Item {
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext options) {
-		tooltip.addAll(Utils.WrapStringToLiterals("Used in the recipes for structures, not for direct storage", 30));
+		tooltip.addAll(Utils.WrapStringToLiterals(GuiLangKeys.translateString(GuiLangKeys.COMPRESSED_CHEST), 30));
 	}
 }

@@ -86,21 +86,13 @@ public class ModRegistry {
 
     /* *********************************** Blueprint Items *********************************** */
 
-    public static final ItemWareHouse Warehouse = new ItemWareHouse();
-    public static final ItemChickenCoop ChickenCoop = new ItemChickenCoop();
-    public static final ItemProduceFarm ProduceFarm = new ItemProduceFarm();
-    public static final ItemTreeFarm TreeFarm = new ItemTreeFarm();
-    public static final ItemFishPond FishPond = new ItemFishPond();
-    public static final ItemAdvancedWareHouse AdvancedWareHouse = new ItemAdvancedWareHouse();
-    public static final ItemMonsterMasher MonsterMasher = new ItemMonsterMasher();
-    public static final ItemHorseStable HorseStable = new ItemHorseStable();
+
     public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
     public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
     public static final ItemStartHouse StartHouse = new ItemStartHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
     public static final ItemStructurePart StructurePart = new ItemStructurePart();
-    public static final ItemVillagerHouses VillagerHouses = new ItemVillagerHouses();
 
     public static final ItemBasicStructure Barn = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Barn);
     public static final ItemBasicStructure AdvancedCoop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop);
@@ -124,6 +116,16 @@ public class ModRegistry {
     public static final ItemBasicStructure SugarCaneFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm);
     public static final ItemBasicStructure AdvancedAquaBase = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase);
     public static final ItemBasicStructure WorkShop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WorkShop);
+    public static final ItemBasicStructure Warehouse = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Warehouse);
+    public static final ItemBasicStructure ChickenCoop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ChickenCoop);
+    public static final ItemBasicStructure ProduceFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ProduceFarm);
+    public static final ItemBasicStructure TreeFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.TreeFarm);
+    public static final ItemBasicStructure FishPond = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.FishPond);
+    public static final ItemBasicStructure AdvancedWareHouse = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedWarehouse);
+    public static final ItemBasicStructure MonsterMasher = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MonsterMasher);
+    public static final ItemBasicStructure HorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.HorseStable);
+    public static final ItemBasicStructure VillagerHouses = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses, 10);
+    public static final ItemBasicStructure ModernBuildings = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings, 5);
 
     /* *********************************** Recipe Serializers *********************************** */
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
@@ -174,20 +176,12 @@ public class ModRegistry {
 
     private static void registerBluePrints() {
         ModRegistry.registerItem("item_start_house", ModRegistry.StartHouse);
-        ModRegistry.registerItem("item_warehouse", ModRegistry.Warehouse);
-        ModRegistry.registerItem("item_chicken_coop", ModRegistry.ChickenCoop);
-        ModRegistry.registerItem("item_produce_farm", ModRegistry.ProduceFarm);
-        ModRegistry.registerItem("item_tree_farm", ModRegistry.TreeFarm);
-        ModRegistry.registerItem("item_fish_pond", ModRegistry.FishPond);
-        ModRegistry.registerItem("item_advanced_warehouse", ModRegistry.AdvancedWareHouse);
-        ModRegistry.registerItem("item_monster_masher", ModRegistry.MonsterMasher);
-        ModRegistry.registerItem("item_horse_stable", ModRegistry.HorseStable);
         ModRegistry.registerItem("item_instant_bridge", ModRegistry.InstantBridge);
         ModRegistry.registerItem("item_moderate_house", ModRegistry.ModerateHouse);
         ModRegistry.registerItem("item_bulldozer", ModRegistry.Bulldozer);
         ModRegistry.registerItem("item_creative_bulldozer", ModRegistry.CreativeBulldozer);
         ModRegistry.registerItem("item_structure_part", ModRegistry.StructurePart);
-        ModRegistry.registerItem("item_villager_houses", ModRegistry.VillagerHouses);
+
 
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Barn.getItemTextureLocation().getPath(), ModRegistry.Barn);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop.getItemTextureLocation().getPath(), ModRegistry.AdvancedCoop);
@@ -211,6 +205,16 @@ public class ModRegistry {
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm.getItemTextureLocation().getPath(), ModRegistry.SugarCaneFarm);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase.getItemTextureLocation().getPath(), ModRegistry.AdvancedAquaBase);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getItemTextureLocation().getPath(), ModRegistry.WorkShop);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Warehouse.getItemTextureLocation().getPath(), ModRegistry.Warehouse);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ChickenCoop.getItemTextureLocation().getPath(), ModRegistry.ChickenCoop);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ProduceFarm.getItemTextureLocation().getPath(), ModRegistry.ProduceFarm);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.TreeFarm.getItemTextureLocation().getPath(), ModRegistry.TreeFarm);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.FishPond.getItemTextureLocation().getPath(), ModRegistry.FishPond);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedWarehouse.getItemTextureLocation().getPath(), ModRegistry.AdvancedWareHouse);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MonsterMasher.getItemTextureLocation().getPath(), ModRegistry.MonsterMasher);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.HorseStable.getItemTextureLocation().getPath(), ModRegistry.HorseStable);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses.getItemTextureLocation().getPath(), ModRegistry.VillagerHouses);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings.getItemTextureLocation().getPath(), ModRegistry.ModernBuildings);
     }
 
     private static void registerItemBlocks() {

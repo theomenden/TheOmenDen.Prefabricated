@@ -7,28 +7,40 @@ public class SugarCaneFarmOptions extends BaseOption {
             "item.prefab.sugar_cane_farm",
             "assets/prefab/structures/sugar_cane_farm.zip",
             "textures/gui/sugar_cane_farm_topdown.png",
-            180,
-            109,
             Direction.SOUTH,
             9,
             6,
             12,
             1,
             10,
-            -1);
+            -1,
+            false,
+            false);
 
     protected SugarCaneFarmOptions(String translationString,
                                    String assetLocation,
                                    String pictureLocation,
-                                   int imageWidth,
-                                   int imageHeight,
                                    Direction direction,
                                    int height,
                                    int width,
                                    int length,
                                    int offsetParallelToPlayer,
                                    int offsetToLeftOfPlayer,
-                                   int heightOffset) {
-        super(translationString, assetLocation, pictureLocation, imageWidth, imageHeight, direction, height, width, length, offsetParallelToPlayer, offsetToLeftOfPlayer, heightOffset);
+                                   int heightOffset,
+                                   boolean hasBedColor,
+                                   boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                direction,
+                height,
+                width,
+                length,
+                offsetParallelToPlayer,
+                offsetToLeftOfPlayer,
+                heightOffset,
+                hasBedColor,
+                hasGlassColor);
     }
 }

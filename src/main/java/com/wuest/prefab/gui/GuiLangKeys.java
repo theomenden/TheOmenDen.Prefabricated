@@ -285,6 +285,9 @@ public class GuiLangKeys {
 	@Unlocalized(name = "Acacia House")
 	public static final String MODERATE_HOUSE_ACACIA = "prefab.gui.moderate_house.acacia";
 
+	@Unlocalized(name = "Acacia House 2")
+	public static final String MODERATE_HOUSE_ACACIA_2 = "prefab.gui.moderate_house.acacia_2";
+
 	@Unlocalized(name = "Earthen Home")
 	public static final String MODERATE_EARTHEN_HOME = "prefab.gui.moderate_house.earthen";
 
@@ -377,6 +380,9 @@ public class GuiLangKeys {
 
 	@Unlocalized(name = "Building Options")
 	public static final String BUILDING_OPTIONS = "prefab.gui.building_options";
+
+	@Unlocalized(name = "Used in the recipes for structures, not for direct storage")
+	public static final String COMPRESSED_CHEST = "prefab.gui.compressed_chest_desc";
 
 	/**
 	 * Translates the specified language key for the current language.

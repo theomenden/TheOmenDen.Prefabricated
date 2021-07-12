@@ -5,6 +5,7 @@ import com.wuest.prefab.structures.items.StructureItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
@@ -176,7 +177,7 @@ public class StructureConfiguration {
 		}
 	}
 
-	protected void DamageHeldItem(PlayerEntity player, StructureItem item) {
+	protected void DamageHeldItem(PlayerEntity player, Item item) {
 		ItemStack stack = player.getMainHandStack().getItem() == item ? player.getMainHandStack() : player.getOffHandStack();
 		EquipmentSlot hand = player.getMainHandStack().getItem() == item ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
 

@@ -201,7 +201,8 @@ public class ModConfiguration implements ConfigData {
         public static String heapOfTimberKey = "Heap of Timber";
         public static String tonOfTimberKey = "Ton of Timber";
         public static String sugarCaneFarmKey = "Sugar Cane Farm";
-        private static final String workshopKey = "Workshop";
+        public static String workshopKey = "Workshop";
+        public static String modernBuildingsKey = "Modern Buildings";
 
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
@@ -213,7 +214,7 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.phasicBlockKey, ConfigKeyNames.smartGlassKey, ConfigKeyNames.greenHouseKey, ConfigKeyNames.startingHouseKey, ConfigKeyNames.glassStairsKey,
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
                         ConfigKeyNames.bulldozerKey, ConfigKeyNames.structurePartKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
-                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, sugarCaneFarmKey, workshopKey};
+                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.sugarCaneFarmKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey};
 
         // Config file option names.
         static String enableLoftHouseName = "Enable Loft House";

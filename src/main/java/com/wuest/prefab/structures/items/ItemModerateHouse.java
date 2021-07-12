@@ -24,7 +24,7 @@ public class ItemModerateHouse extends StructureItem {
                 context.getWorld(),
                 context.getBlockPos(),
                 context.getPlayer().getHorizontalFacing(),
-                ModerateHouseConfiguration.HouseStyle.MOUNTAIN_HOME);
+                ModerateHouseConfiguration.HouseStyle.ACACIA_HOME2);
     }
 
     /**

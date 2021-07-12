@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.config;
 
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.structures.config.enums.*;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.predefined.StructureBasic;
@@ -19,21 +20,25 @@ import net.minecraft.util.math.Direction;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BasicStructureConfiguration extends StructureConfiguration {
-    private static String structureEnumNameTag = "structureEnumName";
-    private static String structureDisplayNameTag = "structureDisplayName";
-    private static String bedColorTag = "bedColor";
-    private static String chosenOptionTag = "chosenOption";
+    private static final String structureEnumNameTag = "structureEnumName";
+    private static final String structureDisplayNameTag = "structureDisplayName";
+    private static final String bedColorTag = "bedColor";
+    private static final String glassColorTag = "glassColor";
+    private static final String chosenOptionTag = "chosenOption";
 
     /**
      * This field is used to contain the {@link EnumBasicStructureName} used by this instance.
      */
     public EnumBasicStructureName basicStructureName;
+
     /**
      * This field is used to contain the display name for the structure.
      */
     public String structureDisplayName;
 
     public DyeColor bedColor;
+
+    public FullDyeColor glassColor;
 
     public BaseOption chosenOption;
 
@@ -72,6 +77,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         this.houseFacing = Direction.NORTH;
         this.basicStructureName = EnumBasicStructureName.AdvancedCoop;
         this.bedColor = DyeColor.RED;
+        this.glassColor = FullDyeColor.CLEAR;
         this.chosenOption = this.basicStructureName.baseOption.getSpecificOptions().get(0);
     }
 
@@ -91,8 +97,12 @@ public class BasicStructureConfiguration extends StructureConfiguration {
             basicConfig.bedColor = DyeColor.valueOf(messageTag.getString(BasicStructureConfiguration.bedColorTag));
         }
 
+        if (messageTag.contains(BasicStructureConfiguration.glassColorTag)) {
+            basicConfig.glassColor = FullDyeColor.valueOf(messageTag.getString(BasicStructureConfiguration.glassColorTag));
+        }
+
         if (messageTag.contains(BasicStructureConfiguration.chosenOptionTag)) {
-            basicConfig.chosenOption = basicConfig.basicStructureName.baseOption.getOptionByTranslationString(messageTag.getString(BasicStructureConfiguration.chosenOptionTag));
+            basicConfig.chosenOption = BaseOption.getOptionByTranslationString(messageTag.getString(BasicStructureConfiguration.chosenOptionTag));
         }
     }
 
@@ -105,6 +115,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         }
 
         tag.putString(BasicStructureConfiguration.bedColorTag, this.bedColor.asString().toUpperCase());
+        tag.putString(BasicStructureConfiguration.glassColorTag, this.glassColor.asString().toUpperCase());
         tag.putString(BasicStructureConfiguration.chosenOptionTag, this.chosenOption.getTranslationString());
 
         return tag;
@@ -143,13 +154,18 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
             ItemStack stack = ItemBasicStructure.getBasicStructureItemInHand(player);
 
-            if (stack.getCount() == 1) {
-                player.getInventory().removeOne(stack);
-            } else {
-                stack.setCount(stack.getCount() - 1);
-            }
+            if (!stack.isDamageable()) {
+                if (stack.getCount() == 1) {
+                    player.getInventory().removeOne(stack);
+                } else {
+                    stack.setCount(stack.getCount() - 1);
+                }
 
-            player.currentScreenHandler.sendContentUpdates();
+                player.currentScreenHandler.sendContentUpdates();
+            } else {
+                // The item has durability; damage it since the building was constructed.
+                this.DamageHeldItem(player, stack.getItem());
+            }
         }
     }
 
@@ -163,7 +179,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         Custom("custom", null, null, null),
         AdvancedCoop("advancedcoop", "item.prefab.item_advanced_chicken_coop", "item_advanced_chicken_coop", AdvancedCoopOptions.Default),
         AdvancedHorseStable("advanced_horse_stable", "item.prefab.item_advanced_horse_stable", "item_advanced_horse_stable", AdvancedHorseStableOptions.Default),
-        Barn("barn", "item.prefab.item_barn", "item_barn", BarnOptions.Default),
+        Barn("barn", "item.prefab.barn", "item_barn", BarnOptions.Default),
         MachineryTower("machinery_tower", "item.prefab.item_machinery_tower", "item_machinery_tower", MachineryTowerOptions.Default),
         DefenseBunker("defense_bunker", "item.prefab.item_defense_bunker", "item_defense_bunker", DefenseBunkerOptions.Default),
         MineshaftEntrance("mineshaft_entrance", "item.prefab.item_mineshaft_entrance", "item_mineshaft_entrance", MineshaftEntranceOptions.Default),
@@ -182,7 +198,17 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         NetherGate("nether_gate", "item.prefab.item_nether_gate", "item_nether_gate", NetherGateOptions.AncientSkull),
         SugarCaneFarm("sugar_cane_farm", "item.prefab.item_sugar_cane_farm", "item_sugar_cane_farm", SugarCaneFarmOptions.Default),
         AdvancedAquaBase("advanced_aqua_base", "item.prefab.item_advanced_aqua_base", "item_advanced_aqua_base", AdvancedAquaBaseOptions.Default),
-        WorkShop("workshop", "item.prefab.item_workshop", "item_workshop", WorkshopOptions.Default);
+        WorkShop("workshop", "item.prefab.item_workshop", "item_workshop", WorkshopOptions.Default),
+        FishPond("fishpond", "item.prefab.item_fishpond", "item_fish_pond", FishPondOptions.Default),
+        HorseStable("horse_stable", "item.prefab.item_horse_stable", "item_horse_stable", HorseStableOptions.Default),
+        TreeFarm("tree_farm", "item.prefab.item_tree_farm", "item_tree_farm", TreeFarmOptions.Default),
+        VillagerHouses("villager_houses", "item.prefab.item_villager_houses", "item_villager_houses", VillagerHouseOptions.FLAT_ROOF),
+        ChickenCoop("chicken_coop", "item.prefab.item_chicken_coop", "item_chicken_coop", ChickenCoopOptions.Default),
+        ProduceFarm("produce_farm", "item.prefab.item_produce_farm", "item_produce_farm", ProduceFarmOptions.Default),
+        MonsterMasher("monster_masher", "item.prefab.item_monster_masher", "item_monster_masher", MonsterMasherOptions.Default),
+        AdvancedWarehouse("advanced_warehouse", "item.prefab.item_advanced_warehouse", "item_advanced_warehouse", AdvancedWarehouseOptions.Default),
+        Warehouse("warehouse", "item.prefab.item_warehouse", "item_warehouse", WarehouseOptions.Default),
+        ModernBuildings("modern_buildings", "item.prefab.item_modern_buildings", "item_modern_buildings", ModernBuildingsOptions.Mall);
 
         private final String name;
         private final String itemTranslationString;
@@ -192,15 +218,17 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         /**
          * This is a basic structure which doesn't have any (or limited) custom processing.
          *
-         * @param name                  - This is the name for this structure. This is used for comparative purposes in
-         *                              item stacks.
-         * @param itemTranslationString - This is the localization key to determine the displayed name to the user.
-         * @param itemTextureLocation   - This is the resource location for the item's texture when it's in the players
+         * @param name             - This is the name for this structure. This is used for comparative purposes in
+         *                         item stacks.
+         * @param itemTranslationString  - This is the localization key to determine the displayed name to the user.
+         * @param itemTextureLocation - This is the resource location for the item's texture when it's in the players
+         *                         and or in inventories/the world.
          */
-        EnumBasicStructureName(String name,
-                               String itemTranslationString,
-                               String itemTextureLocation,
-                               BaseOption baseOption) {
+        EnumBasicStructureName(
+                String name,
+                String itemTranslationString,
+                String itemTextureLocation,
+                BaseOption baseOption) {
             this.name = name;
             this.itemTranslationString = itemTranslationString;
 
@@ -235,9 +263,9 @@ public class BasicStructureConfiguration extends StructureConfiguration {
          *
          * @return The resource location for the item texture.
          */
-		public Identifier getItemTextureLocation() {
-			return this.itemTextureLocation;
-		}
+        public Identifier getItemTextureLocation() {
+            return this.itemTextureLocation;
+        }
 
         public BaseOption getBaseOption() {
             return this.baseOption;

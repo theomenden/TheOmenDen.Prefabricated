@@ -148,24 +148,20 @@ public class StructurePartConfiguration extends StructureConfiguration {
 	 * @author WuestMan
 	 */
 	public enum EnumStyle {
-		DoorWay("prefab.gui.part_style.door_way", "textures/gui/doorway_topdown.png", 164, 141),
-		Floor("prefab.gui.part_style.floor", "textures/gui/floor_topdown.png", 166, 121),
-		Frame("prefab.gui.part_style.frame", "textures/gui/frame_topdown.png", 167, 145),
-		Gate("prefab.gui.part_style.gate", "textures/gui/gate_topdown.png", 162, 141),
-		Roof("prefab.gui.part_style.roof", "textures/gui/roof_topdown.png", 167, 113),
-		Stairs("prefab.gui.part_style.stairs", "textures/gui/stairs_topdown.png", 142, 169),
-		Wall("prefab.gui.part_style.wall", "textures/gui/wall_topdown.png", 166, 154);
+		DoorWay("prefab.gui.part_style.door_way", "textures/gui/doorway_topdown.png" ),
+		Floor("prefab.gui.part_style.floor", "textures/gui/floor_topdown.png" ),
+		Frame("prefab.gui.part_style.frame", "textures/gui/frame_topdown.png"),
+		Gate("prefab.gui.part_style.gate", "textures/gui/gate_topdown.png"),
+		Roof("prefab.gui.part_style.roof", "textures/gui/roof_topdown.png"),
+		Stairs("prefab.gui.part_style.stairs", "textures/gui/stairs_topdown.png"),
+		Wall("prefab.gui.part_style.wall", "textures/gui/wall_topdown.png");
 
 		public final String translateKey;
 		public final String resourceLocation;
-		public final int imageWidth;
-		public final int imageHeight;
 
-		EnumStyle(String translateKey, String resourceLocation, int imageWidth, int imageHeight) {
+		EnumStyle(String translateKey, String resourceLocation) {
 			this.translateKey = translateKey;
 			this.resourceLocation = resourceLocation;
-			this.imageHeight = imageHeight;
-			this.imageWidth = imageWidth;
 		}
 
 		public static EnumStyle getByOrdinal(int ordinal) {
