@@ -49,7 +49,7 @@ public class ClientModRegistry {
 				GuiStructure screen = entry.getValue();
 				screen.pos = itemUseContext.getBlockPos();
 
-				MinecraftClient.getInstance().openScreen(screen);
+				MinecraftClient.getInstance().setScreen(screen);
 			}
 		}
 	}

@@ -126,11 +126,11 @@ public class ItemBulldozer extends StructureItem {
         }
 
         if (stack.getItem() == ModRegistry.Bulldozer) {
-            if (stack.getTag() == null
-                    || stack.getTag().isEmpty()) {
-                stack.setTag(stack.writeNbt(new NbtCompound()));
+            if (stack.getNbt() == null
+                    || stack.getNbt().isEmpty()) {
+                stack.setNbt(stack.writeNbt(new NbtCompound()));
             } else {
-                NbtCompound tag = stack.getTag();
+                NbtCompound tag = stack.getNbt();
 
                 if (tag.contains(Prefab.MODID)) {
                     NbtCompound prefabTag = tag.getCompound(Prefab.MODID);
@@ -146,13 +146,13 @@ public class ItemBulldozer extends StructureItem {
     }
 
     public void setPoweredValue(ItemStack stack, boolean value) {
-        if (stack.getTag() == null
-                || stack.getTag().isEmpty()) {
-            stack.setTag(stack.writeNbt(new NbtCompound()));
+        if (stack.getNbt() == null
+                || stack.getNbt().isEmpty()) {
+            stack.setNbt(stack.writeNbt(new NbtCompound()));
         }
 
         NbtCompound prefabTag = new NbtCompound();
         prefabTag.putBoolean("powered", value);
-        stack.getTag().put(Prefab.MODID, prefabTag);
+        stack.getNbt().put(Prefab.MODID, prefabTag);
     }
 }
