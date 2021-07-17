@@ -15,7 +15,7 @@
     "key": {
         "a": [
             {
-                "tag": "c:iron_ingots"
+                "item": "minecraft:iron_ingot"
             }
         ],
         "b" : [
