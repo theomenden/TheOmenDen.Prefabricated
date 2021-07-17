@@ -85,6 +85,17 @@
   "item.prefab.item_nether_gate_tree": "Arbre corrompu",
   "item.prefab.item_nether_gate_skull": "Crâne antique",
 
+  "item.prefab.item_swift_blade_wood": "Épée rapide : Bois",
+  "item.prefab.item_swift_blade_stone": "Épée rapide : Pierre",
+  "item.prefab.item_swift_blade_iron": "Épée rapide : fer",
+  "item.prefab.item_swift_blade_gold": "Épée rapide : Or",
+  "item.prefab.item_swift_blade_diamond": "Épée rapide : Diamant",
+  "item.prefab.item_swift_blade_copper": "Épée rapide : Cuivre",
+  "item.prefab.item_swift_blade_osmium": "Épée rapide : Osmium",
+  "item.prefab.item_swift_blade_bronze": "Épée rapide : Bronze",
+  "item.prefab.item_swift_blade_steel": "Épée rapide : Acier",
+  "item.prefab.item_swift_blade_obsidian": "Épée rapide : obsidienne",
+
   "block.prefab.block_compressed_stone": "Pierre compressée",
   "block.prefab.block_double_compressed_stone": "Double Pierre compressée",
   "block.prefab.block_triple_compressed_stone": "Triple Pierre compressée",

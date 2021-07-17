@@ -85,6 +85,17 @@
   "item.prefab.item_nether_gate_tree": "Árbol corrupto",
   "item.prefab.item_nether_gate_skull": "Calavera Antigua",
 
+  "item.prefab.item_swift_blade_wood": "Espada rápida: Madera",
+  "item.prefab.item_swift_blade_stone": "Espada rápida: piedra",
+  "item.prefab.item_swift_blade_iron": "Espada rápida: Hierro",
+  "item.prefab.item_swift_blade_gold": "Espada rápida: oro",
+  "item.prefab.item_swift_blade_diamond": "Espada rápida: Diamante",
+  "item.prefab.item_swift_blade_copper": "Espada rápida: cobre",
+  "item.prefab.item_swift_blade_osmium": "Espada rápida: Osmio",
+  "item.prefab.item_swift_blade_bronze": "Espada rápida: bronce",
+  "item.prefab.item_swift_blade_steel": "Espada rápida: acero",
+  "item.prefab.item_swift_blade_obsidian": "Espada rápida: obsidiana",
+
   "block.prefab.block_compressed_stone": "Piedra comprimida",
   "block.prefab.block_double_compressed_stone": "Doble piedra comprimida",
   "block.prefab.block_triple_compressed_stone": "Triple piedra comprimida",

@@ -85,6 +85,17 @@
   "item.prefab.item_nether_gate_tree": "Albero Corrotto",
   "item.prefab.item_nether_gate_skull": "Teschio Antico",
 
+  "item.prefab.item_swift_blade_wood": "Spada veloce: legno:",
+  "item.prefab.item_swift_blade_stone": "Spada veloce: pietra:",
+  "item.prefab.item_swift_blade_iron": "Spada Veloce: Ferro",
+  "item.prefab.item_swift_blade_gold": "Spada veloce: oro:",
+  "item.prefab.item_swift_blade_diamond": "Spada Veloce: Diamante",
+  "item.prefab.item_swift_blade_copper": "Spada veloce: rame",
+  "item.prefab.item_swift_blade_osmium": "Spada veloce: Osmio",
+  "item.prefab.item_swift_blade_bronze": "Spada veloce: bronzo",
+  "item.prefab.item_swift_blade_steel": "Spada veloce: Acciaio",
+  "item.prefab.item_swift_blade_obsidian": "Spada Veloce: Ossidiana",
+
   "block.prefab.block_compressed_stone": "Pietra Compressa",
   "block.prefab.block_double_compressed_stone": "Pietra Doppiamente Compressa",
   "block.prefab.block_triple_compressed_stone": "Pietra Triplamente Compressa",

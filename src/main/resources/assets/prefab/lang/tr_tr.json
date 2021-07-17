@@ -85,6 +85,17 @@
   "item.prefab.item_nether_gate_tree": "Bozuk ağaç",
   "item.prefab.item_nether_gate_skull": "Antik kurukafa",
 
+  "item.prefab.item_swift_blade_wood": "Hızlı Kılıç: Ahşap",
+  "item.prefab.item_swift_blade_stone": "Hızlı Kılıç: Taş",
+  "item.prefab.item_swift_blade_iron": "Hızlı Kılıç: Demir",
+  "item.prefab.item_swift_blade_gold": "Hızlı Kılıç: Altın",
+  "item.prefab.item_swift_blade_diamond": "Hızlı Kılıç: Elmas",
+  "item.prefab.item_swift_blade_copper": "Hızlı Kılıç: Bakır",
+  "item.prefab.item_swift_blade_osmium": "Hızlı Kılıç: Osmiyum",
+  "item.prefab.item_swift_blade_bronze": "Hızlı Kılıç: Bronz",
+  "item.prefab.item_swift_blade_steel": "Hızlı Kılıç: Çelik",
+  "item.prefab.item_swift_blade_obsidian": "Быстрый меч: обсидиан",
+
   "block.prefab.block_compressed_stone": "Sıkıştırılmış Taş",
   "block.prefab.block_double_compressed_stone": "Çifte Sıkıştırılmış Taş",
   "block.prefab.block_triple_compressed_stone": "Üçlü Sıkıştırılmış Taş",

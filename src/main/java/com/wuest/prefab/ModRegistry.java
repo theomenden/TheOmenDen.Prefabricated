@@ -2,6 +2,7 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.items.ItemCompressedChest;
+import com.wuest.prefab.items.ItemSwiftBlade;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
@@ -12,16 +13,18 @@ import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Lazy;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * This is the mod registry so there is a way to get to all instances of the blocks/items created by this mod.
@@ -29,11 +32,9 @@ import java.util.function.Consumer;
  * @author WuestMan
  */
 public class ModRegistry {
-    public static ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
+    public static final BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);
 
     /* *********************************** Blocks *********************************** */
-
-    public static final BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);
     public static final BlockCompressedStone DoubleCompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE);
     public static final BlockCompressedStone TripleCompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE);
     public static final BlockCompressedStone CompressedDirt = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_DIRT);
@@ -47,10 +48,9 @@ public class ModRegistry {
     public static final BlockPaperLantern PaperLantern = new BlockPaperLantern();
     public static final BlockPhasic Phasic = new BlockPhasic();
     public static final BlockBoundary Boundary = new BlockBoundary();
+    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
     /* *********************************** Item Blocks *********************************** */
-
-    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem DoubleCompressedStoneItem = new BlockItem(ModRegistry.DoubleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem TripleCompressedStoneItem = new BlockItem(ModRegistry.TripleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem CompressedDirtItem = new BlockItem(ModRegistry.CompressedDirt, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
@@ -64,17 +64,15 @@ public class ModRegistry {
     public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
 
 
     /* *********************************** Messages *********************************** */
-
-    public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
     public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
     public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
+    public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
     /* *********************************** Items *********************************** */
-
-    public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item PalletOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item BundleOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item HeapOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -83,17 +81,24 @@ public class ModRegistry {
     public static final Item CoilOfLanterns = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final ItemCompressedChest CompressedChest = new ItemCompressedChest();
     public static final Item WarehouseUpgrade = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+    public static final Item SwiftBladeWood = new ItemSwiftBlade(ToolMaterials.WOOD, 3, 10);
+    public static final Item SwiftBladeStone = new ItemSwiftBlade(ToolMaterials.STONE, 3, 10);
+    public static final Item SwiftBladeIron = new ItemSwiftBlade(ToolMaterials.IRON, 3, 10);
+    public static final Item SwiftBladeDiamond = new ItemSwiftBlade(ToolMaterials.DIAMOND, 3, 10);
+    public static final Item SwiftBladeGold = new ItemSwiftBlade(ToolMaterials.GOLD, 3, 10);
+    public static final Item SwiftBladeCopper = new ItemSwiftBlade(CustomItemTier.COPPER, 3, 10);
+    public static final Item SwiftBladeOsmium = new ItemSwiftBlade(CustomItemTier.OSMIUM, 3, 10);
+    public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 3, 10);
+    public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 3, 10);
+    public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 3, 10);
+    public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
 
     /* *********************************** Blueprint Items *********************************** */
-
-
-    public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
     public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
     public static final ItemStartHouse StartHouse = new ItemStartHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
     public static final ItemStructurePart StructurePart = new ItemStructurePart();
-
     public static final ItemBasicStructure Barn = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Barn);
     public static final ItemBasicStructure AdvancedCoop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop);
     public static final ItemBasicStructure AdvancedHorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedHorseStable);
@@ -126,10 +131,10 @@ public class ModRegistry {
     public static final ItemBasicStructure HorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.HorseStable);
     public static final ItemBasicStructure VillagerHouses = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses, 10);
     public static final ItemBasicStructure ModernBuildings = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings, 5);
-
     /* *********************************** Recipe Serializers *********************************** */
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
     public static final RecipeSerializer<ConditionedShaplessRecipe> ConditionedShapelessRecipeSeriaizer = new ConditionedShaplessRecipe.Serializer();
+    public static ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
 
     public static void registerModComponents() {
         ModRegistry.registerBlocks();
@@ -172,6 +177,17 @@ public class ModRegistry {
         ModRegistry.registerItem("item_coil_of_lanterns", ModRegistry.CoilOfLanterns);
         ModRegistry.registerItem("item_compressed_chest", ModRegistry.CompressedChest);
         ModRegistry.registerItem("item_warehouse_upgrade", ModRegistry.WarehouseUpgrade);
+
+        ModRegistry.registerItem("item_swift_blade_wood", ModRegistry.SwiftBladeWood);
+        ModRegistry.registerItem("item_swift_blade_stone", ModRegistry.SwiftBladeStone);
+        ModRegistry.registerItem("item_swift_blade_iron", ModRegistry.SwiftBladeIron);
+        ModRegistry.registerItem("item_swift_blade_diamond", ModRegistry.SwiftBladeDiamond);
+        ModRegistry.registerItem("item_swift_blade_gold", ModRegistry.SwiftBladeGold);
+        ModRegistry.registerItem("item_swift_blade_copper", ModRegistry.SwiftBladeCopper);
+        ModRegistry.registerItem("item_swift_blade_osmium", ModRegistry.SwiftBladeOsmium);
+        ModRegistry.registerItem("item_swift_blade_bronze", ModRegistry.SwiftBladeBronze);
+        ModRegistry.registerItem("item_swift_blade_steel", ModRegistry.SwiftBladeSteel);
+        ModRegistry.registerItem("item_swift_blade_obsidian", ModRegistry.SwiftBladeObsidian);
     }
 
     private static void registerBluePrints() {
@@ -271,5 +287,91 @@ public class ModRegistry {
                     });
                 }
         );
+    }
+
+    public enum CustomItemTier implements ToolMaterial {
+        COPPER("Copper", ToolMaterials.STONE.getMiningLevel(), ToolMaterials.STONE.getDurability(), ToolMaterials.STONE.getMiningSpeedMultiplier(),
+                ToolMaterials.STONE.getAttackDamage(), ToolMaterials.STONE.getEnchantability(), () -> {
+            return Ingredient
+                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "copper_ingots")));
+        }),
+        OSMIUM("Osmium", ToolMaterials.IRON.getMiningLevel(), 500, ToolMaterials.IRON.getMiningSpeedMultiplier(),
+                ToolMaterials.IRON.getAttackDamage() + .5f, ToolMaterials.IRON.getEnchantability(), () -> {
+            return Ingredient
+                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "osmium_ingots")));
+        }),
+        BRONZE("Bronze", ToolMaterials.IRON.getMiningLevel(), ToolMaterials.IRON.getDurability(), ToolMaterials.IRON.getMiningSpeedMultiplier(),
+                ToolMaterials.IRON.getAttackDamage(), ToolMaterials.IRON.getEnchantability(), () -> {
+            return Ingredient
+                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "bronze_ingots")));
+        }),
+        STEEL("Steel", ToolMaterials.DIAMOND.getMiningLevel(), (int) (ToolMaterials.IRON.getDurability() * 1.5),
+                ToolMaterials.DIAMOND.getMiningSpeedMultiplier(), ToolMaterials.DIAMOND.getAttackDamage(),
+                ToolMaterials.DIAMOND.getEnchantability(), () -> {
+            return Ingredient
+                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "steel_ingots")));
+        }),
+        OBSIDIAN("Obsidian", ToolMaterials.DIAMOND.getMiningLevel() + 1, (int) (ToolMaterials.DIAMOND.getDurability() * 1.5),
+                ToolMaterials.DIAMOND.getMiningSpeedMultiplier(), ToolMaterials.DIAMOND.getAttackDamage() + 2,
+                ToolMaterials.DIAMOND.getEnchantability(), () -> {
+            return Ingredient.ofItems(Item.fromBlock(Blocks.OBSIDIAN));
+        });
+
+        private final String name;
+        private final int harvestLevel;
+        private final int maxUses;
+        private final float efficiency;
+        private final float attackDamage;
+        private final int enchantability;
+        private final Lazy<Ingredient> repairMaterial;
+
+        CustomItemTier(String name, int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
+                       int enchantability, Supplier<Ingredient> repairMaterialIn) {
+            this.name = name;
+            this.harvestLevel = harvestLevelIn;
+            this.maxUses = maxUsesIn;
+            this.efficiency = efficiencyIn;
+            this.attackDamage = attackDamageIn;
+            this.enchantability = enchantability;
+            this.repairMaterial = new Lazy<>(repairMaterialIn);
+        }
+
+        public static CustomItemTier getByName(String name) {
+            for (CustomItemTier item : CustomItemTier.values()) {
+                if (item.getName().equals(name)) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public int getDurability() {
+            return this.maxUses;
+        }
+
+        public float getMiningSpeedMultiplier() {
+            return this.efficiency;
+        }
+
+        public float getAttackDamage() {
+            return this.attackDamage;
+        }
+
+        public int getMiningLevel() {
+            return this.harvestLevel;
+        }
+
+        public int getEnchantability() {
+            return this.enchantability;
+        }
+
+        public Ingredient getRepairIngredient() {
+            return this.repairMaterial.get();
+        }
     }
 }

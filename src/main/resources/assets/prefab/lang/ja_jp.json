@@ -85,6 +85,17 @@
   "item.prefab.item_nether_gate_tree": "壊れた木",
   "item.prefab.item_nether_gate_skull": "古代の頭蓋骨",
 
+  "item.prefab.item_swift_blade_wood": "ファストソード：ウッド",
+  "item.prefab.item_swift_blade_stone": "ファストソード：ストーン",
+  "item.prefab.item_swift_blade_iron": "ファストソード：アイアン",
+  "item.prefab.item_swift_blade_gold": "ファストソード：ゴールド",
+  "item.prefab.item_swift_blade_diamond": "ファストソード：ダイアモンド",
+  "item.prefab.item_swift_blade_copper": "ファストソード：銅",
+  "item.prefab.item_swift_blade_osmium": "ファストソード：オスミウム",
+  "item.prefab.item_swift_blade_bronze": "ファストソード：ブロンズ",
+  "item.prefab.item_swift_blade_steel": "ファストソード：スチール",
+  "item.prefab.item_swift_blade_obsidian": "ファストソード：オブシディアン",
+
   "block.prefab.block_compressed_stone": "圧縮石",
   "block.prefab.block_double_compressed_stone": "二重圧縮石",
   "block.prefab.block_triple_compressed_stone": "三重圧縮ストーン",

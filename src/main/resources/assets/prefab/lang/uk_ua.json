@@ -85,6 +85,17 @@
     "item.prefab.item_nether_gate_tree": "Химерне Дерево",
     "item.prefab.item_nether_gate_skull": "Древній Череп",
 
+    "item.prefab.item_swift_blade_wood": "Швидкий меч: Дерево",
+    "item.prefab.item_swift_blade_stone": "Швидкий меч: Камінь",
+    "item.prefab.item_swift_blade_iron": "Швидкий меч: залізо",
+    "item.prefab.item_swift_blade_gold": "Швидкий меч: золото",
+    "item.prefab.item_swift_blade_diamond": "Швидкий меч: Діамант",
+    "item.prefab.item_swift_blade_copper": "Швидкий меч: мідь",
+    "item.prefab.item_swift_blade_osmium": "Швидкий меч: Осмій",
+    "item.prefab.item_swift_blade_bronze": "Швидкий меч: Бронза",
+    "item.prefab.item_swift_blade_steel": "Швидкий меч: сталь",
+    "item.prefab.item_swift_blade_obsidian": "Швидкий меч: Обсидіан",
+
     "block.prefab.block_compressed_stone": "Стиснений Камінь",
     "block.prefab.block_double_compressed_stone": "Подвійно Стиснений Камінь",
     "block.prefab.block_triple_compressed_stone": "Потрійно Стиснений Камінь",
