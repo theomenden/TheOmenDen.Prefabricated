@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Hızlı Kılıç: Çelik",
   "item.prefab.item_swift_blade_obsidian": "Быстрый меч: обсидиан",
 
+  "item.prefab.item_sickle_wood": "Orak: Ahşap",
+  "item.prefab.item_sickle_stone": "Orak: Taş",
+  "item.prefab.item_sickle_iron": "Orak: Demir",
+  "item.prefab.item_sickle_diamond": "Orak: Elmas",
+  "item.prefab.item_sickle_gold": "Orak: Altın",
+
   "block.prefab.block_compressed_stone": "Sıkıştırılmış Taş",
   "block.prefab.block_double_compressed_stone": "Çifte Sıkıştırılmış Taş",
   "block.prefab.block_triple_compressed_stone": "Üçlü Sıkıştırılmış Taş",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "Bu eşya 16x16x16'lık bir alanı temizleyecek ve düşen bloklar eşya olarak geri dönecek.",
   "prefab.gui.compressed_chest_desc": "Doğrudan depolama için değil, yapılar için tariflerde kullanılır",
+  "prefab.gui.sickle_desc": "Çimleri, çiçekleri ve yaprakları kolaylıkla kesin!",
 
   "prefab.ceiling.block.type.stone": "Taş Tuğla",
   "prefab.ceiling.block.type.brick": "Tuğla",

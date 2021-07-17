@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "ファストソード：スチール",
   "item.prefab.item_swift_blade_obsidian": "ファストソード：オブシディアン",
 
+  "item.prefab.item_sickle_wood": "鎌：木",
+  "item.prefab.item_sickle_stone": "鎌：石",
+  "item.prefab.item_sickle_iron": "鎌：鉄",
+  "item.prefab.item_sickle_diamond": "鎌：ダイヤモンド",
+  "item.prefab.item_sickle_gold": "鎌：ゴールド",
+
   "block.prefab.block_compressed_stone": "圧縮石",
   "block.prefab.block_double_compressed_stone": "二重圧縮石",
   "block.prefab.block_triple_compressed_stone": "三重圧縮ストーン",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "このアイテムは16x16x16のスペースを空にし、各ブロックからのドロップを提供します。",
   "prefab.gui.compressed_chest_desc": "直接保管ではなく、構造物のレシピで使用されます",
+  "prefab.gui.sickle_desc": "草、花、葉を簡単にカット！",
 
   "prefab.ceiling.block.type.stone": "石レンガ",
   "prefab.ceiling.block.type.brick": "レンガ",

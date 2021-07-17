@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Épée rapide : Acier",
   "item.prefab.item_swift_blade_obsidian": "Épée rapide : obsidienne",
 
+  "item.prefab.item_sickle_wood": "Faucille : Bois",
+  "item.prefab.item_sickle_stone": "Faucille : Pierre",
+  "item.prefab.item_sickle_iron": "Faucille : Fer",
+  "item.prefab.item_sickle_diamond": "Faucille : Diamant",
+  "item.prefab.item_sickle_gold": "Faucille : Or",
+
   "block.prefab.block_compressed_stone": "Pierre compressée",
   "block.prefab.block_double_compressed_stone": "Double Pierre compressée",
   "block.prefab.block_triple_compressed_stone": "Triple Pierre compressée",
@@ -172,6 +178,7 @@
 
   "prefab.gui.bulldozer_desc": "Cet objet va nettoyer un espace 16x16x16 et fournir les gouttes de chaque bloc.",
   "prefab.gui.compressed_chest_desc": "Utilisé dans les recettes pour les structures, pas pour le stockage direct",
+  "prefab.gui.sickle_desc": "Coupez facilement l'herbe, les fleurs et les feuilles!",
   "prefab.gui.cleared_area": "La zone dégagée sera dans la direction que vous affrontez.",
 
   "prefab.gui.villager.house.flat": "Toit plat",

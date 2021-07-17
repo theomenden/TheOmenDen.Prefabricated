@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Swift Blade: Steel",
   "item.prefab.item_swift_blade_obsidian": "Swift Blade: Obsidian",
 
+  "item.prefab.item_sickle_wood": "Wood Sickle",
+  "item.prefab.item_sickle_stone": "Stone Sickle",
+  "item.prefab.item_sickle_iron": "Iron Sickle",
+  "item.prefab.item_sickle_diamond": "Diamond Sickle",
+  "item.prefab.item_sickle_gold": "Gold Sickle",
+
   "block.prefab.block_compressed_stone": "Compressed Stone",
   "block.prefab.block_double_compressed_stone": "Double Compressed Stone",
   "block.prefab.block_triple_compressed_stone": "Triple Compressed Stone",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "This item will clear out a 16x16x16 space and provide the drops from each block.",
   "prefab.gui.compressed_chest_desc": "Used in the recipes for structures, not for direct storage",
+  "prefab.gui.sickle_desc": "Cut grass, flowers, and leaves with ease!",
 
   "prefab.ceiling.block.type.stone": "Stonebrick",
   "prefab.ceiling.block.type.brick": "Brick",

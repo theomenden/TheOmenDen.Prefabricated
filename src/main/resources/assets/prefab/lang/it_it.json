@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Spada veloce: Acciaio",
   "item.prefab.item_swift_blade_obsidian": "Spada Veloce: Ossidiana",
 
+  "item.prefab.item_sickle_wood": "Falce: legno",
+  "item.prefab.item_sickle_stone": "Falce: Pietra",
+  "item.prefab.item_sickle_iron": "Falce: Ferro",
+  "item.prefab.item_sickle_diamond": "Falce: Diamante",
+  "item.prefab.item_sickle_gold": "Falce: Oro",
+
   "block.prefab.block_compressed_stone": "Pietra Compressa",
   "block.prefab.block_double_compressed_stone": "Pietra Doppiamente Compressa",
   "block.prefab.block_triple_compressed_stone": "Pietra Triplamente Compressa",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "Questo oggetto sgombrerà uno spazio di 16x16x16 e fornirà il drop di ogni blocco.",
   "prefab.gui.compressed_chest_desc": "Utilizzato nelle ricette per strutture, non per lo stoccaggio diretto",
+  "prefab.gui.sickle_desc": "Taglia erba, fiori e foglie con facilità!",
 
   "prefab.ceiling.block.type.stone": "Mattoni di Pietra",
   "prefab.ceiling.block.type.brick": "Mattone",

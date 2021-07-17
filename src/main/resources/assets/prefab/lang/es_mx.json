@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Espada rápida: acero",
   "item.prefab.item_swift_blade_obsidian": "Espada rápida: obsidiana",
 
+  "item.prefab.item_sickle_wood": "Hoz: Madera",
+  "item.prefab.item_sickle_stone": "Hoz: Piedra",
+  "item.prefab.item_sickle_iron": "Hoz: Hierro",
+  "item.prefab.item_sickle_diamond": "Hoz: Diamante",
+  "item.prefab.item_sickle_gold": "Hoz: Oro",
+
   "block.prefab.block_compressed_stone": "Piedra comprimida",
   "block.prefab.block_double_compressed_stone": "Doble piedra comprimida",
   "block.prefab.block_triple_compressed_stone": "Triple piedra comprimida",
@@ -172,6 +178,7 @@
 
   "prefab.gui.bulldozer_desc": "Este artículo limpiará un espacio de 16x16x16 y proporcionará las gotas de cada bloque.",
   "prefab.gui.compressed_chest_desc": "Se utiliza en las recetas de estructuras, no para almacenamiento directo.",
+  "prefab.gui.sickle_desc": "¡Corta el césped, las flores y las hojas con facilidad!",
   "prefab.gui.cleared_area": "El área despejada será en la dirección que estás enfrentando.",
 
   "prefab.gui.villager.house.flat": "Azotea plana",

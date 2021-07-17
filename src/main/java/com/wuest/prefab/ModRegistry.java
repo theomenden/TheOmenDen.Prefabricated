@@ -2,6 +2,7 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.items.ItemCompressedChest;
+import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.items.ItemSwiftBlade;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
@@ -32,6 +33,7 @@ import java.util.function.Supplier;
  * @author WuestMan
  */
 public class ModRegistry {
+    public static final ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
     public static final BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);
 
     /* *********************************** Blocks *********************************** */
@@ -64,15 +66,14 @@ public class ModRegistry {
     public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
-
 
     /* *********************************** Messages *********************************** */
+    public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
     public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
     public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
-    public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
 
     /* *********************************** Items *********************************** */
+    public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item PalletOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item BundleOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
     public static final Item HeapOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -91,9 +92,14 @@ public class ModRegistry {
     public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 3, 10);
     public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 3, 10);
     public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 3, 10);
-    public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
+    public static final ItemSickle SickleWood = new ItemSickle(ToolMaterials.WOOD);
+    public static final ItemSickle SickleStone = new ItemSickle(ToolMaterials.STONE);
+    public static final ItemSickle SickleGold = new ItemSickle(ToolMaterials.GOLD);
+    public static final ItemSickle SickleIron = new ItemSickle(ToolMaterials.IRON);
+    public static final ItemSickle SickleDiamond = new ItemSickle(ToolMaterials.DIAMOND);
 
     /* *********************************** Blueprint Items *********************************** */
+    public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
     public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
     public static final ItemStartHouse StartHouse = new ItemStartHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
@@ -131,10 +137,10 @@ public class ModRegistry {
     public static final ItemBasicStructure HorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.HorseStable);
     public static final ItemBasicStructure VillagerHouses = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses, 10);
     public static final ItemBasicStructure ModernBuildings = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings, 5);
+
     /* *********************************** Recipe Serializers *********************************** */
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
     public static final RecipeSerializer<ConditionedShaplessRecipe> ConditionedShapelessRecipeSeriaizer = new ConditionedShaplessRecipe.Serializer();
-    public static ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
 
     public static void registerModComponents() {
         ModRegistry.registerBlocks();
@@ -188,6 +194,12 @@ public class ModRegistry {
         ModRegistry.registerItem("item_swift_blade_bronze", ModRegistry.SwiftBladeBronze);
         ModRegistry.registerItem("item_swift_blade_steel", ModRegistry.SwiftBladeSteel);
         ModRegistry.registerItem("item_swift_blade_obsidian", ModRegistry.SwiftBladeObsidian);
+
+        ModRegistry.registerItem("item_sickle_wood", ModRegistry.SickleWood);
+        ModRegistry.registerItem("item_sickle_stone", ModRegistry.SickleStone);
+        ModRegistry.registerItem("item_sickle_gold", ModRegistry.SickleGold);
+        ModRegistry.registerItem("item_sickle_iron", ModRegistry.SickleIron);
+        ModRegistry.registerItem("item_sickle_diamond", ModRegistry.SickleDiamond);
     }
 
     private static void registerBluePrints() {

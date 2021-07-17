@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "Быстрый меч: сталь",
   "item.prefab.item_swift_blade_obsidian": "Быстрый меч: обсидиан",
 
+  "item.prefab.item_sickle_wood": "Серп: дерево",
+  "item.prefab.item_sickle_stone": "Серп: Камень",
+  "item.prefab.item_sickle_iron": "Серп: железо",
+  "item.prefab.item_sickle_diamond": "Серп: Бриллиант",
+  "item.prefab.item_sickle_gold": "Серп: золото",
+
   "block.prefab.block_compressed_stone": "Сжатый Камень",
   "block.prefab.block_double_compressed_stone": "Двойной Сжатый Камень",
   "block.prefab.block_triple_compressed_stone": "Тройной Сжатый Камень",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "Этот предмет очистит местность размером в 16x16x16 блоков и отдаст разрушенные блоки.",
   "prefab.gui.compressed_chest_desc": "Используется в рецептах для конструкций, а не для непосредственного хранения",
+  "prefab.gui.sickle_desc": "С легкостью косите траву, цветы и листья!",
 
   "prefab.ceiling.block.type.stone": "Каменный Кирпич",
   "prefab.ceiling.block.type.brick": "Кирпич",

@@ -96,6 +96,12 @@
   "item.prefab.item_swift_blade_steel": "快剑：钢",
   "item.prefab.item_swift_blade_obsidian": "快剑：黑曜石",
 
+  "item.prefab.item_sickle_wood": "镰刀：木头",
+  "item.prefab.item_sickle_stone": "镰刀：石头",
+  "item.prefab.item_sickle_iron": "镰刀：铁",
+  "item.prefab.item_sickle_diamond": "镰刀：钻石",
+  "item.prefab.item_sickle_gold": "镰刀：黄金",
+
   "block.prefab.block_compressed_stone": "压缩石头",
   "block.prefab.block_double_compressed_stone": "双倍压缩石头",
   "block.prefab.block_triple_compressed_stone": "三倍压缩石头",
@@ -180,6 +186,7 @@
 
   "prefab.gui.bulldozer_desc": "此物品将清空 16x16x16 的区域，并将原方块变为掉落物。",
   "prefab.gui.compressed_chest_desc": "用于结构配方，不用于直接存储",
+  "prefab.gui.sickle_desc": "轻松剪草、剪花和剪树叶！",
 
   "prefab.ceiling.block.type.stone": "石砖",
   "prefab.ceiling.block.type.brick": "砖块",

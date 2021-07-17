@@ -96,6 +96,12 @@
     "item.prefab.item_swift_blade_steel": "Швидкий меч: сталь",
     "item.prefab.item_swift_blade_obsidian": "Швидкий меч: Обсидіан",
 
+    "item.prefab.item_sickle_wood": "Серп: Деревина",
+    "item.prefab.item_sickle_stone": "Серп: Камінь",
+    "item.prefab.item_sickle_iron": "Серп: Залізний",
+    "item.prefab.item_sickle_diamond": "Серп: Діамант",
+    "item.prefab.item_sickle_gold": "Серп: Золото",
+
     "block.prefab.block_compressed_stone": "Стиснений Камінь",
     "block.prefab.block_double_compressed_stone": "Подвійно Стиснений Камінь",
     "block.prefab.block_triple_compressed_stone": "Потрійно Стиснений Камінь",
@@ -180,6 +186,7 @@
 
     "prefab.gui.bulldozer_desc": "Цей предмет почистить область розміром 16x16x16 блоків та віддасть зламані блоки.",
     "prefab.gui.compressed_chest_desc": "Використовується в рецептах конструкцій, а не для безпосереднього зберігання",
+    "prefab.gui.sickle_desc": "Скосити траву, квіти та листя з легкістю!",
 
     "prefab.ceiling.block.type.stone": "Кам'яна Цегла",
     "prefab.ceiling.block.type.brick": "Цегла",
