@@ -1,11 +1,6 @@
 {
-    "conditions": [
-        {
-            "type": "prefab:config_recipe",
-            "recipeKey": "Swift Blade"
-        }
-    ],
-    "type": "minecraft:crafting_shaped",
+    "type": "prefab:condition_crafting_shaped",
+    "config": "Swift Blade",
     "group": "Swift Blade",
     "pattern": [
         "  a",

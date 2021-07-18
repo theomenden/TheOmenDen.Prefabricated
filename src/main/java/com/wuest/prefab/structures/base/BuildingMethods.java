@@ -1,6 +1,7 @@
 package com.wuest.prefab.structures.base;
 
 
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
 import com.wuest.prefab.Tuple;
@@ -409,13 +410,7 @@ public class BuildingMethods {
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addSword) {
-				Item sword = Items.STONE_SWORD;
-
-				Identifier name = new Identifier("repurpose", "item_swift_blade_stone");
-
-				if (Registry.ITEM.getIds().contains(name)) {
-					sword = Registry.ITEM.get(name);
-				}
+				Item sword = ModRegistry.SwiftBladeStone;
 
 				chestTile.setStack(itemSlot++, new ItemStack(sword));
 			}
