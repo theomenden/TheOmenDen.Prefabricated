@@ -102,6 +102,16 @@
   "item.prefab.item_sickle_diamond": "Серп: Бриллиант",
   "item.prefab.item_sickle_gold": "Серп: золото",
 
+  "item.prefab.item_wooden_crate": "Деревянный ящик",
+  "item.prefab.item_clutch_of_eggs": "Связка яиц",
+  "item.prefab.item_carton_of_eggs": "Коробка яиц",
+  "item.prefab.item_bunch_of_potatoes": "Букет из картофеля",
+  "item.prefab.item_crate_of_potatoes": "Ящик с картофелем",
+  "item.prefab.item_bunch_of_carrots": "Гроздь моркови",
+  "item.prefab.item_crate_of_carrots": "Ящик с морковью",
+  "item.prefab.item_bunch_of_beets": "Букет из свеклы",
+  "item.prefab.item_crate_of_beets": "Ящик свеклы",
+
   "block.prefab.block_compressed_stone": "Сжатый Камень",
   "block.prefab.block_double_compressed_stone": "Двойной Сжатый Камень",
   "block.prefab.block_triple_compressed_stone": "Тройной Сжатый Камень",

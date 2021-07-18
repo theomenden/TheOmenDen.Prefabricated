@@ -102,6 +102,16 @@
   "item.prefab.item_sickle_diamond": "Faucille : Diamant",
   "item.prefab.item_sickle_gold": "Faucille : Or",
 
+  "item.prefab.item_wooden_crate": "Caisse en bois",
+  "item.prefab.item_clutch_of_eggs": "Bouquet d'oeufs",
+  "item.prefab.item_carton_of_eggs": "Boite d'œufs",
+  "item.prefab.item_bunch_of_potatoes": "Tas de pommes de terre",
+  "item.prefab.item_crate_of_potatoes": "Caisse de pommes de terre",
+  "item.prefab.item_bunch_of_carrots": "Botte de carottes",
+  "item.prefab.item_crate_of_carrots": "Caisse de carottes",
+  "item.prefab.item_bunch_of_beets": "Bouquet de betteraves",
+  "item.prefab.item_crate_of_beets": "Caisse de betteraves",
+
   "block.prefab.block_compressed_stone": "Pierre compressée",
   "block.prefab.block_double_compressed_stone": "Double Pierre compressée",
   "block.prefab.block_triple_compressed_stone": "Triple Pierre compressée",

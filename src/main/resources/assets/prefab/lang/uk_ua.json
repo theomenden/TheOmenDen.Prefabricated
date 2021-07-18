@@ -102,6 +102,16 @@
     "item.prefab.item_sickle_diamond": "Серп: Діамант",
     "item.prefab.item_sickle_gold": "Серп: Золото",
 
+    "item.prefab.item_wooden_crate": "Дерев’яний ящик",
+    "item.prefab.item_clutch_of_eggs": "Пучок яєць",
+    "item.prefab.item_carton_of_eggs": "Коробка яєць",
+    "item.prefab.item_bunch_of_potatoes": "Пучок картоплі",
+    "item.prefab.item_crate_of_potatoes": "Ящик з картоплею",
+    "item.prefab.item_bunch_of_carrots": "Пучок моркви",
+    "item.prefab.item_crate_of_carrots": "Ящик з морквою",
+    "item.prefab.item_bunch_of_beets": "Букет буряків",
+    "item.prefab.item_crate_of_beets": "Ящик з буряком",
+
     "block.prefab.block_compressed_stone": "Стиснений Камінь",
     "block.prefab.block_double_compressed_stone": "Подвійно Стиснений Камінь",
     "block.prefab.block_triple_compressed_stone": "Потрійно Стиснений Камінь",

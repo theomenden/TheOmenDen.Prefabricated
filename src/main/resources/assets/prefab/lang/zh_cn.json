@@ -102,6 +102,16 @@
   "item.prefab.item_sickle_diamond": "镰刀：钻石",
   "item.prefab.item_sickle_gold": "镰刀：黄金",
 
+  "item.prefab.item_wooden_crate": "木箱",
+  "item.prefab.item_clutch_of_eggs": "一堆鸡蛋",
+  "item.prefab.item_carton_of_eggs": "一盒鸡蛋",
+  "item.prefab.item_bunch_of_potatoes": "一串土豆",
+  "item.prefab.item_crate_of_potatoes": "一箱土豆",
+  "item.prefab.item_bunch_of_carrots": "一束胡萝卜",
+  "item.prefab.item_crate_of_carrots": "一箱胡萝卜",
+  "item.prefab.item_bunch_of_beets": "一串甜菜",
+  "item.prefab.item_crate_of_beets": "一箱甜菜",
+
   "block.prefab.block_compressed_stone": "压缩石头",
   "block.prefab.block_double_compressed_stone": "双倍压缩石头",
   "block.prefab.block_triple_compressed_stone": "三倍压缩石头",

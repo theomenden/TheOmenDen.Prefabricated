@@ -4,6 +4,7 @@ import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.items.ItemSwiftBlade;
+import com.wuest.prefab.items.ItemWoodenCrate;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
@@ -109,6 +110,17 @@ public class ModRegistry {
     public static final ItemSickle SickleGold = new ItemSickle(ToolMaterials.GOLD);
     public static final ItemSickle SickleIron = new ItemSickle(ToolMaterials.IRON);
     public static final ItemSickle SickleDiamond = new ItemSickle(ToolMaterials.DIAMOND);
+
+    // Note: Empty crate must be registered first to avoid null-pointer errors with the rest of the ItemWoodenCrate items.
+    public static final ItemWoodenCrate EmptyCrate = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Empty);
+    public static final ItemWoodenCrate ClutchOfEggs = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Clutch_Of_Eggs);
+    public static final ItemWoodenCrate CartonOfEggs = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Carton_Of_Eggs);
+    public static final ItemWoodenCrate BunchOfPotatoes = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Bunch_Of_Potatoes);
+    public static final ItemWoodenCrate CrateOfPotatoes = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Crate_Of_Potatoes);
+    public static final ItemWoodenCrate BunchOfCarrots = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Bunch_Of_Carrots);
+    public static final ItemWoodenCrate CrateOfCarrots = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Crate_Of_Carrots);
+    public static final ItemWoodenCrate BunchOfBeets = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Bunch_Of_Beets);
+    public static final ItemWoodenCrate CrateOfBeets = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Crate_Of_Beets);
 
     /* *********************************** Blueprint Items *********************************** */
     public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
@@ -218,6 +230,16 @@ public class ModRegistry {
         ModRegistry.registerItem("item_sickle_gold", ModRegistry.SickleGold);
         ModRegistry.registerItem("item_sickle_iron", ModRegistry.SickleIron);
         ModRegistry.registerItem("item_sickle_diamond", ModRegistry.SickleDiamond);
+
+        ModRegistry.registerItem("item_wooden_crate", ModRegistry.EmptyCrate);
+        ModRegistry.registerItem("item_clutch_of_eggs", ModRegistry.ClutchOfEggs);
+        ModRegistry.registerItem("item_carton_of_eggs", ModRegistry.CartonOfEggs);
+        ModRegistry.registerItem("item_bunch_of_potatoes", ModRegistry.BunchOfPotatoes);
+        ModRegistry.registerItem("item_crate_of_potatoes", ModRegistry.CrateOfPotatoes);
+        ModRegistry.registerItem("item_bunch_of_carrots", ModRegistry.BunchOfCarrots);
+        ModRegistry.registerItem("item_crate_of_carrots", ModRegistry.CrateOfCarrots);
+        ModRegistry.registerItem("item_bunch_of_beets", ModRegistry.BunchOfBeets);
+        ModRegistry.registerItem("item_crate_of_beets", ModRegistry.CrateOfBeets);
     }
 
     private static void registerBluePrints() {
