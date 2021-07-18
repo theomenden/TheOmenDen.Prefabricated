@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "Scala di Vetro",
   "block.prefab.block_glass_slab": "Lastra di Vetro",
 
+  "block.prefab.block_dirt_stairs": "Scale sporche",
+  "block.prefab.block_grass_stairs": "Scale d'erba",
+  "block.prefab.block_dirt_slab": "Lastra di terra",
+  "block.prefab.block_grass_slab": "Lastra d'erba",
+  "block.prefab.block_dirt_wall": "Muro di terra",
+  "block.prefab.block_grass_wall": "Muro d'erba",
+
   "prefab.gui.cleared_area": "L'area verrà sgombrata nella direzione che stai guardando.",
 
   "prefab.gui.producefarm.structure.size": "Questa struttura misura 32x32 blocchi.",

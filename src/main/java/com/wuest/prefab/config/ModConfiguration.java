@@ -205,6 +205,7 @@ public class ModConfiguration implements ConfigData {
         public static String modernBuildingsKey = "Modern Buildings";
         public static String swiftBladeKey = "Swift Blade";
         public static String sickleKey = "Sickle";
+        public static String DirtRecipesKey = "Dirt Recipes";
 
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
@@ -217,7 +218,7 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
                         ConfigKeyNames.bulldozerKey, ConfigKeyNames.structurePartKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
                         ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.sugarCaneFarmKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey,
-                        ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey};
+                        ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey, ConfigKeyNames.DirtRecipesKey};
 
         // Config file option names.
         static String enableLoftHouseName = "Enable Loft House";

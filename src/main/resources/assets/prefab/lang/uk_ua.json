@@ -118,6 +118,13 @@
     "block.prefab.block_glass_stairs": "Скляні Сходи",
     "block.prefab.block_glass_slab": "Скляна Плита",
 
+    "block.prefab.block_dirt_stairs": "Грунтові сходи",
+    "block.prefab.block_grass_stairs": "Трав'яні сходи",
+    "block.prefab.block_dirt_slab": "Брудна плита",
+    "block.prefab.block_grass_slab": "Трав'яна плита",
+    "block.prefab.block_dirt_wall": "Брудна стіна",
+    "block.prefab.block_grass_wall": "Трав'яна стіна",
+
     "prefab.gui.cleared_area": "Очищена зона буде в тому напрямку, в який ви спрямовані.",
 
     "prefab.gui.producefarm.structure.size": "Ця структура розміром 32x32 блока.",

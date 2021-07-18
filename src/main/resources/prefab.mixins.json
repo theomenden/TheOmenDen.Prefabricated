@@ -9,7 +9,8 @@
   ],
   "client": [
     "ClientWorldMixin",
-    "RenderIndicatorMixin"
+    "RenderIndicatorMixin",
+    "MinecraftClientInitMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "玻璃楼梯",
   "block.prefab.block_glass_slab": "玻璃台阶",
 
+  "block.prefab.block_dirt_stairs": "污垢楼梯",
+  "block.prefab.block_grass_stairs": "草梯",
+  "block.prefab.block_dirt_slab": "泥板",
+  "block.prefab.block_grass_slab": "草板",
+  "block.prefab.block_dirt_wall": "土墙",
+  "block.prefab.block_grass_wall": "草墙",
+
   "prefab.gui.cleared_area": "你面朝方向的一片区域将被清除。",
 
   "prefab.gui.producefarm.structure.size": "此结构的尺寸为 32x32。",

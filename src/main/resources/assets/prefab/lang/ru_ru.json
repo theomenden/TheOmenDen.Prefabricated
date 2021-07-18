@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "Стеклянные Ступеньки",
   "block.prefab.block_glass_slab": "Стеклянная Плита",
 
+  "block.prefab.block_dirt_stairs": "Грязная лестница",
+  "block.prefab.block_grass_stairs": "Лестница из травы",
+  "block.prefab.block_dirt_slab": "Грязевая плита",
+  "block.prefab.block_grass_slab": "Плита травы",
+  "block.prefab.block_dirt_wall": "Грязная стена",
+  "block.prefab.block_grass_wall": "Трава Стена",
+
   "prefab.gui.cleared_area": "Очищенная область будет находиться в направлении, куда вы смотрите",
 
   "prefab.gui.producefarm.structure.size": "Эта структура размером 32x32 блока.",

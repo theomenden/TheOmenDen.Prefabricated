@@ -1,5 +1,8 @@
 package com.wuest.prefab;
 
+import com.wuest.prefab.blocks.BlockCustomWall;
+import com.wuest.prefab.blocks.BlockGrassSlab;
+import com.wuest.prefab.blocks.BlockGrassStairs;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.network.message.ConfigSyncMessage;
 import com.wuest.prefab.network.message.PlayerEntityTagMessage;
@@ -9,11 +12,18 @@ import com.wuest.prefab.structures.render.ShaderHelper;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
@@ -86,10 +96,56 @@ public class ClientModRegistry {
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.PaperLantern, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Boundary, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Phasic, RenderLayer.getTranslucent());
+
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassStairs, RenderLayer.getCutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtStairs, RenderLayer.getCutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassSlab, RenderLayer.getCutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtSlab, RenderLayer.getCutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassWall, RenderLayer.getCutoutMipped());
+		BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtWall, RenderLayer.getCutoutMipped());
 	}
 
 	private static void registerRenderers() {
 		ShaderHelper.Initialize();
+	}
+
+	public static void RegisterBlockRenderer() {
+		// Register the block renderer.
+		MinecraftClient.getInstance().getBlockColors().registerColorProvider((state, worldIn, pos, tintIndex) -> worldIn != null && pos != null
+				? BiomeColors.getGrassColor(worldIn, pos)
+				: GrassColors.getColor(0.5D, 1.0D), ModRegistry.GrassWall, ModRegistry.GrassSlab, ModRegistry.GrassStairs);
+
+		// Register the item renderer.
+		MinecraftClient.getInstance().itemColors.register((stack, tintIndex) -> {
+			// Get the item for this stack.
+			Item item = stack.getItem();
+
+			if (item instanceof BlockItem) {
+				// Get the block for this item and determine if it's a grass stairs.
+				BlockItem itemBlock = (BlockItem) item;
+				boolean paintBlock = false;
+
+				if (itemBlock.getBlock() instanceof BlockCustomWall) {
+					BlockCustomWall customWall = (BlockCustomWall) itemBlock.getBlock();
+
+					if (customWall.BlockVariant == BlockCustomWall.EnumType.GRASS) {
+						paintBlock = true;
+					}
+				} else if (itemBlock.getBlock() instanceof BlockGrassSlab) {
+					paintBlock = true;
+				} else if (itemBlock.getBlock() instanceof BlockGrassStairs) {
+					paintBlock = true;
+				}
+
+				if (paintBlock) {
+					BlockPos pos = MinecraftClient.getInstance().player.getBlockPos();
+					ClientWorld world = MinecraftClient.getInstance().world;
+					return BiomeColors.getGrassColor(world, pos);
+				}
+			}
+
+			return -1;
+		}, new Block[]{ModRegistry.GrassWall, ModRegistry.GrassSlab, ModRegistry.GrassStairs});
 	}
 
 	/**

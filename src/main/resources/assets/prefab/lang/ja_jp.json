@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "ガラス階段",
   "block.prefab.block_glass_slab": "ガラスのハーフブロック",
 
+  "block.prefab.block_dirt_stairs": "汚れた階段",
+  "block.prefab.block_grass_stairs": "草の階段",
+  "block.prefab.block_dirt_slab": "ダートスラブ",
+  "block.prefab.block_grass_slab": "グラススラブ",
+  "block.prefab.block_dirt_wall": "汚れた壁",
+  "block.prefab.block_grass_wall": "草の壁",
+
   "prefab.gui.cleared_area": "クリアされたエリアは、あなたが向いている方向になります。",
 
   "prefab.gui.producefarm.structure.size": "この構造は、サイズが32x32ブロックです。",

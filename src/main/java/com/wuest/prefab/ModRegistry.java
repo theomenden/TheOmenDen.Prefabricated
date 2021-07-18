@@ -50,9 +50,15 @@ public class ModRegistry {
     public static final BlockPaperLantern PaperLantern = new BlockPaperLantern();
     public static final BlockPhasic Phasic = new BlockPhasic();
     public static final BlockBoundary Boundary = new BlockBoundary();
-    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockGrassSlab GrassSlab = new BlockGrassSlab();
+    public static final BlockGrassStairs GrassStairs = new BlockGrassStairs();
+    public static final BlockCustomWall GrassWall = new BlockCustomWall(Blocks.GRASS_BLOCK, BlockCustomWall.EnumType.GRASS);
+    public static final BlockCustomWall DirtWall = new BlockCustomWall(Blocks.DIRT, BlockCustomWall.EnumType.DIRT);
+    public static final BlockDirtStairs DirtStairs = new BlockDirtStairs();
+    public static final BlockDirtSlab DirtSlab = new BlockDirtSlab();
 
     /* *********************************** Item Blocks *********************************** */
+    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem DoubleCompressedStoneItem = new BlockItem(ModRegistry.DoubleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem TripleCompressedStoneItem = new BlockItem(ModRegistry.TripleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem CompressedDirtItem = new BlockItem(ModRegistry.CompressedDirt, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
@@ -66,6 +72,12 @@ public class ModRegistry {
     public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem GrassSlabItem = new BlockItem(ModRegistry.GrassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem GrassStairsItem = new BlockItem(ModRegistry.GrassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem GrassWallItem = new BlockItem(ModRegistry.GrassWall, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem DirtWallItem = new BlockItem(ModRegistry.DirtWall, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem DirtStairsItem = new BlockItem(ModRegistry.DirtStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem DirtSlabItem = new BlockItem(ModRegistry.DirtSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
 
     /* *********************************** Messages *********************************** */
     public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
@@ -171,6 +183,12 @@ public class ModRegistry {
         ModRegistry.registerBlock("block_paper_lantern", ModRegistry.PaperLantern);
         ModRegistry.registerBlock("block_phasic", ModRegistry.Phasic);
         ModRegistry.registerBlock("block_boundary", ModRegistry.Boundary);
+        ModRegistry.registerBlock("block_grass_slab", ModRegistry.GrassSlab);
+        ModRegistry.registerBlock("block_grass_stairs", ModRegistry.GrassStairs);
+        ModRegistry.registerBlock(BlockCustomWall.EnumType.GRASS.getUnlocalizedName(), ModRegistry.GrassWall);
+        ModRegistry.registerBlock(BlockCustomWall.EnumType.DIRT.getUnlocalizedName(), ModRegistry.DirtWall);
+        ModRegistry.registerBlock("block_dirt_stairs", ModRegistry.DirtStairs);
+        ModRegistry.registerBlock("block_dirt_slab", ModRegistry.DirtSlab);
     }
 
     private static void registerItems() {
@@ -260,6 +278,12 @@ public class ModRegistry {
         ModRegistry.registerItem("block_paper_lantern", ModRegistry.PaperLanternItem);
         ModRegistry.registerItem("block_phasic", ModRegistry.PhasicItem);
         ModRegistry.registerItem("block_boundary", ModRegistry.BoundaryItem);
+        ModRegistry.registerItem("block_grass_slab", ModRegistry.GrassSlabItem);
+        ModRegistry.registerItem("block_grass_stairs", ModRegistry.GrassStairsItem);
+        ModRegistry.registerItem(BlockCustomWall.EnumType.GRASS.getUnlocalizedName(), ModRegistry.GrassWallItem);
+        ModRegistry.registerItem(BlockCustomWall.EnumType.DIRT.getUnlocalizedName(), ModRegistry.DirtWallItem);
+        ModRegistry.registerItem("block_dirt_stairs", ModRegistry.DirtStairsItem);
+        ModRegistry.registerItem("block_dirt_slab", ModRegistry.DirtSlabItem);
     }
 
     /**

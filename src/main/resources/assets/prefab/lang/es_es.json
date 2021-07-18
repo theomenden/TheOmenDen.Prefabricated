@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "Escaleras de vidrio",
   "block.prefab.block_glass_slab": "Losa de vidrio",
 
+  "block.prefab.block_dirt_stairs": "Escaleras de tierra",
+  "block.prefab.block_grass_stairs": "Escaleras de hierba",
+  "block.prefab.block_dirt_slab": "Losa de tierra",
+  "block.prefab.block_grass_slab": "Losa de hierba",
+  "block.prefab.block_dirt_wall": "Muro de tierra",
+  "block.prefab.block_grass_wall": "Muro de hierba",
+
   "prefab.gui.producefarm.structure.size": "Esta estructura es 32x32 bloques de tamaño.",
 
   "prefab.gui.starter.tab.general": "General",

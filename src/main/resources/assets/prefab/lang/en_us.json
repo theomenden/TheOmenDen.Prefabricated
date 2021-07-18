@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "Glass Stairs",
   "block.prefab.block_glass_slab": "Glass Slab",
 
+  "block.prefab.block_dirt_stairs": "Dirt Stairs",
+  "block.prefab.block_grass_stairs": "Grass Stairs",
+  "block.prefab.block_dirt_slab": "Dirt Slab",
+  "block.prefab.block_grass_slab": "Grass Slab",
+  "block.prefab.block_dirt_wall": "Dirt Wall",
+  "block.prefab.block_grass_wall": "Grass Wall",
+
   "prefab.gui.cleared_area": "The area cleared will be in the direction you are facing.",
 
   "prefab.gui.producefarm.structure.size": "This structure is 32x32 blocks in size.",

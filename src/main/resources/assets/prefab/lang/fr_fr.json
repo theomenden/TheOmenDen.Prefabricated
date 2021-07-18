@@ -118,6 +118,13 @@
   "block.prefab.block_glass_stairs": "Escalier en verre",
   "block.prefab.block_glass_slab": "Dalle de verre",
 
+  "block.prefab.block_dirt_stairs": "Escaliers en terre",
+  "block.prefab.block_grass_stairs": "Escaliers en herbe",
+  "block.prefab.block_dirt_slab": "Dalle de terre",
+  "block.prefab.block_grass_slab": "Dalle d'herbe",
+  "block.prefab.block_dirt_wall": "Mur de terre",
+  "block.prefab.block_grass_wall": "Mur d'herbe",
+
   "prefab.gui.producefarm.structure.size": "Cette structure est 32x32 blocs de taille.",
 
   "prefab.gui.starter.tab.general": "Général",
