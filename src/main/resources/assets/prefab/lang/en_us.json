@@ -135,6 +135,8 @@
   "block.prefab.block_dirt_wall": "Dirt Wall",
   "block.prefab.block_grass_wall": "Grass Wall",
 
+  "block.prefab.block_structure_scanner": "Structure Scanner",
+
   "prefab.gui.cleared_area": "The area cleared will be in the direction you are facing.",
 
   "prefab.gui.producefarm.structure.size": "This structure is 32x32 blocks in size.",

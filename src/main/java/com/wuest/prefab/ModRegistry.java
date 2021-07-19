@@ -1,6 +1,7 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
+import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.items.ItemSwiftBlade;
@@ -12,9 +13,11 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -37,6 +40,12 @@ public class ModRegistry {
     public static final ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
     public static final BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);
 
+    /* *********************************** Block Entities Types *********************************** */
+    public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
+
+    /* *********************************** Block Entities *********************************** */
+    public static StructureScannerBlockEntity StructureScannerEntity;
+
     /* *********************************** Blocks *********************************** */
     public static final BlockCompressedStone DoubleCompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_STONE);
     public static final BlockCompressedStone TripleCompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.TRIPLE_COMPRESSED_STONE);
@@ -57,6 +66,7 @@ public class ModRegistry {
     public static final BlockCustomWall DirtWall = new BlockCustomWall(Blocks.DIRT, BlockCustomWall.EnumType.DIRT);
     public static final BlockDirtStairs DirtStairs = new BlockDirtStairs();
     public static final BlockDirtSlab DirtSlab = new BlockDirtSlab();
+    public static final BlockStructureScanner StructureScanner = new BlockStructureScanner();
 
     /* *********************************** Item Blocks *********************************** */
     public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
@@ -79,6 +89,7 @@ public class ModRegistry {
     public static final BlockItem DirtWallItem = new BlockItem(ModRegistry.DirtWall, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem DirtStairsItem = new BlockItem(ModRegistry.DirtStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
     public static final BlockItem DirtSlabItem = new BlockItem(ModRegistry.DirtSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final BlockItem StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Settings().group(ItemGroup.MISC));
 
     /* *********************************** Messages *********************************** */
     public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
@@ -168,6 +179,8 @@ public class ModRegistry {
     public static final RecipeSerializer<ConditionedShaplessRecipe> ConditionedShapelessRecipeSeriaizer = new ConditionedShaplessRecipe.Serializer();
 
     public static void registerModComponents() {
+        ModRegistry.registerBlockEntities();
+
         ModRegistry.registerBlocks();
 
         ModRegistry.registerItems();
@@ -179,6 +192,15 @@ public class ModRegistry {
         ModRegistry.RegisterClientToServerMessageHandlers();
 
         ModRegistry.RegisterRecipeSerializers();
+    }
+
+    private static void registerBlockEntities() {
+        StructureScannerEntityType = Registry.register(
+                Registry.BLOCK_ENTITY_TYPE,
+                "prefab:structure_scanner_entity",
+                FabricBlockEntityTypeBuilder
+                        .create(StructureScannerBlockEntity::new, ModRegistry.StructureScanner)
+                        .build(null));
     }
 
     private static void registerBlocks() {
@@ -202,6 +224,8 @@ public class ModRegistry {
         ModRegistry.registerBlock(BlockCustomWall.EnumType.DIRT.getUnlocalizedName(), ModRegistry.DirtWall);
         ModRegistry.registerBlock("block_dirt_stairs", ModRegistry.DirtStairs);
         ModRegistry.registerBlock("block_dirt_slab", ModRegistry.DirtSlab);
+
+        ModRegistry.registerBlock("block_structure_scanner", ModRegistry.StructureScanner);
     }
 
     private static void registerItems() {
@@ -307,6 +331,8 @@ public class ModRegistry {
         ModRegistry.registerItem(BlockCustomWall.EnumType.DIRT.getUnlocalizedName(), ModRegistry.DirtWallItem);
         ModRegistry.registerItem("block_dirt_stairs", ModRegistry.DirtStairsItem);
         ModRegistry.registerItem("block_dirt_slab", ModRegistry.DirtSlabItem);
+
+        ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
     }
 
     /**
