@@ -105,6 +105,7 @@ public class ModRegistry {
     public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 3, 10);
     public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 3, 10);
     public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 3, 10);
+
     public static final ItemSickle SickleWood = new ItemSickle(ToolMaterials.WOOD);
     public static final ItemSickle SickleStone = new ItemSickle(ToolMaterials.STONE);
     public static final ItemSickle SickleGold = new ItemSickle(ToolMaterials.GOLD);
