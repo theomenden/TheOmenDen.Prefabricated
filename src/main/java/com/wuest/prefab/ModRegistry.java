@@ -2,10 +2,12 @@ package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
 import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
+import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.items.ItemSwiftBlade;
 import com.wuest.prefab.items.ItemWoodenCrate;
+import com.wuest.prefab.network.message.TagMessage;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
@@ -13,12 +15,15 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -95,6 +100,7 @@ public class ModRegistry {
     public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
     public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
     public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
+    public static final Identifier StructureScannerSync = new Identifier(Prefab.MODID, "structure_scanner_sync");
 
     /* *********************************** Items *********************************** */
     public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -341,6 +347,8 @@ public class ModRegistry {
     private static void RegisterClientToServerMessageHandlers() {
 
         ModRegistry.registerStructureBuilderMessageHandler();
+
+        ModRegistry.registerStructureScannerMessageHandler();
     }
 
     private static void RegisterRecipeSerializers() {
@@ -372,6 +380,22 @@ public class ModRegistry {
                     });
                 }
         );
+    }
+
+    private static void registerStructureScannerMessageHandler() {
+        ServerPlayNetworking.registerGlobalReceiver(ModRegistry.StructureScannerSync, (server, player, handler, buf, responseSender) -> {
+            NbtCompound compound = buf.readNbt();
+            StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
+
+            server.execute(() -> {
+                BlockEntity blockEntity = player.getServerWorld().getBlockEntity(config.blockPos);
+
+                if (blockEntity instanceof StructureScannerBlockEntity) {
+                    StructureScannerBlockEntity actualEntity = (StructureScannerBlockEntity) blockEntity;
+                    actualEntity.setConfig(config);
+                }
+            });
+        });
     }
 
     public enum CustomItemTier implements ToolMaterial {

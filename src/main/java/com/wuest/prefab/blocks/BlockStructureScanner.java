@@ -1,5 +1,6 @@
 package com.wuest.prefab.blocks;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.base.TileBlockBase;
 import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.wuest.prefab.config.StructureScannerConfig;
@@ -12,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -61,16 +61,15 @@ public class BlockStructureScanner extends TileBlockBase<StructureScannerBlockEn
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
-            return ActionResult.SUCCESS;
-        } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
             if (blockEntity instanceof StructureScannerBlockEntity) {
                 StructureScannerConfig config = ((StructureScannerBlockEntity) blockEntity).getConfig();
-                config.some_value = !config.some_value;
-                blockEntity.markDirty();
+                ClientModRegistry.openGuiForBlock(pos, world, config);
             }
 
+            return ActionResult.SUCCESS;
+        } else {
             return ActionResult.CONSUME;
         }
     }
