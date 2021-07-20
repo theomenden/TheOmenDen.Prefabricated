@@ -1,5 +1,6 @@
 package com.wuest.prefab.gui.controls;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
@@ -10,8 +11,11 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import org.lwjgl.opengl.GL11;
 
 public class ExtendedButton extends ButtonWidget {
+	public float fontScale = 1;
+
 	public ExtendedButton(int xPos, int yPos, int width, int height, Text displayString, PressAction handler) {
 		super(xPos, yPos, width, height, displayString, handler);
 	}
@@ -47,7 +51,16 @@ public class ExtendedButton extends ButtonWidget {
 				buttonText = Utils.createTextComponent(mc.textRenderer.trimToWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 			}
 
-			DrawableHelper.drawCenteredText(mStack, mc.textRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, this.getFGColor());
+			MatrixStack originalStack = new MatrixStack();
+
+			originalStack.push();
+			originalStack.scale(this.fontScale, this.fontScale, this.fontScale);
+
+			int xPosition = (int) ((this.x + this.width / 2) / this.fontScale);
+			int yPosition = (int) ((this.y + (this.height - (8 * this.fontScale)) / 2) / this.fontScale);
+
+			DrawableHelper.drawCenteredText(originalStack, mc.textRenderer, buttonText, xPosition, yPosition, this.getFGColor());
+			originalStack.pop();
 		}
 	}
 

@@ -19,6 +19,7 @@ import net.minecraft.text.StringVisitable;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
+import java.awt.*;
 import java.util.List;
 
 public abstract class GuiBase extends Screen {
@@ -34,6 +35,7 @@ public abstract class GuiBase extends Screen {
     protected int imagePanelHeight = 0;
     protected int shownImageHeight = 0;
     protected int shownImageWidth = 0;
+    protected int textColor = Color.DARK_GRAY.getRGB();
     private boolean pauseGame;
 
     public GuiBase(String title) {

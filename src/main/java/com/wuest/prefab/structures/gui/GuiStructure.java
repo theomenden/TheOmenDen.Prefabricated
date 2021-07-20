@@ -33,7 +33,6 @@ public abstract class GuiStructure extends GuiBase {
     protected ButtonWidget btnCancel;
     protected ButtonWidget btnBuild;
     protected ButtonWidget btnVisualize;
-    protected int textColor = Color.DARK_GRAY.getRGB();
     protected StructureTagMessage.EnumStructureConfiguration structureConfiguration;
     protected Identifier structureImageLocation;
     private Direction structureFacing;
