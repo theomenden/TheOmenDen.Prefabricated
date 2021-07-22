@@ -7,12 +7,17 @@ import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
+import com.wuest.prefab.gui.controls.GuiTextBox;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.widget.PressableWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.awt.*;
 
 public class GuiStructureScanner extends GuiBase {
     private final BlockPos blockPos;
@@ -29,7 +34,9 @@ public class GuiStructureScanner extends GuiBase {
     private ExtendedButton btnLengthShrink;
     private ExtendedButton btnHeightGrow;
     private ExtendedButton btnHeightShrink;
-    private ExtendedButton btnSave;
+    private GuiTextBox txtZipName;
+    private ExtendedButton btnScan;
+    private ExtendedButton btnSet;
 
     public GuiStructureScanner(BlockPos blockPos, World world, StructureScannerConfig config) {
         super("Structure Scanner");
@@ -49,26 +56,39 @@ public class GuiStructureScanner extends GuiBase {
         int adjustedY = adjustedXYValues.second;
 
         // Starting position.
-        this.btnStartingPositionMoveLeft = this.createAndAddButton(adjustedX + 20, adjustedY + 30, 25, 20, "◄");
+        this.btnStartingPositionMoveDown = this.createAndAddButton(adjustedX + 33, adjustedY + 50, 25, 20, "▲");
+
+        this.btnStartingPositionMoveLeft = this.createAndAddButton(adjustedX + 20, adjustedY + 75, 25, 20, "◄");
         this.btnStartingPositionMoveLeft.fontScale = 2.0f;
-        this.btnStartingPositionMoveRight = this.createAndAddButton(adjustedX + 47, adjustedY + 30, 25, 20, "►");
+        this.btnStartingPositionMoveRight = this.createAndAddButton(adjustedX + 47, adjustedY + 75, 25, 20, "►");
         this.btnStartingPositionMoveRight.fontScale = 2.0f;
-        this.btnStartingPositionMoveDown = this.createAndAddButton(adjustedX + 20, adjustedY + 55, 25, 20, "▲");
-        this.btnStartingPositionMoveUp = this.createAndAddButton(adjustedX + 47, adjustedY + 55, 25, 20, "▼");
+
+        this.btnStartingPositionMoveUp = this.createAndAddButton(adjustedX + 33, adjustedY + 100, 25, 20, "▼");
 
         // Length
-        this.btnLengthGrow = this.createAndAddButton(adjustedX + 120, adjustedY + 30, 25, 20, "▲");
-        this.btnLengthShrink = this.createAndAddButton(adjustedX + 147, adjustedY + 30, 25, 20, "▼");
+        this.btnLengthShrink = this.createAndAddButton(adjustedX + 120, adjustedY + 30, 25, 20, "▼");
+        this.btnLengthGrow = this.createAndAddButton(adjustedX + 147, adjustedY + 30, 25, 20, "▲");
 
         // Width
-        this.btnWidthGrow = this.createAndAddButton(adjustedX + 200, adjustedY + 30, 25, 20, "▲");
-        this.btnWidthShrink = this.createAndAddButton(adjustedX + 227, adjustedY + 30, 25, 20, "▼");
+        this.btnWidthShrink = this.createAndAddButton(adjustedX + 200, adjustedY + 30, 25, 20, "▼");
+        this.btnWidthGrow = this.createAndAddButton(adjustedX + 227, adjustedY + 30, 25, 20, "▲");
 
         // Height
-        this.btnHeightGrow = this.createAndAddButton(adjustedX + 270, adjustedY + 30, 25, 20, "▲");
-        this.btnHeightShrink = this.createAndAddButton(adjustedX + 297, adjustedY + 30, 25, 20, "▼");
+        this.btnHeightShrink = this.createAndAddButton(adjustedX + 270, adjustedY + 30, 25, 20, "▼");
+        this.btnHeightGrow = this.createAndAddButton(adjustedX + 297, adjustedY + 30, 25, 20, "▲");
 
-        this.btnSave = this.createAndAddButton(adjustedX + 15, adjustedY + 140, 90, 20, "Save");
+        // Zip Text Field
+        this.txtZipName = new GuiTextBox(this.getMinecraft().textRenderer, adjustedX + 120, adjustedY + 75, 150, 20, new LiteralText(""));
+        this.txtZipName.setText("Structure Name Here");
+        this.txtZipName.setMaxLength(128);
+        this.txtZipName.setDrawsBackground(true);
+        this.txtZipName.backgroundColor = Color.WHITE.getRGB();
+        this.txtZipName.setEditableColor(Color.DARK_GRAY.getRGB());
+        this.txtZipName.drawsTextShadow = false;
+        this.addSelectableChild(this.txtZipName);
+
+        this.btnSet = this.createAndAddButton(adjustedX + 25, adjustedY + 140, 90, 20, "Set And Close");
+        this.btnScan = this.createAndAddCustomButton(adjustedX + 200, adjustedY + 140, 90, 20, "Scan");
     }
 
     @Override
@@ -79,16 +99,17 @@ public class GuiStructureScanner extends GuiBase {
     @Override
     protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         this.drawString(matrixStack, "Starting Position", x + 15, y + 20, this.textColor);
-        this.drawString(matrixStack, "Length", x + 120, y + 20, this.textColor);
-        this.drawString(matrixStack, "Width", x + 200, y + 20, this.textColor);
-        this.drawString(matrixStack, "Height", x + 270, y + 20, this.textColor);
+        this.drawString(matrixStack, "Left: " + this.config.blocksToTheLeft + " Down: " + this.config.blocksDown, x + 15, y + 35, this.textColor);
+        this.drawString(matrixStack, "Length: " + this.config.blocksLong, x + 120, y + 20, this.textColor);
+        this.drawString(matrixStack, "Width: " + this.config.blocksWide, x + 200, y + 20, this.textColor);
+        this.drawString(matrixStack, "Height: " + this.config.blocksTall, x + 270, y + 20, this.textColor);
 
         this.drawString(matrixStack, "Name", x + 120, y + 60, this.textColor);
     }
 
     @Override
     public void buttonClicked(PressableWidget button) {
-        if (button == this.btnSave) {
+        if (button == this.btnScan) {
             this.closeScreen();
         } else {
             if (button == this.btnStartingPositionMoveLeft) {
@@ -105,6 +126,30 @@ public class GuiStructureScanner extends GuiBase {
 
             if (button == this.btnStartingPositionMoveUp) {
                 this.config.blocksDown = this.config.blocksDown + 1;
+            }
+
+            if (button == this.btnWidthGrow) {
+                this.config.blocksWide += 1;
+            }
+
+            if (button == this.btnWidthShrink) {
+                this.config.blocksWide -= 1;
+            }
+
+            if (button == this.btnLengthGrow) {
+                this.config.blocksLong += 1;
+            }
+
+            if (button == this.btnLengthShrink) {
+                this.config.blocksLong -= 1;
+            }
+
+            if (button == this.btnHeightGrow) {
+                this.config.blocksTall += 1;
+            }
+
+            if (button == this.btnHeightShrink) {
+                this.config.blocksTall -= 1;
             }
 
             this.sendUpdatePacket();

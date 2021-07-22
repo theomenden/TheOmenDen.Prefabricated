@@ -12,6 +12,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
@@ -300,7 +301,7 @@ public abstract class GuiBase extends Screen {
 
     protected void renderButtons(MatrixStack matrixStack, int mouseX, int mouseY) {
         for (Element button : this.children()) {
-            if (button instanceof PressableWidget currentButton) {
+            if (button instanceof ClickableWidget currentButton) {
                 if (currentButton.visible) {
                     currentButton.renderButton(matrixStack, mouseX, mouseY, this.client.getTickDelta());
                 }
