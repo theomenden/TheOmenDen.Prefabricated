@@ -2,8 +2,11 @@ package com.wuest.prefab.structures.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.blocks.BlockStructureScanner;
+import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.base.Structure;
@@ -258,13 +261,32 @@ public class StructureRenderHandler {
             double blockXOffset = originalPos.getX();
             double blockZOffset = originalPos.getZ();
             double blockStartYOffset = originalPos.getY();
-            double blockEndYOffset = originalPos.up().getY();
 
-            StructureRenderHandler.drawBox(matrixStack, blockXOffset, blockZOffset, blockStartYOffset, blockEndYOffset, cameraX, cameraY, cameraZ);
+            StructureRenderHandler.drawBox(
+                    matrixStack,
+                    blockXOffset,
+                    blockZOffset,
+                    blockStartYOffset,
+                    cameraX,
+                    cameraY,
+                    cameraZ,
+                    1,
+                    1,
+                    1);
         }
     }
 
-    private static void drawBox(MatrixStack matrixStack, double blockXOffset, double blockZOffset, double blockStartYOffset, double blockEndYOffset, double cameraX, double cameraY, double cameraZ) {
+    public static void drawBox(
+            MatrixStack matrixStack,
+            double blockXOffset,
+            double blockZOffset,
+            double blockStartYOffset,
+            double cameraX,
+            double cameraY,
+            double cameraZ,
+            int xLength,
+            int zLength,
+            int height) {
         RenderSystem.enableDepthTest();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
@@ -276,7 +298,7 @@ public class StructureRenderHandler {
 
         double translatedX = blockXOffset - cameraX;
         double translatedY = blockStartYOffset - cameraY + .02;
-        double translatedYEnd = translatedY + 1.0D - .02D;
+        double translatedYEnd = translatedY + height - .02D;
         double translatedZ = blockZOffset - cameraZ;
         RenderSystem.lineWidth(2.0f);
 
@@ -287,40 +309,133 @@ public class StructureRenderHandler {
         tessellator.draw();
 
         bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(translatedX, translatedY, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
         tessellator.draw();
 
         bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(translatedX + 1.0D, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-        bufferBuilder.vertex(translatedX + 1.0D, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
         tessellator.draw();
 
         bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
-        bufferBuilder.vertex(translatedX + 1.0D, translatedY, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-        bufferBuilder.vertex(translatedX + 1.0D, translatedYEnd, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
         tessellator.draw();
 
         // All horizontals.
-        for (double i1 = translatedY; i1 <= translatedYEnd; i1 += .98D) {
-            bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
 
-            bufferBuilder.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            bufferBuilder.vertex(translatedX, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
 
-            bufferBuilder.vertex(translatedX + 1.0D, i1, translatedZ + 1.0D).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            bufferBuilder.vertex(translatedX + 1.0D, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
 
-            bufferBuilder.vertex(translatedX, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            bufferBuilder.vertex(translatedX + 1, i1, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
 
-            bufferBuilder.vertex(translatedX + 1, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            bufferBuilder.vertex(translatedX, i1, translatedZ + 1).color(1.0F, 1.0F, 0.0F, 1.0F).next();
-            tessellator.draw();
-        }
+        bufferBuilder.vertex(translatedX + xLength, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedY, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
+
+        // Draw top horizontals
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINE_STRIP, VertexFormats.POSITION_COLOR);
+
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+
+        bufferBuilder.vertex(translatedX + xLength, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        bufferBuilder.vertex(translatedX, translatedYEnd, translatedZ + zLength).color(1.0F, 1.0F, 0.0F, 1.0F).next();
+        tessellator.draw();
 
         RenderSystem.lineWidth(1.0F);
         RenderSystem.enableBlend();
         RenderSystem.enableTexture();
+    }
+
+    public static void renderScanningBoxes(MatrixStack matrixStack,
+                                           double cameraX,
+                                           double cameraY,
+                                           double cameraZ) {
+        for (int i = 0; i < ClientModRegistry.structureScanners.size(); i++) {
+            StructureScannerConfig config = ClientModRegistry.structureScanners.get(i);
+
+            BlockPos pos = config.blockPos;
+            boolean removeConfig = false;
+            removeConfig = pos == null;
+
+            // Make sure the block exists in the world at the block pos.
+            if (pos != null) {
+                removeConfig = !(MinecraftClient.getInstance().world.getBlockState(pos).getBlock() instanceof BlockStructureScanner);
+            }
+
+            if (removeConfig) {
+                ClientModRegistry.structureScanners.remove(i);
+                i--;
+                continue;
+            }
+
+            Direction leftDirection = config.direction.rotateYCounterclockwise();
+
+            BlockPos startingPosition = config.blockPos
+                    .offset(leftDirection, config.blocksToTheLeft)
+                    .offset(Direction.DOWN, config.blocksDown)
+                    .offset(config.direction, config.blocksParallel);
+
+            int xLength = config.blocksWide;
+            int zLength = config.blocksLong;
+
+            // Based on direction, width and length may be need to be modified;
+
+            switch (config.direction) {
+                case NORTH: {
+                    zLength = -zLength;
+                    startingPosition = startingPosition.offset(config.direction.getOpposite());
+                    break;
+                }
+
+                case EAST: {
+                    int tempWidth = xLength;
+                    xLength = zLength;
+                    zLength = tempWidth;
+                    break;
+                }
+
+                case SOUTH: {
+                    xLength = -xLength;
+                    startingPosition = startingPosition.offset(config.direction.rotateYCounterclockwise());
+                    break;
+                }
+
+                case WEST: {
+                    int tempLength = zLength;
+                    zLength = -xLength;
+                    xLength = -tempLength;
+
+                    startingPosition = startingPosition.offset(config.direction.getOpposite());
+                    startingPosition = startingPosition.offset(config.direction.rotateYCounterclockwise());
+                    break;
+                }
+            }
+
+            StructureRenderHandler.drawBox(
+                    matrixStack,
+                    startingPosition.getX(),
+                    startingPosition.getZ(),
+                    startingPosition.getY(),
+                    cameraX,
+                    cameraY,
+                    cameraZ,
+                    xLength,
+                    zLength,
+                    config.blocksTall);
+        }
     }
 }

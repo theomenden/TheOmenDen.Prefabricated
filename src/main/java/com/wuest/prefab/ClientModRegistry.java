@@ -31,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,11 +41,15 @@ public class ClientModRegistry {
 
     public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
     public static KeyBinding keyBinding;
-
+    public static ArrayList<StructureScannerConfig> structureScanners;
     /**
      * The hashmap of mod guis.
      */
     public static HashMap<StructureItem, GuiStructure> ModGuis = new HashMap<>();
+
+    static {
+        ClientModRegistry.structureScanners = new ArrayList<>();
+    }
 
     public static void registerModComponents() {
         ClientModRegistry.registerKeyBindings();
@@ -126,6 +131,9 @@ public class ClientModRegistry {
         ShaderHelper.Initialize();
     }
 
+    /**
+     * This is called within a Mixin as the BlockColors and ItemColors classes are otherwise null when this class is called.
+     */
     public static void RegisterBlockRenderer() {
         // Register the block renderer.
         MinecraftClient.getInstance().getBlockColors().registerColorProvider((state, worldIn, pos, tintIndex) -> worldIn != null && pos != null

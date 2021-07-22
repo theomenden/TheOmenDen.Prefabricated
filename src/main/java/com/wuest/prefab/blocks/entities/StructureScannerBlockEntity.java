@@ -11,5 +11,6 @@ public class StructureScannerBlockEntity extends TileEntityBase<StructureScanner
         super(ModRegistry.StructureScannerEntityType, pos, state);
 
         this.config = new StructureScannerConfig();
+        this.config.blockPos = pos;
     }
 }

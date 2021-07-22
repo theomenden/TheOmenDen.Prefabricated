@@ -1,16 +1,16 @@
 package com.wuest.prefab.gui.screens;
 
+import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
+import com.wuest.prefab.blocks.BlockStructureScanner;
 import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.gui.controls.ExtendedButton;
-import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiTextBox;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.LiteralText;
@@ -50,6 +50,8 @@ public class GuiStructureScanner extends GuiBase {
     @Override
     protected void Initialize() {
         super.Initialize();
+
+        this.config.direction = this.world.getBlockState(this.blockPos).get(BlockStructureScanner.FACING);
 
         Tuple<Integer, Integer> adjustedXYValues = this.getAdjustedXYValue();
         int adjustedX = adjustedXYValues.first;
@@ -99,7 +101,7 @@ public class GuiStructureScanner extends GuiBase {
     @Override
     protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         this.drawString(matrixStack, "Starting Position", x + 15, y + 20, this.textColor);
-        this.drawString(matrixStack, "Left: " + this.config.blocksToTheLeft + " Down: " + this.config.blocksDown, x + 15, y + 35, this.textColor);
+        this.drawString(matrixStack, "Left: " + this.config.blocksToTheLeft + " Down: " + -this.config.blocksDown, x + 15, y + 35, this.textColor);
         this.drawString(matrixStack, "Length: " + this.config.blocksLong, x + 120, y + 20, this.textColor);
         this.drawString(matrixStack, "Width: " + this.config.blocksWide, x + 200, y + 20, this.textColor);
         this.drawString(matrixStack, "Height: " + this.config.blocksTall, x + 270, y + 20, this.textColor);
@@ -110,14 +112,32 @@ public class GuiStructureScanner extends GuiBase {
     @Override
     public void buttonClicked(PressableWidget button) {
         if (button == this.btnScan) {
+            // TODO: Do the scanning here.
             this.closeScreen();
+        } else if (button == this.btnSet) {
+            // Look through the list of scanners to see if it's already there, if so don't do anything.
+            // Otherwise add it to the list of scanners.
+            boolean foundExistingConfig = false;
+
+            for (StructureScannerConfig config : ClientModRegistry.structureScanners) {
+                if (config.blockPos.getX() == this.config.blockPos.getX()
+                        && config.blockPos.getZ() == this.config.blockPos.getZ()
+                        && config.blockPos.getY() == this.config.blockPos.getY()) {
+                    foundExistingConfig = true;
+                    break;
+                }
+            }
+
+            if (!foundExistingConfig) {
+                ClientModRegistry.structureScanners.add(this.config);
+            }
         } else {
             if (button == this.btnStartingPositionMoveLeft) {
-                this.config.blocksToTheLeft = this.config.blocksToTheLeft - 1;
+                this.config.blocksToTheLeft = this.config.blocksToTheLeft + 1;
             }
 
             if (button == this.btnStartingPositionMoveRight) {
-                this.config.blocksToTheLeft = this.config.blocksToTheLeft + 1;
+                this.config.blocksToTheLeft = this.config.blocksToTheLeft - 1;
             }
 
             if (button == this.btnStartingPositionMoveDown) {
