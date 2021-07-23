@@ -231,7 +231,12 @@ public class HouseConfiguration extends StructureConfiguration {
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_DISPLAY,
 				new Identifier("prefab", "textures/gui/subaqua_house.png"),
 				GuiLangKeys.STARTER_HOUSE_SUBAQUATIC_NOTES,
-				"assets/prefab/structures/subaqua_house.zip");
+				"assets/prefab/structures/subaqua_house.zip"),
+		MODERN(8,
+				GuiLangKeys.STARTER_HOUSE_MODERN_DISPLAY,
+				new Identifier("prefab", "textures/gui/modern_starting_house.png"),
+				GuiLangKeys.STARTER_HOUSE_MODERN_NOTES,
+				"assets/prefab/structures/modern_starting_house.zip");
 
 		private final int value;
 		private final String displayName;

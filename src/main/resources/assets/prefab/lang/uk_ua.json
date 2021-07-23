@@ -135,6 +135,8 @@
     "block.prefab.block_dirt_wall": "Брудна стіна",
     "block.prefab.block_grass_wall": "Трав'яна стіна",
 
+    "block.prefab.block_structure_scanner": "Structure Scanner",
+
     "prefab.gui.cleared_area": "Очищена зона буде в тому напрямку, в який ви спрямовані.",
 
     "prefab.gui.producefarm.structure.size": "Ця структура розміром 32x32 блока.",
@@ -164,6 +166,8 @@
     "prefab.gui.starter.desert.notes2": "Будинок, спроектований для життя у пустелі.",
     "prefab.gui.starter.subaquatic.display": "Підводний",
     "prefab.gui.starter.subaquatic.notes": "Будинок, спроектований для життя під водою.",
+    "prefab.gui.starter.modern.display": "Сучасний стиль",
+    "prefab.gui.starter.modern.notes": "Будинок, призначений для сучасного життя.",
 
     "prefab.gui.starter.addtorches": "Додати Смолоскипи",
     "prefab.gui.starter.addbed": "Додати Ліжко",
@@ -200,6 +204,11 @@
     "prefab.gui.item_modern_construction_site": "Будівельна площадка",
     "prefab.gui.item_modern_apartment": "Квартири",
     "prefab.gui.item_modern_library": "Бібліотека",
+    "prefab.gui.item_modern_mini_hotel": "Невеликий готель",
+    "prefab.gui.item_modern_house": "Сучасний будинок",
+    "prefab.gui.item_modern_gas_station": "Автозаправна станція",
+    "prefab.gui.item_modern_cottage": "Котедж",
+    "prefab.gui.item_modern_bank": "Банку",
 
     "prefab.gui.bulldozer_desc": "Цей предмет почистить область розміром 16x16x16 блоків та віддасть зламані блоки.",
     "prefab.gui.compressed_chest_desc": "Використовується в рецептах конструкцій, а не для безпосереднього зберігання",

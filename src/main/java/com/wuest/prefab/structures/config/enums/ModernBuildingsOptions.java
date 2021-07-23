@@ -101,6 +101,76 @@ public class ModernBuildingsOptions extends BaseOption{
             false,
             false);
 
+    public static ModernBuildingsOptions MiniHotel = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_mini_hotel",
+            "assets/prefab/structures/modern_mini_hotel.zip",
+            "textures/gui/modern_mini_hotel_topdown.png",
+            Direction.SOUTH,
+            11,
+            29,
+            28,
+            1,
+            17,
+            0,
+            false,
+            false);
+
+    public static ModernBuildingsOptions House = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_house",
+            "assets/prefab/structures/modern_house.zip",
+            "textures/gui/modern_house_topdown.png",
+            Direction.SOUTH,
+            15,
+            24,
+            18,
+            1,
+            7,
+            0,
+            false,
+            false);
+
+    public static ModernBuildingsOptions GasStation = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_gas_station",
+            "assets/prefab/structures/modern_gas_station.zip",
+            "textures/gui/modern_gas_station_topdown.png",
+            Direction.SOUTH,
+            14,
+            39,
+            36,
+            1,
+            19,
+            0,
+            false,
+            false);
+
+    public static ModernBuildingsOptions Cottage = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_cottage",
+            "assets/prefab/structures/modern_cottage.zip",
+            "textures/gui/modern_cottage_topdown.png",
+            Direction.SOUTH,
+            14,
+            17,
+            16,
+            1,
+            15,
+            0,
+            false,
+            false);
+
+    public static ModernBuildingsOptions Bank = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_bank",
+            "assets/prefab/structures/modern_bank.zip",
+            "textures/gui/modern_bank_topdown.png",
+            Direction.SOUTH,
+            10,
+            16,
+            16,
+            1,
+            8,
+            0,
+            false,
+            false);
+
     protected ModernBuildingsOptions(String translationString,
                           String assetLocation,
                           String pictureLocation,
