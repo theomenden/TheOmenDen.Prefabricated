@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseOption {
+public class BaseOption {
 
     private static final HashMap<String, ArrayList<BaseOption>> classOptions = new HashMap<>();
     private final String translationString;

@@ -101,6 +101,7 @@ public class ModRegistry {
     public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
     public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
     public static final Identifier StructureScannerSync = new Identifier(Prefab.MODID, "structure_scanner_sync");
+    public static final Identifier StructureScannerAction = new Identifier(Prefab.MODID, "structure_scanner_action");
 
     /* *********************************** Items *********************************** */
     public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
@@ -349,6 +350,8 @@ public class ModRegistry {
         ModRegistry.registerStructureBuilderMessageHandler();
 
         ModRegistry.registerStructureScannerMessageHandler();
+
+        ModRegistry.registerStructureScannerActionMessageHandler();
     }
 
     private static void RegisterRecipeSerializers() {
@@ -394,6 +397,18 @@ public class ModRegistry {
                     StructureScannerBlockEntity actualEntity = (StructureScannerBlockEntity) blockEntity;
                     actualEntity.setConfig(config);
                 }
+            });
+        });
+    }
+
+    private static void registerStructureScannerActionMessageHandler() {
+        ServerPlayNetworking.registerGlobalReceiver(ModRegistry.StructureScannerAction, (server, player, handler, buf, responseSender) -> {
+            NbtCompound compound = buf.readNbt();
+            StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
+
+            server.execute(() -> {
+                // TODO: Do scanning here:
+                StructureScannerBlockEntity.ScanShape(config, player, player.getServerWorld());
             });
         });
     }

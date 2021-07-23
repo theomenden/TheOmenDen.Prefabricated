@@ -81,7 +81,13 @@ public class GuiStructureScanner extends GuiBase {
 
         // Zip Text Field
         this.txtZipName = new GuiTextBox(this.getMinecraft().textRenderer, adjustedX + 120, adjustedY + 75, 150, 20, new LiteralText(""));
-        this.txtZipName.setText("Structure Name Here");
+
+        if (this.config.structureZipName == null || this.config.structureZipName.trim().equals("")) {
+            this.txtZipName.setText("Structure Name Here");
+        } else {
+            this.txtZipName.setText(this.config.structureZipName);
+        }
+
         this.txtZipName.setMaxLength(128);
         this.txtZipName.setDrawsBackground(true);
         this.txtZipName.backgroundColor = Color.WHITE.getRGB();
@@ -111,8 +117,16 @@ public class GuiStructureScanner extends GuiBase {
 
     @Override
     public void buttonClicked(PressableWidget button) {
+        this.config.structureZipName = this.txtZipName.getText();
+
+        if (this.config.structureZipName.trim().equals("")) {
+            this.config.structureZipName = "Structure Name Here";
+        }
+
+        this.config.structureZipName = this.config.structureZipName.toLowerCase().trim().replace(' ', '_');
+
         if (button == this.btnScan) {
-            // TODO: Do the scanning here.
+            this.sendScanPacket();
             this.closeScreen();
         } else if (button == this.btnSet) {
             // Look through the list of scanners to see if it's already there, if so don't do anything.
@@ -131,6 +145,8 @@ public class GuiStructureScanner extends GuiBase {
             if (!foundExistingConfig) {
                 ClientModRegistry.structureScanners.add(this.config);
             }
+
+            this.closeScreen();
         } else {
             if (button == this.btnStartingPositionMoveLeft) {
                 this.config.blocksToTheLeft = this.config.blocksToTheLeft + 1;
@@ -179,5 +195,10 @@ public class GuiStructureScanner extends GuiBase {
     private void sendUpdatePacket() {
         PacketByteBuf messagePacket = Utils.createMessageBuffer(this.config.GetCompoundNBT());
         ClientPlayNetworking.send(ModRegistry.StructureScannerSync, messagePacket);
+    }
+
+    private void sendScanPacket() {
+        PacketByteBuf messagePacket = Utils.createMessageBuffer(this.config.GetCompoundNBT());
+        ClientPlayNetworking.send(ModRegistry.StructureScannerAction, messagePacket);
     }
 }
