@@ -7,7 +7,6 @@ import com.wuest.prefab.items.ItemCompressedChest;
 import com.wuest.prefab.items.ItemSickle;
 import com.wuest.prefab.items.ItemSwiftBlade;
 import com.wuest.prefab.items.ItemWoodenCrate;
-import com.wuest.prefab.network.message.TagMessage;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
@@ -16,21 +15,14 @@ import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Lazy;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -60,8 +52,8 @@ public class ModRegistry {
     public static final BlockCompressedStone DoubleCompressedGlowstone = new BlockCompressedStone(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE);
     public static final BlockCompressedObsidian CompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN);
     public static final BlockCompressedObsidian DoubleCompressedObsidian = new BlockCompressedObsidian(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN);
-    public static final BlockGlassSlab GlassSlab = new BlockGlassSlab(AbstractBlock.Settings.copy(Blocks.GLASS));
-    public static final BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.GLASS));
+    public static final BlockGlassSlab GlassSlab = new BlockGlassSlab(BlockBehaviour.Properties.copy(Blocks.GLASS));
+    public static final BlockGlassStairs GlassStairs = new BlockGlassStairs(Blocks.GLASS.defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.GLASS));
     public static final BlockPaperLantern PaperLantern = new BlockPaperLantern();
     public static final BlockPhasic Phasic = new BlockPhasic();
     public static final BlockBoundary Boundary = new BlockBoundary();
@@ -74,61 +66,61 @@ public class ModRegistry {
     public static final BlockStructureScanner StructureScanner = new BlockStructureScanner();
 
     /* *********************************** Item Blocks *********************************** */
-    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DoubleCompressedStoneItem = new BlockItem(ModRegistry.DoubleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem TripleCompressedStoneItem = new BlockItem(ModRegistry.TripleCompressedStone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem CompressedDirtItem = new BlockItem(ModRegistry.CompressedDirt, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DoubleCompressedDirtItem = new BlockItem(ModRegistry.DoubleCompressedDirt, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem CompressedGlowstoneItem = new BlockItem(ModRegistry.CompressedGlowstone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DoubleCompressedGlowstoneItem = new BlockItem(ModRegistry.DoubleCompressedGlowstone, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem CompressedObsidianItem = new BlockItem(ModRegistry.CompressedObsidian, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DoubleCompressedObsidianItem = new BlockItem(ModRegistry.DoubleCompressedObsidian, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem GrassSlabItem = new BlockItem(ModRegistry.GrassSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem GrassStairsItem = new BlockItem(ModRegistry.GrassStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem GrassWallItem = new BlockItem(ModRegistry.GrassWall, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DirtWallItem = new BlockItem(ModRegistry.DirtWall, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DirtStairsItem = new BlockItem(ModRegistry.DirtStairs, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem DirtSlabItem = new BlockItem(ModRegistry.DirtSlab, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS));
-    public static final BlockItem StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Settings().group(ItemGroup.MISC));
+    public static final BlockItem CompressedStoneItem = new BlockItem(ModRegistry.CompressedStone, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DoubleCompressedStoneItem = new BlockItem(ModRegistry.DoubleCompressedStone, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem TripleCompressedStoneItem = new BlockItem(ModRegistry.TripleCompressedStone, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem CompressedDirtItem = new BlockItem(ModRegistry.CompressedDirt, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DoubleCompressedDirtItem = new BlockItem(ModRegistry.DoubleCompressedDirt, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem CompressedGlowstoneItem = new BlockItem(ModRegistry.CompressedGlowstone, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DoubleCompressedGlowstoneItem = new BlockItem(ModRegistry.DoubleCompressedGlowstone, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem CompressedObsidianItem = new BlockItem(ModRegistry.CompressedObsidian, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DoubleCompressedObsidianItem = new BlockItem(ModRegistry.DoubleCompressedObsidian, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem GlassSlabItem = new BlockItem(ModRegistry.GlassSlab, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem GlassStairsItem = new BlockItem(ModRegistry.GlassStairs, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem PaperLanternItem = new BlockItem(ModRegistry.PaperLantern, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem PhasicItem = new BlockItem(ModRegistry.Phasic, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem BoundaryItem = new BlockItem(ModRegistry.Boundary, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem GrassSlabItem = new BlockItem(ModRegistry.GrassSlab, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem GrassStairsItem = new BlockItem(ModRegistry.GrassStairs, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem GrassWallItem = new BlockItem(ModRegistry.GrassWall, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DirtWallItem = new BlockItem(ModRegistry.DirtWall, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DirtStairsItem = new BlockItem(ModRegistry.DirtStairs, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem DirtSlabItem = new BlockItem(ModRegistry.DirtSlab, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS));
+    public static final BlockItem StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Properties().tab(CreativeModeTab.TAB_MISC));
 
     /* *********************************** Messages *********************************** */
-    public static final Identifier ConfigSync = new Identifier(Prefab.MODID, "config_sync");
-    public static final Identifier PlayerConfigSync = new Identifier(Prefab.MODID, "player_config_sync");
-    public static final Identifier StructureBuild = new Identifier(Prefab.MODID, "structure_build");
-    public static final Identifier StructureScannerSync = new Identifier(Prefab.MODID, "structure_scanner_sync");
-    public static final Identifier StructureScannerAction = new Identifier(Prefab.MODID, "structure_scanner_action");
+    public static final ResourceLocation ConfigSync = new ResourceLocation(Prefab.MODID, "config_sync");
+    public static final ResourceLocation PlayerConfigSync = new ResourceLocation(Prefab.MODID, "player_config_sync");
+    public static final ResourceLocation StructureBuild = new ResourceLocation(Prefab.MODID, "structure_build");
+    public static final ResourceLocation StructureScannerSync = new ResourceLocation(Prefab.MODID, "structure_scanner_sync");
+    public static final ResourceLocation StructureScannerAction = new ResourceLocation(Prefab.MODID, "structure_scanner_action");
 
     /* *********************************** Items *********************************** */
-    public static final Item PileOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item PalletOfBricks = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item BundleOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item HeapOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item TonOfTimber = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item StringOfLanterns = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item CoilOfLanterns = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
+    public static final Item PileOfBricks = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item PalletOfBricks = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item BundleOfTimber = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item HeapOfTimber = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item TonOfTimber = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item StringOfLanterns = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item CoilOfLanterns = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
     public static final ItemCompressedChest CompressedChest = new ItemCompressedChest();
-    public static final Item WarehouseUpgrade = new Item(new Item.Settings().group(ItemGroup.MATERIALS));
-    public static final Item SwiftBladeWood = new ItemSwiftBlade(ToolMaterials.WOOD, 3, 10);
-    public static final Item SwiftBladeStone = new ItemSwiftBlade(ToolMaterials.STONE, 3, 10);
-    public static final Item SwiftBladeIron = new ItemSwiftBlade(ToolMaterials.IRON, 3, 10);
-    public static final Item SwiftBladeDiamond = new ItemSwiftBlade(ToolMaterials.DIAMOND, 3, 10);
-    public static final Item SwiftBladeGold = new ItemSwiftBlade(ToolMaterials.GOLD, 3, 10);
+    public static final Item WarehouseUpgrade = new Item(new Item.Properties().tab(CreativeModeTab.TAB_MATERIALS));
+    public static final Item SwiftBladeWood = new ItemSwiftBlade(Tiers.WOOD, 3, 10);
+    public static final Item SwiftBladeStone = new ItemSwiftBlade(Tiers.STONE, 3, 10);
+    public static final Item SwiftBladeIron = new ItemSwiftBlade(Tiers.IRON, 3, 10);
+    public static final Item SwiftBladeDiamond = new ItemSwiftBlade(Tiers.DIAMOND, 3, 10);
+    public static final Item SwiftBladeGold = new ItemSwiftBlade(Tiers.GOLD, 3, 10);
     public static final Item SwiftBladeCopper = new ItemSwiftBlade(CustomItemTier.COPPER, 3, 10);
     public static final Item SwiftBladeOsmium = new ItemSwiftBlade(CustomItemTier.OSMIUM, 3, 10);
     public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 3, 10);
     public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 3, 10);
     public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 3, 10);
 
-    public static final ItemSickle SickleWood = new ItemSickle(ToolMaterials.WOOD);
-    public static final ItemSickle SickleStone = new ItemSickle(ToolMaterials.STONE);
-    public static final ItemSickle SickleGold = new ItemSickle(ToolMaterials.GOLD);
-    public static final ItemSickle SickleIron = new ItemSickle(ToolMaterials.IRON);
-    public static final ItemSickle SickleDiamond = new ItemSickle(ToolMaterials.DIAMOND);
+    public static final ItemSickle SickleWood = new ItemSickle(Tiers.WOOD);
+    public static final ItemSickle SickleStone = new ItemSickle(Tiers.STONE);
+    public static final ItemSickle SickleGold = new ItemSickle(Tiers.GOLD);
+    public static final ItemSickle SickleIron = new ItemSickle(Tiers.IRON);
+    public static final ItemSickle SickleDiamond = new ItemSickle(Tiers.DIAMOND);
 
     // Note: Empty crate must be registered first to avoid null-pointer errors with the rest of the ItemWoodenCrate items.
     public static final ItemWoodenCrate EmptyCrate = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Empty);
@@ -355,16 +347,16 @@ public class ModRegistry {
     }
 
     private static void RegisterRecipeSerializers() {
-        Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
-        Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
+        Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
+        Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
     }
 
     private static void registerBlock(String registryName, Block block) {
-        Registry.register(Registry.BLOCK, new Identifier(Prefab.MODID, registryName), block);
+        Registry.register(Registry.BLOCK, new ResourceLocation(Prefab.MODID, registryName), block);
     }
 
     private static void registerItem(String registryName, Item item) {
-        Registry.register(Registry.ITEM, new Identifier(Prefab.MODID, registryName), item);
+        Registry.register(Registry.ITEM, new ResourceLocation(Prefab.MODID, registryName), item);
     }
 
     private static void registerStructureBuilderMessageHandler() {
@@ -412,32 +404,32 @@ public class ModRegistry {
         });
     }
 
-    public enum CustomItemTier implements ToolMaterial {
-        COPPER("Copper", ToolMaterials.STONE.getMiningLevel(), ToolMaterials.STONE.getDurability(), ToolMaterials.STONE.getMiningSpeedMultiplier(),
-                ToolMaterials.STONE.getAttackDamage(), ToolMaterials.STONE.getEnchantability(), () -> {
+    public enum CustomItemTier implements Tier {
+        COPPER("Copper", Tiers.STONE.getLevel(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
+                Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
             return Ingredient
-                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "copper_ingots")));
+                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "copper_ingots")));
         }),
-        OSMIUM("Osmium", ToolMaterials.IRON.getMiningLevel(), 500, ToolMaterials.IRON.getMiningSpeedMultiplier(),
-                ToolMaterials.IRON.getAttackDamage() + .5f, ToolMaterials.IRON.getEnchantability(), () -> {
+        OSMIUM("Osmium", Tiers.IRON.getLevel(), 500, Tiers.IRON.getSpeed(),
+                Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "osmium_ingots")));
+                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "osmium_ingots")));
         }),
-        BRONZE("Bronze", ToolMaterials.IRON.getMiningLevel(), ToolMaterials.IRON.getDurability(), ToolMaterials.IRON.getMiningSpeedMultiplier(),
-                ToolMaterials.IRON.getAttackDamage(), ToolMaterials.IRON.getEnchantability(), () -> {
+        BRONZE("Bronze", Tiers.IRON.getLevel(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
+                Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "bronze_ingots")));
+                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "bronze_ingots")));
         }),
-        STEEL("Steel", ToolMaterials.DIAMOND.getMiningLevel(), (int) (ToolMaterials.IRON.getDurability() * 1.5),
-                ToolMaterials.DIAMOND.getMiningSpeedMultiplier(), ToolMaterials.DIAMOND.getAttackDamage(),
-                ToolMaterials.DIAMOND.getEnchantability(), () -> {
+        STEEL("Steel", Tiers.DIAMOND.getLevel(), (int) (Tiers.IRON.getUses() * 1.5),
+                Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
+                Tiers.DIAMOND.getEnchantmentValue(), () -> {
             return Ingredient
-                    .fromTag(ItemTags.getTagGroup().getTag(new Identifier("c", "steel_ingots")));
+                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "steel_ingots")));
         }),
-        OBSIDIAN("Obsidian", ToolMaterials.DIAMOND.getMiningLevel() + 1, (int) (ToolMaterials.DIAMOND.getDurability() * 1.5),
-                ToolMaterials.DIAMOND.getMiningSpeedMultiplier(), ToolMaterials.DIAMOND.getAttackDamage() + 2,
-                ToolMaterials.DIAMOND.getEnchantability(), () -> {
-            return Ingredient.ofItems(Item.fromBlock(Blocks.OBSIDIAN));
+        OBSIDIAN("Obsidian", Tiers.DIAMOND.getLevel() + 1, (int) (Tiers.DIAMOND.getUses() * 1.5),
+                Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus() + 1,
+                Tiers.DIAMOND.getEnchantmentValue(), () -> {
+            return Ingredient.of(Item.byBlock(Blocks.OBSIDIAN));
         });
 
         private final String name;
@@ -446,7 +438,7 @@ public class ModRegistry {
         private final float efficiency;
         private final float attackDamage;
         private final int enchantability;
-        private final Lazy<Ingredient> repairMaterial;
+        private final LazyLoadedValue<Ingredient> repairMaterial;
 
         CustomItemTier(String name, int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
                        int enchantability, Supplier<Ingredient> repairMaterialIn) {
@@ -456,7 +448,7 @@ public class ModRegistry {
             this.efficiency = efficiencyIn;
             this.attackDamage = attackDamageIn;
             this.enchantability = enchantability;
-            this.repairMaterial = new Lazy<>(repairMaterialIn);
+            this.repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
         }
 
         public static CustomItemTier getByName(String name) {

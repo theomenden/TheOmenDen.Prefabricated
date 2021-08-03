@@ -2,10 +2,10 @@ package com.wuest.prefab.gui;
 
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.blocks.FullDyeColor;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.DyeColor;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
@@ -400,8 +400,8 @@ public class GuiLangKeys {
 	 * @return The translated language key.
 	 */
 	public static String translateString(String translateKey) {
-		if (I18n.hasTranslation(translateKey)) {
-			return I18n.translate(translateKey);
+		if (I18n.exists(translateKey)) {
+			return I18n.get(translateKey);
 		} else {
 			return GuiLangKeys.getUnLocalized(translateKey);
 		}
@@ -412,7 +412,7 @@ public class GuiLangKeys {
 	 * @param translateKey The key to translate.
 	 * @return A StringTextComponent representing the translated text.
 	 */
-	public static LiteralText translateToComponent(String translateKey) {
+	public static TextComponent translateToComponent(String translateKey) {
 		return Utils.createTextComponent(GuiLangKeys.translateString(translateKey));
 	}
 
@@ -453,7 +453,7 @@ public class GuiLangKeys {
 	}
 
 	public static String translateDye(DyeColor dyeColor) {
-		return GuiLangKeys.translateString("prefab.gui." + dyeColor.asString());
+		return GuiLangKeys.translateString("prefab.gui." + dyeColor.getSerializedName());
 	}
 
 	public static String translateFullDye(FullDyeColor dyeColor) {
