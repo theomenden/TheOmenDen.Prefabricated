@@ -2,18 +2,17 @@ package com.wuest.prefab.gui.controls;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 
 import java.awt.*;
 
@@ -21,16 +20,16 @@ import java.awt.*;
  * @author WuestMan
  */
 @SuppressWarnings({"UnusedReturnValue", "unused"})
-public class GuiCheckBox extends PressableWidget {
-    private static final Identifier buttonTexture = new Identifier("prefab", "textures/gui/prefab_checkbox.png");
-    private static final Identifier buttonTexturePressed = new Identifier("prefab", "textures/gui/prefab_checkbox_selected.png");
-    private static final Identifier buttonTextureHover = new Identifier("prefab", "textures/gui/prefab_checkbox_hover.png");
+public class GuiCheckBox extends AbstractButton {
+    private static final ResourceLocation buttonTexture = new ResourceLocation("prefab", "textures/gui/prefab_checkbox.png");
+    private static final ResourceLocation buttonTexturePressed = new ResourceLocation("prefab", "textures/gui/prefab_checkbox_selected.png");
+    private static final ResourceLocation buttonTextureHover = new ResourceLocation("prefab", "textures/gui/prefab_checkbox_hover.png");
 
     protected int boxWidth;
     protected int boxHeight;
     protected int stringColor;
     protected boolean withShadow;
-    protected MinecraftClient mineCraft;
+    protected Minecraft mineCraft;
     protected String displayString;
     protected PressAction handler;
     protected int labelWidth;
@@ -40,7 +39,7 @@ public class GuiCheckBox extends PressableWidget {
         super(xPos, yPos, 11, 12, Utils.createTextComponent(displayString));
 
         this.boxWidth = 11;
-        this.mineCraft = MinecraftClient.getInstance();
+        this.mineCraft = Minecraft.getInstance();
         this.displayString = displayString;
         this.stringColor = Color.DARK_GRAY.getRGB();
         this.handler = handler;
@@ -103,13 +102,11 @@ public class GuiCheckBox extends PressableWidget {
         return this;
     }
 
-    public boolean isChecked()
-    {
+    public boolean isChecked() {
         return this.isChecked;
     }
 
-    public void setIsChecked(boolean isChecked)
-    {
+    public void setIsChecked(boolean isChecked) {
         this.isChecked = isChecked;
     }
 
@@ -117,15 +114,15 @@ public class GuiCheckBox extends PressableWidget {
      * Draws this button to the screen.
      */
     @Override
-    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partial) {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partial) {
         if (this.visible) {
-            Identifier resourceLocation = GuiCheckBox.buttonTexture;
+            ResourceLocation resourceLocation = GuiCheckBox.buttonTexture;
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.boxWidth && mouseY < this.y + this.height;
+            this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.boxWidth && mouseY < this.y + this.height;
 
             if (this.isChecked()) {
                 resourceLocation = GuiCheckBox.buttonTexturePressed;
-            } else if (this.hovered) {
+            } else if (this.isHovered) {
                 resourceLocation = GuiCheckBox.buttonTextureHover;
             }
 
@@ -136,21 +133,21 @@ public class GuiCheckBox extends PressableWidget {
             int color = this.stringColor;
 
             if (this.withShadow) {
-                this.mineCraft.textRenderer.drawWithShadow(matrixStack, displayString, x + this.boxWidth + 2, y + 2, color);
+                this.drawString(matrixStack, this.mineCraft.font, displayString, x + this.boxWidth + 2, y + 2, color);
             } else {
-                this.mineCraft.textRenderer.drawTrimmed(Utils.createTextComponent(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
+                this.mineCraft.font.drawWordWrap(Utils.createTextComponent(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
             }
         }
     }
 
     @Override
-    public void appendNarrations(NarrationMessageBuilder builder) {
-        builder.put(NarrationPart.TITLE, this.getNarrationMessage());
+    public void updateNarration(NarrationElementOutput builder) {
+        builder.add(NarratedElementType.TITLE, this.createNarrationMessage());
         if (this.active) {
             if (this.isFocused()) {
-                builder.put(NarrationPart.USAGE, new TranslatableText("narration.checkbox.usage.focused"));
+                builder.add(NarratedElementType.USAGE, new TranslatableComponent("narration.checkbox.usage.focused"));
             } else {
-                builder.put(NarrationPart.USAGE, new TranslatableText("narration.checkbox.usage.hovered"));
+                builder.add(NarratedElementType.USAGE, new TranslatableComponent("narration.checkbox.usage.hovered"));
             }
         }
     }

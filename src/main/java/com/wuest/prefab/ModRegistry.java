@@ -15,12 +15,18 @@ import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -210,8 +216,8 @@ public class ModRegistry {
         ModRegistry.registerBlock(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.DoubleCompressedDirt);
         ModRegistry.registerBlock(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.CompressedGlowstone);
         ModRegistry.registerBlock(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.DoubleCompressedGlowstone);
-        ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString(), ModRegistry.CompressedObsidian);
-        ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidian);
+        ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.getSerializedName(), ModRegistry.CompressedObsidian);
+        ModRegistry.registerBlock(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.getSerializedName(), ModRegistry.DoubleCompressedObsidian);
         ModRegistry.registerBlock("block_glass_slab", ModRegistry.GlassSlab);
         ModRegistry.registerBlock("block_glass_stairs", ModRegistry.GlassStairs);
         ModRegistry.registerBlock("block_paper_lantern", ModRegistry.PaperLantern);
@@ -317,8 +323,8 @@ public class ModRegistry {
         ModRegistry.registerItem(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_DIRT.getUnlocalizedName(), ModRegistry.DoubleCompressedDirtItem);
         ModRegistry.registerItem(BlockCompressedStone.EnumType.COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.CompressedGlowstoneItem);
         ModRegistry.registerItem(BlockCompressedStone.EnumType.DOUBLE_COMPRESSED_GLOWSTONE.getUnlocalizedName(), ModRegistry.DoubleCompressedGlowstoneItem);
-        ModRegistry.registerItem(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.asString(), ModRegistry.CompressedObsidianItem);
-        ModRegistry.registerItem(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.asString(), ModRegistry.DoubleCompressedObsidianItem);
+        ModRegistry.registerItem(BlockCompressedObsidian.EnumType.COMPRESSED_OBSIDIAN.getSerializedName(), ModRegistry.CompressedObsidianItem);
+        ModRegistry.registerItem(BlockCompressedObsidian.EnumType.DOUBLE_COMPRESSED_OBSIDIAN.getSerializedName(), ModRegistry.DoubleCompressedObsidianItem);
         ModRegistry.registerItem("block_glass_slab", ModRegistry.GlassSlabItem);
         ModRegistry.registerItem("block_glass_stairs", ModRegistry.GlassStairsItem);
         ModRegistry.registerItem("block_paper_lantern", ModRegistry.PaperLanternItem);
@@ -367,11 +373,11 @@ public class ModRegistry {
                     StructureTagMessage.EnumStructureConfiguration structureConfig = message.getStructureConfig();
 
                     packetContext.getTaskQueue().execute(() -> {
-                        ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) packetContext.getPlayer();
+                        ServerPlayer serverPlayerEntity = (ServerPlayer) packetContext.getPlayer();
                         // This is now on the "main" server thread and things can be done in the world!
                         StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundNBT(message.getMessageTag());
 
-                        configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getServerWorld());
+                        configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getLevel());
                     });
                 }
         );
@@ -379,11 +385,11 @@ public class ModRegistry {
 
     private static void registerStructureScannerMessageHandler() {
         ServerPlayNetworking.registerGlobalReceiver(ModRegistry.StructureScannerSync, (server, player, handler, buf, responseSender) -> {
-            NbtCompound compound = buf.readNbt();
+            CompoundTag compound = buf.readNbt();
             StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
 
             server.execute(() -> {
-                BlockEntity blockEntity = player.getServerWorld().getBlockEntity(config.blockPos);
+                BlockEntity blockEntity = player.getLevel().getBlockEntity(config.blockPos);
 
                 if (blockEntity instanceof StructureScannerBlockEntity) {
                     StructureScannerBlockEntity actualEntity = (StructureScannerBlockEntity) blockEntity;
@@ -395,11 +401,11 @@ public class ModRegistry {
 
     private static void registerStructureScannerActionMessageHandler() {
         ServerPlayNetworking.registerGlobalReceiver(ModRegistry.StructureScannerAction, (server, player, handler, buf, responseSender) -> {
-            NbtCompound compound = buf.readNbt();
+            CompoundTag compound = buf.readNbt();
             StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
 
             server.execute(() -> {
-                StructureScannerBlockEntity.ScanShape(config, player, player.getServerWorld());
+                StructureScannerBlockEntity.ScanShape(config, player, player.getLevel());
             });
         });
     }
@@ -465,23 +471,23 @@ public class ModRegistry {
             return this.name;
         }
 
-        public int getDurability() {
+        public int getUses() {
             return this.maxUses;
         }
 
-        public float getMiningSpeedMultiplier() {
+        public float getSpeed() {
             return this.efficiency;
         }
 
-        public float getAttackDamage() {
+        public float getAttackDamageBonus() {
             return this.attackDamage;
         }
 
-        public int getMiningLevel() {
+        public int getLevel() {
             return this.harvestLevel;
         }
 
-        public int getEnchantability() {
+        public int getEnchantmentValue() {
             return this.enchantability;
         }
 

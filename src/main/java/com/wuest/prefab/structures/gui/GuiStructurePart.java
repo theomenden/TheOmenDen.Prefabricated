@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -11,9 +12,8 @@ import com.wuest.prefab.structures.base.EnumStructureMaterial;
 import com.wuest.prefab.structures.config.StructurePartConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructurePart;
-import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.core.Direction;
 
 
 /**
@@ -68,7 +68,7 @@ public class GuiStructurePart extends GuiStructure {
     }
 
     @Override
-    protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         int imagePanelUpperLeft = x + 132;
         int imagePanelWidth = 285;
         int imagePanelMiddle = imagePanelWidth / 2;
@@ -95,7 +95,7 @@ public class GuiStructurePart extends GuiStructure {
     }
 
     @Override
-    protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         // Draw the text here.
         this.drawString(matrixStack, GuiLangKeys.translateString("item.prefab.item_structure_part"), x + 15, y + 17, this.textColor);
 
@@ -134,8 +134,8 @@ public class GuiStructurePart extends GuiStructure {
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
     @Override
-    public void buttonClicked(PressableWidget button) {
-        this.configuration.houseFacing = this.client.player.getHorizontalFacing().getOpposite();
+    public void buttonClicked(AbstractButton button) {
+        this.configuration.houseFacing = this.getMinecraft().player.getDirection().getOpposite();
         this.configuration.stairHeight = this.sldrStairHeight.getValueInt();
         this.configuration.stairWidth = this.sldrStairWidth.getValueInt();
         this.configuration.generalHeight = this.sldrGeneralHeight.getValueInt();
@@ -157,7 +157,7 @@ public class GuiStructurePart extends GuiStructure {
         } else if (button == this.btnVisualize) {
             StructurePart structure = new StructurePart();
             structure.getClearSpace().getShape().setDirection(Direction.NORTH);
-            structure.setupStructure(this.client.world, this.configuration, this.pos);
+            structure.setupStructure(this.getMinecraft().level, this.configuration, this.pos);
 
             this.performPreview(structure, this.configuration);
         }

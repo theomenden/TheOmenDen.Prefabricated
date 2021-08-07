@@ -1,5 +1,6 @@
 package com.wuest.prefab.structures.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -11,15 +12,13 @@ import com.wuest.prefab.structures.base.EnumStructureMaterial;
 import com.wuest.prefab.structures.config.InstantBridgeConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureInstantBridge;
-import com.wuest.prefab.structures.render.StructureRenderHandler;
-import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class GuiInstantBridge extends GuiStructure {
-    private static final Identifier structureTopDown = new Identifier("prefab", "textures/gui/instant_bridge_top_down.png");
+    private static final ResourceLocation structureTopDown = new ResourceLocation("prefab", "textures/gui/instant_bridge_top_down.png");
     protected InstantBridgeConfiguration configuration;
     private ExtendedButton btnMaterialType;
     private GuiSlider sldrBridgeLength;
@@ -60,7 +59,7 @@ public class GuiInstantBridge extends GuiStructure {
     }
 
     @Override
-    protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         int imagePanelUpperLeft = x + 132;
         int imagePanelWidth = 285;
         int imagePanelMiddle = imagePanelWidth / 2;
@@ -87,7 +86,7 @@ public class GuiInstantBridge extends GuiStructure {
     }
 
     @Override
-    protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         this.drawSplitString(GuiLangKeys.translateString("item.prefab.item_instant_bridge"), x + 15, y + 17, 100, this.textColor);
 
         this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.BRIDGE_MATERIAL), x + 15, y + 35, this.textColor);
@@ -103,7 +102,7 @@ public class GuiInstantBridge extends GuiStructure {
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
     @Override
-    public void buttonClicked(PressableWidget button) {
+    public void buttonClicked(AbstractButton button) {
         int sliderValue = this.sldrBridgeLength.getValueInt();
 
         if (sliderValue > 75) {
@@ -124,7 +123,7 @@ public class GuiInstantBridge extends GuiStructure {
 
         this.configuration.interiorHeight = sliderValue;
         this.configuration.includeRoof = this.chckIncludeRoof.isChecked();
-        this.configuration.houseFacing = player.getHorizontalFacing().getOpposite();
+        this.configuration.houseFacing = player.getDirection().getOpposite();
         this.configuration.pos = this.pos;
 
         this.performCancelOrBuildOrHouseFacing(this.configuration, button);

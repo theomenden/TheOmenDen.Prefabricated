@@ -4,7 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +47,8 @@ public class ModConfiguration implements ConfigData {
         }
     }
 
-    public NbtCompound writeCompoundTag() {
-        NbtCompound tag = new NbtCompound();
+    public CompoundTag writeCompoundTag() {
+        CompoundTag tag = new CompoundTag();
 
         tag.putString(ConfigKeyNames.startingItemName, this.startingItem.toString());
         tag.putBoolean(ConfigKeyNames.enableLoftHouseName, this.enableLoftHouse);
@@ -84,7 +84,7 @@ public class ModConfiguration implements ConfigData {
         return tag;
     }
 
-    public void readFromTag(NbtCompound tag) {
+    public void readFromTag(CompoundTag tag) {
         this.startingItem = StartingItemOptions.getByName(tag.getString(ConfigKeyNames.startingItemName));
 
         this.enableLoftHouse = tag.getBoolean(ConfigKeyNames.enableLoftHouseName);

@@ -1,7 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 
 public class MonsterMasherOptions extends BaseOption{
     public static MonsterMasherOptions Default = new MonsterMasherOptions(

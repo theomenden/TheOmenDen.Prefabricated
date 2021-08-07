@@ -2,10 +2,10 @@ package com.wuest.prefab.structures.base;
 
 import com.google.gson.annotations.Expose;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.StringNbtReader;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * This class is used to define the necessary properties to describe an entity to be generated when a structure is
@@ -55,12 +55,12 @@ public class BuildEntity {
 		this.entityResourceLocation = value;
 	}
 
-	public void setEntityResourceString(Identifier value) {
+	public void setEntityResourceString(ResourceLocation value) {
 		this.entityResourceLocation = value.toString();
 	}
 
-	public Identifier getEntityResource() {
-		return new Identifier(this.entityResourceLocation);
+	public ResourceLocation getEntityResource() {
+		return new ResourceLocation(this.entityResourceLocation);
 	}
 
 	public PositionOffset getStartingPosition() {
@@ -79,7 +79,7 @@ public class BuildEntity {
 		this.entityNBTData = value;
 	}
 
-	public void setEntityNBTData(NbtCompound tagCompound) {
+	public void setEntityNBTData(CompoundTag tagCompound) {
 		this.entityNBTData = tagCompound.toString();
 	}
 
@@ -93,15 +93,15 @@ public class BuildEntity {
 		this.entityXAxisOffset = 0;
 		this.entityYAxisOffset = 0;
 		this.entityZAxisOffset = 0;
-		this.entityFacing = Direction.NORTH.asString();
+		this.entityFacing = Direction.NORTH.getSerializedName();
 	}
 
-	public NbtCompound getEntityDataTag() {
-		NbtCompound tag = null;
+	public CompoundTag getEntityDataTag() {
+		CompoundTag tag = null;
 
 		if (!this.entityNBTData.equals("")) {
 			try {
-				tag = StringNbtReader.parse(this.entityNBTData);
+				tag = TagParser.parseTag(this.entityNBTData);
 			} catch (CommandSyntaxException e) {
 				e.printStackTrace();
 			}

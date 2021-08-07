@@ -4,14 +4,14 @@ import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.structures.config.enums.*;
 import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.predefined.StructureBasic;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * This class is used for the basic structures in the mod.
@@ -82,7 +82,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
     }
 
     @Override
-    protected void CustomReadFromNBTTag(NbtCompound messageTag, StructureConfiguration config) {
+    protected void CustomReadFromNBTTag(CompoundTag messageTag, StructureConfiguration config) {
         BasicStructureConfiguration basicConfig = (BasicStructureConfiguration) config;
 
         if (messageTag.contains(BasicStructureConfiguration.structureEnumNameTag)) {
@@ -107,15 +107,15 @@ public class BasicStructureConfiguration extends StructureConfiguration {
     }
 
     @Override
-    protected NbtCompound CustomWriteToCompoundNBT(NbtCompound tag) {
+    protected CompoundTag CustomWriteToCompoundNBT(CompoundTag tag) {
         tag.putString(BasicStructureConfiguration.structureEnumNameTag, this.basicStructureName.name());
 
         if (this.structureDisplayName != null) {
             tag.putString(BasicStructureConfiguration.structureDisplayNameTag, this.structureDisplayName);
         }
 
-        tag.putString(BasicStructureConfiguration.bedColorTag, this.bedColor.asString().toUpperCase());
-        tag.putString(BasicStructureConfiguration.glassColorTag, this.glassColor.asString().toUpperCase());
+        tag.putString(BasicStructureConfiguration.bedColorTag, this.bedColor.getSerializedName().toUpperCase());
+        tag.putString(BasicStructureConfiguration.glassColorTag, this.glassColor.getSerializedName().toUpperCase());
         tag.putString(BasicStructureConfiguration.chosenOptionTag, this.chosenOption.getTranslationString());
 
         return tag;
@@ -128,7 +128,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
      * @return An instance of {@link BasicStructureConfiguration} with vaules pulled from the NBTTagCompound.
      */
     @Override
-    public BasicStructureConfiguration ReadFromCompoundNBT(NbtCompound messageTag) {
+    public BasicStructureConfiguration ReadFromCompoundNBT(CompoundTag messageTag) {
         BasicStructureConfiguration config = new BasicStructureConfiguration();
 
         return (BasicStructureConfiguration) super.ReadFromCompoundNBT(messageTag, config);
@@ -142,7 +142,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
      * @param hitBlockPos This hit block position.
      */
     @Override
-    protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
+    protected void ConfigurationSpecificBuildStructure(Player player, ServerLevel world, BlockPos hitBlockPos) {
         String assetLocation = "";
 
         if (!this.IsCustomStructure()) {
@@ -154,14 +154,14 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
             ItemStack stack = ItemBasicStructure.getBasicStructureItemInHand(player);
 
-            if (!stack.isDamageable()) {
+            if (!stack.isDamageableItem()) {
                 if (stack.getCount() == 1) {
-                    player.getInventory().removeOne(stack);
+                    player.getInventory().removeItem(stack);
                 } else {
                     stack.setCount(stack.getCount() - 1);
                 }
 
-                player.currentScreenHandler.sendContentUpdates();
+                player.containerMenu.broadcastChanges();
             } else {
                 // The item has durability; damage it since the building was constructed.
                 this.DamageHeldItem(player, stack.getItem());
@@ -213,7 +213,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         private final String name;
         private final String itemTranslationString;
         private final BaseOption baseOption;
-        private Identifier itemTextureLocation;
+        private ResourceLocation itemTextureLocation;
 
         /**
          * This is a basic structure which doesn't have any (or limited) custom processing.
@@ -233,7 +233,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
             this.itemTranslationString = itemTranslationString;
 
             if (itemTextureLocation != null) {
-                this.itemTextureLocation = new Identifier("prefab", itemTextureLocation);
+                this.itemTextureLocation = new ResourceLocation("prefab", itemTextureLocation);
             }
 
             this.baseOption = baseOption;
@@ -263,7 +263,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
          *
          * @return The resource location for the item texture.
          */
-        public Identifier getItemTextureLocation() {
+        public ResourceLocation getItemTextureLocation() {
             return this.itemTextureLocation;
         }
 

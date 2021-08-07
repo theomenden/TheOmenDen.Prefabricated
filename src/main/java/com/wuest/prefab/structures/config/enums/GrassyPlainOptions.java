@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
 
 public class GrassyPlainOptions extends BaseOption {
     public static GrassyPlainOptions Default = new GrassyPlainOptions(
