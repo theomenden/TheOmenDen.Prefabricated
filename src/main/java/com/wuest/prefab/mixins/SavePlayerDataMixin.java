@@ -13,7 +13,7 @@ import java.util.UUID;
 @Mixin(Player.class)
 public class SavePlayerDataMixin {
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
+    private void addAdditionalSaveData(CompoundTag tag, CallbackInfo ci) {
         UUID playerTag = tag.getUUID("UUID");
         EntityPlayerConfiguration configuration;
 
@@ -28,7 +28,7 @@ public class SavePlayerDataMixin {
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
+    private void readAdditionalSaveData(CompoundTag tag, CallbackInfo ci) {
         UUID playerTag = tag.getUUID("UUID");
 
         EntityPlayerConfiguration configuration = new EntityPlayerConfiguration();
