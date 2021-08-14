@@ -1,15 +1,15 @@
 plugins {
-	id 'fabric-loom' version '0.8-SNAPSHOT'
+	id 'fabric-loom' version '0.9-SNAPSHOT'
 	id 'maven-publish'
 }
 
 repositories {
 	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.kotlindiscord.com/repository/terraformers/" }
+	maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
-minecraft {
-	accessWidener = file("src/main/resources/prefab.accesswidener")
+loom {
+	accessWidenerPath = file("src/main/resources/prefab.accesswidener")
 }
 
 sourceCompatibility = JavaVersion.VERSION_16
