@@ -3,8 +3,8 @@ package com.wuest.prefab.structures.config.enums;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.base.BuildShape;
 import com.wuest.prefab.structures.base.PositionOffset;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class BaseOption {
     private static final HashMap<String, ArrayList<BaseOption>> classOptions = new HashMap<>();
     private final String translationString;
     private final String assetLocation;
-    private final ResourceLocation pictureLocation;
+    private final Identifier pictureLocation;
     private final BuildShape clearShape;
     private final PositionOffset clearPositionOffset;
     private final boolean hasBedColor;
@@ -36,7 +36,7 @@ public class BaseOption {
             boolean hasGlassColor) {
         this.translationString = translationString;
         this.assetLocation = assetLocation;
-        this.pictureLocation = new ResourceLocation(Prefab.MODID, pictureLocation);
+        this.pictureLocation = new Identifier(Prefab.MODID, pictureLocation);
         this.clearShape = new BuildShape();
         this.clearPositionOffset = new PositionOffset();
         this.hasBedColor = hasBedColor;
@@ -47,7 +47,7 @@ public class BaseOption {
         this.clearShape.setWidth(width);
         this.clearShape.setLength(length);
         this.clearPositionOffset.setHorizontalOffset(direction, offsetParallelToPlayer);
-        this.clearPositionOffset.setHorizontalOffset(direction.getCounterClockWise(), offsetToLeftOfPlayer);
+        this.clearPositionOffset.setHorizontalOffset(direction.rotateYCounterclockwise(), offsetToLeftOfPlayer);
         this.clearPositionOffset.setHeightOffset(heightOffset);
 
         BaseOption.addOption(this);
@@ -101,7 +101,7 @@ public class BaseOption {
     /**
      * @return Get's the picture location to show when this option is chosen.
      */
-    public ResourceLocation getPictureLocation() {
+    public Identifier getPictureLocation() {
         return this.pictureLocation;
     }
 

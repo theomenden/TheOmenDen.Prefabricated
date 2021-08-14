@@ -1,7 +1,7 @@
 package com.wuest.prefab.network.message;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 
 /**
  * @author WuestMan
@@ -13,7 +13,7 @@ public class ConfigSyncMessage extends TagMessage {
 	 *
 	 * @param writeToNBTTagCompound The NBTTagCompound to write the data too.
 	 */
-	public ConfigSyncMessage(CompoundTag writeToNBTTagCompound) {
+	public ConfigSyncMessage(NbtCompound writeToNBTTagCompound) {
 		super(writeToNBTTagCompound);
 	}
 
@@ -21,7 +21,7 @@ public class ConfigSyncMessage extends TagMessage {
 		super();
 	}
 
-	public static ConfigSyncMessage decode(FriendlyByteBuf buf) {
+	public static ConfigSyncMessage decode(PacketByteBuf buf) {
 		return TagMessage.decode(buf, ConfigSyncMessage.class);
 	}
 }

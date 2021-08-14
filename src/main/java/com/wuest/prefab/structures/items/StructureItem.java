@@ -3,11 +3,11 @@ package com.wuest.prefab.structures.items;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.gui.GuiStructure;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
@@ -19,11 +19,11 @@ public class StructureItem extends Item {
      * Initializes a new instance of the StructureItem class.
      */
     public StructureItem() {
-        super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+        super(new Item.Settings().group(ItemGroup.MISC));
         this.Initialize();
     }
 
-    public StructureItem(Item.Properties properties) {
+    public StructureItem(Item.Settings properties) {
         super(properties);
         this.Initialize();
     }
@@ -32,9 +32,9 @@ public class StructureItem extends Item {
      * Does something when the item is right-clicked.
      */
     @Override
-    public InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().isClientSide) {
-            if (context.getClickedFace() == Direction.UP) {
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (context.getWorld().isClient) {
+            if (context.getSide() == Direction.UP) {
                 if (Prefab.useScanningMode) {
                     this.scanningMode(context);
                 } else {
@@ -42,14 +42,14 @@ public class StructureItem extends Item {
                     ClientModRegistry.openGuiForItem(context);
                 }
 
-                return InteractionResult.PASS;
+                return ActionResult.PASS;
             }
         }
 
-        return InteractionResult.FAIL;
+        return ActionResult.FAIL;
     }
 
-    public void scanningMode(UseOnContext context) {
+    public void scanningMode(ItemUsageContext context) {
     }
 
     /**

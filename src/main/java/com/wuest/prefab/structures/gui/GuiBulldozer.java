@@ -1,12 +1,12 @@
 package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.ClientModRegistry;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.BulldozerConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
-import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.widget.PressableWidget;
+import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * @author WuestMan
@@ -45,7 +45,7 @@ public class GuiBulldozer extends GuiStructure {
     }
 
     @Override
-    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         String strToDraw = GuiLangKeys.translateString(GuiLangKeys.GUI_BULLDOZER_DESCRIPTION) + "\n \n" + GuiLangKeys.translateString(GuiLangKeys.GUI_CLEARED_AREA);
         this.drawSplitString(strToDraw, x + 10, y + 10, 230, this.textColor);
     }
@@ -54,8 +54,8 @@ public class GuiBulldozer extends GuiStructure {
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
     @Override
-    public void buttonClicked(AbstractButton button) {
-        this.configuration.houseFacing = this.getMinecraft().player.getDirection().getOpposite();
+    public void buttonClicked(PressableWidget button) {
+        this.configuration.houseFacing = this.getMinecraft().player.getHorizontalFacing().getOpposite();
         this.performCancelOrBuildOrHouseFacing(this.configuration, button);
     }
 }

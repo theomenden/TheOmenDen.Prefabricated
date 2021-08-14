@@ -2,17 +2,17 @@ package com.wuest.prefab.structures.items;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.structures.gui.GuiStructurePart;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 
 /**
  * @author WuestMan
  */
 public class ItemStructurePart extends StructureItem {
     public ItemStructurePart() {
-        super(new Item.Properties()
-                .tab(CreativeModeTab.TAB_MISC)
-                .durability(10));
+        super(new Item.Settings()
+                .group(ItemGroup.MISC)
+                .maxDamage(10));
     }
 
     /**

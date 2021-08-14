@@ -2,26 +2,22 @@ package com.wuest.prefab.gui.controls;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
 import net.minecraft.SharedConstants;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Widget;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.narration.NarratedElementType;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.Mth;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
+import net.minecraft.client.gui.screen.narration.NarrationPart;
+import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.render.*;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.*;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -30,199 +26,197 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListener {
-    private final Font font;
-    private String value;
+public class GuiTextBox extends ClickableWidget implements Drawable, Element {
+    private final TextRenderer textRenderer;
+    private String text;
     private int maxLength;
-    private int frame;
-    private boolean bordered;
-    private boolean canLoseFocus;
-    private boolean isEditable;
-    private boolean shiftPressed;
-    private int displayPos;
-    private int cursorPos;
-    private int highlightPos;
-    private int textColor;
-    private int textColorUneditable;
-
+    public int focusedTicks;
+    public boolean drawsBackground;
+    public boolean focusUnlocked;
+    public boolean editable;
+    public boolean selecting;
+    public int firstCharacterIndex;
+    public int selectionStart;
+    public int selectionEnd;
+    public int editableColor;
+    public int uneditableColor;
     public int backgroundColor;
     public boolean drawsTextShadow;
-
     @Nullable
     public String suggestion;
     @Nullable
-    private Consumer<String> responder;
-    private Predicate<String> filter;
-    private BiFunction<String, Integer, FormattedCharSequence> formatter;
+    public Consumer<String> changedListener;
+    public Predicate<String> textPredicate;
+    public BiFunction<String, Integer, OrderedText> renderTextProvider;
 
-    public GuiTextBox(Font textRenderer, int x, int y, int width, int height, Component text) {
-        this(textRenderer, x, y, width, height, (EditBox)null, text);
+    public GuiTextBox(TextRenderer textRenderer, int x, int y, int width, int height, Text text) {
+        this(textRenderer, x, y, width, height, (TextFieldWidget)null, text);
     }
 
-    public GuiTextBox(Font textRenderer, int x, int y, int width, int height, @Nullable EditBox copyFrom, Component text) {
+    public GuiTextBox(TextRenderer textRenderer, int x, int y, int width, int height, @Nullable TextFieldWidget copyFrom, Text text) {
         super(x, y, width, height, text);
-        this.value = "";
+        this.text = "";
         this.maxLength = 32;
-        this.bordered = true;
-        this.canLoseFocus = true;
-        this.isEditable = true;
-        this.textColor = 14737632;
-        this.textColorUneditable = 7368816;
+        this.drawsBackground = true;
+        this.focusUnlocked = true;
+        this.editable = true;
+        this.editableColor = 14737632;
+        this.uneditableColor = 7368816;
         this.backgroundColor = Color.WHITE.getRGB();
-        this.filter = Objects::nonNull;
+        this.textPredicate = Objects::nonNull;
 
-        this.formatter = (string, integer) -> {
-            return FormattedCharSequence.forward(string, Style.EMPTY);
+        this.renderTextProvider = (string, integer) -> {
+            return OrderedText.styledForwardsVisitedString(string, Style.EMPTY);
         };
 
-        this.font = textRenderer;
+        this.textRenderer = textRenderer;
 
         if (copyFrom != null) {
-            this.setValue(copyFrom.getValue());
+            this.setText(copyFrom.getText());
         }
 
     }
 
-    public void setResponder(Consumer<String> rssponder) {
-        this.responder = rssponder;
+    public void setChangedListener(Consumer<String> changedListener) {
+        this.changedListener = changedListener;
     }
 
-    public void setFormatter(BiFunction<String, Integer, FormattedCharSequence> textFormatter) {
-        this.formatter = textFormatter;
+    public void setRenderTextProvider(BiFunction<String, Integer, OrderedText> renderTextProvider) {
+        this.renderTextProvider = renderTextProvider;
     }
 
     public void tick() {
-        ++this.frame;
+        ++this.focusedTicks;
     }
 
-    protected MutableComponent createNarrationMessage() {
-        Component component = this.getMessage();
-        return new TranslatableComponent("gui.narrate.editBox", new Object[]{component, this.value});
+    protected MutableText getNarrationMessage() {
+        Text text = this.getMessage();
+        return new TranslatableText("gui.narrate.editBox", new Object[]{text, this.text});
     }
 
-    public void setValue(String text) {
-        if (this.filter.test(text)) {
+    public void setText(String text) {
+        if (this.textPredicate.test(text)) {
             if (text.length() > this.maxLength) {
-                this.value = text.substring(0, this.maxLength);
+                this.text = text.substring(0, this.maxLength);
             } else {
-                this.value = text;
+                this.text = text;
             }
 
-            this.moveCursorToEnd();
-            this.setHighlightPos(this.cursorPos);
-            this.onValueChange(text);
+            this.setCursorToEnd();
+            this.setSelectionEnd(this.selectionStart);
+            this.onChanged(text);
         }
     }
 
-    public String getValue() {
-        return this.value;
+    public String getText() {
+        return this.text;
     }
 
-    public String getHighlighted() {
-        int i = Math.min(this.cursorPos, this.highlightPos);
-        int j = Math.max(this.cursorPos, this.highlightPos);
-        return this.value.substring(i, j);
+    public String getSelectedText() {
+        int i = Math.min(this.selectionStart, this.selectionEnd);
+        int j = Math.max(this.selectionStart, this.selectionEnd);
+        return this.text.substring(i, j);
     }
 
-    public void setFilter(Predicate<String> validator) {
-        this.filter = validator;
+    public void setTextPredicate(Predicate<String> textPredicate) {
+        this.textPredicate = textPredicate;
     }
 
-    public void insertText(String textToWrite) {
-        int i = Math.min(this.cursorPos, this.highlightPos);
-        int j = Math.max(this.cursorPos, this.highlightPos);
-        int k = this.maxLength - this.value.length() - (i - j);
-        String string = SharedConstants.filterText(textToWrite);
+    public void write(String text) {
+        int i = Math.min(this.selectionStart, this.selectionEnd);
+        int j = Math.max(this.selectionStart, this.selectionEnd);
+        int k = this.maxLength - this.text.length() - (i - j);
+        String string = SharedConstants.stripInvalidChars(text);
         int l = string.length();
         if (k < l) {
             string = string.substring(0, k);
             l = k;
         }
 
-        String string2 = (new StringBuilder(this.value)).replace(i, j, string).toString();
-        if (this.filter.test(string2)) {
-            this.value = string2;
-            this.setCursorPosition(i + l);
-            this.setHighlightPos(this.cursorPos);
-            this.onValueChange(this.value);
+        String string2 = (new StringBuilder(this.text)).replace(i, j, string).toString();
+        if (this.textPredicate.test(string2)) {
+            this.text = string2;
+            this.setSelectionStart(i + l);
+            this.setSelectionEnd(this.selectionStart);
+            this.onChanged(this.text);
         }
     }
 
-    private void onValueChange(String newText) {
-        if (this.responder != null) {
-            this.responder.accept(newText);
+    private void onChanged(String newText) {
+        if (this.changedListener != null) {
+            this.changedListener.accept(newText);
         }
 
     }
 
-    private void deleteText(int i) {
+    private void erase(int offset) {
         if (Screen.hasControlDown()) {
-            this.deleteWords(i);
+            this.eraseWords(offset);
         } else {
-            this.deleteChars(i);
+            this.eraseCharacters(offset);
         }
 
     }
 
-    public void deleteWords(int num) {
-        if (!this.value.isEmpty()) {
-            if (this.highlightPos != this.cursorPos) {
-                this.insertText("");
+    public void eraseWords(int wordOffset) {
+        if (!this.text.isEmpty()) {
+            if (this.selectionEnd != this.selectionStart) {
+                this.write("");
             } else {
-                this.deleteChars(this.getWordPosition(num) - this.cursorPos);
+                this.eraseCharacters(this.getWordSkipPosition(wordOffset) - this.selectionStart);
             }
         }
     }
 
-    public void deleteChars(int num) {
-        if (!this.value.isEmpty()) {
-            if (this.highlightPos != this.cursorPos) {
-                this.insertText("");
+    public void eraseCharacters(int characterOffset) {
+        if (!this.text.isEmpty()) {
+            if (this.selectionEnd != this.selectionStart) {
+                this.write("");
             } else {
-                int i = this.getCursorPos(num);
-                int j = Math.min(i, this.cursorPos);
-                int k = Math.max(i, this.cursorPos);
+                int i = this.getCursorPosWithOffset(characterOffset);
+                int j = Math.min(i, this.selectionStart);
+                int k = Math.max(i, this.selectionStart);
                 if (j != k) {
-                    String string = (new StringBuilder(this.value)).delete(j, k).toString();
-                    if (this.filter.test(string)) {
-                        this.value = string;
-                        this.moveCursorTo(j);
+                    String string = (new StringBuilder(this.text)).delete(j, k).toString();
+                    if (this.textPredicate.test(string)) {
+                        this.text = string;
+                        this.setCursor(j);
                     }
                 }
             }
         }
     }
 
-    public int getWordPosition(int numWords) {
-        return this.getWordPosition(numWords, this.getCursorPosition());
+    public int getWordSkipPosition(int wordOffset) {
+        return this.getWordSkipPosition(wordOffset, this.getCursor());
     }
 
-    private int getWordPosition(int n, int pos) {
-        return this.getWordPosition(n, pos, true);
+    private int getWordSkipPosition(int wordOffset, int cursorPosition) {
+        return this.getWordSkipPosition(wordOffset, cursorPosition, true);
     }
 
-    private int getWordPosition(int n, int pos, boolean skipWs) {
-        int i = pos;
-        boolean bl = n < 0;
-        int j = Math.abs(n);
+    private int getWordSkipPosition(int wordOffset, int cursorPosition, boolean skipOverSpaces) {
+        int i = cursorPosition;
+        boolean bl = wordOffset < 0;
+        int j = Math.abs(wordOffset);
 
         for(int k = 0; k < j; ++k) {
             if (!bl) {
-                int l = this.value.length();
-                i = this.value.indexOf(32, i);
+                int l = this.text.length();
+                i = this.text.indexOf(32, i);
                 if (i == -1) {
                     i = l;
                 } else {
-                    while(skipWs && i < l && this.value.charAt(i) == ' ') {
+                    while(skipOverSpaces && i < l && this.text.charAt(i) == ' ') {
                         ++i;
                     }
                 }
             } else {
-                while(skipWs && i > 0 && this.value.charAt(i - 1) == ' ') {
+                while(skipOverSpaces && i > 0 && this.text.charAt(i - 1) == ' ') {
                     --i;
                 }
 
-                while(i > 0 && this.value.charAt(i - 1) != ' ') {
+                while(i > 0 && this.text.charAt(i - 1) != ' ') {
                     --i;
                 }
             }
@@ -231,67 +225,67 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
         return i;
     }
 
-    public void moveCursor(int num) {
-        this.moveCursorTo(this.getCursorPos(num));
+    public void moveCursor(int offset) {
+        this.setCursor(this.getCursorPosWithOffset(offset));
     }
 
-    private int getCursorPos(int i) {
-        return Util.offsetByCodepoints(this.value, this.cursorPos, i);
+    private int getCursorPosWithOffset(int offset) {
+        return Util.moveCursor(this.text, this.selectionStart, offset);
     }
 
-    public void moveCursorTo(int pos) {
-        this.setCursorPosition(pos);
-        if (!this.shiftPressed) {
-            this.setHighlightPos(this.cursorPos);
+    public void setCursor(int cursor) {
+        this.setSelectionStart(cursor);
+        if (!this.selecting) {
+            this.setSelectionEnd(this.selectionStart);
         }
 
-        this.onValueChange(this.value);
+        this.onChanged(this.text);
     }
 
-    public void setCursorPosition(int pos) {
-        this.cursorPos = Mth.clamp(pos, 0, this.value.length());
+    public void setSelectionStart(int cursor) {
+        this.selectionStart = MathHelper.clamp(cursor, 0, this.text.length());
     }
 
-    public void moveCursorToStart() {
-        this.moveCursorTo(0);
+    public void setCursorToStart() {
+        this.setCursor(0);
     }
 
-    public void moveCursorToEnd() {
-        this.moveCursorTo(this.value.length());
+    public void setCursorToEnd() {
+        this.setCursor(this.text.length());
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (!this.canConsumeInput()) {
+        if (!this.isActive()) {
             return false;
         } else {
-            this.shiftPressed = Screen.hasShiftDown();
+            this.selecting = Screen.hasShiftDown();
             if (Screen.isSelectAll(keyCode)) {
-                this.moveCursorToEnd();
-                this.setHighlightPos(0);
+                this.setCursorToEnd();
+                this.setSelectionEnd(0);
                 return true;
             } else if (Screen.isCopy(keyCode)) {
-                Minecraft.getInstance().keyboardHandler.setClipboard(this.getHighlighted());
+                MinecraftClient.getInstance().keyboard.setClipboard(this.getSelectedText());
                 return true;
             } else if (Screen.isPaste(keyCode)) {
-                if (this.isEditable) {
-                    this.insertText(Minecraft.getInstance().keyboardHandler.getClipboard());
+                if (this.editable) {
+                    this.write(MinecraftClient.getInstance().keyboard.getClipboard());
                 }
 
                 return true;
             } else if (Screen.isCut(keyCode)) {
-                Minecraft.getInstance().keyboardHandler.setClipboard(this.getHighlighted());
-                if (this.isEditable) {
-                    this.insertText("");
+                MinecraftClient.getInstance().keyboard.setClipboard(this.getSelectedText());
+                if (this.editable) {
+                    this.write("");
                 }
 
                 return true;
             } else {
                 switch(keyCode) {
                     case 259:
-                        if (this.isEditable) {
-                            this.shiftPressed = false;
-                            this.deleteText(-1);
-                            this.shiftPressed = Screen.hasShiftDown();
+                        if (this.editable) {
+                            this.selecting = false;
+                            this.erase(-1);
+                            this.selecting = Screen.hasShiftDown();
                         }
 
                         return true;
@@ -303,16 +297,16 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
                     default:
                         return false;
                     case 261:
-                        if (this.isEditable) {
-                            this.shiftPressed = false;
-                            this.deleteText(1);
-                            this.shiftPressed = Screen.hasShiftDown();
+                        if (this.editable) {
+                            this.selecting = false;
+                            this.erase(1);
+                            this.selecting = Screen.hasShiftDown();
                         }
 
                         return true;
                     case 262:
                         if (Screen.hasControlDown()) {
-                            this.moveCursorTo(this.getWordPosition(1));
+                            this.setCursor(this.getWordSkipPosition(1));
                         } else {
                             this.moveCursor(1);
                         }
@@ -320,33 +314,33 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
                         return true;
                     case 263:
                         if (Screen.hasControlDown()) {
-                            this.moveCursorTo(this.getWordPosition(-1));
+                            this.setCursor(this.getWordSkipPosition(-1));
                         } else {
                             this.moveCursor(-1);
                         }
 
                         return true;
                     case 268:
-                        this.moveCursorToStart();
+                        this.setCursorToStart();
                         return true;
                     case 269:
-                        this.moveCursorToEnd();
+                        this.setCursorToEnd();
                         return true;
                 }
             }
         }
     }
 
-    public boolean canConsumeInput() {
+    public boolean isActive() {
         return this.isVisible() && this.isFocused() && this.isEditable();
     }
 
-    public boolean charTyped(char codePoint, int modifiers) {
-        if (!this.canConsumeInput()) {
+    public boolean charTyped(char chr, int modifiers) {
+        if (!this.isActive()) {
             return false;
-        } else if (SharedConstants.isAllowedChatCharacter(codePoint)) {
-            if (this.isEditable) {
-                this.insertText(Character.toString(codePoint));
+        } else if (SharedConstants.isValidChar(chr)) {
+            if (this.editable) {
+                this.write(Character.toString(chr));
             }
 
             return true;
@@ -360,18 +354,18 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
             return false;
         } else {
             boolean bl = mouseX >= (double)this.x && mouseX < (double)(this.x + this.width) && mouseY >= (double)this.y && mouseY < (double)(this.y + this.height);
-            if (this.canLoseFocus) {
-                this.setFocus(bl);
+            if (this.focusUnlocked) {
+                this.setTextFieldFocused(bl);
             }
 
             if (this.isFocused() && bl && button == 0) {
-                int i = Mth.floor(mouseX) - this.x;
-                if (this.bordered) {
+                int i = MathHelper.floor(mouseX) - this.x;
+                if (this.drawsBackground) {
                     i -= 4;
                 }
 
-                String string = this.font.plainSubstrByWidth(this.value.substring(this.displayPos), this.getInnerWidth());
-                this.moveCursorTo(this.font.plainSubstrByWidth(string, i).length() + this.displayPos);
+                String string = this.textRenderer.trimToWidth(this.text.substring(this.firstCharacterIndex), this.getInnerWidth());
+                this.setCursor(this.textRenderer.trimToWidth(string, i).length() + this.firstCharacterIndex);
                 return true;
             } else {
                 return false;
@@ -379,27 +373,27 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
         }
     }
 
-    public void setFocus(boolean isFocused) {
-        this.setFocused(isFocused);
+    public void setTextFieldFocused(boolean focused) {
+        this.setFocused(focused);
     }
 
-    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         if (this.isVisible()) {
             int j;
-            if (this.isBordered()) {
+            if (this.drawsBackground()) {
                 j = this.isFocused() ? -1 : -6250336;
-                fill(poseStack, this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, j);
-                fill(poseStack, this.x, this.y, this.x + this.width, this.y + this.height, this.backgroundColor);
+                fill(matrices, this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, j);
+                fill(matrices, this.x, this.y, this.x + this.width, this.y + this.height, this.backgroundColor);
             }
 
-            j = this.isEditable ? this.textColor : this.textColorUneditable;
-            int k = this.cursorPos - this.displayPos;
-            int l = this.highlightPos - this.displayPos;
-            String string = this.font.plainSubstrByWidth(this.value.substring(this.displayPos), this.getInnerWidth());
+            j = this.editable ? this.editableColor : this.uneditableColor;
+            int k = this.selectionStart - this.firstCharacterIndex;
+            int l = this.selectionEnd - this.firstCharacterIndex;
+            String string = this.textRenderer.trimToWidth(this.text.substring(this.firstCharacterIndex), this.getInnerWidth());
             boolean bl = k >= 0 && k <= string.length();
-            boolean bl2 = this.isFocused() && this.frame / 6 % 2 == 0 && bl;
-            int m = this.bordered ? this.x + 4 : this.x;
-            int n = this.bordered ? this.y + (this.height - 8) / 2 : this.y;
+            boolean bl2 = this.isFocused() && this.focusedTicks / 6 % 2 == 0 && bl;
+            int m = this.drawsBackground ? this.x + 4 : this.x;
+            int n = this.drawsBackground ? this.y + (this.height - 8) / 2 : this.y;
             int o = m;
             if (l > string.length()) {
                 l = string.length();
@@ -409,13 +403,13 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
                 String string2 = bl ? string.substring(0, k) : string;
 
                 if (!this.drawsTextShadow) {
-                    o = this.font.draw(poseStack, this.formatter.apply(string2, this.displayPos), (float)m, (float)n, j);
+                    o = this.textRenderer.draw(matrices, (OrderedText) this.renderTextProvider.apply(string2, this.firstCharacterIndex), (float) m, (float) n, j);
                 } else {
-                    o = this.font.drawShadow(poseStack, this.formatter.apply(string2, this.displayPos), (float) m, (float) n, j);
+                    o = this.textRenderer.drawWithShadow(matrices, (OrderedText)this.renderTextProvider.apply(string2, this.firstCharacterIndex), (float)m, (float)n, j);
                 }
             }
 
-            boolean bl3 = this.cursorPos < this.value.length() || this.value.length() >= this.getMaxLength();
+            boolean bl3 = this.selectionStart < this.text.length() || this.text.length() >= this.getMaxLength();
             int p = o;
             if (!bl) {
                 p = k > 0 ? m + this.width : m;
@@ -426,17 +420,17 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
 
             if (!string.isEmpty() && bl && k < string.length()) {
                 if (!this.drawsTextShadow) {
-                    this.font.draw(poseStack, this.formatter.apply(string.substring(k), this.cursorPos), (float) o, (float) n, j);
+                    this.textRenderer.draw(matrices, this.renderTextProvider.apply(string.substring(k), this.selectionStart), (float)o, (float)n, j);
                 } else {
-                    this.font.drawShadow(poseStack, this.formatter.apply(string.substring(k), this.cursorPos), (float) o, (float) n, j);
+                    this.textRenderer.drawWithShadow(matrices, this.renderTextProvider.apply(string.substring(k), this.selectionStart), (float)o, (float)n, j);
                 }
             }
 
             if (!bl3 && this.suggestion != null) {
                 if (!this.drawsTextShadow) {
-                    this.font.draw(poseStack, this.suggestion, (float) (p - 1), (float) n, -8355712);
+                    this.textRenderer.draw(matrices, this.suggestion, (float)(p - 1), (float)n, -8355712);
                 } else {
-                    this.font.drawShadow(poseStack, this.suggestion, (float) (p - 1), (float) n, -8355712);
+                    this.textRenderer.drawWithShadow(matrices, this.suggestion, (float)(p - 1), (float)n, -8355712);
                 }
             }
 
@@ -448,74 +442,74 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
                     var10002 = n - 1;
                     var10003 = p + 1;
                     var10004 = n + 1;
-                    Objects.requireNonNull(this.font);
-                    GuiComponent.fill(poseStack, p, var10002, var10003, var10004 + 9, -3092272);
+                    Objects.requireNonNull(this.textRenderer);
+                    DrawableHelper.fill(matrices, p, var10002, var10003, var10004 + 9, -3092272);
                 } else {
                     if (!this.drawsTextShadow) {
-                        this.font.draw(poseStack, "_", (float) p, (float) n, j);
+                        this.textRenderer.draw(matrices, "_", (float)p, (float)n, j);
                     } else {
-                        this.font.drawShadow(poseStack, "_", (float) p, (float) n, j);
+                        this.textRenderer.drawWithShadow(matrices, "_", (float)p, (float)n, j);
                     }
                 }
             }
 
             if (l != k) {
-                int q = m + this.font.width(string.substring(0, l));
+                int q = m + this.textRenderer.getWidth(string.substring(0, l));
                 var10002 = n - 1;
                 var10003 = q - 1;
                 var10004 = n + 1;
-                Objects.requireNonNull(this.font);
-                this.renderHighlight(p, var10002, var10003, var10004 + 9);
+                Objects.requireNonNull(this.textRenderer);
+                this.drawSelectionHighlight(p, var10002, var10003, var10004 + 9);
             }
 
         }
     }
 
-    private void renderHighlight(int startX, int startY, int endX, int endY) {
+    private void drawSelectionHighlight(int x1, int y1, int x2, int y2) {
         int j;
-        if (startX < endX) {
-            j = startX;
-            startX = endX;
-            endX = j;
+        if (x1 < x2) {
+            j = x1;
+            x1 = x2;
+            x2 = j;
         }
 
-        if (startY < endY) {
-            j = startY;
-            startY = endY;
-            endY = j;
+        if (y1 < y2) {
+            j = y1;
+            y1 = y2;
+            y2 = j;
         }
 
-        if (endX > this.x + this.width) {
-            endX = this.x + this.width;
+        if (x2 > this.x + this.width) {
+            x2 = this.x + this.width;
         }
 
-        if (startX > this.x + this.width) {
-            startX = this.x + this.width;
+        if (x1 > this.x + this.width) {
+            x1 = this.x + this.width;
         }
 
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder bufferBuilder = tesselator.getBuilder();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
         RenderSystem.setShader(GameRenderer::getPositionShader);
         RenderSystem.setShaderColor(0.0F, 0.0F, 1.0F, 1.0F);
         RenderSystem.disableTexture();
         RenderSystem.enableColorLogicOp();
         RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-        bufferBuilder.vertex((double)startX, (double)endY, 0.0D).endVertex();
-        bufferBuilder.vertex((double)endX, (double)endY, 0.0D).endVertex();
-        bufferBuilder.vertex((double)endX, (double)startY, 0.0D).endVertex();
-        bufferBuilder.vertex((double)startX, (double)startY, 0.0D).endVertex();
-        tesselator.end();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        bufferBuilder.vertex((double)x1, (double)y2, 0.0D).next();
+        bufferBuilder.vertex((double)x2, (double)y2, 0.0D).next();
+        bufferBuilder.vertex((double)x2, (double)y1, 0.0D).next();
+        bufferBuilder.vertex((double)x1, (double)y1, 0.0D).next();
+        tessellator.draw();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableColorLogicOp();
         RenderSystem.enableTexture();
     }
 
-    public void setMaxLength(int length) {
-        this.maxLength = length;
-        if (this.value.length() > length) {
-            this.value = this.value.substring(0, length);
-            this.onValueChange(this.value);
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
+        if (this.text.length() > maxLength) {
+            this.text = this.text.substring(0, maxLength);
+            this.onChanged(this.text);
         }
 
     }
@@ -524,104 +518,104 @@ public class GuiTextBox extends AbstractWidget implements Widget, GuiEventListen
         return this.maxLength;
     }
 
-    public int getCursorPosition() {
-        return this.cursorPos;
+    public int getCursor() {
+        return this.selectionStart;
     }
 
-    private boolean isBordered() {
-        return this.bordered;
+    private boolean drawsBackground() {
+        return this.drawsBackground;
     }
 
-    public void setBordered(boolean enableBackgroundDrawing) {
-        this.bordered = enableBackgroundDrawing;
+    public void setDrawsBackground(boolean drawsBackground) {
+        this.drawsBackground = drawsBackground;
     }
 
-    public void setTextColor(int color) {
-        this.textColor = color;
+    public void setEditableColor(int color) {
+        this.editableColor = color;
     }
 
-    public void setTextColorUneditable(int color) {
-        this.textColorUneditable = color;
+    public void setUneditableColor(int color) {
+        this.uneditableColor = color;
     }
 
-    public boolean changeFocus(boolean focus) {
-        return this.visible && this.isEditable ? super.changeFocus(focus) : false;
+    public boolean changeFocus(boolean lookForwards) {
+        return this.visible && this.editable ? super.changeFocus(lookForwards) : false;
     }
 
     public boolean isMouseOver(double mouseX, double mouseY) {
         return this.visible && mouseX >= (double)this.x && mouseX < (double)(this.x + this.width) && mouseY >= (double)this.y && mouseY < (double)(this.y + this.height);
     }
 
-    protected void onFocusedChanged(boolean focused) {
-        if (focused) {
-            this.frame = 0;
+    protected void onFocusedChanged(boolean newFocused) {
+        if (newFocused) {
+            this.focusedTicks = 0;
         }
 
     }
 
     private boolean isEditable() {
-        return this.isEditable;
+        return this.editable;
     }
 
-    public void setEditable(boolean enabled) {
-        this.isEditable = enabled;
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
 
     public int getInnerWidth() {
-        return this.isBordered() ? this.width - 8 : this.width;
+        return this.drawsBackground() ? this.width - 8 : this.width;
     }
 
-    public void setHighlightPos(int position) {
-        int i = this.value.length();
-        this.highlightPos = Mth.clamp(position, 0, i);
-        if (this.font != null) {
-            if (this.displayPos > i) {
-                this.displayPos = i;
+    public void setSelectionEnd(int index) {
+        int i = this.text.length();
+        this.selectionEnd = MathHelper.clamp(index, 0, i);
+        if (this.textRenderer != null) {
+            if (this.firstCharacterIndex > i) {
+                this.firstCharacterIndex = i;
             }
 
             int j = this.getInnerWidth();
-            String string = this.font.plainSubstrByWidth(this.value.substring(this.displayPos), j);
-            int k = string.length() + this.displayPos;
-            if (this.highlightPos == this.displayPos) {
-                this.displayPos -= this.font.plainSubstrByWidth(this.value, j, true).length();
+            String string = this.textRenderer.trimToWidth(this.text.substring(this.firstCharacterIndex), j);
+            int k = string.length() + this.firstCharacterIndex;
+            if (this.selectionEnd == this.firstCharacterIndex) {
+                this.firstCharacterIndex -= this.textRenderer.trimToWidth(this.text, j, true).length();
             }
 
-            if (this.highlightPos > k) {
-                this.displayPos += this.highlightPos - k;
-            } else if (this.highlightPos <= this.displayPos) {
-                this.displayPos -= this.displayPos - this.highlightPos;
+            if (this.selectionEnd > k) {
+                this.firstCharacterIndex += this.selectionEnd - k;
+            } else if (this.selectionEnd <= this.firstCharacterIndex) {
+                this.firstCharacterIndex -= this.firstCharacterIndex - this.selectionEnd;
             }
 
-            this.displayPos = Mth.clamp(this.displayPos, 0, i);
+            this.firstCharacterIndex = MathHelper.clamp(this.firstCharacterIndex, 0, i);
         }
 
     }
 
-    public void setCanLoseFocus(boolean canLoseFocus) {
-        this.canLoseFocus = canLoseFocus;
+    public void setFocusUnlocked(boolean focusUnlocked) {
+        this.focusUnlocked = focusUnlocked;
     }
 
     public boolean isVisible() {
         return this.visible;
     }
 
-    public void setVisible(boolean isVisible) {
-        this.visible = isVisible;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
-    public void setSuggestion(@Nullable String string) {
-        this.suggestion = string;
+    public void setSuggestion(@Nullable String suggestion) {
+        this.suggestion = suggestion;
     }
 
-    public int getScreenX(int i) {
-        return i > this.value.length() ? this.x : this.x + this.font.width(this.value.substring(0, i));
+    public int getCharacterX(int index) {
+        return index > this.text.length() ? this.x : this.x + this.textRenderer.getWidth(this.text.substring(0, index));
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
-    public void updateNarration(NarrationElementOutput narrationElementOutput) {
-        narrationElementOutput.add(NarratedElementType.TITLE, new TranslatableComponent("narration.edit_box", new Object[]{this.getValue()}));
+    public void appendNarrations(NarrationMessageBuilder builder) {
+        builder.put(NarrationPart.TITLE, new TranslatableText("narration.edit_box", new Object[]{this.getText()}));
     }
 }

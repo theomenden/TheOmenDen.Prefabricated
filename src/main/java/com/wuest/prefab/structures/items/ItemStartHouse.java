@@ -5,9 +5,9 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.gui.GuiStartHouseChooser;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
@@ -22,24 +22,24 @@ public class ItemStartHouse extends StructureItem {
      * Does something when the item is right-clicked.
      */
     @Override
-    public InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().isClientSide) {
-            if (context.getClickedFace() == Direction.UP) {
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (context.getWorld().isClient) {
+            if (context.getSide() == Direction.UP) {
                 if (!Prefab.useScanningMode) {
                     // Open the client side gui to determine the house options.
                     ClientModRegistry.openGuiForItem(context);
                 } else {
                     this.scanningMode(context);
                 }
-                return InteractionResult.PASS;
+                return ActionResult.PASS;
             }
         }
 
-        return InteractionResult.FAIL;
+        return ActionResult.FAIL;
     }
 
     @Override
-    public void scanningMode(UseOnContext context) {
+    public void scanningMode(ItemUsageContext context) {
 		/*StructureAlternateStart.ScanBasicHouseStructure(
 				context.getWorld(),
 				context.getBlockPos(),
@@ -77,9 +77,9 @@ public class ItemStartHouse extends StructureItem {
 				false);*/
 
         StructureAlternateStart.ScanDesert2Structure(
-                context.getLevel(),
-                context.getClickedPos(),
-                context.getPlayer().getDirection());
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing());
 
         /*StructureAlternateStart.ScanSubAquaticStructure(
                 context.getWorld(),

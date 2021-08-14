@@ -1,7 +1,5 @@
 package com.wuest.prefab;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
-import com.mojang.blaze3d.platform.InputConstants;
 import com.wuest.prefab.base.BaseConfig;
 import com.wuest.prefab.blocks.BlockCustomWall;
 import com.wuest.prefab.blocks.BlockGrassSlab;
@@ -18,18 +16,19 @@ import com.wuest.prefab.structures.render.ShaderHelper;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ import java.util.function.Consumer;
 public class ClientModRegistry {
 
     public static EntityPlayerConfiguration playerConfig = new EntityPlayerConfiguration();
-    public static KeyMapping keyBinding;
+    public static KeyBinding keyBinding;
     public static ArrayList<StructureScannerConfig> structureScanners;
     /**
      * The hashmap of mod guis.
@@ -64,18 +63,18 @@ public class ClientModRegistry {
         ClientModRegistry.RegisterGuis();
     }
 
-    public static void openGuiForItem(UseOnContext itemUseContext) {
+    public static void openGuiForItem(ItemUsageContext itemUseContext) {
         for (Map.Entry<StructureItem, GuiStructure> entry : ClientModRegistry.ModGuis.entrySet()) {
-            if (entry.getKey() == itemUseContext.getItemInHand().getItem()) {
+            if (entry.getKey() == itemUseContext.getStack().getItem()) {
                 GuiStructure screen = entry.getValue();
-                screen.pos = itemUseContext.getClickedPos();
+                screen.pos = itemUseContext.getBlockPos();
 
-                Minecraft.getInstance().setScreen(screen);
+                MinecraftClient.getInstance().setScreen(screen);
             }
         }
     }
 
-    public static void openGuiForBlock(BlockPos blockPos, Level world, BaseConfig config) {
+    public static void openGuiForBlock(BlockPos blockPos, World world, BaseConfig config) {
         GuiBase screen = null;
 
         if (config instanceof StructureScannerConfig) {
@@ -83,7 +82,7 @@ public class ClientModRegistry {
         }
 
         if (screen != null) {
-            Minecraft.getInstance().setScreen(screen);
+            MinecraftClient.getInstance().setScreen(screen);
         }
     }
 
@@ -106,7 +105,7 @@ public class ClientModRegistry {
 
             packetContext.getTaskQueue().execute(() -> {
                 // This is now on the "main" client thread and things can be done in the world!
-                UUID playerUUID = Minecraft.getInstance().player.getUUID();
+                UUID playerUUID = MinecraftClient.getInstance().player.getUuid();
 
                 ClientModRegistry.playerConfig = EntityPlayerConfiguration.loadFromTag(playerUUID, syncMessage.getMessageTag());
             });
@@ -114,18 +113,18 @@ public class ClientModRegistry {
     }
 
     private static void registerBlockLayers() {
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassStairs, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassSlab, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.PaperLantern, RenderType.cutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Boundary, RenderType.translucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Phasic, RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassStairs, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GlassSlab, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.PaperLantern, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Boundary, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.Phasic, RenderLayer.getTranslucent());
 
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassStairs, RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtStairs, RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassSlab, RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtSlab, RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassWall, RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtWall, RenderType.cutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassStairs, RenderLayer.getCutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtStairs, RenderLayer.getCutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassSlab, RenderLayer.getCutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtSlab, RenderLayer.getCutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassWall, RenderLayer.getCutoutMipped());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtWall, RenderLayer.getCutoutMipped());
     }
 
     private static void registerRenderers() {
@@ -137,12 +136,12 @@ public class ClientModRegistry {
      */
     public static void RegisterBlockRenderer() {
         // Register the block renderer.
-        Minecraft.getInstance().getBlockColors().register((state, worldIn, pos, tintIndex) -> worldIn != null && pos != null
-                ? BiomeColors.getAverageGrassColor(worldIn, pos)
-                : GrassColor.get(0.5D, 1.0D), ModRegistry.GrassWall, ModRegistry.GrassSlab, ModRegistry.GrassStairs);
+        MinecraftClient.getInstance().getBlockColors().registerColorProvider((state, worldIn, pos, tintIndex) -> worldIn != null && pos != null
+                ? BiomeColors.getGrassColor(worldIn, pos)
+                : GrassColors.getColor(0.5D, 1.0D), ModRegistry.GrassWall, ModRegistry.GrassSlab, ModRegistry.GrassStairs);
 
         // Register the item renderer.
-        Minecraft.getInstance().itemColors.register((stack, tintIndex) -> {
+        MinecraftClient.getInstance().itemColors.register((stack, tintIndex) -> {
             // Get the item for this stack.
             Item item = stack.getItem();
 
@@ -164,9 +163,9 @@ public class ClientModRegistry {
                 }
 
                 if (paintBlock) {
-                    BlockPos pos = Minecraft.getInstance().player.blockPosition();
-                    ClientLevel world = Minecraft.getInstance().level;
-                    return BiomeColors.getAverageGrassColor(world, pos);
+                    BlockPos pos = MinecraftClient.getInstance().player.getBlockPos();
+                    ClientWorld world = MinecraftClient.getInstance().world;
+                    return BiomeColors.getGrassColor(world, pos);
                 }
             }
 
@@ -184,9 +183,9 @@ public class ClientModRegistry {
     }
 
     private static void registerKeyBindings() {
-        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "Build Current Structure", // The translation key of the keybinding's name
-                InputConstants.Type.KEYSYM,
+                InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
                 "Prefab - Structure Preview" // The translation key of the keybinding's category.
         ));

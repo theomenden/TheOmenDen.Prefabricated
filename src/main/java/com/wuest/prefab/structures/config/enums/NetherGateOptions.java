@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
+import net.minecraft.util.math.Direction;
 
 public class NetherGateOptions extends BaseOption {
     public static NetherGateOptions AncientSkull = new NetherGateOptions(

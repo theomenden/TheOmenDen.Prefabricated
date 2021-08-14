@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
+import net.minecraft.util.math.Direction;
 
 public class WorkshopOptions extends BaseOption {
     public static WorkshopOptions Default = new WorkshopOptions(

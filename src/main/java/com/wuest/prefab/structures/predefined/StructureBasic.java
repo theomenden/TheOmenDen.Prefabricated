@@ -5,18 +5,16 @@ import com.wuest.prefab.structures.base.*;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration.EnumBasicStructureName;
 import com.wuest.prefab.structures.config.StructureConfiguration;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.block.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
@@ -30,7 +28,7 @@ public class StructureBasic extends Structure {
     private BlockPos customBlockPos = null;
     private ArrayList<Tuple<BlockPos, BlockPos>> bedPositions = new ArrayList<>();
 
-    public static void ScanStructure(Level world, BlockPos originalPos, Direction playerFacing, BasicStructureConfiguration configuration, boolean includeAir, boolean excludeWater) {
+    public static void ScanStructure(World world, BlockPos originalPos, Direction playerFacing, BasicStructureConfiguration configuration, boolean includeAir, boolean excludeWater) {
         BuildClear clearedSpace = new BuildClear();
         clearedSpace.setShape(configuration.chosenOption.getClearShape());
         clearedSpace.setStartingPosition(configuration.chosenOption.getClearPositionOffset());
@@ -50,14 +48,14 @@ public class StructureBasic extends Structure {
 
             int downOffset = offset.getHeightOffset() < 0 ? Math.abs(offset.getHeightOffset()) : 0;
             BlockPos cornerPos = originalPos
-                    .relative(playerFacing.getCounterClockWise(), offset.getOffSetValueForFacing(playerFacing.getClockWise()))
-                    .relative(playerFacing, offset.getOffSetValueForFacing(playerFacing))
-                    .below(downOffset);
+                    .offset(playerFacing.rotateYCounterclockwise(), offset.getOffSetValueForFacing(playerFacing.rotateYCounterclockwise()))
+                    .offset(playerFacing, offset.getOffSetValueForFacing(playerFacing))
+                    .down(downOffset);
 
             BlockPos otherCorner = cornerPos
-                    .relative(playerFacing, buildShape.getLength())
-                    .relative(playerFacing.getClockWise(), buildShape.getWidth())
-                    .above(buildShape.getHeight());
+                    .offset(playerFacing, buildShape.getLength())
+                    .offset(playerFacing.rotateYClockwise(), buildShape.getWidth())
+                    .up(buildShape.getHeight());
 
             Structure.ScanStructure(
                     world,
@@ -73,8 +71,8 @@ public class StructureBasic extends Structure {
     }
 
     @Override
-    protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, Level world, BlockPos originalPos,
-                                                   Direction assumedNorth, Block foundBlock, BlockState blockState, Player player) {
+    protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos,
+                                                   Direction assumedNorth, Block foundBlock, BlockState blockState, PlayerEntity player) {
         BasicStructureConfiguration config = (BasicStructureConfiguration) configuration;
 
         if (foundBlock instanceof HopperBlock && config.basicStructureName.getName().equals(EnumBasicStructureName.AdvancedCoop.getName())) {
@@ -84,12 +82,12 @@ public class StructureBasic extends Structure {
                     configuration.houseFacing);
         } else if (foundBlock instanceof FenceGateBlock && config.basicStructureName.getName().equals(EnumBasicStructureName.ChickenCoop.getName())) {
             this.customBlockPos = block.getStartingPosition().getRelativePosition(
-                            originalPos,
-                            this.getClearSpace().getShape().getDirection(),
-                            configuration.houseFacing)
-                    .relative(configuration.houseFacing.getOpposite(), 2)
-                    .above();
-        } else if (foundBlock instanceof TrapDoorBlock && config.basicStructureName.getName().equals(EnumBasicStructureName.MineshaftEntrance.getName())) {
+                    originalPos,
+                    this.getClearSpace().getShape().getDirection(),
+                    configuration.houseFacing)
+                    .offset(configuration.houseFacing.getOpposite(), 2)
+                    .up();
+        } else if (foundBlock instanceof TrapdoorBlock && config.basicStructureName.getName().equals(EnumBasicStructureName.MineshaftEntrance.getName())) {
             this.customBlockPos = block.getStartingPosition().getRelativePosition(
                     originalPos,
                     this.getClearSpace().getShape().getDirection(),
@@ -100,7 +98,7 @@ public class StructureBasic extends Structure {
             this.customBlockPos = block.getStartingPosition().getRelativePosition(
                     originalPos,
                     this.getClearSpace().getShape().getDirection(),
-                    configuration.houseFacing).above();
+                    configuration.houseFacing).up();
         } else if (foundBlock instanceof BedBlock && config.chosenOption.getHasBedColor()) {
             // Even if a structure has a bed; we may want to keep a specific color to match what the design of the structure is.
             BlockPos bedHeadPosition = block.getStartingPosition().getRelativePosition(originalPos, this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
@@ -114,8 +112,8 @@ public class StructureBasic extends Structure {
             return true;
         }
 
-        ResourceLocation foundBlockIdentifier = Registry.BLOCK.getKey(foundBlock);
-        if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS).getNamespace())
+        Identifier foundBlockIdentifier = Registry.BLOCK.getId(foundBlock);
+        if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS).getNamespace())
                 && foundBlockIdentifier.getPath().endsWith("stained_glass")
                 && config.chosenOption.getHasGlassColor()) {
             blockState = this.getStainedGlassBlock(config.glassColor);
@@ -123,7 +121,7 @@ public class StructureBasic extends Structure {
             this.priorityOneBlocks.add(block);
 
             return true;
-        } else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
+        } else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
                 && foundBlockIdentifier.getPath().endsWith("stained_glass_pane")
                 && config.chosenOption.getHasGlassColor()) {
             blockState = this.getStainedGlassPaneBlock(config.glassColor);
@@ -146,7 +144,7 @@ public class StructureBasic extends Structure {
     }
 
     @Override
-    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, Level world, BlockPos originalPos, Direction assumedNorth, BlockPos blockPos) {
+    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, World world, BlockPos originalPos, Direction assumedNorth, BlockPos blockPos) {
         BasicStructureConfiguration config = (BasicStructureConfiguration) configuration;
 
         if (config.basicStructureName.getName().equals(EnumBasicStructureName.AquaBase.getName())
@@ -169,26 +167,26 @@ public class StructureBasic extends Structure {
      * @param player        The player which initiated the construction.
      */
     @Override
-    public void AfterBuilding(StructureConfiguration configuration, ServerLevel world, BlockPos originalPos, Direction assumedNorth, Player player) {
+    public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
         BasicStructureConfiguration config = (BasicStructureConfiguration) configuration;
 
         if (this.customBlockPos != null) {
             if (config.basicStructureName.getName().equals(EnumBasicStructureName.AdvancedCoop.getName())) {
                 // For the advanced chicken coop, spawn 4 chickens above the hopper.
                 for (int i = 0; i < 4; i++) {
-                    Chicken entity = new Chicken(EntityType.CHICKEN, world);
-                    entity.setPos(this.customBlockPos.getX(), this.customBlockPos.above().getY(), this.customBlockPos.getZ());
-                    world.addFreshEntity(entity);
+                    ChickenEntity entity = new ChickenEntity(EntityType.CHICKEN, world);
+                    entity.setPos(this.customBlockPos.getX(), this.customBlockPos.up().getY(), this.customBlockPos.getZ());
+                    world.spawnEntity(entity);
                 }
             } else if (config.basicStructureName.getName().equals(EnumBasicStructureName.ChickenCoop.getName())) {
                 // For the advanced chicken coop, spawn 4 chickens above the hopper.
-                Chicken entity = new Chicken(EntityType.CHICKEN, world);
-                entity.setPos(this.customBlockPos.getX(), this.customBlockPos.below().getY(), this.customBlockPos.getZ());
-                world.addFreshEntity(entity);
+                ChickenEntity entity = new ChickenEntity(EntityType.CHICKEN, world);
+                entity.setPos(this.customBlockPos.getX(), this.customBlockPos.down().getY(), this.customBlockPos.getZ());
+                world.spawnEntity(entity);
             } else if (config.basicStructureName.getName().equals(EnumBasicStructureName.MineshaftEntrance.getName())
                     || config.basicStructureName.getName().equals(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getName())) {
                 // Build the mineshaft where the trap door exists.
-                BuildingMethods.PlaceMineShaft(world, this.customBlockPos.below(), configuration.houseFacing, true);
+                BuildingMethods.PlaceMineShaft(world, this.customBlockPos.down(), configuration.houseFacing, true);
             }
 
             this.customBlockPos = null;
@@ -203,40 +201,40 @@ public class StructureBasic extends Structure {
         if (config.basicStructureName.getName().equals(EnumBasicStructureName.AquaBase.getName())
                 || config.basicStructureName.getName().equals(EnumBasicStructureName.AdvancedAquaBase.getName())) {
             // Replace the entrance area with air blocks.
-            BlockPos airPos = originalPos.above(4).relative(configuration.houseFacing.getOpposite(), 1);
+            BlockPos airPos = originalPos.up(4).offset(configuration.houseFacing.getOpposite(), 1);
 
             // This is the first wall.
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
-            airPos = airPos.below();
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            airPos = airPos.down();
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
-            airPos = airPos.below();
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            airPos = airPos.down();
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
-            airPos = airPos.below();
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            airPos = airPos.down();
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
             // Second part of the wall.
-            airPos = airPos.relative(configuration.houseFacing.getOpposite()).above();
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            airPos = airPos.offset(configuration.houseFacing.getOpposite()).up();
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
-            airPos = airPos.above();
-            world.removeBlock(airPos.relative(configuration.houseFacing.getClockWise()), false);
+            airPos = airPos.up();
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYClockwise()), false);
             world.removeBlock(airPos, false);
-            world.removeBlock(airPos.relative(configuration.houseFacing.getCounterClockWise()), false);
+            world.removeBlock(airPos.offset(configuration.houseFacing.rotateYCounterclockwise()), false);
 
-            airPos = airPos.above();
+            airPos = airPos.up();
             world.removeBlock(airPos, false);
         }
     }

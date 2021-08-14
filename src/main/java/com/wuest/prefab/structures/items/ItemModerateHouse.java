@@ -4,7 +4,7 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.structures.config.ModerateHouseConfiguration;
 import com.wuest.prefab.structures.gui.GuiModerateHouse;
 import com.wuest.prefab.structures.predefined.StructureModerateHouse;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.item.ItemUsageContext;
 
 /**
  * @author WuestMan
@@ -19,11 +19,11 @@ public class ItemModerateHouse extends StructureItem {
     }
 
     @Override
-    public void scanningMode(UseOnContext context) {
+    public void scanningMode(ItemUsageContext context) {
         StructureModerateHouse.ScanStructure(
-                context.getLevel(),
-                context.getClickedPos(),
-                context.getPlayer().getDirection(),
+                context.getWorld(),
+                context.getBlockPos(),
+                context.getPlayer().getHorizontalFacing(),
                 ModerateHouseConfiguration.HouseStyle.ACACIA_HOME2);
     }
 

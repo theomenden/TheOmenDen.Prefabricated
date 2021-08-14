@@ -5,12 +5,12 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.structures.base.EnumStairsMaterial;
 import com.wuest.prefab.structures.base.EnumStructureMaterial;
 import com.wuest.prefab.structures.predefined.StructurePart;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
@@ -74,14 +74,14 @@ public class StructurePartConfiguration extends StructureConfiguration {
 	 * @return An new configuration object with the values derived from the CompoundNBT.
 	 */
 	@Override
-	public StructurePartConfiguration ReadFromCompoundNBT(CompoundTag messageTag) {
+	public StructurePartConfiguration ReadFromCompoundNBT(NbtCompound messageTag) {
 		StructurePartConfiguration config = new StructurePartConfiguration();
 
 		return (StructurePartConfiguration) super.ReadFromCompoundNBT(messageTag, config);
 	}
 
 	@Override
-	protected void ConfigurationSpecificBuildStructure(Player player, ServerLevel world, BlockPos hitBlockPos) {
+	protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
 		StructurePart structure = StructurePart.CreateInstance();
 
 		if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
@@ -96,7 +96,7 @@ public class StructurePartConfiguration extends StructureConfiguration {
 	 * @return The updated tag.
 	 */
 	@Override
-	protected CompoundTag CustomWriteToCompoundNBT(CompoundTag tag) {
+	protected NbtCompound CustomWriteToCompoundNBT(NbtCompound tag) {
 		tag.putString("material", this.partMaterial.name());
 		tag.putString("style", this.style.name());
 		tag.putInt("stair_height", this.stairHeight);
@@ -114,7 +114,7 @@ public class StructurePartConfiguration extends StructureConfiguration {
 	 * @param config     The configuration to read the settings into.
 	 */
 	@Override
-	protected void CustomReadFromNBTTag(CompoundTag messageTag, StructureConfiguration config) {
+	protected void CustomReadFromNBTTag(NbtCompound messageTag, StructureConfiguration config) {
 		if (messageTag.contains("material")) {
 			((StructurePartConfiguration) config).partMaterial = EnumStructureMaterial.valueOf(messageTag.getString("material"));
 		}
@@ -174,9 +174,9 @@ public class StructurePartConfiguration extends StructureConfiguration {
 			return EnumStyle.DoorWay;
 		}
 
-		public ResourceLocation getPictureLocation() {
+		public Identifier getPictureLocation() {
 			if (this.resourceLocation != null) {
-				return new ResourceLocation(Prefab.MODID, this.resourceLocation);
+				return new Identifier(Prefab.MODID, this.resourceLocation);
 			}
 
 			return null;

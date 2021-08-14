@@ -2,13 +2,13 @@ package com.wuest.prefab.structures.config;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.structures.predefined.StructureBulldozer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 /**
  * @author WuestMan
@@ -30,7 +30,7 @@ public class BulldozerConfiguration extends StructureConfiguration {
 	 * @return An new configuration object with the values derived from the NBTTagCompound.
 	 */
 	@Override
-	public BulldozerConfiguration ReadFromCompoundNBT(CompoundTag messageTag) {
+	public BulldozerConfiguration ReadFromCompoundNBT(NbtCompound messageTag) {
 		BulldozerConfiguration config = new BulldozerConfiguration();
 
 		return (BulldozerConfiguration) super.ReadFromCompoundNBT(messageTag, config);
@@ -44,7 +44,7 @@ public class BulldozerConfiguration extends StructureConfiguration {
 	 * @param hitBlockPos This hit block position.
 	 */
 	@Override
-	protected void ConfigurationSpecificBuildStructure(Player player, ServerLevel world, BlockPos hitBlockPos) {
+	protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
 		StructureBulldozer structure = new StructureBulldozer();
 
 		if (player.isCreative()) {
@@ -52,26 +52,26 @@ public class BulldozerConfiguration extends StructureConfiguration {
 		}
 
 		if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
-			ItemStack stack = player.getOffhandItem();
-			InteractionHand hand = InteractionHand.OFF_HAND;
+			ItemStack stack = player.getOffHandStack();
+			Hand hand = Hand.OFF_HAND;
 
 			if (stack.getItem() == ModRegistry.CreativeBulldozer) {
 				this.creativeMode = true;
 			}
 
 			if (stack.getItem() != ModRegistry.Bulldozer) {
-				stack = player.getMainHandItem();
-				hand = InteractionHand.MAIN_HAND;
+				stack = player.getMainHandStack();
+				hand = Hand.MAIN_HAND;
 			}
 
 			if (stack.getItem() == ModRegistry.Bulldozer) {
-				InteractionHand hand1 = hand;
-				stack.hurtAndBreak(1, player, (player1) ->
+				Hand hand1 = hand;
+				stack.damage(1, player, (player1) ->
 				{
-					player1.broadcastBreakEvent(hand1);
+					player1.sendToolBreakStatus(hand1);
 				});
 
-				player.containerMenu.broadcastChanges();
+				player.currentScreenHandler.sendContentUpdates();
 			}
 		}
 	}

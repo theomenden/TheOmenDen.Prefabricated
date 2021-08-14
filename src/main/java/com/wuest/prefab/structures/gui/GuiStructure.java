@@ -1,24 +1,26 @@
 package com.wuest.prefab.structures.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.gui.GuiBase;
 import com.wuest.prefab.gui.GuiLangKeys;
-import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.structures.base.Structure;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.PressableWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+
+import java.awt.*;
 
 /**
  * Generic GUI for all structures.
@@ -27,12 +29,12 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class GuiStructure extends GuiBase {
     public BlockPos pos;
-    protected Player player;
-    protected ExtendedButton btnCancel;
-    protected ExtendedButton btnBuild;
-    protected ExtendedButton btnVisualize;
+    protected PlayerEntity player;
+    protected ButtonWidget btnCancel;
+    protected ButtonWidget btnBuild;
+    protected ButtonWidget btnVisualize;
     protected StructureTagMessage.EnumStructureConfiguration structureConfiguration;
-    protected ResourceLocation structureImageLocation;
+    protected Identifier structureImageLocation;
     private Direction structureFacing;
 
     public GuiStructure(String title) {
@@ -41,8 +43,8 @@ public abstract class GuiStructure extends GuiBase {
 
     @Override
     public void init() {
-        this.player = this.getMinecraft().player;
-        this.structureFacing = this.player.getDirection().getOpposite();
+        this.player = this.client.player;
+        this.structureFacing = this.player.getHorizontalFacing().getOpposite();
         this.Initialize();
     }
 
@@ -72,7 +74,7 @@ public abstract class GuiStructure extends GuiBase {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int x, int y, float f) {
+    public void render(MatrixStack matrixStack, int x, int y, float f) {
         Tuple<Integer, Integer> adjustedXYValue = this.getAdjustedXYValue();
 
         this.preButtonRender(matrixStack, adjustedXYValue.getFirst(), adjustedXYValue.getSecond(), x, y, f);
@@ -87,24 +89,24 @@ public abstract class GuiStructure extends GuiBase {
     }
 
     @Override
-    protected void preButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void preButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         this.drawStandardControlBoxAndImage(matrixStack, this.structureImageLocation, x, y, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
+    protected void postButtonRender(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
     }
 
     /**
      * Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
      */
-    protected void performCancelOrBuildOrHouseFacing(StructureConfiguration configuration, AbstractButton button) {
+    protected void performCancelOrBuildOrHouseFacing(StructureConfiguration configuration, PressableWidget button) {
         configuration.houseFacing = this.structureFacing;
 
         if (button == this.btnCancel) {
             this.closeScreen();
         } else if (button == this.btnBuild) {
-            FriendlyByteBuf messagePacket = Utils.createStructureMessageBuffer(configuration.WriteToCompoundNBT(), this.structureConfiguration);
+            PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(configuration.WriteToCompoundNBT(), this.structureConfiguration);
             ClientPlayNetworking.send(ModRegistry.StructureBuild, messagePacket);
 
             this.closeScreen();

@@ -2,15 +2,15 @@ package com.wuest.prefab.structures.config;
 
 import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.items.StructureItem;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 
 /**
@@ -56,8 +56,8 @@ public class StructureConfiguration {
 	 *
 	 * @return An CompoundNBT with the updated properties.
 	 */
-	public CompoundTag WriteToCompoundNBT() {
-		CompoundTag tag = new CompoundTag();
+	public NbtCompound WriteToCompoundNBT() {
+		NbtCompound tag = new NbtCompound();
 
 		if (this.pos != null) {
 			tag.putInt(StructureConfiguration.hitXTag, this.pos.getX());
@@ -65,7 +65,7 @@ public class StructureConfiguration {
 			tag.putInt(StructureConfiguration.hitZTag, this.pos.getZ());
 		}
 
-		tag.putString(StructureConfiguration.houseFacingTag, this.houseFacing.getSerializedName());
+		tag.putString(StructureConfiguration.houseFacingTag, this.houseFacing.asString());
 
 		tag = this.CustomWriteToCompoundNBT(tag);
 
@@ -78,7 +78,7 @@ public class StructureConfiguration {
 	 * @param messageTag The CompoundNBT to read the properties from.
 	 * @return The updated StructureConfiguration instance.
 	 */
-	public StructureConfiguration ReadFromCompoundNBT(CompoundTag messageTag) {
+	public StructureConfiguration ReadFromCompoundNBT(NbtCompound messageTag) {
 		return null;
 	}
 
@@ -89,7 +89,7 @@ public class StructureConfiguration {
 	 * @param config     The existing StructureConfiguration instance to fill the properties in for.
 	 * @return The updated StructureConfiguration instance.
 	 */
-	public StructureConfiguration ReadFromCompoundNBT(CompoundTag messageTag, StructureConfiguration config) {
+	public StructureConfiguration ReadFromCompoundNBT(NbtCompound messageTag, StructureConfiguration config) {
 		if (messageTag != null) {
 			if (messageTag.contains(StructureConfiguration.hitXTag)) {
 				config.pos = new BlockPos(
@@ -114,7 +114,7 @@ public class StructureConfiguration {
 	 * @param player The player which requested the build.
 	 * @param world  The world instance where the build will occur.
 	 */
-	public void BuildStructure(Player player, ServerLevel world) {
+	public void BuildStructure(PlayerEntity player, ServerWorld world) {
 		// This is always on the server.
 		BlockPos hitBlockPos = this.pos;
 
@@ -128,7 +128,7 @@ public class StructureConfiguration {
 	 * @param world       The world instance where the build will occur.
 	 * @param hitBlockPos This hit block position.
 	 */
-	protected void ConfigurationSpecificBuildStructure(Player player, ServerLevel world, BlockPos hitBlockPos) {
+	protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class StructureConfiguration {
 	 * @param tag The CompoundNBT to write the custom properties too.
 	 * @return The updated tag.
 	 */
-	protected CompoundTag CustomWriteToCompoundNBT(CompoundTag tag) {
+	protected NbtCompound CustomWriteToCompoundNBT(NbtCompound tag) {
 		return tag;
 	}
 
@@ -147,7 +147,7 @@ public class StructureConfiguration {
 	 * @param messageTag The message to create the configuration from.
 	 * @param config     The configuration to read the settings into.
 	 */
-	protected void CustomReadFromNBTTag(CompoundTag messageTag, StructureConfiguration config) {
+	protected void CustomReadFromNBTTag(NbtCompound messageTag, StructureConfiguration config) {
 	}
 
 	/**
@@ -157,55 +157,49 @@ public class StructureConfiguration {
 	 * @param player The player to remove the item from.
 	 * @param item   the structure item to find.
 	 */
-	protected void RemoveStructureItemFromPlayer(Player player, StructureItem item) {
-		ItemStack stack = player.getMainHandItem();
+	protected void RemoveStructureItemFromPlayer(PlayerEntity player, StructureItem item) {
+		ItemStack stack = player.getMainHandStack();
 
 		if (stack.getItem() != item) {
-			stack = player.getOffhandItem();
-
-			stack.shrink(1);
-
-			if (stack.isEmpty()) {
-				player.getInventory().offhand.set(0, ItemStack.EMPTY);
-			}
-		} else {
-			int slot = this.getSlotFor(player.getInventory(), stack);
-
-			if (slot != -1) {
-				stack.shrink(1);
-
-				if (stack.isEmpty()) {
-					player.getInventory().setItem(slot, ItemStack.EMPTY);
-				}
-			}
+			stack = player.getOffHandStack();
 		}
 
-		player.containerMenu.broadcastChanges();
+		int slot = this.getSlotFor(player.getInventory(), stack);
+
+		if (slot != -1) {
+			stack.decrement(1);
+
+			if (stack.isEmpty()) {
+				player.getInventory().setStack(slot, ItemStack.EMPTY);
+			}
+
+			player.currentScreenHandler.sendContentUpdates();
+		}
 	}
 
-	protected void DamageHeldItem(Player player, Item item) {
-		ItemStack stack = player.getMainHandItem().getItem() == item ? player.getMainHandItem() : player.getOffhandItem();
-		EquipmentSlot hand = player.getMainHandItem().getItem() == item ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+	protected void DamageHeldItem(PlayerEntity player, Item item) {
+		ItemStack stack = player.getMainHandStack().getItem() == item ? player.getMainHandStack() : player.getOffHandStack();
+		EquipmentSlot hand = player.getMainHandStack().getItem() == item ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
 
 		ItemStack copy = stack.copy();
 
-		stack.hurtAndBreak(1, player, (player1) ->
+		stack.damage(1, player, (player1) ->
 		{
-			player1.broadcastBreakEvent(hand);
+			player1.sendEquipmentBreakStatus(hand);
 		});
 
 		if (stack.isEmpty()) {
-			player.setItemSlot(hand, ItemStack.EMPTY);
+			player.equipStack(hand, ItemStack.EMPTY);
 		}
 
-		player.containerMenu.broadcastChanges();
+		player.currentScreenHandler.sendContentUpdates();
 	}
 
 	/**
 	 * Checks item, NBT, and meta if the item is not damageable
 	 */
 	private boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
-		return stack1.getItem() == stack2.getItem() && ItemStack.tagMatches(stack1, stack2);
+		return stack1.getItem() == stack2.getItem() && ItemStack.areNbtEqual(stack1, stack2);
 	}
 
 	/**
@@ -216,9 +210,9 @@ public class StructureConfiguration {
 	 * @param stack           The stack to find an associated slot.
 	 * @return The slot index or -1 if the item wasn't found.
 	 */
-	public int getSlotFor(Inventory playerInventory, ItemStack stack) {
-		for (int i = 0; i < playerInventory.items.size(); ++i) {
-			if (!playerInventory.items.get(i).isEmpty() && this.stackEqualExact(stack, playerInventory.items.get(i))) {
+	public int getSlotFor(PlayerInventory playerInventory, ItemStack stack) {
+		for (int i = 0; i < playerInventory.main.size(); ++i) {
+			if (!playerInventory.main.get(i).isEmpty() && this.stackEqualExact(stack, playerInventory.main.get(i))) {
 				return i;
 			}
 		}

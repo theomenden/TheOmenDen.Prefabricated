@@ -8,7 +8,8 @@ import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.network.FriendlyByteBuf;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.network.PacketByteBuf;
 
 public class ClientEvents {
     /**
@@ -24,9 +25,9 @@ public class ClientEvents {
 
     public static void registerClientEndTick() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (ClientModRegistry.keyBinding.isDown()) {
+            if (ClientModRegistry.keyBinding.isPressed()) {
                 if (StructureRenderHandler.currentStructure != null) {
-                    FriendlyByteBuf messagePacket = Utils.createStructureMessageBuffer(
+                    PacketByteBuf messagePacket = Utils.createStructureMessageBuffer(
                             StructureRenderHandler.currentConfiguration.WriteToCompoundNBT(),
                             StructureTagMessage.EnumStructureConfiguration.getByConfigurationInstance(StructureRenderHandler.currentConfiguration));
 

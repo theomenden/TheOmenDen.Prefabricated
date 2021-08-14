@@ -1,8 +1,8 @@
 package com.wuest.prefab.structures.base;
 
 import com.wuest.prefab.gui.GuiLangKeys;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 
 /**
  * This enum is used to list the names of the structure materials.
@@ -11,20 +11,20 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 @SuppressWarnings("SpellCheckingInspection")
 public enum EnumStairsMaterial {
-	Brick("prefab.gui.material.brick", Blocks.BRICK_STAIRS.defaultBlockState()),
-	Cobblestone("prefab.gui.material.cobble_stone", Blocks.COBBLESTONE_STAIRS.defaultBlockState()),
-	StoneBrick("prefab.gui.material.stone_brick", Blocks.STONE_BRICK_STAIRS.defaultBlockState()),
-	Granite("prefab.gui.material.granite", Blocks.POLISHED_GRANITE_STAIRS.defaultBlockState()),
-	Andesite("prefab.gui.material.andesite", Blocks.POLISHED_ANDESITE_STAIRS.defaultBlockState()),
-	Diorite("prefab.gui.material.diorite", Blocks.POLISHED_DIORITE_STAIRS.defaultBlockState()),
-	Oak("prefab.wall.block.type.oak", Blocks.OAK_STAIRS.defaultBlockState()),
-	Spruce("prefab.wall.block.type.spruce", Blocks.SPRUCE_STAIRS.defaultBlockState()),
-	Birch("prefab.wall.block.type.birch", Blocks.BIRCH_STAIRS.defaultBlockState()),
-	Jungle("prefab.wall.block.type.jungle", Blocks.JUNGLE_STAIRS.defaultBlockState()),
-	Acacia("prefab.wall.block.type.acacia", Blocks.ACACIA_STAIRS.defaultBlockState()),
-	DarkOak("prefab.wall.block.type.darkoak", Blocks.DARK_OAK_STAIRS.defaultBlockState()),
-	SandStone("prefab.ceiling.block.type.sand", Blocks.SANDSTONE_STAIRS.defaultBlockState()),
-	RedSandStone("prefab.gui.material.red_sandstone", Blocks.RED_SANDSTONE_STAIRS.defaultBlockState());
+	Brick("prefab.gui.material.brick", Blocks.BRICK_STAIRS.getDefaultState()),
+	Cobblestone("prefab.gui.material.cobble_stone", Blocks.COBBLESTONE_STAIRS.getDefaultState()),
+	StoneBrick("prefab.gui.material.stone_brick", Blocks.STONE_BRICK_STAIRS.getDefaultState()),
+	Granite("prefab.gui.material.granite", Blocks.POLISHED_GRANITE_STAIRS.getDefaultState()),
+	Andesite("prefab.gui.material.andesite", Blocks.POLISHED_ANDESITE_STAIRS.getDefaultState()),
+	Diorite("prefab.gui.material.diorite", Blocks.POLISHED_DIORITE_STAIRS.getDefaultState()),
+	Oak("prefab.wall.block.type.oak", Blocks.OAK_STAIRS.getDefaultState()),
+	Spruce("prefab.wall.block.type.spruce", Blocks.SPRUCE_STAIRS.getDefaultState()),
+	Birch("prefab.wall.block.type.birch", Blocks.BIRCH_STAIRS.getDefaultState()),
+	Jungle("prefab.wall.block.type.jungle", Blocks.JUNGLE_STAIRS.getDefaultState()),
+	Acacia("prefab.wall.block.type.acacia", Blocks.ACACIA_STAIRS.getDefaultState()),
+	DarkOak("prefab.wall.block.type.darkoak", Blocks.DARK_OAK_STAIRS.getDefaultState()),
+	SandStone("prefab.ceiling.block.type.sand", Blocks.SANDSTONE_STAIRS.getDefaultState()),
+	RedSandStone("prefab.gui.material.red_sandstone", Blocks.RED_SANDSTONE_STAIRS.getDefaultState());
 
 	public final BlockState stairsState;
 	private String name;
@@ -51,63 +51,63 @@ public enum EnumStairsMaterial {
 	public BlockState getFullBlock() {
 		switch (this) {
 			case Acacia: {
-				return Blocks.ACACIA_SLAB.defaultBlockState();
+				return Blocks.ACACIA_SLAB.getDefaultState();
 			}
 
 			case Andesite: {
-				return Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState();
+				return Blocks.POLISHED_ANDESITE_SLAB.getDefaultState();
 			}
 
 			case Birch: {
-				return Blocks.BIRCH_SLAB.defaultBlockState();
+				return Blocks.BIRCH_SLAB.getDefaultState();
 			}
 
 			case Cobblestone: {
-				return Blocks.COBBLESTONE_SLAB.defaultBlockState();
+				return Blocks.COBBLESTONE_SLAB.getDefaultState();
 			}
 
 			case DarkOak: {
-				return Blocks.DARK_OAK_SLAB.defaultBlockState();
+				return Blocks.DARK_OAK_SLAB.getDefaultState();
 			}
 
 			case Diorite: {
-				return Blocks.POLISHED_DIORITE_SLAB.defaultBlockState();
+				return Blocks.POLISHED_DIORITE_SLAB.getDefaultState();
 			}
 
 			case Granite: {
-				return Blocks.POLISHED_GRANITE_SLAB.defaultBlockState();
+				return Blocks.POLISHED_GRANITE_SLAB.getDefaultState();
 			}
 
 			case Jungle: {
-				return Blocks.JUNGLE_SLAB.defaultBlockState();
+				return Blocks.JUNGLE_SLAB.getDefaultState();
 			}
 
 			case Oak: {
-				return Blocks.OAK_SLAB.defaultBlockState();
+				return Blocks.OAK_SLAB.getDefaultState();
 			}
 
 			case Spruce: {
-				return Blocks.SPRUCE_SLAB.defaultBlockState();
+				return Blocks.SPRUCE_SLAB.getDefaultState();
 			}
 
 			case StoneBrick: {
-				return Blocks.STONE_BRICK_SLAB.defaultBlockState();
+				return Blocks.STONE_BRICK_SLAB.getDefaultState();
 			}
 
 			case Brick: {
-				return Blocks.BRICK_SLAB.defaultBlockState();
+				return Blocks.BRICK_SLAB.getDefaultState();
 			}
 
 			case SandStone: {
-				return Blocks.SANDSTONE_SLAB.defaultBlockState();
+				return Blocks.SANDSTONE_SLAB.getDefaultState();
 			}
 
 			case RedSandStone: {
-				return Blocks.RED_SANDSTONE_SLAB.defaultBlockState();
+				return Blocks.RED_SANDSTONE_SLAB.getDefaultState();
 			}
 
 			default: {
-				return Blocks.STONE_SLAB.defaultBlockState();
+				return Blocks.STONE_SLAB.getDefaultState();
 			}
 		}
 	}

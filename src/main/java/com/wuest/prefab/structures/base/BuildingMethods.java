@@ -6,22 +6,23 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
 import com.wuest.prefab.Tuple;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.block.entity.FurnaceBlockEntity;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
+import net.minecraft.block.enums.BedPart;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
@@ -42,9 +43,9 @@ public class BuildingMethods {
 	 * @param itemsToNotAdd  The items to not add to the list.
 	 * @return An updated list of item stacks.
 	 */
-	public static ArrayList<ItemStack> ConsolidateDrops(ServerLevel world, BlockPos pos, BlockState state, ArrayList<ItemStack> originalStacks,
+	public static ArrayList<ItemStack> ConsolidateDrops(ServerWorld world, BlockPos pos, BlockState state, ArrayList<ItemStack> originalStacks,
 														ArrayList<Item> itemsToNotAdd) {
-		for (ItemStack stack : Block.getDrops(state, world, pos, null)) {
+		for (ItemStack stack : Block.getDroppedStacks(state, world, pos, null)) {
 			if (itemsToNotAdd != null) {
 				if (itemsToNotAdd.contains(stack.getItem())) {
 					continue;
@@ -56,10 +57,10 @@ public class BuildingMethods {
 			boolean foundStack = false;
 
 			for (ItemStack existingStack : originalStacks) {
-				if (ItemStack.isSame(existingStack, stack)) {
+				if (ItemStack.areItemsEqual(existingStack, stack)) {
 					// Make sure that this combined stack is at or smaller than
 					// the max.
-					if (existingStack.getCount() + stack.getCount() <= stack.getMaxStackSize()) {
+					if (existingStack.getCount() + stack.getCount() <= stack.getMaxCount()) {
 						existingStack.setCount(existingStack.getCount() + stack.getCount());
 						foundStack = true;
 						break;
@@ -87,7 +88,7 @@ public class BuildingMethods {
 	 * @param itemsToNotAdd    When consolidating drops, the items to not include in the returned list.
 	 * @return An Arraylist of Itemstacks which contains the drops from any destroyed blocks.
 	 */
-	public static ArrayList<ItemStack> CreateWall(ServerLevel world, int height, int length, Direction direction, BlockPos startingPosition, Block replacementBlock,
+	public static ArrayList<ItemStack> CreateWall(ServerWorld world, int height, int length, Direction direction, BlockPos startingPosition, Block replacementBlock,
 												  ArrayList<Item> itemsToNotAdd) {
 		ArrayList<ItemStack> itemsDropped = new ArrayList<>();
 
@@ -97,12 +98,12 @@ public class BuildingMethods {
 		for (int i = 0; i < height; i++) {
 			// Reset wall building position to the starting position up by the
 			// height counter.
-			wallPos = startingPosition.above(i);
+			wallPos = startingPosition.up(i);
 
 			for (int j = 0; j < length; j++) {
 				BlockState currentBlockPosState = world.getBlockState(wallPos);
 
-				for (ItemStack stack : Block.getDrops(currentBlockPosState, world, wallPos, null)) {
+				for (ItemStack stack : Block.getDroppedStacks(currentBlockPosState, world, wallPos, null)) {
 					if (itemsToNotAdd != null && itemsToNotAdd.contains(stack.getItem())) {
 						continue;
 					}
@@ -113,7 +114,7 @@ public class BuildingMethods {
 				// j is the north/south counter.
 				BuildingMethods.ReplaceBlock(world, wallPos, replacementBlock);
 
-				wallPos = wallPos.relative(direction);
+				wallPos = wallPos.offset(direction);
 			}
 		}
 
@@ -133,12 +134,12 @@ public class BuildingMethods {
 	 * @param itemsToNotAdd The items to not include in the returned consolidated items.
 	 * @return An ArrayList of Itemstacks which contains the drops from all harvested blocks.
 	 */
-	public static ArrayList<ItemStack> SetFloor(ServerLevel world, BlockPos pos, Block block, int width, int depth, ArrayList<ItemStack> originalStack, Direction facing,
+	public static ArrayList<ItemStack> SetFloor(ServerWorld world, BlockPos pos, Block block, int width, int depth, ArrayList<ItemStack> originalStack, Direction facing,
 												ArrayList<Item> itemsToNotAdd) {
 		for (int i = 0; i < width; i++) {
 			originalStack.addAll(BuildingMethods.CreateWall(world, 1, depth, facing, pos, block, itemsToNotAdd));
 
-			pos = pos.relative(facing.getClockWise());
+			pos = pos.offset(facing.rotateYClockwise());
 		}
 
 		return originalStack;
@@ -152,8 +153,8 @@ public class BuildingMethods {
 	 * @param pos              The position to update.
 	 * @param replacementBlock The block object to place at this position. The default state is used.
 	 */
-	public static void ReplaceBlock(Level world, BlockPos pos, Block replacementBlock) {
-		BuildingMethods.ReplaceBlock(world, pos, replacementBlock.defaultBlockState(), 3);
+	public static void ReplaceBlock(World world, BlockPos pos, Block replacementBlock) {
+		BuildingMethods.ReplaceBlock(world, pos, replacementBlock.getDefaultState(), 3);
 	}
 
 	/**
@@ -163,8 +164,8 @@ public class BuildingMethods {
 	 * @param pos              The position to update.
 	 * @param replacementBlock The block object to place at this position. The default state is used.
 	 */
-	public static void ReplaceBlockNoAir(Level world, BlockPos pos, Block replacementBlock) {
-		BuildingMethods.ReplaceBlockNoAir(world, pos, replacementBlock.defaultBlockState(), 3);
+	public static void ReplaceBlockNoAir(World world, BlockPos pos, Block replacementBlock) {
+		BuildingMethods.ReplaceBlockNoAir(world, pos, replacementBlock.getDefaultState(), 3);
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class BuildingMethods {
 	 * @param pos                   The position to update.
 	 * @param replacementBlockState The block state to place at this position.
 	 */
-	public static void ReplaceBlock(Level world, BlockPos pos, BlockState replacementBlockState) {
+	public static void ReplaceBlock(World world, BlockPos pos, BlockState replacementBlockState) {
 		BuildingMethods.ReplaceBlock(world, pos, replacementBlockState, 3);
 	}
 
@@ -188,9 +189,9 @@ public class BuildingMethods {
 	 * @param replacementBlockState The block state to place at this position.
 	 * @param flags                 The trigger flags, this should always be set to 3 so the clients are updated.
 	 */
-	public static void ReplaceBlock(Level world, BlockPos pos, BlockState replacementBlockState, int flags) {
+	public static void ReplaceBlock(World world, BlockPos pos, BlockState replacementBlockState, int flags) {
 		world.removeBlock(pos, false);
-		world.setBlock(pos, replacementBlockState, flags);
+		world.setBlockState(pos, replacementBlockState, flags);
 	}
 
 	/**
@@ -201,8 +202,8 @@ public class BuildingMethods {
 	 * @param replacementBlockState The block state to place at this position.
 	 * @param flags                 The trigger flags, this should always be set to 3 so the clients are updated.
 	 */
-	public static void ReplaceBlockNoAir(Level world, BlockPos pos, BlockState replacementBlockState, int flags) {
-		world.setBlock(pos, replacementBlockState, flags);
+	public static void ReplaceBlockNoAir(World world, BlockPos pos, BlockState replacementBlockState, int flags) {
+		world.setBlockState(pos, replacementBlockState, flags);
 	}
 
 	/**
@@ -215,28 +216,28 @@ public class BuildingMethods {
 	 * @param player        The player running this build request.
 	 * @return True if all blocks can be replaced. Otherwise false and send a message to the player.
 	 */
-	public static Triple<Boolean, BlockState, BlockPos> CheckBuildSpaceForAllowedBlockReplacement(ServerLevel world, BlockPos startBlockPos, BlockPos endBlockPos,
-																								  Player player) {
-		if (!world.isClientSide()) {
+	public static Triple<Boolean, BlockState, BlockPos> CheckBuildSpaceForAllowedBlockReplacement(ServerWorld world, BlockPos startBlockPos, BlockPos endBlockPos,
+																								  PlayerEntity player) {
+		if (!world.isClient) {
 			// Check each block in the space to be cleared if it's protected from
 			// breaking or placing, if it is return false.
-			for (BlockPos currentPos : BlockPos.betweenClosed(startBlockPos, endBlockPos)) {
+			for (BlockPos currentPos : BlockPos.iterate(startBlockPos, endBlockPos)) {
 				BlockState blockState = world.getBlockState(currentPos);
 
 				// First check to see if this is a spawn protected block.
-				if (world.getServer().isUnderSpawnProtection(world, currentPos, player)) {
+				if (world.getServer().isSpawnProtected(world, currentPos, player)) {
 					// This block is protected by vanilla spawn protection. Don't allow building here.
 					return new Triple<>(false, blockState, currentPos);
 				}
 
-				if (!world.isEmptyBlock(currentPos)) {
+				if (!world.isAir(currentPos)) {
 					if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, currentPos, world.getBlockState(currentPos), null)) {
 						return new Triple<>(false, blockState, currentPos);
 					}
 				}
 
 				// A hardness of less than 0 is unbreakable.
-				if (blockState.getDestroySpeed(world, currentPos) < 0.0f) {
+				if (blockState.getHardness(world, currentPos) < 0.0f) {
 					// This is bedrock or some other type of unbreakable block. Don't allow this block to be broken by a
 					// structure.
 					return new Triple<>(false, blockState, currentPos);
@@ -255,91 +256,125 @@ public class BuildingMethods {
 	 * @param bedFootPos The position of the foot of the bed.
 	 * @param bedColor   The color of the bed to place.
 	 */
-	public static void PlaceColoredBed(Level world, BlockPos bedHeadPos, BlockPos bedFootPos, DyeColor bedColor) {
-		BlockState bedHead = null;
+	public static void PlaceColoredBed(World world, BlockPos bedHeadPos, BlockPos bedFootPos, DyeColor bedColor) {
 		BlockState bedFoot = null;
+		BedBlock bedBlock = null;
 
 		switch (bedColor) {
-			case BLACK -> {
-				bedHead = Blocks.BLACK_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.BLACK_BED.defaultBlockState();
+			case BLACK: {
+				bedBlock = (BedBlock) Blocks.BLACK_BED;
+				bedFoot = Blocks.BLACK_BED.getDefaultState();
+				break;
 			}
-			case BLUE -> {
-				bedHead = Blocks.BLUE_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.BLUE_BED.defaultBlockState();
+			case BLUE: {
+				bedBlock = (BedBlock) Blocks.BLUE_BED;
+				bedFoot = Blocks.BLUE_BED.getDefaultState();
+				break;
 			}
-			case BROWN -> {
-				bedHead = Blocks.BROWN_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.BROWN_BED.defaultBlockState();
+
+			case BROWN: {
+				bedBlock = (BedBlock) Blocks.BROWN_BED;
+				bedFoot = Blocks.BROWN_BED.getDefaultState();
+				break;
 			}
-			case CYAN -> {
-				bedHead = Blocks.CYAN_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.CYAN_BED.defaultBlockState();
+
+			case CYAN: {
+				bedBlock = (BedBlock) Blocks.CYAN_BED;
+				bedFoot = Blocks.CYAN_BED.getDefaultState();
+				break;
 			}
-			case GRAY -> {
-				bedHead = Blocks.GRAY_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.GRAY_BED.defaultBlockState();
+
+			case GRAY: {
+				bedBlock = (BedBlock) Blocks.GRAY_BED;
+				bedFoot = Blocks.GRAY_BED.getDefaultState();
+				break;
 			}
-			case GREEN -> {
-				bedHead = Blocks.GREEN_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.GREEN_BED.defaultBlockState();
+
+			case GREEN: {
+				bedBlock = (BedBlock) Blocks.GREEN_BED;
+				bedFoot = Blocks.GREEN_BED.getDefaultState();
+				break;
 			}
-			case LIGHT_BLUE -> {
-				bedHead = Blocks.LIGHT_BLUE_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.LIGHT_BLUE_BED.defaultBlockState();
+
+			case LIGHT_BLUE: {
+				bedBlock = (BedBlock) Blocks.LIGHT_BLUE_BED;
+				bedFoot = Blocks.LIGHT_BLUE_BED.getDefaultState();
+				break;
 			}
-			case LIGHT_GRAY -> {
-				bedHead = Blocks.LIGHT_GRAY_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.LIGHT_GRAY_BED.defaultBlockState();
+
+			case LIGHT_GRAY: {
+				bedBlock = (BedBlock) Blocks.LIGHT_GRAY_BED;
+				bedFoot = Blocks.LIGHT_GRAY_BED.getDefaultState();
+				break;
 			}
-			case LIME -> {
-				bedHead = Blocks.LIME_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.LIME_BED.defaultBlockState();
+
+			case LIME: {
+				bedBlock = (BedBlock) Blocks.LIME_BED;
+				bedFoot = Blocks.LIME_BED.getDefaultState();
+				break;
 			}
-			case MAGENTA -> {
-				bedHead = Blocks.MAGENTA_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.MAGENTA_BED.defaultBlockState();
+
+			case MAGENTA: {
+				bedBlock = (BedBlock) Blocks.MAGENTA_BED;
+				bedFoot = Blocks.MAGENTA_BED.getDefaultState();
+				break;
 			}
-			case ORANGE -> {
-				bedHead = Blocks.ORANGE_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.ORANGE_BED.defaultBlockState();
+
+			case ORANGE: {
+				bedBlock = (BedBlock) Blocks.ORANGE_BED;
+				bedFoot = Blocks.ORANGE_BED.getDefaultState();
+				break;
 			}
-			case PINK -> {
-				bedHead = Blocks.PINK_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.PINK_BED.defaultBlockState();
+
+			case PINK: {
+				bedBlock = (BedBlock) Blocks.PINK_BED;
+				bedFoot = Blocks.PINK_BED.getDefaultState();
+				break;
 			}
-			case PURPLE -> {
-				bedHead = Blocks.PURPLE_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.PURPLE_BED.defaultBlockState();
+
+			case PURPLE: {
+				bedBlock = (BedBlock) Blocks.PURPLE_BED;
+				bedFoot = Blocks.PURPLE_BED.getDefaultState();
+				break;
 			}
-			case RED -> {
-				bedHead = Blocks.RED_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.RED_BED.defaultBlockState();
+
+			case RED: {
+				bedBlock = (BedBlock) Blocks.RED_BED;
+				bedFoot = Blocks.RED_BED.getDefaultState();
+				break;
 			}
-			case WHITE -> {
-				bedHead = Blocks.WHITE_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.WHITE_BED.defaultBlockState();
+
+			case WHITE: {
+				bedBlock = (BedBlock) Blocks.WHITE_BED;
+				bedFoot = Blocks.WHITE_BED.getDefaultState();
+				break;
 			}
-			case YELLOW -> {
-				bedHead = Blocks.YELLOW_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD);
-				bedFoot = Blocks.YELLOW_BED.defaultBlockState();
+
+			case YELLOW: {
+				bedBlock = (BedBlock) Blocks.YELLOW_BED;
+				bedFoot = Blocks.YELLOW_BED.getDefaultState();
+				break;
 			}
 		}
 
 		Direction direction = Direction.NORTH;
-		BlockPos tempPos = bedHeadPos.relative(Direction.NORTH);
+		BlockPos tempPos = bedHeadPos.offset(Direction.NORTH);
 
 		while (tempPos.getX() != bedFootPos.getX() || tempPos.getZ() != bedFootPos.getZ()) {
-			direction = direction.getClockWise();
-			tempPos = bedHeadPos.relative(direction);
+			direction = direction.rotateYClockwise();
+			tempPos = bedHeadPos.offset(direction);
 		}
 
 		Direction facingDirection = direction.getOpposite();
-		bedHead = bedHead.setValue(BedBlock.FACING, facingDirection);
-		bedFoot = bedFoot.setValue(BedBlock.FACING, facingDirection);
+		bedFoot = bedFoot.with(BedBlock.FACING, facingDirection);
 
-		BuildingMethods.ReplaceBlock(world, bedHeadPos, bedHead);
+		// Remove the bed blocks before setting the new color bed bocks.
+		// This way a bed item entity doesn't get generated.
+		world.setBlockState(bedHeadPos, Blocks.AIR.getDefaultState(), 35);
+		world.setBlockState(bedFootPos, Blocks.AIR.getDefaultState(), 35);
+
 		BuildingMethods.ReplaceBlock(world, bedFootPos, bedFoot);
+		bedBlock.onPlaced(world,bedFootPos,bedFoot,null, ItemStack.EMPTY);
 	}
 
 	/**
@@ -348,80 +383,80 @@ public class BuildingMethods {
 	 * @param world        - The world where the chest resides.
 	 * @param itemPosition - The block position of the chest.
 	 */
-	public static void FillChest(Level world, BlockPos itemPosition) {
+	public static void FillChest(World world, BlockPos itemPosition) {
 		// Add each stone tool to the chest and leather armor.
 		BlockEntity tileEntity = world.getBlockEntity(itemPosition);
 
-		if (tileEntity instanceof RandomizableContainerBlockEntity) {
-			RandomizableContainerBlockEntity chestTile = (RandomizableContainerBlockEntity) tileEntity;
+		if (tileEntity instanceof LootableContainerBlockEntity) {
+			LootableContainerBlockEntity chestTile = (LootableContainerBlockEntity) tileEntity;
 
 			int itemSlot = 0;
 
 			// Add the tools.
 			if (Prefab.serverConfiguration.chestOptions.addAxe) {
-				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_AXE));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.STONE_AXE));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addHoe) {
-				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_HOE));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.STONE_HOE));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addPickAxe) {
-				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_PICKAXE));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.STONE_PICKAXE));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addShovel) {
-				chestTile.setItem(itemSlot++, new ItemStack(Items.STONE_SHOVEL));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.STONE_SHOVEL));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addSword) {
 				Item sword = ModRegistry.SwiftBladeStone;
 
-				chestTile.setItem(itemSlot++, new ItemStack(sword));
+				chestTile.setStack(itemSlot++, new ItemStack(sword));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addArmor) {
 				// Add the armor.
-				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_BOOTS));
-				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_CHESTPLATE));
-				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_HELMET));
-				chestTile.setItem(itemSlot++, new ItemStack(Items.LEATHER_LEGGINGS));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.LEATHER_BOOTS));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.LEATHER_CHESTPLATE));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.LEATHER_HELMET));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.LEATHER_LEGGINGS));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addFood) {
 				// Add some bread.
-				chestTile.setItem(itemSlot++, new ItemStack(Items.BREAD, 20));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.BREAD, 20));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addCrops) {
 				// Add potatoes.
-				chestTile.setItem(itemSlot++, new ItemStack(Items.POTATO, 3));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.POTATO, 3));
 
 				// Add carrots.
-				chestTile.setItem(itemSlot++, new ItemStack(Items.CARROT, 3));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.CARROT, 3));
 
 				// Add seeds.
-				chestTile.setItem(itemSlot++, new ItemStack(Items.WHEAT_SEEDS, 3));
+				chestTile.setStack(itemSlot++, new ItemStack(Items.WHEAT_SEEDS, 3));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addCobble) {
 				// Add Cobblestone.
-				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.COBBLESTONE), 64));
+				chestTile.setStack(itemSlot++, new ItemStack(Item.fromBlock(Blocks.COBBLESTONE), 64));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addDirt) {
 				// Add Dirt.
-				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.DIRT), 64));
+				chestTile.setStack(itemSlot++, new ItemStack(Item.fromBlock(Blocks.DIRT), 64));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addSaplings) {
 				// Add oak saplings.
-				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.OAK_SAPLING), 3));
+				chestTile.setStack(itemSlot++, new ItemStack(Item.fromBlock(Blocks.OAK_SAPLING), 3));
 			}
 
 			if (Prefab.serverConfiguration.chestOptions.addTorches) {
 				// Add a set of 20 torches.
-				chestTile.setItem(itemSlot++, new ItemStack(Item.byBlock(Blocks.TORCH), 20));
+				chestTile.setStack(itemSlot++, new ItemStack(Item.fromBlock(Blocks.TORCH), 20));
 			}
 		}
 	}
@@ -432,7 +467,7 @@ public class BuildingMethods {
 	 * @param world            The world where the furnaces reside.
 	 * @param furnacePositions A collection of furnace positions.
 	 */
-	public static void FillFurnaces(Level world, ArrayList<BlockPos> furnacePositions) {
+	public static void FillFurnaces(World world, ArrayList<BlockPos> furnacePositions) {
 		if (furnacePositions != null && furnacePositions.size() > 0) {
 			for (BlockPos furnacePos : furnacePositions) {
 				// Fill the furnace.
@@ -440,7 +475,7 @@ public class BuildingMethods {
 
 				if (tileEntity instanceof FurnaceBlockEntity) {
 					FurnaceBlockEntity furnaceTile = (FurnaceBlockEntity) tileEntity;
-					furnaceTile.setItem(1, new ItemStack(Items.COAL, 20));
+					furnaceTile.setStack(1, new ItemStack(Items.COAL, 20));
 				}
 			}
 		}
@@ -454,7 +489,7 @@ public class BuildingMethods {
 	 * @param facing         - The direction where the ladder will be placed.
 	 * @param onlyGatherOres - Determines if vanilla non-ore blocks will be gathered.
 	 */
-	public static void PlaceMineShaft(ServerLevel world, BlockPos pos, Direction facing, boolean onlyGatherOres) {
+	public static void PlaceMineShaft(ServerWorld world, BlockPos pos, Direction facing, boolean onlyGatherOres) {
 		// Keep track of all of the items to add to the chest at the end of the
 		// shaft.
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
@@ -462,18 +497,18 @@ public class BuildingMethods {
 		ArrayList<Item> blocksToNotAdd = new ArrayList<Item>();
 
 		if (onlyGatherOres) {
-			blocksToNotAdd.add(Item.byBlock(Blocks.SAND));
-			blocksToNotAdd.add(Item.byBlock(Blocks.SANDSTONE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.COBBLESTONE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.STONE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.DIRT));
-			blocksToNotAdd.add(Item.byBlock(Blocks.GRANITE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.ANDESITE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.DIORITE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.RED_SAND));
-			blocksToNotAdd.add(Item.byBlock(Blocks.RED_SANDSTONE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.MOSSY_COBBLESTONE));
-			blocksToNotAdd.add(Item.byBlock(Blocks.MOSSY_STONE_BRICKS));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.SAND));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.SANDSTONE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.COBBLESTONE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.STONE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.DIRT));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.GRANITE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.ANDESITE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.DIORITE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.RED_SAND));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.RED_SANDSTONE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.MOSSY_COBBLESTONE));
+			blocksToNotAdd.add(Item.fromBlock(Blocks.MOSSY_STONE_BRICKS));
 		}
 
 		Tuple<ArrayList<ItemStack>, ArrayList<BlockPos>> ladderShaftResults = BuildingMethods.CreateLadderShaft(world, pos, stacks, facing, blocksToNotAdd);
@@ -481,19 +516,19 @@ public class BuildingMethods {
 		ArrayList<BlockPos> torchPositions = ladderShaftResults.getSecond();
 
 		// Get to Y11;
-		pos = pos.below(pos.getY() - 10);
+		pos = pos.down(pos.getY() - 10);
 
 		ArrayList<ItemStack> tempStacks = new ArrayList<ItemStack>();
 
-		BlockPos ceilingLevel = pos.above(4);
+		BlockPos ceilingLevel = pos.up(4);
 
-		tempStacks = BuildingMethods.SetFloor(world, ceilingLevel.relative(facing, 2).relative(facing.getClockWise(), 2).relative(facing.getOpposite()), Blocks.STONE, 4, 4, tempStacks,
+		tempStacks = BuildingMethods.SetFloor(world, ceilingLevel.offset(facing, 2).offset(facing.rotateYClockwise(), 2).offset(facing.getOpposite()), Blocks.STONE, 4, 4, tempStacks,
 				facing.getOpposite(), blocksToNotAdd);
 
 		// After setting the floor, make sure to replace the ladder.
-		BuildingMethods.ReplaceBlock(world, ceilingLevel, Blocks.LADDER.defaultBlockState().setValue(LadderBlock.FACING, facing));
+		BuildingMethods.ReplaceBlock(world, ceilingLevel, Blocks.LADDER.getDefaultState().with(LadderBlock.FACING, facing));
 
-		BlockState torchState = Blocks.TORCH.defaultBlockState();
+		BlockState torchState = Blocks.TORCH.getDefaultState();
 
 		// Place the torches at this point since the entire shaft has been set.
 		for (BlockPos torchPos : torchPositions) {
@@ -505,13 +540,13 @@ public class BuildingMethods {
 
 		// The entire ladder has been created. Create a platform at this level
 		// and place a chest next to the ladder.
-		tempStacks.addAll(BuildingMethods.SetFloor(world, pos.relative(facing).relative(facing.getClockWise()), Blocks.STONE, 3, 4, tempStacks, facing.getOpposite(), blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.SetFloor(world, pos.offset(facing).offset(facing.rotateYClockwise()), Blocks.STONE, 3, 4, tempStacks, facing.getOpposite(), blocksToNotAdd));
 
 		// Remove the ladder stack since they shouldn't be getting that.
 		for (int i = 0; i < tempStacks.size(); i++) {
 			ItemStack stack = tempStacks.get(i);
 
-			if (stack.getItem() == Item.byBlock(Blocks.LADDER)) {
+			if (stack.getItem() == Item.fromBlock(Blocks.LADDER)) {
 				tempStacks.remove(i);
 				i--;
 			}
@@ -519,7 +554,7 @@ public class BuildingMethods {
 
 		// Now that the floor has been set, go up 1 block to star creating the
 		// walls.
-		pos = pos.above();
+		pos = pos.up();
 
 		// Clear a space around the ladder pillar and make walls. The walls are
 		// necessary if there is a lot of lava down here.
@@ -527,32 +562,32 @@ public class BuildingMethods {
 
 		// South wall.
 		tempStacks
-				.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.getClockWise(), pos.relative(facing.getOpposite(), 2).relative(facing.getCounterClockWise()), Blocks.AIR, blocksToNotAdd));
+				.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.rotateYClockwise(), pos.offset(facing.getOpposite(), 2).offset(facing.rotateYCounterclockwise()), Blocks.AIR, blocksToNotAdd));
 
 		tempStacks.addAll(
-				BuildingMethods.CreateWall(world, 3, 3, facing.getClockWise(), pos.relative(facing.getOpposite(), 3).relative(facing.getCounterClockWise()), Blocks.STONE, blocksToNotAdd));
+				BuildingMethods.CreateWall(world, 3, 3, facing.rotateYClockwise(), pos.offset(facing.getOpposite(), 3).offset(facing.rotateYCounterclockwise()), Blocks.STONE, blocksToNotAdd));
 
 		// East wall.
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing, pos.relative(facing.getOpposite(), 2).relative(facing.getClockWise()), Blocks.AIR, blocksToNotAdd));
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing, pos.relative(facing.getOpposite(), 2).relative(facing.getClockWise(), 2), Blocks.STONE, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing, pos.offset(facing.getOpposite(), 2).offset(facing.rotateYClockwise()), Blocks.AIR, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing, pos.offset(facing.getOpposite(), 2).offset(facing.rotateYClockwise(), 2), Blocks.STONE, blocksToNotAdd));
 
 		// North wall.
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.getCounterClockWise(), pos.relative(facing).relative(facing.getClockWise()), Blocks.AIR, blocksToNotAdd));
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.getCounterClockWise(), pos.relative(facing, 2).relative(facing.getClockWise()), Blocks.STONE, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.rotateYCounterclockwise(), pos.offset(facing).offset(facing.rotateYClockwise()), Blocks.AIR, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 3, facing.rotateYCounterclockwise(), pos.offset(facing, 2).offset(facing.rotateYClockwise()), Blocks.STONE, blocksToNotAdd));
 
 		// West wall.
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing.getOpposite(), pos.relative(facing).relative(facing.getCounterClockWise()), Blocks.AIR, blocksToNotAdd));
-		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing.getOpposite(), pos.relative(facing, 1).relative(facing.getCounterClockWise(), 2), Blocks.STONE, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing.getOpposite(), pos.offset(facing).offset(facing.rotateYCounterclockwise()), Blocks.AIR, blocksToNotAdd));
+		tempStacks.addAll(BuildingMethods.CreateWall(world, 3, 4, facing.getOpposite(), pos.offset(facing, 1).offset(facing.rotateYCounterclockwise(), 2), Blocks.STONE, blocksToNotAdd));
 
 		// Consolidate the stacks.
 		for (ItemStack tempStack : tempStacks) {
 			boolean foundStack = false;
 
 			for (ItemStack existingStack : stacks) {
-				if (ItemStack.isSame(existingStack, tempStack)) {
+				if (ItemStack.areItemsEqual(existingStack, tempStack)) {
 					// Make sure that this combined stack is at or smaller than
 					// the max.
-					if (existingStack.getCount() + tempStack.getCount() <= tempStack.getMaxStackSize()) {
+					if (existingStack.getCount() + tempStack.getCount() <= tempStack.getMaxCount()) {
 						existingStack.setCount(existingStack.getCount() + tempStack.getCount());
 						foundStack = true;
 						break;
@@ -566,21 +601,21 @@ public class BuildingMethods {
 		}
 
 		// Place a torch to the left of the ladder.
-		BlockState blockState = Blocks.TORCH.defaultBlockState();
-		BuildingMethods.ReplaceBlock(world, pos.relative(facing.getCounterClockWise()), blockState);
+		BlockState blockState = Blocks.TORCH.getDefaultState();
+		BuildingMethods.ReplaceBlock(world, pos.offset(facing.rotateYCounterclockwise()), blockState);
 
 		if (Prefab.serverConfiguration.includeMineshaftChest) {
 			// Place a chest to the right of the ladder.
-			BlockState chestState = Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, facing);
-			BuildingMethods.ReplaceBlock(world, pos.relative(facing.getClockWise()), chestState);
+			BlockState chestState = Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, facing);
+			BuildingMethods.ReplaceBlock(world, pos.offset(facing.rotateYClockwise()), chestState);
 
 			if (stacks.size() > 27) {
 				// Add another chest to south of the existing chest.
-				BuildingMethods.ReplaceBlock(world, pos.relative(facing.getClockWise()).relative(facing.getOpposite()), chestState);
+				BuildingMethods.ReplaceBlock(world, pos.offset(facing.rotateYClockwise()).offset(facing.getOpposite()), chestState);
 			}
 
-			BlockEntity tileEntity = world.getBlockEntity(pos.relative(facing.getClockWise()));
-			BlockEntity tileEntity2 = world.getBlockEntity(pos.relative(facing.getClockWise()).relative(facing.getOpposite()));
+			BlockEntity tileEntity = world.getBlockEntity(pos.offset(facing.rotateYClockwise()));
+			BlockEntity tileEntity2 = world.getBlockEntity(pos.offset(facing.rotateYClockwise()).offset(facing.getOpposite()));
 
 			if (tileEntity instanceof ChestBlockEntity) {
 				ChestBlockEntity chestTile = (ChestBlockEntity) tileEntity;
@@ -602,7 +637,7 @@ public class BuildingMethods {
 						// Too many items, discard the rest.
 						break;
 					} else {
-						chestTile.setItem(i, stack);
+						chestTile.setStack(i, stack);
 					}
 
 					i++;
@@ -611,15 +646,15 @@ public class BuildingMethods {
 		}
 	}
 
-	private static Tuple<ArrayList<ItemStack>, ArrayList<BlockPos>> CreateLadderShaft(ServerLevel world, BlockPos pos, ArrayList<ItemStack> originalStacks, Direction houseFacing,
+	private static Tuple<ArrayList<ItemStack>, ArrayList<BlockPos>> CreateLadderShaft(ServerWorld world, BlockPos pos, ArrayList<ItemStack> originalStacks, Direction houseFacing,
 																					  ArrayList<Item> blocksToNotAdd) {
 		int torchCounter = 0;
 
 		// Keep the "west" facing.
-		Direction westWall = houseFacing.getCounterClockWise();
+		Direction westWall = houseFacing.rotateYCounterclockwise();
 
 		// Get the ladder state based on the house facing.
-		BlockState ladderState = Blocks.LADDER.defaultBlockState().setValue(LadderBlock.FACING, houseFacing);
+		BlockState ladderState = Blocks.LADDER.getDefaultState().with(LadderBlock.FACING, houseFacing);
 
 		// Replace the main floor block with air since we don't want it placed in the chest at the end.
 		BuildingMethods.ReplaceBlock(world, pos, Blocks.AIR);
@@ -637,7 +672,7 @@ public class BuildingMethods {
 
 				switch (i) {
 					case 1: {
-						facing = houseFacing.getClockWise();
+						facing = houseFacing.rotateYClockwise();
 						break;
 					}
 					case 2: {
@@ -645,7 +680,7 @@ public class BuildingMethods {
 						break;
 					}
 					case 3: {
-						facing = houseFacing.getCounterClockWise();
+						facing = houseFacing.rotateYCounterclockwise();
 						break;
 					}
 					default: {
@@ -664,15 +699,15 @@ public class BuildingMethods {
 						Block surroundingBlock = null;
 
 						if (j == 0) {
-							tempPos = pos.relative(facing, 2);
+							tempPos = pos.offset(facing, 2);
 							surroundingState = world.getBlockState(tempPos);
 							surroundingBlock = surroundingState.getBlock();
 						} else if (j == 1) {
-							tempPos = pos.relative(facing).relative(facing.getClockWise());
+							tempPos = pos.offset(facing).offset(facing.rotateYClockwise());
 							surroundingState = world.getBlockState(tempPos);
 							surroundingBlock = surroundingState.getBlock();
 						} else {
-							tempPos = pos.relative(facing).relative(facing.getCounterClockWise());
+							tempPos = pos.offset(facing).offset(facing.rotateYCounterclockwise());
 							surroundingState = world.getBlockState(tempPos);
 							surroundingBlock = surroundingState.getBlock();
 						}
@@ -686,15 +721,15 @@ public class BuildingMethods {
 						}
 					}
 
-					torchPositions.add(pos.relative(facing));
+					torchPositions.add(pos.offset(facing));
 					torchCounter = 0;
 				} else {
-					BlockPos tempPos = pos.relative(facing);
+					BlockPos tempPos = pos.offset(facing);
 					BlockState surroundingState = world.getBlockState(tempPos);
 					Block surroundingBlock = surroundingState.getBlock();
 
-					if (!surroundingState.isRedstoneConductor(world, tempPos)
-							|| surroundingBlock instanceof LiquidBlock) {
+					if (!surroundingState.isOpaqueFullCube(world, tempPos)
+							|| surroundingBlock instanceof FluidBlock) {
 						// This is not a solid block. Get the drops then replace
 						// it with stone.
 						originalStacks = BuildingMethods.ConsolidateDrops(world, tempPos, surroundingState, originalStacks, blocksToNotAdd);
@@ -712,7 +747,7 @@ public class BuildingMethods {
 				BuildingMethods.ReplaceBlock(world, pos, ladderState);
 			}
 
-			pos = pos.below();
+			pos = pos.down();
 		}
 
 		return new Tuple<>(originalStacks, torchPositions);

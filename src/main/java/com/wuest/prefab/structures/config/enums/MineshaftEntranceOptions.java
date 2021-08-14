@@ -1,6 +1,6 @@
 package com.wuest.prefab.structures.config.enums;
 
-import net.minecraft.core.Direction;
+import net.minecraft.util.math.Direction;
 
 public class MineshaftEntranceOptions extends BaseOption {
     public static MineshaftEntranceOptions Default = new MineshaftEntranceOptions(
