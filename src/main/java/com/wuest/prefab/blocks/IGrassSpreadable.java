@@ -1,10 +1,10 @@
 package com.wuest.prefab.blocks;
 
 import com.wuest.prefab.ModRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
 
@@ -17,13 +17,13 @@ public interface IGrassSpreadable {
      * @param pos The position of the block.
      * @param random The random value used for checking.
      */
-    default void DetermineGrassSpread(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-        if (!worldIn.isClientSide) {
-            if (worldIn.getBrightness(pos.above()) >= 9) {
+    default void DetermineGrassSpread(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+        if (!worldIn.isClient) {
+            if (worldIn.getLightLevel(pos.up()) >= 9) {
                 for (int i = 0; i < 4; ++i) {
-                    BlockPos blockpos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+                    BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
 
-                    if (blockpos.getY() >= 0 && blockpos.getY() < 256 && !worldIn.isLoaded(blockpos)) {
+                    if (blockpos.getY() >= 0 && blockpos.getY() < 256 && !worldIn.isChunkLoaded(blockpos)) {
                         return;
                     }
 
@@ -33,11 +33,11 @@ public interface IGrassSpreadable {
                             || iblockstate1.getBlock() == ModRegistry.GrassStairs
                             || iblockstate1.getBlock() == ModRegistry.GrassWall
                             || iblockstate1.getBlock() == ModRegistry.GrassSlab)
-                            && worldIn.getBrightness(blockpos.above()) >= 4) {
+                            && worldIn.getLightLevel(blockpos.up()) >= 4) {
 
                         BlockState grassState = this.getGrassBlockState(state);
 
-                        worldIn.setBlock(pos, grassState, 3);
+                        worldIn.setBlockState(pos, grassState, 3);
                     }
                 }
             }

@@ -6,27 +6,25 @@ import com.wuest.prefab.events.ServerEvents;
 import com.wuest.prefab.gui.GuiLangKeys;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.block.*;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -36,25 +34,25 @@ public class BlockBoundary extends Block {
 	/**
 	 * The powered meta data property.
 	 */
-	public static final BooleanProperty Powered = BooleanProperty.create("powered");
+	public static final BooleanProperty Powered = BooleanProperty.of("powered");
 
-	public final CreativeModeTab itemGroup;
+	public final ItemGroup itemGroup;
 
 	/**
 	 * Initializes a new instance of the BlockBoundary class.
 	 */
 	public BlockBoundary() {
-		super(BlockBehaviour.Properties.of(Prefab.SeeThroughImmovable)
-				.sound(SoundType.STONE)
+		super(AbstractBlock.Settings.of(Prefab.SeeThroughImmovable)
+				.sounds(BlockSoundGroup.STONE)
 				.strength(0.6F)
-				.noOcclusion());
+				.nonOpaque());
 
-		this.itemGroup = CreativeModeTab.TAB_BUILDING_BLOCKS;
-		this.registerDefaultState(this.stateDefinition.any().setValue(Powered, false));
+		this.itemGroup = ItemGroup.BUILDING_BLOCKS;
+		this.setDefaultState(this.stateManager.getDefaultState().with(Powered, false));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(BlockBoundary.Powered);
 	}
 
@@ -63,25 +61,39 @@ public class BlockBoundary extends Block {
 	 * LIQUID for vanilla liquids, INVISIBLE to skip all rendering
 	 */
 	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		boolean powered = state.getValue(Powered);
-		return powered ? RenderShape.MODEL : RenderShape.INVISIBLE;
+	public BlockRenderType getRenderType(BlockState state) {
+		boolean powered = state.get(Powered);
+		return powered ? BlockRenderType.MODEL : BlockRenderType.INVISIBLE;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		boolean powered = state.getValue(Powered);
+	public VoxelShape getOutlineShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+		boolean powered = state.get(Powered);
 
-		return powered ? Shapes.block() : Shapes.empty();
+		return powered ? VoxelShapes.fullCube() : VoxelShapes.empty();
 	}
 
+	/**
+	 * Called when a player removes a block. This is responsible for actually destroying the block, and the block is
+	 * intact at time of call. This is called regardless of whether the player can harvest the block or not.
+	 * <p>
+	 * Return true if the block is actually destroyed.
+	 * <p>
+	 * Note: When used in multi-player, this is called on both client and server sides!
+	 *
+	 * @param state  The current state.
+	 * @param world  The current world
+	 * @param player The player damaging the block, may be null
+	 * @param pos    Block position in world
+	 * @return True if the block is actually destroyed.
+	 */
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
-		super.playerWillDestroy(world, pos, state, player);
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.onBreak(world, pos, state, player);
 
 		ServerEvents.RedstoneAffectedBlockPositions.remove(pos);
 
-		boolean poweredSide = world.hasNeighborSignal(pos);
+		boolean poweredSide = world.isReceivingRedstonePower(pos);
 
 		if (poweredSide) {
 			this.setNeighborGlassBlocksPoweredStatus(world, pos, false, 0, new ArrayList<>(), false);
@@ -91,22 +103,22 @@ public class BlockBoundary extends Block {
 	/**
 	 * Gets the {@link BlockState} to place
 	 *
-	 * @param context The {@link BlockPlaceContext}.
+	 * @param context The {@link ItemPlacementContext}.
 	 * @return The state to be placed in the world
 	 */
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
+	public BlockState getPlacementState(ItemPlacementContext context) {
 		/*
 		 * Called by ItemBlocks just before a block is actually set in the world, to allow for adjustments to the
 		 * BlockState
 		 */
-		boolean poweredSide = context.getLevel().hasNeighborSignal(context.getClickedPos());
+		boolean poweredSide = context.getWorld().isReceivingRedstonePower(context.getBlockPos());
 
 		if (poweredSide) {
-			this.setNeighborGlassBlocksPoweredStatus(context.getLevel(), context.getClickedPos(), true, 0, new ArrayList<>(), false);
+			this.setNeighborGlassBlocksPoweredStatus(context.getWorld(), context.getBlockPos(), true, 0, new ArrayList<>(), false);
 		}
 
-		return this.defaultBlockState().setValue(Powered, poweredSide);
+		return this.getDefaultState().with(Powered, poweredSide);
 	}
 
 	/**
@@ -115,11 +127,11 @@ public class BlockBoundary extends Block {
 	 * block, etc.
 	 */
 	@Override
-	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos p_189540_5_, boolean p_220069_6_) {
-		if (!worldIn.isClientSide) {
+	public void neighborUpdate(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos p_189540_5_, boolean p_220069_6_) {
+		if (!worldIn.isClient) {
 			// Only worry about powering blocks.
-			if (blockIn.defaultBlockState().isSignalSource()) {
-				boolean poweredSide = worldIn.hasNeighborSignal(pos);
+			if (blockIn.getDefaultState().emitsRedstonePower()) {
+				boolean poweredSide = worldIn.isReceivingRedstonePower(pos);
 
 				this.setNeighborGlassBlocksPoweredStatus(worldIn, pos, poweredSide, 0, new ArrayList<>(), true);
 			}
@@ -131,8 +143,8 @@ public class BlockBoundary extends Block {
 	 */
 	@Environment(EnvType.CLIENT)
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag options) {
-		super.appendHoverText(stack, world, tooltip, options);
+	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
+		super.appendTooltip(stack, world, tooltip, options);
 		boolean advancedKeyDown = Screen.hasShiftDown();
 
 		if (!advancedKeyDown) {
@@ -143,21 +155,21 @@ public class BlockBoundary extends Block {
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		boolean powered = state.getValue(Powered);
+	public int getOpacity(BlockState state, BlockView worldIn, BlockPos pos) {
+		boolean powered = state.get(Powered);
 
-		if (powered && state.isSolidRender(worldIn, pos)) {
+		if (powered && state.isOpaqueFullCube(worldIn, pos)) {
 			return worldIn.getMaxLightLevel();
 		} else {
-			return state.propagatesSkylightDown(worldIn, pos) ? 0 : 1;
+			return state.isTranslucent(worldIn, pos) ? 0 : 1;
 		}
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-		boolean powered = state.getValue(Powered);
+	public boolean isTranslucent(BlockState state, BlockView reader, BlockPos pos) {
+		boolean powered = state.get(Powered);
 
-		return !powered || (!Block.isShapeFullBlock(state.getShape(reader, pos)) && state.getFluidState().isEmpty());
+		return !powered || (!isShapeFullCube(state.getOutlineShape(reader, pos)) && state.getFluidState().isEmpty());
 	}
 
 	/**
@@ -170,24 +182,24 @@ public class BlockBoundary extends Block {
 	 * @return Returns a shape.
 	 */
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		return Shapes.block();
+	public VoxelShape getCollisionShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
+		return VoxelShapes.fullCube();
 	}
 
 	@Deprecated
 	@Override
-	public VoxelShape getInteractionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		if (!state.getValue(Powered)) {
-			return Shapes.empty();
+	public VoxelShape getRaycastShape(BlockState state, BlockView worldIn, BlockPos pos) {
+		if (!state.get(Powered)) {
+			return VoxelShapes.empty();
 		} else {
-			return Shapes.block();
+			return VoxelShapes.fullCube();
 		}
 	}
 
 	@Environment(EnvType.CLIENT)
 	@Override
-	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-		return !state.getValue(Powered);
+	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return !state.get(Powered);
 	}
 
 	/**
@@ -200,7 +212,7 @@ public class BlockBoundary extends Block {
 	 * @param cascadedBlockPos All of the block positions which have been cascaded too.
 	 * @param setCurrentBlock  Determines if the current block should be set.
 	 */
-	protected void setNeighborGlassBlocksPoweredStatus(Level world, BlockPos pos, boolean isPowered, int cascadeCount, ArrayList<BlockPos> cascadedBlockPos,
+	protected void setNeighborGlassBlocksPoweredStatus(World world, BlockPos pos, boolean isPowered, int cascadeCount, ArrayList<BlockPos> cascadedBlockPos,
 													   boolean setCurrentBlock) {
 		cascadeCount++;
 
@@ -210,23 +222,23 @@ public class BlockBoundary extends Block {
 
 		if (setCurrentBlock) {
 			BlockState state = world.getBlockState(pos);
-			world.setBlock(pos, state.setValue(Powered, isPowered), 3);
+			world.setBlockState(pos, state.with(Powered, isPowered));
 		}
 
 		cascadedBlockPos.add(pos);
 
 		for (Direction facing : Direction.values()) {
-			Block neighborBlock = world.getBlockState(pos.relative(facing)).getBlock();
+			Block neighborBlock = world.getBlockState(pos.offset(facing)).getBlock();
 
 			if (neighborBlock instanceof BlockBoundary) {
 				// If the block is already in the correct state, there is no need to cascade to it's neighbors.
-				if (cascadedBlockPos.contains(pos.relative(facing))) {
+				if (cascadedBlockPos.contains(pos.offset(facing))) {
 					continue;
 				}
 
 				// running this method for the neighbor block will cascade out to it's other neighbors until there are
 				// no more Phasic blocks around.
-				((BlockBoundary) neighborBlock).setNeighborGlassBlocksPoweredStatus(world, pos.relative(facing), isPowered, cascadeCount, cascadedBlockPos, true);
+				((BlockBoundary) neighborBlock).setNeighborGlassBlocksPoweredStatus(world, pos.offset(facing), isPowered, cascadeCount, cascadedBlockPos, true);
 			}
 		}
 	}
