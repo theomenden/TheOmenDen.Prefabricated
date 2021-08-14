@@ -33,14 +33,12 @@ dependencies {
 
 	/*mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"*/
 
-	mappings minecraft.officialMojangMappings()
-
-	/*mappings loom.layered() {
+	mappings loom.layered() {
 		officialMojangMappings()
 
 		// Get this value from: https://ldtteam.jfrog.io/ui/native/parchmentmc-public/org/parchmentmc/data/parchment-1.17.1
 		parchment("org.parchmentmc.data:parchment-${project.minecraft_version}:${project.parchment_mapping_version}")
-	}*/
+	}
 
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
