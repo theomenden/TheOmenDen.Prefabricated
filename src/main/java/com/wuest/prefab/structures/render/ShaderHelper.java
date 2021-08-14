@@ -37,7 +37,6 @@ public class ShaderHelper {
 
     public static void Initialize() {
         if (Minecraft.getInstance().getResourceManager() instanceof ReloadableResourceManager) {
-
             ReloadableResourceManager manager = (ReloadableResourceManager) Minecraft.getInstance().getResourceManager();
             manager.registerReloadListener((synchronizer, resourceManager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor) -> {
                 ShaderHelper.checkIncompatibleMods();
@@ -58,9 +57,6 @@ public class ShaderHelper {
         }
 
         lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
-
-        // disableLighting
-        // GlStateManager.disableLighting();
 
         // useProgram
         GlStateManager._glUseProgram(shader);
