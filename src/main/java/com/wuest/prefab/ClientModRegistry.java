@@ -12,7 +12,6 @@ import com.wuest.prefab.network.message.ConfigSyncMessage;
 import com.wuest.prefab.network.message.PlayerEntityTagMessage;
 import com.wuest.prefab.structures.gui.GuiStructure;
 import com.wuest.prefab.structures.items.StructureItem;
-import com.wuest.prefab.structures.render.ShaderHelper;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -57,8 +56,6 @@ public class ClientModRegistry {
         ClientModRegistry.registerBlockLayers();
 
         ClientModRegistry.registerServerToClientMessageHandlers();
-
-        ClientModRegistry.registerRenderers();
 
         ClientModRegistry.RegisterGuis();
     }
@@ -125,10 +122,6 @@ public class ClientModRegistry {
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtSlab, RenderLayer.getCutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassWall, RenderLayer.getCutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtWall, RenderLayer.getCutoutMipped());
-    }
-
-    private static void registerRenderers() {
-        ShaderHelper.Initialize();
     }
 
     /**
