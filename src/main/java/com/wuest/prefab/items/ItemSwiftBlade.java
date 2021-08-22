@@ -1,5 +1,6 @@
 package com.wuest.prefab.items;
 
+import com.wuest.prefab.ModRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SwordItem;
@@ -17,7 +18,7 @@ public class ItemSwiftBlade extends SwordItem {
      */
     public ItemSwiftBlade(ToolMaterial tier, int attackDamageIn, float attackSpeedIn) {
         super(tier, attackDamageIn, attackSpeedIn,
-                new Item.Settings().maxCount(1).maxDamage(tier.getDurability()).group(ItemGroup.COMBAT));
+                new Item.Settings().maxCount(1).maxDamage(tier.getDurability()).group(ModRegistry.PREFAB_GROUP));
     }
 
     /**
