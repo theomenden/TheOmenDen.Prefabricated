@@ -4,6 +4,7 @@
   "text.autoconfig.Prefab.option.includeSpawnersInMasher": "Üreticiyi Masher'a Dahil Et",
   "text.autoconfig.Prefab.option.enableStructurePreview": "Yapı Önizlemesini Etkinleştir",
   "text.autoconfig.Prefab.option.allowBulldozerToCreateDrops": "Ekskavatör Damlalar Oluşturur",
+  "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Dünya dışı boyutlarda su",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Mineshaft Kasasını Dahil Et",
   "text.autoconfig.Prefab.option.startingItem": "Başlangıç Öğesi",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Kılıç ekle",

@@ -4,6 +4,7 @@
   "text.autoconfig.Prefab.option.includeSpawnersInMasher": "マッシャーにスポナーを含める",
   "text.autoconfig.Prefab.option.enableStructurePreview": "構造プレビューを有効にする",
   "text.autoconfig.Prefab.option.allowBulldozerToCreateDrops": "掘削機はドロップを作成します",
+  "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "非世界的な次元の水",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "マインシャフト金庫を含む",
   "text.autoconfig.Prefab.option.startingItem": "開始アイテム",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "剣を追加する",
