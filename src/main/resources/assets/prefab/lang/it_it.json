@@ -31,6 +31,8 @@
   "text.autoconfig.Prefab.category.chest_options": "Opzioni scrigno",
   "text.autoconfig.Prefab.category.starter_options": "Avvia Opzioni casa",
 
+  "itemGroup.prefab.logo": "Prefab",
+
   "item.prefab.item_start_house": "Casa Di Partenza",
   "item.prefab.item_warehouse": "Magazzino",
   "item.prefab.item_chicken_coop": "Pollaio",

@@ -31,6 +31,8 @@
     "text.autoconfig.Prefab.category.chest_options": "Параметри скрині",
     "text.autoconfig.Prefab.category.starter_options": "Параметри стартового будинку",
 
+    "itemGroup.prefab.logo": "Prefab",
+
     "item.prefab.item_start_house": "Стартовий Будинок",
     "item.prefab.item_warehouse": "Склад",
     "item.prefab.item_chicken_coop": "Курник",

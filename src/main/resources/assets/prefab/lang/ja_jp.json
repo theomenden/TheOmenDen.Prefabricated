@@ -31,6 +31,8 @@
   "text.autoconfig.Prefab.category.chest_options": "金庫オプション",
   "text.autoconfig.Prefab.category.starter_options": "スタートハウスオプション",
 
+  "itemGroup.prefab.logo": "Prefab",
+
   "item.prefab.item_start_house": "スターターハウス",
   "item.prefab.item_warehouse": "倉庫",
   "item.prefab.item_chicken_coop": "鶏舎",

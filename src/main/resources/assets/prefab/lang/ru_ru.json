@@ -31,6 +31,8 @@
   "text.autoconfig.Prefab.category.chest_options": "Параметры сундуков",
   "text.autoconfig.Prefab.category.starter_options": "Параметры стартового дома",
 
+  "itemGroup.prefab.logo": "Prefab",
+
   "item.prefab.item_start_house": "Стартовый Дом",
   "item.prefab.item_warehouse": "Склад",
   "item.prefab.item_chicken_coop": "Курятник",
