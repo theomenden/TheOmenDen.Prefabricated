@@ -5,6 +5,7 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.config.ModConfiguration;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -412,6 +413,10 @@ public class BuildingMethods {
 			if (Prefab.serverConfiguration.chestOptions.addSword) {
 				Item sword = ModRegistry.SwiftBladeStone;
 
+				if (!Prefab.serverConfiguration.recipes.get(ModConfiguration.ConfigKeyNames.swiftBladeKey)) {
+					sword = Items.STONE_SWORD;
+				}
+				
 				chestTile.setStack(itemSlot++, new ItemStack(sword));
 			}
 

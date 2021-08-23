@@ -122,22 +122,24 @@ public class ModRegistry {
     public static final Item WarehouseUpgrade = new Item(new Item.Settings().group(ModRegistry.PREFAB_GROUP));
     public static final Item LogoItem = new Item(new Item.Settings());
 
-    public static final Item SwiftBladeWood = new ItemSwiftBlade(ToolMaterials.WOOD, 3, 10);
-    public static final Item SwiftBladeStone = new ItemSwiftBlade(ToolMaterials.STONE, 3, 10);
-    public static final Item SwiftBladeIron = new ItemSwiftBlade(ToolMaterials.IRON, 3, 10);
-    public static final Item SwiftBladeDiamond = new ItemSwiftBlade(ToolMaterials.DIAMOND, 3, 10);
-    public static final Item SwiftBladeGold = new ItemSwiftBlade(ToolMaterials.GOLD, 3, 10);
-    public static final Item SwiftBladeCopper = new ItemSwiftBlade(CustomItemTier.COPPER, 3, 10);
-    public static final Item SwiftBladeOsmium = new ItemSwiftBlade(CustomItemTier.OSMIUM, 3, 10);
-    public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 3, 10);
-    public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 3, 10);
-    public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 3, 10);
+    public static final Item SwiftBladeWood = new ItemSwiftBlade(ToolMaterials.WOOD, 2, .5f);
+    public static final Item SwiftBladeStone = new ItemSwiftBlade(ToolMaterials.STONE, 2, .5f);
+    public static final Item SwiftBladeIron = new ItemSwiftBlade(ToolMaterials.IRON, 2, .5f);
+    public static final Item SwiftBladeDiamond = new ItemSwiftBlade(ToolMaterials.DIAMOND, 2, .5f);
+    public static final Item SwiftBladeGold = new ItemSwiftBlade(ToolMaterials.GOLD, 2, .5f);
+    public static final Item SwiftBladeCopper = new ItemSwiftBlade(CustomItemTier.COPPER, 2, .5f);
+    public static final Item SwiftBladeOsmium = new ItemSwiftBlade(CustomItemTier.OSMIUM, 2, .5f);
+    public static final Item SwiftBladeBronze = new ItemSwiftBlade(CustomItemTier.BRONZE, 2, .5f);
+    public static final Item SwiftBladeSteel = new ItemSwiftBlade(CustomItemTier.STEEL, 2, .5f);
+    public static final Item SwiftBladeObsidian = new ItemSwiftBlade(CustomItemTier.OBSIDIAN, 2, .5f);
+    public static final Item SwiftBladeNetherite = new ItemSwiftBlade(ToolMaterials.NETHERITE, 2, .5f);
 
     public static final ItemSickle SickleWood = new ItemSickle(ToolMaterials.WOOD);
     public static final ItemSickle SickleStone = new ItemSickle(ToolMaterials.STONE);
     public static final ItemSickle SickleGold = new ItemSickle(ToolMaterials.GOLD);
     public static final ItemSickle SickleIron = new ItemSickle(ToolMaterials.IRON);
     public static final ItemSickle SickleDiamond = new ItemSickle(ToolMaterials.DIAMOND);
+    public static final ItemSickle SickleNetherite = new ItemSickle(ToolMaterials.NETHERITE);
 
     // Note: Empty crate must be registered first to avoid null-pointer errors with the rest of the ItemWoodenCrate items.
     public static final ItemWoodenCrate EmptyCrate = new ItemWoodenCrate(ItemWoodenCrate.CrateType.Empty);
@@ -266,12 +268,14 @@ public class ModRegistry {
         ModRegistry.registerItem("item_swift_blade_bronze", ModRegistry.SwiftBladeBronze);
         ModRegistry.registerItem("item_swift_blade_steel", ModRegistry.SwiftBladeSteel);
         ModRegistry.registerItem("item_swift_blade_obsidian", ModRegistry.SwiftBladeObsidian);
+        ModRegistry.registerItem("item_swift_blade_netherite", ModRegistry.SwiftBladeNetherite);
 
         ModRegistry.registerItem("item_sickle_wood", ModRegistry.SickleWood);
         ModRegistry.registerItem("item_sickle_stone", ModRegistry.SickleStone);
         ModRegistry.registerItem("item_sickle_gold", ModRegistry.SickleGold);
         ModRegistry.registerItem("item_sickle_iron", ModRegistry.SickleIron);
         ModRegistry.registerItem("item_sickle_diamond", ModRegistry.SickleDiamond);
+        ModRegistry.registerItem("item_sickle_netherite", ModRegistry.SickleNetherite);
 
         ModRegistry.registerItem("item_wooden_crate", ModRegistry.EmptyCrate);
         ModRegistry.registerItem("item_clutch_of_eggs", ModRegistry.ClutchOfEggs);
