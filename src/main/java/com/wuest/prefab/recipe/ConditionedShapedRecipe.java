@@ -240,7 +240,16 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 				throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
 			}
 
-			map.put(entry.getKey(), Ingredient.fromJson((JsonElement) entry.getValue()));
+			JsonElement ingredientJSON = entry.getValue();
+			Ingredient ingredient = Ingredient.fromJson(ingredientJSON);
+
+			if (ingredient.isEmpty() || ingredient.getMatchingStacks().length == 0) {
+				// Unable to find a corresponding item for this key. Clear out all entries and return.
+				map.clear();
+				break;
+			}
+
+			map.put(entry.getKey(), ingredient);
 		}
 
 		map.put(" ", Ingredient.EMPTY);
