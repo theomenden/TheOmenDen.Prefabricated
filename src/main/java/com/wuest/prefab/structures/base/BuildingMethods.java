@@ -416,7 +416,7 @@ public class BuildingMethods {
 				if (!Prefab.serverConfiguration.recipes.get(ModConfiguration.ConfigKeyNames.swiftBladeKey)) {
 					sword = Items.STONE_SWORD;
 				}
-				
+
 				chestTile.setStack(itemSlot++, new ItemStack(sword));
 			}
 
