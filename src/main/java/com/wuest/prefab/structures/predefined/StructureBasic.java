@@ -28,6 +28,7 @@ public class StructureBasic extends Structure {
     private BlockPos customBlockPos = null;
     private ArrayList<Tuple<BlockPos, BlockPos>> bedPositions = new ArrayList<>();
 
+    // TODO: Remove these specific scanning functions now that we have a scanning block.
     public static void ScanStructure(World world, BlockPos originalPos, Direction playerFacing, BasicStructureConfiguration configuration, boolean includeAir, boolean excludeWater) {
         BuildClear clearedSpace = new BuildClear();
         clearedSpace.setShape(configuration.chosenOption.getClearShape());

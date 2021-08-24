@@ -108,6 +108,7 @@ public class BaseOption {
     /**
      * @return Get the build shape for this option.
      */
+    // TODO: Remove this as it's only used during scanning and is not needed anymore due to the scanning block.
     public BuildShape getClearShape() {
         return this.clearShape;
     }
@@ -117,6 +118,7 @@ public class BaseOption {
      *
      * @return A {@link PositionOffset} which describes where the clearing should start.
      */
+    // TODO: Remove this as it's only used during scanning and is not needed anymore due to the scanning block.
     public PositionOffset getClearPositionOffset() {
         return this.clearPositionOffset;
     }
