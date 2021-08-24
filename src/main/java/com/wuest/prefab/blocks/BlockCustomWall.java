@@ -19,9 +19,9 @@ public class BlockCustomWall extends WallBlock implements IGrassSpreadable {
 
     public BlockCustomWall(Block modelBlock, BlockCustomWall.EnumType variant) {
         super(FabricBlockSettings.of(Material.AGGREGATE)
-                .strength(modelBlock.getDefaultState().getHardness(null, null),
+                .strength(modelBlock.getHardness(),
                         modelBlock.getBlastResistance() * 5.0F / 3.0F)
-                .sounds(modelBlock.getSoundGroup(null))
+                .sounds(modelBlock.getSoundGroup(modelBlock.getDefaultState()))
                 .breakByTool(FabricToolTags.SHOVELS, 0));
 
         this.BlockVariant = variant;
