@@ -51,3 +51,6 @@ bin/
 
 run/
 remappedSrc/
+
+# mac
+.DS_Store
