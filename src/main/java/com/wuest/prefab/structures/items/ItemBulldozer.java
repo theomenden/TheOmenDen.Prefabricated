@@ -50,7 +50,7 @@ public class ItemBulldozer extends StructureItem {
      */
     public ItemBulldozer(boolean creativePowered) {
         super(new Item.Settings()
-                .group(ItemGroup.MISC));
+                .group(ModRegistry.PREFAB_GROUP));
 
         this.creativePowered = creativePowered;
     }
