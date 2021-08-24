@@ -13,7 +13,7 @@ import net.minecraft.item.ItemGroup;
 public class ItemInstantBridge extends StructureItem {
     public ItemInstantBridge() {
         super(new Item.Settings()
-                .group(ItemGroup.MISC)
+                .group(ModRegistry.PREFAB_GROUP)
                 .maxDamage(10));
     }
 

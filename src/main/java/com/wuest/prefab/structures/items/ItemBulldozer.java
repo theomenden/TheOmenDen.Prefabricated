@@ -39,7 +39,7 @@ public class ItemBulldozer extends StructureItem {
      */
     public ItemBulldozer() {
         super(new Item.Settings()
-                .group(ItemGroup.MISC)
+                .group(ModRegistry.PREFAB_GROUP)
                 .maxDamage(4));
     }
 

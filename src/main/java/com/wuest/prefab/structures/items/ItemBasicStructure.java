@@ -29,7 +29,7 @@ public class ItemBasicStructure extends StructureItem {
 
     public ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName structureType, int durability) {
         super(new Item.Settings()
-                .group(ItemGroup.MISC)
+                .group(ModRegistry.PREFAB_GROUP)
                 .maxDamage(durability));
         this.structureType = structureType;
     }

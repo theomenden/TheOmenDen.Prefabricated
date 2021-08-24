@@ -11,7 +11,7 @@ import net.minecraft.item.ItemGroup;
 public class ItemStructurePart extends StructureItem {
     public ItemStructurePart() {
         super(new Item.Settings()
-                .group(ItemGroup.MISC)
+                .group(ModRegistry.PREFAB_GROUP)
                 .maxDamage(10));
     }
 
