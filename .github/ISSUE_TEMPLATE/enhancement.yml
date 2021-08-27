@@ -1,7 +1,7 @@
 name: Enhancement
 description: Add/Change something
 title: "[Enhancement]: "
-labels: [Enhancement]
+labels: [enhancement]
 body:
 - type: markdown
   attributes:
