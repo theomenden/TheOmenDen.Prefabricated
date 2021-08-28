@@ -20,7 +20,7 @@ public class BlockDirtStairs extends StairsBlock implements IGrassSpreadable {
      * Initializes a new instance of the BlockDirtStairs class.
      */
     public BlockDirtStairs() {
-        super(Blocks.DIRT.getDefaultState(), AbstractBlock.Settings.copy(Blocks.GRASS_BLOCK));
+        super(Blocks.DIRT.getDefaultState(), AbstractBlock.Settings.copy(Blocks.DIRT));
     }
 
     /**
