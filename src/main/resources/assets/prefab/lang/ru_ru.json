@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Ферма Тростника",
   "item.prefab.item_workshop": "Мастерская",
   "item.prefab.item_modern_buildings": "Современные Здания",
+  "item.prefab.item_starter_farm": "Стартовая ферма",
+  "item.prefab.item_moderate_farm": "Умеренная ферма",
+  "item.prefab.item_advanced_farm": "Продвинутая ферма",
 
   "item.prefab.item_nether_gate_tree": "Искажённое Дерево",
   "item.prefab.item_nether_gate_skull": "Древний Череп",
@@ -207,6 +210,10 @@
   "prefab.gui.item_modern_cottage": "Коттедж",
   "prefab.gui.item_modern_bank": "Банк",
   "prefab.gui.item_modern_tree_house": "Дом на дереве",
+
+  "prefab.gui.item_elevated_farm": "Возвышенная ферма",
+  "prefab.gui.item_automated_farm": "Автоматическая ферма",
+  "prefab.gui.item_automated_be_farm": "Автоматическая пчелиная ферма",
 
   "prefab.gui.bulldozer_desc": "Этот предмет очистит местность размером в 16x16x16 блоков и отдаст разрушенные блоки.",
   "prefab.gui.compressed_chest_desc": "Используется в рецептах для конструкций, а не для непосредственного хранения",

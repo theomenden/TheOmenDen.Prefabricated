@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Granja de caña de azúcar",
   "item.prefab.item_workshop": "Taller",
   "item.prefab.item_modern_buildings": "Edificios modernos",
+  "item.prefab.item_starter_farm": "Granja de inicio",
+  "item.prefab.item_moderate_farm": "Granja moderada",
+  "item.prefab.item_advanced_farm": "Granja avanzada",
 
   "item.prefab.item_nether_gate_tree": "Árbol corrupto",
   "item.prefab.item_nether_gate_skull": "Calavera Antigua",
@@ -199,6 +202,10 @@
   "prefab.gui.item_modern_cottage": "Cabaña",
   "prefab.gui.item_modern_bank": "Banco",
   "prefab.gui.item_modern_tree_house": "Casa del árbol",
+
+  "prefab.gui.item_elevated_farm": "Granja elevada",
+  "prefab.gui.item_automated_farm": "Granja automática",
+  "prefab.gui.item_automated_be_farm": "Granja de abejas automática",
 
   "prefab.gui.bulldozer_desc": "Este artículo limpiará un espacio de 16x16x16 y proporcionará las gotas de cada bloque.",
   "prefab.gui.compressed_chest_desc": "Se utiliza en las recetas de estructuras, no para almacenamiento directo.",

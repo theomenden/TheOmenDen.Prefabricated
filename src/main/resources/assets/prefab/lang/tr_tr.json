@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Şeker Kamışı Çiftliği",
   "item.prefab.item_workshop": "atölye",
   "item.prefab.item_modern_buildings": "Modern Binalar",
+  "item.prefab.item_starter_farm": "Başlangıç Çiftliği",
+  "item.prefab.item_moderate_farm": "Orta Çiftlik",
+  "item.prefab.item_advanced_farm": "Gelişmiş Çiftlik",
 
   "item.prefab.item_nether_gate_tree": "Bozuk ağaç",
   "item.prefab.item_nether_gate_skull": "Antik kurukafa",
@@ -208,6 +211,10 @@
   "prefab.gui.item_modern_cottage": "Kulübe",
   "prefab.gui.item_modern_bank": "Banka",
   "prefab.gui.item_modern_tree_house": "Ağaç ev",
+
+  "prefab.gui.item_elevated_farm": "yükseltilmiş çiftlik",
+  "prefab.gui.item_automated_farm": "Otomatik Çiftlik",
+  "prefab.gui.item_automated_be_farm": "Otomatik Arı Çiftliği",
 
   "prefab.gui.bulldozer_desc": "Bu eşya 16x16x16'lık bir alanı temizleyecek ve düşen bloklar eşya olarak geri dönecek.",
   "prefab.gui.compressed_chest_desc": "Doğrudan depolama için değil, yapılar için tariflerde kullanılır",

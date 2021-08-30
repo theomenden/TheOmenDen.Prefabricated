@@ -1,0 +1,31 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Starter Farm",
+  "group": "Starter Farm",
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ded"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "b": {
+      "item": "prefab:item_bundle_of_timber"
+    },
+    "c": {
+      "tag": "c:compressed_dirt"
+    },
+    "d": {
+      "tag": "minecraft:wool"
+    },
+    "e": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "prefab:item_starter_farm",
+    "count": 1
+  }
+}
