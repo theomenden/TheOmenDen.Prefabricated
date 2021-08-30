@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Sugar Cane Farm",
   "item.prefab.item_workshop": "Workshop",
   "item.prefab.item_modern_buildings": "Modern Buildings",
+  "item.prefab.item_starter_farm": "Starter Farm",
+  "item.prefab.item_moderate_farm": "Moderate Farm",
+  "item.prefab.item_advanced_farm": "Advanced Farm",
 
   "item.prefab.item_nether_gate_tree": "Corrupted Tree",
   "item.prefab.item_nether_gate_skull": "Ancient Skull",
@@ -206,6 +209,11 @@
   "prefab.gui.item_modern_gas_station": "Gas Station",
   "prefab.gui.item_modern_cottage": "Cottage",
   "prefab.gui.item_modern_bank": "Bank",
+  "prefab.gui.item_modern_tree_house": "Tree House",
+
+  "prefab.gui.item_elevated_farm": "Elevated Farm",
+  "prefab.gui.item_automated_farm": "Automated Farm",
+  "prefab.gui.item_automated_be_farm": "Automated Bee Farm",
 
   "prefab.gui.bulldozer_desc": "This item will clear out a 16x16x16 space and provide the drops from each block.",
   "prefab.gui.compressed_chest_desc": "Used in the recipes for structures, not for direct storage",

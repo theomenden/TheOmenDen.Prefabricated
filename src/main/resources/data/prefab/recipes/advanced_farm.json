@@ -1,0 +1,34 @@
+{
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Advanced Farm",
+  "group": "Advanced Farm",
+  "pattern": [
+    "abc",
+    "ddd",
+    "efe"
+  ],
+  "key": {
+    "a": {
+      "item": "prefab:item_ton_of_timber"
+    },
+    "b": {
+      "tag": "c:compressed_glow_stone"
+    },
+    "c": {
+      "item": "prefab:item_pallet_of_bricks"
+    },
+    "d": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "e": {
+      "tag": "c:double_compressed_stone"
+    },
+    "f": {
+      "item": "prefab:item_compressed_chest"
+    }
+  },
+  "result": {
+    "item": "prefab:item_advanced_farm",
+    "count": 1
+  }
+}

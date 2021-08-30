@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "サトウキビ農場",
   "item.prefab.item_workshop": "ワークショップ",
   "item.prefab.item_modern_buildings": "近代的な建物",
+  "item.prefab.item_starter_farm": "スターターファーム",
+  "item.prefab.item_moderate_farm": "中程度の農場",
+  "item.prefab.item_advanced_farm": "アドバンストファーム",
 
   "item.prefab.item_nether_gate_tree": "壊れた木",
   "item.prefab.item_nether_gate_skull": "古代の頭蓋骨",
@@ -206,6 +209,11 @@
   "prefab.gui.item_modern_gas_station": "ガソリンスタンド",
   "prefab.gui.item_modern_cottage": "コテージ",
   "prefab.gui.item_modern_bank": "銀行",
+  "prefab.gui.item_modern_tree_house": "樹上の家",
+
+  "prefab.gui.item_elevated_farm": "高架農場",
+  "prefab.gui.item_automated_farm": "自動ファーム",
+  "prefab.gui.item_automated_be_farm": "自動ビーファーム",
 
   "prefab.gui.bulldozer_desc": "このアイテムは16x16x16のスペースを空にし、各ブロックからのドロップを提供します。",
   "prefab.gui.compressed_chest_desc": "直接保管ではなく、構造物のレシピで使用されます",

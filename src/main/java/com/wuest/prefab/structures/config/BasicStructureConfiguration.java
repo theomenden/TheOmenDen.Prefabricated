@@ -208,7 +208,10 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         MonsterMasher("monster_masher", "item.prefab.item_monster_masher", "item_monster_masher", MonsterMasherOptions.Default),
         AdvancedWarehouse("advanced_warehouse", "item.prefab.item_advanced_warehouse", "item_advanced_warehouse", AdvancedWarehouseOptions.Default),
         Warehouse("warehouse", "item.prefab.item_warehouse", "item_warehouse", WarehouseOptions.Default),
-        ModernBuildings("modern_buildings", "item.prefab.item_modern_buildings", "item_modern_buildings", ModernBuildingsOptions.Mall);
+        ModernBuildings("modern_buildings", "item.prefab.item_modern_buildings", "item_modern_buildings", ModernBuildingsOptions.Mall),
+        StarterFarm("starter_farm", "item.prefab.item_starter_farm", "item_starter_farm", StarterFarmOptions.ElevatedFarm),
+        ModerateFarm("moderate_farm", "item.prefab.item_moderate_farm", "item_moderate_farm", ModerateFarmOptions.AutomatedFarm),
+        AdvancedFarm("advanced_farm", "item.prefab.item_advanced_farm", "item_advanced_farm", AdvancedFarmOptions.AutomatedBeeFarm),;
 
         private final String name;
         private final String itemTranslationString;

@@ -84,6 +84,9 @@
     "item.prefab.item_sugar_cane_farm": "Ферма Цукрової Тростини",
     "item.prefab.item_workshop": "Майстерня",
     "item.prefab.item_modern_buildings": "Сучасні Будівлі",
+    "item.prefab.item_starter_farm": "Стартове господарство",
+    "item.prefab.item_moderate_farm": "Помірне господарство",
+    "item.prefab.item_advanced_farm": "Передова ферма",
 
     "item.prefab.item_nether_gate_tree": "Химерне Дерево",
     "item.prefab.item_nether_gate_skull": "Древній Череп",
@@ -206,6 +209,11 @@
     "prefab.gui.item_modern_gas_station": "Заправка",
     "prefab.gui.item_modern_cottage": "Котедж",
     "prefab.gui.item_modern_bank": "Банк",
+    "prefab.gui.item_modern_tree_house": "Будинок на дереві",
+
+    "prefab.gui.item_elevated_farm": "Піднесені ферми",
+    "prefab.gui.item_automated_farm": "Автоматична ферма",
+    "prefab.gui.item_automated_be_farm": "Автоматична бджолова ферма",
 
     "prefab.gui.bulldozer_desc": "Цей предмет почистить область розміром 16x16x16 блоків та віддасть зламані блоки.",
     "prefab.gui.compressed_chest_desc": "Використовується в рецептах конструкцій, а не для безпосереднього зберігання",

@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Ferme de canne à sucre",
   "item.prefab.item_workshop": "Atelier",
   "item.prefab.item_modern_buildings": "Bâtiments modernes",
+  "item.prefab.item_starter_farm": "Ferme de démarrage",
+  "item.prefab.item_moderate_farm": "Ferme modérée",
+  "item.prefab.item_advanced_farm": "Ferme avancée",
 
   "item.prefab.item_nether_gate_tree": "Arbre corrompu",
   "item.prefab.item_nether_gate_skull": "Crâne antique",
@@ -198,6 +201,11 @@
   "prefab.gui.item_modern_gas_station": "Station d'essence",
   "prefab.gui.item_modern_cottage": "Cottage",
   "prefab.gui.item_modern_bank": "Banque",
+  "prefab.gui.item_modern_tree_house": "Cabane dans les arbres",
+
+  "prefab.gui.item_elevated_farm": "Ferme surélevée",
+  "prefab.gui.item_automated_farm": "Ferme automatique",
+  "prefab.gui.item_automated_be_farm": "Ferme d'abeilles automatique",
 
   "prefab.gui.bulldozer_desc": "Cet objet va nettoyer un espace 16x16x16 et fournir les gouttes de chaque bloc.",
   "prefab.gui.compressed_chest_desc": "Utilisé dans les recettes pour les structures, pas pour le stockage direct",

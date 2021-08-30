@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "甘蔗农场",
   "item.prefab.item_workshop": "作坊",
   "item.prefab.item_modern_buildings": "现代建筑",
+  "item.prefab.item_starter_farm": "初学者农场",
+  "item.prefab.item_moderate_farm": "中等农场",
+  "item.prefab.item_advanced_farm": "高级农场",
 
   "item.prefab.item_nether_gate_tree": "腐败的树",
   "item.prefab.item_nether_gate_skull": "古代骷髅",
@@ -206,6 +209,11 @@
   "prefab.gui.item_modern_gas_station": "加油站",
   "prefab.gui.item_modern_cottage": "小屋",
   "prefab.gui.item_modern_bank": "银行",
+  "prefab.gui.item_modern_tree_house": "树屋",
+
+  "prefab.gui.item_elevated_farm": "高架农场",
+  "prefab.gui.item_automated_farm": "自动农场",
+  "prefab.gui.item_automated_be_farm": "自动养蜂场",
 
   "prefab.gui.bulldozer_desc": "此物品将清空 16x16x16 的区域，并将原方块变为掉落物。",
   "prefab.gui.compressed_chest_desc": "用于结构配方，不用于直接存储",

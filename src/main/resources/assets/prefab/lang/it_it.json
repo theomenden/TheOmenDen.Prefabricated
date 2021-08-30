@@ -84,6 +84,9 @@
   "item.prefab.item_sugar_cane_farm": "Fattoria di canna da zucchero",
   "item.prefab.item_workshop": "Officina",
   "item.prefab.item_modern_buildings": "Edifici moderni",
+  "item.prefab.item_starter_farm": "Fattoria iniziale",
+  "item.prefab.item_moderate_farm": "Fattoria moderata",
+  "item.prefab.item_advanced_farm": "Fattoria avanzata",
 
   "item.prefab.item_nether_gate_tree": "Albero Corrotto",
   "item.prefab.item_nether_gate_skull": "Teschio Antico",
@@ -206,6 +209,11 @@
   "prefab.gui.item_modern_gas_station": "Stazione di rifornimento",
   "prefab.gui.item_modern_cottage": "Villetta",
   "prefab.gui.item_modern_bank": "Banca",
+  "prefab.gui.item_modern_tree_house": "Casa sull'albero",
+
+  "prefab.gui.item_elevated_farm": "Fattoria sopraelevata",
+  "prefab.gui.item_automated_farm": "Fattoria automatica",
+  "prefab.gui.item_automated_be_farm": "Allevamento automatico di api",
 
   "prefab.gui.bulldozer_desc": "Questo oggetto sgombrerà uno spazio di 16x16x16 e fornirà il drop di ogni blocco.",
   "prefab.gui.compressed_chest_desc": "Utilizzato nelle ricette per strutture, non per lo stoccaggio diretto",

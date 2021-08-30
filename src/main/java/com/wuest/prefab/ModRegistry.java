@@ -191,6 +191,9 @@ public class ModRegistry {
     public static final ItemBasicStructure HorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.HorseStable);
     public static final ItemBasicStructure VillagerHouses = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses, 10);
     public static final ItemBasicStructure ModernBuildings = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings, 5);
+    public static final ItemBasicStructure StarterFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.StarterFarm);
+    public static final ItemBasicStructure ModerateFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModerateFarm);
+    public static final ItemBasicStructure AdvancedFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedFarm);
 
     /* *********************************** Recipe Serializers *********************************** */
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
@@ -329,6 +332,9 @@ public class ModRegistry {
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.HorseStable.getItemTextureLocation().getPath(), ModRegistry.HorseStable);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses.getItemTextureLocation().getPath(), ModRegistry.VillagerHouses);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings.getItemTextureLocation().getPath(), ModRegistry.ModernBuildings);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.StarterFarm.getItemTextureLocation().getPath(), ModRegistry.StarterFarm);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ModerateFarm.getItemTextureLocation().getPath(), ModRegistry.ModerateFarm);
+        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedFarm.getItemTextureLocation().getPath(), ModRegistry.AdvancedFarm);
     }
 
     private static void registerItemBlocks() {

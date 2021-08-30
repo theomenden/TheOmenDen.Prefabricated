@@ -97,7 +97,9 @@ public class StructureRenderHandler {
 
                     // Don't render the block if it isn't visible (cull)
                     Box box = new Box(pos.getX()-0.5, pos.getY()-0.5, pos.getZ()-0.5, pos.getX()+1.5, pos.getY()+1.5, pos.getZ()+1.5);
-                    if (!frustum.isVisible(box)) continue;
+                    if (!frustum.isVisible(box)) {
+                        continue;
+                    }
 
                     // Get the unique block state for this block.
                     BlockState blockState = foundBlock.getDefaultState();
@@ -132,11 +134,6 @@ public class StructureRenderHandler {
         }
     }
 
-    private static void doRenderComponent(World world, BuildBlock buildBlock, BlockPos pos, VertexConsumerProvider entityVertexConsumer, MatrixStack matrixStack) {
-        BlockState state = buildBlock.getBlockState();
-        StructureRenderHandler.renderBlock(world, matrixStack, new Vec3d(pos.getX(), pos.getY(), pos.getZ()), state, entityVertexConsumer, pos);
-    }
-
     private static boolean renderComponentInWorld(World world, BuildBlock buildBlock, VertexConsumerProvider entityVertexConsumer, MatrixStack matrixStack, BlockPos pos) {
         // Don't render this block if it's going to overlay a non-air/water block.
         BlockState targetBlock = world.getBlockState(pos);
@@ -168,6 +165,11 @@ public class StructureRenderHandler {
         }
 
         return true;
+    }
+
+    private static void doRenderComponent(World world, BuildBlock buildBlock, BlockPos pos, VertexConsumerProvider entityVertexConsumer, MatrixStack matrixStack) {
+        BlockState state = buildBlock.getBlockState();
+        StructureRenderHandler.renderBlock(world, matrixStack, new Vec3d(pos.getX(), pos.getY(), pos.getZ()), state, entityVertexConsumer, pos);
     }
 
     private static void renderBlock(World world, MatrixStack matrixStack, Vec3d pos, BlockState state, VertexConsumerProvider entityVertexConsumer, BlockPos blockPos) {
