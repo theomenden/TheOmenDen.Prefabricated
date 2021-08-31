@@ -159,9 +159,6 @@ public class ModRegistry {
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
     public static final ItemStructurePart StructurePart = new ItemStructurePart();
-    public static final ItemBasicStructure Barn = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Barn);
-    public static final ItemBasicStructure AdvancedCoop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop);
-    public static final ItemBasicStructure AdvancedHorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedHorseStable);
     public static final ItemBasicStructure MachineryTower = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower);
     public static final ItemBasicStructure DefenseBunker = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker);
     public static final ItemBasicStructure MineshaftEntrance = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance);
@@ -169,7 +166,6 @@ public class ModRegistry {
     public static final ItemBasicStructure AquaBase = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AquaBase);
     public static final ItemBasicStructure GrassyPlain = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.GrassyPlain);
     public static final ItemBasicStructure MagicTemple = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MagicTemple);
-    public static final ItemBasicStructure GreenHouse = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.GreenHouse);
     public static final ItemBasicStructure WatchTower = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WatchTower);
     public static final ItemBasicStructure WelcomeCenter = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WelcomeCenter);
     public static final ItemBasicStructure Jail = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Jail);
@@ -178,17 +174,10 @@ public class ModRegistry {
     public static final ItemBasicStructure WindMill = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WindMill);
     public static final ItemBasicStructure TownHall = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.TownHall);
     public static final ItemBasicStructure NetherGate = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.NetherGate);
-    public static final ItemBasicStructure SugarCaneFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm);
     public static final ItemBasicStructure AdvancedAquaBase = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase);
     public static final ItemBasicStructure WorkShop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.WorkShop);
     public static final ItemBasicStructure Warehouse = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.Warehouse);
-    public static final ItemBasicStructure ChickenCoop = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ChickenCoop);
-    public static final ItemBasicStructure ProduceFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ProduceFarm);
-    public static final ItemBasicStructure TreeFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.TreeFarm);
-    public static final ItemBasicStructure FishPond = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.FishPond);
     public static final ItemBasicStructure AdvancedWareHouse = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.AdvancedWarehouse);
-    public static final ItemBasicStructure MonsterMasher = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MonsterMasher);
-    public static final ItemBasicStructure HorseStable = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.HorseStable);
     public static final ItemBasicStructure VillagerHouses = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses, 10);
     public static final ItemBasicStructure ModernBuildings = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings, 5);
     public static final ItemBasicStructure StarterFarm = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.StarterFarm);
@@ -299,10 +288,6 @@ public class ModRegistry {
         ModRegistry.registerItem("item_creative_bulldozer", ModRegistry.CreativeBulldozer);
         ModRegistry.registerItem("item_structure_part", ModRegistry.StructurePart);
 
-
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Barn.getItemTextureLocation().getPath(), ModRegistry.Barn);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedCoop.getItemTextureLocation().getPath(), ModRegistry.AdvancedCoop);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedHorseStable.getItemTextureLocation().getPath(), ModRegistry.AdvancedHorseStable);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower.getItemTextureLocation().getPath(), ModRegistry.MachineryTower);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker.getItemTextureLocation().getPath(), ModRegistry.DefenseBunker);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance.getItemTextureLocation().getPath(), ModRegistry.MineshaftEntrance);
@@ -310,7 +295,6 @@ public class ModRegistry {
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AquaBase.getItemTextureLocation().getPath(), ModRegistry.AquaBase);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GrassyPlain.getItemTextureLocation().getPath(), ModRegistry.GrassyPlain);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MagicTemple.getItemTextureLocation().getPath(), ModRegistry.MagicTemple);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.GreenHouse.getItemTextureLocation().getPath(), ModRegistry.GreenHouse);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WatchTower.getItemTextureLocation().getPath(), ModRegistry.WatchTower);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WelcomeCenter.getItemTextureLocation().getPath(), ModRegistry.WelcomeCenter);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Jail.getItemTextureLocation().getPath(), ModRegistry.Jail);
@@ -319,17 +303,10 @@ public class ModRegistry {
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WindMill.getItemTextureLocation().getPath(), ModRegistry.WindMill);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.TownHall.getItemTextureLocation().getPath(), ModRegistry.TownHall);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.NetherGate.getItemTextureLocation().getPath(), ModRegistry.NetherGate);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.SugarCaneFarm.getItemTextureLocation().getPath(), ModRegistry.SugarCaneFarm);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedAquaBase.getItemTextureLocation().getPath(), ModRegistry.AdvancedAquaBase);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getItemTextureLocation().getPath(), ModRegistry.WorkShop);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.Warehouse.getItemTextureLocation().getPath(), ModRegistry.Warehouse);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ChickenCoop.getItemTextureLocation().getPath(), ModRegistry.ChickenCoop);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ProduceFarm.getItemTextureLocation().getPath(), ModRegistry.ProduceFarm);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.TreeFarm.getItemTextureLocation().getPath(), ModRegistry.TreeFarm);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.FishPond.getItemTextureLocation().getPath(), ModRegistry.FishPond);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.AdvancedWarehouse.getItemTextureLocation().getPath(), ModRegistry.AdvancedWareHouse);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MonsterMasher.getItemTextureLocation().getPath(), ModRegistry.MonsterMasher);
-        ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.HorseStable.getItemTextureLocation().getPath(), ModRegistry.HorseStable);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.VillagerHouses.getItemTextureLocation().getPath(), ModRegistry.VillagerHouses);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.ModernBuildings.getItemTextureLocation().getPath(), ModRegistry.ModernBuildings);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.StarterFarm.getItemTextureLocation().getPath(), ModRegistry.StarterFarm);
