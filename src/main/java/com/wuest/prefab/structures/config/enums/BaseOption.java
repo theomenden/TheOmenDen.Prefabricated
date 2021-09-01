@@ -16,8 +16,6 @@ public class BaseOption {
     private final String translationString;
     private final String assetLocation;
     private final Identifier pictureLocation;
-    private final BuildShape clearShape;
-    private final PositionOffset clearPositionOffset;
     private final boolean hasBedColor;
     private final boolean hasGlassColor;
 
@@ -25,30 +23,13 @@ public class BaseOption {
             String translationString,
             String assetLocation,
             String pictureLocation,
-            Direction direction,
-            int height,
-            int width,
-            int length,
-            int offsetParallelToPlayer,
-            int offsetToLeftOfPlayer,
-            int heightOffset,
             boolean hasBedColor,
             boolean hasGlassColor) {
         this.translationString = translationString;
         this.assetLocation = assetLocation;
         this.pictureLocation = new Identifier(Prefab.MODID, pictureLocation);
-        this.clearShape = new BuildShape();
-        this.clearPositionOffset = new PositionOffset();
         this.hasBedColor = hasBedColor;
         this.hasGlassColor = hasGlassColor;
-
-        this.clearShape.setDirection(direction);
-        this.clearShape.setHeight(height);
-        this.clearShape.setWidth(width);
-        this.clearShape.setLength(length);
-        this.clearPositionOffset.setHorizontalOffset(direction, offsetParallelToPlayer);
-        this.clearPositionOffset.setHorizontalOffset(direction.rotateYCounterclockwise(), offsetToLeftOfPlayer);
-        this.clearPositionOffset.setHeightOffset(heightOffset);
 
         BaseOption.addOption(this);
     }
@@ -103,24 +84,6 @@ public class BaseOption {
      */
     public Identifier getPictureLocation() {
         return this.pictureLocation;
-    }
-
-    /**
-     * @return Get the build shape for this option.
-     */
-    // TODO: Remove this as it's only used during scanning and is not needed anymore due to the scanning block.
-    public BuildShape getClearShape() {
-        return this.clearShape;
-    }
-
-    /**
-     * The {@link PositionOffset} for the clear shape.
-     *
-     * @return A {@link PositionOffset} which describes where the clearing should start.
-     */
-    // TODO: Remove this as it's only used during scanning and is not needed anymore due to the scanning block.
-    public PositionOffset getClearPositionOffset() {
-        return this.clearPositionOffset;
     }
 
     /**
