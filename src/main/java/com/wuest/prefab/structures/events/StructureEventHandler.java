@@ -329,9 +329,7 @@ public final class StructureEventHandler {
                 BlockEntity tileEntity = structure.world.getBlockEntity(tileEntityPos);
                 BlockState tileBlock = structure.world.getBlockState(tileEntityPos);
 
-                if (tileEntity == null) {
-                    tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
-                } else {
+                if (tileEntity != null) {
                     structure.world.removeBlockEntity(tileEntityPos);
                     tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
                     structure.world.addBlockEntity(tileEntity);
