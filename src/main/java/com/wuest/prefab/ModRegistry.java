@@ -158,7 +158,6 @@ public class ModRegistry {
     public static final ItemStartHouse StartHouse = new ItemStartHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
-    public static final ItemStructurePart StructurePart = new ItemStructurePart();
     public static final ItemBasicStructure MachineryTower = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower);
     public static final ItemBasicStructure DefenseBunker = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker);
     public static final ItemBasicStructure MineshaftEntrance = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MineshaftEntrance);
@@ -286,7 +285,6 @@ public class ModRegistry {
         ModRegistry.registerItem("item_moderate_house", ModRegistry.ModerateHouse);
         ModRegistry.registerItem("item_bulldozer", ModRegistry.Bulldozer);
         ModRegistry.registerItem("item_creative_bulldozer", ModRegistry.CreativeBulldozer);
-        ModRegistry.registerItem("item_structure_part", ModRegistry.StructurePart);
 
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower.getItemTextureLocation().getPath(), ModRegistry.MachineryTower);
         ModRegistry.registerItem(BasicStructureConfiguration.EnumBasicStructureName.DefenseBunker.getItemTextureLocation().getPath(), ModRegistry.DefenseBunker);

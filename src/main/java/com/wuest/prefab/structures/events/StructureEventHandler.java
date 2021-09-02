@@ -99,11 +99,6 @@ public final class StructureEventHandler {
             ItemStack stack = ItemStack.EMPTY;
 
             switch (startingItem) {
-                case StructureParts: {
-                    stack = new ItemStack(ModRegistry.StructurePart);
-                    break;
-                }
-
                 case StartingHouse: {
                     stack = new ItemStack(ModRegistry.StartHouse);
                     break;

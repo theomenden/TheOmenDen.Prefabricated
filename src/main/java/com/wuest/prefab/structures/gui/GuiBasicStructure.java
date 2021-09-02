@@ -18,7 +18,6 @@ import net.minecraft.util.DyeColor;
 
 import java.util.ArrayList;
 
-
 /**
  * This class is used as the gui for all basic structures.
  *
