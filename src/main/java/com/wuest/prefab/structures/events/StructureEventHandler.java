@@ -2,6 +2,7 @@ package com.wuest.prefab.structures.events;
 
 import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
+import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.config.ModConfiguration;
@@ -21,6 +22,7 @@ import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.decoration.painting.PaintingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtDouble;
@@ -49,7 +51,11 @@ public final class StructureEventHandler {
     /**
      * Contains a hashmap for the structures to build and for whom.
      */
-    public static HashMap<PlayerEntity, ArrayList<Structure>> structuresToBuild = new HashMap<PlayerEntity, ArrayList<Structure>>();
+    public static HashMap<PlayerEntity, ArrayList<Structure>> structuresToBuild = new HashMap<>();
+
+    public static ArrayList<Tuple<Structure, BuildEntity>> entitiesToGenerate = new ArrayList<>();
+
+    public static int ticksSinceLastEntitiesGenerated = 0;
 
     public static void registerStructureServerSideEvents() {
         StructureEventHandler.playerJoinedServer();
@@ -134,6 +140,15 @@ public final class StructureEventHandler {
      */
     public static void onServerTick() {
         ArrayList<PlayerEntity> playersToRemove = new ArrayList<PlayerEntity>();
+
+        StructureEventHandler.ticksSinceLastEntitiesGenerated++;
+
+        if (StructureEventHandler.ticksSinceLastEntitiesGenerated > 40) {
+            // Process any entities; this is done about every 2 seconds.
+            StructureEventHandler.processStructureEntities();
+
+            StructureEventHandler.ticksSinceLastEntitiesGenerated = 0;
+        }
 
         for (Entry<PlayerEntity, ArrayList<Structure>> entry : StructureEventHandler.structuresToBuild.entrySet()) {
             ArrayList<Structure> structuresToRemove = new ArrayList<Structure>();
@@ -344,39 +359,7 @@ public final class StructureEventHandler {
                 Optional<EntityType<?>> entityType = EntityType.get(buildEntity.getEntityResourceString());
 
                 if (entityType.isPresent()) {
-                    Entity entity = entityType.get().create(structure.world);
-
-                    if (entity != null) {
-                        NbtCompound tagCompound = buildEntity.getEntityDataTag();
-                        BlockPos entityPos = buildEntity.getStartingPosition().getRelativePosition(structure.originalPos,
-                                structure.getClearSpace().getShape().getDirection(), structure.configuration.houseFacing);
-
-                        if (tagCompound != null) {
-                            if (tagCompound.containsUuid("UUID")) {
-                                tagCompound.putUuid("UUID", UUID.randomUUID());
-                            }
-
-                            NbtList nbttaglist = new NbtList();
-                            nbttaglist.add(NbtDouble.of(entityPos.getX()));
-                            nbttaglist.add(NbtDouble.of(entityPos.getY()));
-                            nbttaglist.add(NbtDouble.of(entityPos.getZ()));
-                            tagCompound.put("Pos", nbttaglist);
-
-                            entity.readNbt(tagCompound);
-                        }
-
-                        // Set item frame facing and rotation here.
-                        if (entity instanceof ItemFrameEntity) {
-                            entity = StructureEventHandler.setItemFrameFacingAndRotation((ItemFrameEntity) entity, buildEntity, entityPos, structure);
-                        } else if (entity instanceof PaintingEntity) {
-                            entity = StructureEventHandler.setPaintingFacingAndRotation((PaintingEntity) entity, buildEntity, entityPos, structure);
-                        } else {
-                            // All other entities
-                            entity = StructureEventHandler.setEntityFacingAndRotation(entity, buildEntity, entityPos, structure);
-                        }
-
-                        structure.world.spawnEntity(entity);
-                    }
+                    StructureEventHandler.entitiesToGenerate.add(new Tuple<>(structure, buildEntity));
                 }
             }
 
@@ -384,6 +367,58 @@ public final class StructureEventHandler {
             structure.AfterBuilding(structure.configuration, structure.world, structure.originalPos, structure.assumedNorth, entry.getKey());
             entry.getValue().remove(structure);
         }
+    }
+
+    private static void processStructureEntities() {
+        for (Tuple<Structure, BuildEntity> entityRecords : StructureEventHandler.entitiesToGenerate) {
+            BuildEntity buildEntity = entityRecords.second;
+            Structure structure = entityRecords.first;
+
+            Optional<EntityType<?>> entityType = EntityType.get(buildEntity.getEntityResourceString());
+
+            if (entityType.isPresent()) {
+                Entity entity = entityType.get().create(structure.world);
+
+                if (entity != null) {
+                    NbtCompound tagCompound = buildEntity.getEntityDataTag();
+                    BlockPos entityPos = buildEntity.getStartingPosition().getRelativePosition(structure.originalPos,
+                            structure.getClearSpace().getShape().getDirection(), structure.configuration.houseFacing);
+
+                    if (tagCompound != null) {
+                        if (tagCompound.containsUuid("UUID")) {
+                            tagCompound.putUuid("UUID", UUID.randomUUID());
+                        }
+
+                        NbtList nbttaglist = new NbtList();
+                        nbttaglist.add(NbtDouble.of(entityPos.getX()));
+                        nbttaglist.add(NbtDouble.of(entityPos.getY()));
+                        nbttaglist.add(NbtDouble.of(entityPos.getZ()));
+                        tagCompound.put("Pos", nbttaglist);
+
+                        entity.readNbt(tagCompound);
+                    }
+
+                    // Set item frame facing and rotation here.
+                    if (entity instanceof ItemFrameEntity) {
+                        entity = StructureEventHandler.setItemFrameFacingAndRotation((ItemFrameEntity) entity, buildEntity, entityPos, structure);
+                    } else if (entity instanceof PaintingEntity) {
+                        entity = StructureEventHandler.setPaintingFacingAndRotation((PaintingEntity) entity, buildEntity, entityPos, structure);
+                    } else if (entity instanceof AbstractMinecartEntity) {
+                        // Minecarts need to be slightly higher to account for the rails; otherwise they will fall through the rail and the block below the rail.
+                        buildEntity.entityYAxisOffset = buildEntity.entityYAxisOffset + .2;
+                        entity = StructureEventHandler.setEntityFacingAndRotation(entity, buildEntity, entityPos, structure);
+                    } else {
+                        // All other entities
+                        entity = StructureEventHandler.setEntityFacingAndRotation(entity, buildEntity, entityPos, structure);
+                    }
+
+                    structure.world.spawnEntity(entity);
+                }
+            }
+        }
+
+        // All entities generated; clear out the list.
+        StructureEventHandler.entitiesToGenerate.clear();
     }
 
     private static void removeWaterLogging(Structure structure) {
