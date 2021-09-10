@@ -50,13 +50,6 @@ public class StarterFarmOptions extends BaseOption {
             false,
             false);
 
-    public static StarterFarmOptions MushroomFarm = new StarterFarmOptions(
-            "prefab.gui.starter.farm.mushroom",
-            "assets/prefab/structures/mushroom_farm.zip",
-            "textures/gui/mushroom_farm_topdown.png",
-            false,
-            false);
-
     public static StarterFarmOptions RabbitHutch = new StarterFarmOptions(
             "prefab.gui.starter.farm.rabbit",
             "assets/prefab/structures/rabbit_hutch.zip",
