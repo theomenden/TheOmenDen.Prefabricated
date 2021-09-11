@@ -204,12 +204,14 @@ public class ModRegistry {
     }
 
     private static void registerBlockEntities() {
-        /*StructureScannerEntityType = Registry.register(
+        if (Prefab.isDebug) {
+        StructureScannerEntityType = Registry.register(
                 Registry.BLOCK_ENTITY_TYPE,
                 "prefab:structure_scanner_entity",
                 FabricBlockEntityTypeBuilder
                         .create(StructureScannerBlockEntity::new, ModRegistry.StructureScanner)
-                        .build(null));*/
+                        .build(null));
+        }
     }
 
     private static void registerBlocks() {
@@ -234,7 +236,9 @@ public class ModRegistry {
         ModRegistry.registerBlock("block_dirt_stairs", ModRegistry.DirtStairs);
         ModRegistry.registerBlock("block_dirt_slab", ModRegistry.DirtSlab);
 
-        //ModRegistry.registerBlock("block_structure_scanner", ModRegistry.StructureScanner);
+        if (Prefab.isDebug) {
+            ModRegistry.registerBlock("block_structure_scanner", ModRegistry.StructureScanner);
+        }
     }
 
     private static void registerItems() {
@@ -334,7 +338,9 @@ public class ModRegistry {
         ModRegistry.registerItem("block_dirt_stairs", ModRegistry.DirtStairsItem);
         ModRegistry.registerItem("block_dirt_slab", ModRegistry.DirtSlabItem);
 
-        //ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
+        if (Prefab.isDebug) {
+            ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
+        }
     }
 
     /**
