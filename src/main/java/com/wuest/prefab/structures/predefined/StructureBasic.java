@@ -46,13 +46,6 @@ public class StructureBasic extends Structure {
                     originalPos,
                     this.getClearSpace().getShape().getDirection(),
                     configuration.houseFacing);
-        } else if (foundBlock instanceof FenceGateBlock && structureName.equals(EnumBasicStructureName.StarterFarm.getName()) && chosenOption == StarterFarmOptions.ChickenCoop) {
-            this.customBlockPos = block.getStartingPosition().getRelativePosition(
-                            originalPos,
-                            this.getClearSpace().getShape().getDirection(),
-                            configuration.houseFacing)
-                    .offset(configuration.houseFacing.getOpposite(), 2)
-                    .up();
         } else if (foundBlock instanceof TrapdoorBlock && structureName.equals(EnumBasicStructureName.MineshaftEntrance.getName())) {
             this.customBlockPos = block.getStartingPosition().getRelativePosition(
                     originalPos,
@@ -146,12 +139,7 @@ public class StructureBasic extends Structure {
                     entity.setPos(this.customBlockPos.getX(), this.customBlockPos.up().getY(), this.customBlockPos.getZ());
                     world.spawnEntity(entity);
                 }
-            } else if (structureName.equals(EnumBasicStructureName.StarterFarm.getName()) && chosenOption == StarterFarmOptions.ChickenCoop) {
-                // For the advanced chicken coop, spawn 4 chickens above the hopper.
-                ChickenEntity entity = new ChickenEntity(EntityType.CHICKEN, world);
-                entity.setPos(this.customBlockPos.getX(), this.customBlockPos.down().getY(), this.customBlockPos.getZ());
-                world.spawnEntity(entity);
-            } else if (structureName.equals(EnumBasicStructureName.MineshaftEntrance.getName())
+            }else if (structureName.equals(EnumBasicStructureName.MineshaftEntrance.getName())
                     || structureName.equals(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getName())) {
                 // Build the mineshaft where the trap door exists.
                 BuildingMethods.PlaceMineShaft(world, this.customBlockPos.down(), configuration.houseFacing, true);
