@@ -2,7 +2,7 @@
 	"parent": "block/cube_bottom_top",
    "textures": {
         "side": "prefab:items/item_crate_side",
-        "bottom": "prefab:items/item_crate_carrot",
+        "bottom": "prefab:items/item_crate_side",
         "top": "prefab:items/item_crate_carrot"
     },
 	"display": {
