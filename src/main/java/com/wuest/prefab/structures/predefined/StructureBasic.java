@@ -73,7 +73,7 @@ public class StructureBasic extends Structure {
 
         Identifier foundBlockIdentifier = Registry.BLOCK.getId(foundBlock);
         if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS).getNamespace())
-                && foundBlockIdentifier.getPath().endsWith("stained_glass")
+                && foundBlockIdentifier.getPath().endsWith("glass")
                 && config.chosenOption.getHasGlassColor()) {
             blockState = this.getStainedGlassBlock(config.glassColor);
             block.setBlockState(blockState);
@@ -81,7 +81,7 @@ public class StructureBasic extends Structure {
 
             return true;
         } else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
-                && foundBlockIdentifier.getPath().endsWith("stained_glass_pane")
+                && foundBlockIdentifier.getPath().endsWith("glass_pane")
                 && config.chosenOption.getHasGlassColor()) {
             blockState = this.getStainedGlassPaneBlock(config.glassColor);
 

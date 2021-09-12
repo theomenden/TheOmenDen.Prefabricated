@@ -218,7 +218,7 @@ public class StructureAlternateStart extends Structure {
 
 		Identifier foundBlockIdentifier = Registry.BLOCK.getId(foundBlock);
 		if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS).getNamespace())
-				&& foundBlockIdentifier.getPath().endsWith("stained_glass")) {
+				&& foundBlockIdentifier.getPath().endsWith("glass")) {
 			blockState = this.getStainedGlassBlock(houseConfig.glassColor);
 
 			block.setBlockState(blockState);
@@ -226,7 +226,7 @@ public class StructureAlternateStart extends Structure {
 
 			return true;
 		} else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
-				&& foundBlockIdentifier.getPath().endsWith("stained_glass_pane")) {
+				&& foundBlockIdentifier.getPath().endsWith("glass_pane")) {
 			blockState = this.getStainedGlassPaneBlock(houseConfig.glassColor);
 
 			BuildBlock.SetBlockState(
