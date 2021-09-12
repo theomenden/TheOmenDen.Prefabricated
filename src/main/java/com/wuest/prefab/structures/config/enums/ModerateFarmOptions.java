@@ -1,5 +1,10 @@
 package com.wuest.prefab.structures.config.enums;
 
+import com.wuest.prefab.Prefab;
+
+import java.util.ArrayList;
+
+@SuppressWarnings({"unchecked", "unused"})
 public class ModerateFarmOptions extends BaseOption{
     public static ModerateFarmOptions AutomatedChickenCoop = new ModerateFarmOptions(
             "prefab.gui.moderate.farm.chicken",
@@ -54,5 +59,25 @@ public class ModerateFarmOptions extends BaseOption{
                 pictureLocation,
                 hasBedColor,
                 hasGlassColor);
+    }
+
+    /**
+     * Filters the supplied options to remove any options not available based on configuration.
+     *
+     * @param originalOptions The original options to filter.
+     * @return A modified array list which potentially has some items removed.
+     */
+    @Override
+    public ArrayList<BaseOption> filterOptions(ArrayList<BaseOption> originalOptions) {
+        if (!Prefab.serverConfiguration.enableAutomationOptionsFromModerateFarm) {
+            ArrayList<BaseOption> modifiedList = (ArrayList<BaseOption>)originalOptions.clone();
+            modifiedList.remove(ModerateFarmOptions.SugarCaneFarm);
+            modifiedList.remove(ModerateFarmOptions.AutomatedFarm);
+            modifiedList.remove(ModerateFarmOptions.AutomatedChickenCoop);
+
+            return modifiedList;
+        }
+
+        return originalOptions;
     }
 }

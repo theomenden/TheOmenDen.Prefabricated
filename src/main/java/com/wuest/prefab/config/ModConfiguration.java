@@ -12,25 +12,28 @@ import java.util.Map;
 @Config(name = "Prefab")
 public class ModConfiguration implements ConfigData {
 
-    @Comment("Item provided to new players when joining a world.")
+    @Comment("Item provided to new players when joining a world")
     public StartingItemOptions startingItem = StartingItemOptions.StartingHouse;
 
-    @Comment("Enables the loft starter house.")
+    @Comment("Enables the loft starter house")
     public boolean enableLoftHouse = false;
 
-    @Comment("Add spawners to monster masher.")
+    @Comment("Add spawners to monster masher")
     public boolean includeSpawnersInMasher = true;
 
-    @Comment("Enables preview buttons in screens.")
+    @Comment("Enables preview buttons in screens")
     public boolean enableStructurePreview = true;
 
-    @Comment("Bulldozer makes drops.")
+    @Comment("Bulldozer makes drops")
     public boolean allowBulldozerToCreateDrops = true;
 
     @Comment("Allow water in the End or Custom Dimensions")
     public boolean allowWaterInNonOverworldDimensions = true;
 
-    @Comment("Generated mineshafts have chests with materials.")
+    @Comment("Enable Automation Options For Moderate Farm")
+    public boolean enableAutomationOptionsFromModerateFarm = true;
+
+    @Comment("Generated mineshafts have chests with materials")
     public boolean includeMineshaftChest = true;
 
     @ConfigEntry.Category("recipes")
@@ -60,6 +63,7 @@ public class ModConfiguration implements ConfigData {
         tag.putBoolean(ConfigKeyNames.includeMineshaftChestName, this.includeMineshaftChest);
         tag.putBoolean(ConfigKeyNames.allowBulldozerToCreateDropsName, this.allowBulldozerToCreateDrops);
         tag.putBoolean(ConfigKeyNames.allowWaterInNonOverworldDimensionsName, this.allowWaterInNonOverworldDimensions);
+        tag.putBoolean(ConfigKeyNames.enableAutomationOptionsFromModerateFarmName, this.enableAutomationOptionsFromModerateFarm);
 
         tag.putBoolean(ConfigKeyNames.addSwordName, this.chestOptions.addSword);
         tag.putBoolean(ConfigKeyNames.addAxeName, this.chestOptions.addAxe);
@@ -97,6 +101,7 @@ public class ModConfiguration implements ConfigData {
         this.includeMineshaftChest = tag.getBoolean(ConfigKeyNames.includeMineshaftChestName);
         this.allowBulldozerToCreateDrops = tag.getBoolean(ConfigKeyNames.allowBulldozerToCreateDropsName);
         this.allowWaterInNonOverworldDimensions = tag.getBoolean(ConfigKeyNames.allowWaterInNonOverworldDimensionsName);
+        this.enableAutomationOptionsFromModerateFarm = tag.getBoolean(ConfigKeyNames.enableAutomationOptionsFromModerateFarmName);
 
         this.chestOptions.addSword = tag.getBoolean(ConfigKeyNames.addSwordName);
         this.chestOptions.addAxe = tag.getBoolean(ConfigKeyNames.addAxeName);
@@ -164,19 +169,10 @@ public class ModConfiguration implements ConfigData {
         public static String compressedChestKey = "Compressed Chest";
         public static String pileOfBricksKey = "Pile of Bricks";
         public static String warehouseKey = "Warehouse";
-        public static String produceFarmKey = "Produce Farm";
-        public static String treeFarmKey = "Tree Farm";
-        public static String chickenCoopKey = "Chicken Coop";
-        public static String fishFarmKey = "Fish Farm";
         public static String warehouseUpgradeKey = "Warehouse Upgrade";
         public static String advancedWarehouseKey = "Advanced Warehouse";
-        public static String monsterMasherKey = "Monster Masher";
         public static String bundleofTimberKey = "Bundle of Timber";
-        public static String horseStableKey = "Horse Stable";
         public static String netherGateKey = "Nether Gate";
-        public static String advancedChickenCoopKey = "Advanced Chicken Coop";
-        public static String advancedHorseStableKey = "Advanced Horse Stable";
-        public static String barnKey = "Barn";
         public static String machineryTowerKey = "Machinery Tower";
         public static String defenseBunkerKey = "Defense Bunker";
         public static String mineshaftEntranceKey = "Mineshaft Entrance";
@@ -197,7 +193,6 @@ public class ModConfiguration implements ConfigData {
         public static String moderateHouseKey = "Moderate House";
         public static String watchTowerKey = "Watch Tower";
         public static String bulldozerKey = "Bulldozer";
-        public static String structurePartKey = "StructurePart";
         public static String jailKey = "Jail";
         public static String saloonKey = "Saloon";
         public static String skiLodgeKey = "Ski Lodge";
@@ -205,7 +200,6 @@ public class ModConfiguration implements ConfigData {
         public static String townHallKey = "Town Hall";
         public static String heapOfTimberKey = "Heap of Timber";
         public static String tonOfTimberKey = "Ton of Timber";
-        public static String sugarCaneFarmKey = "Sugar Cane Farm";
         public static String workshopKey = "Workshop";
         public static String modernBuildingsKey = "Modern Buildings";
         public static String starterFarmKey = "Starter Farm";
@@ -221,15 +215,15 @@ public class ModConfiguration implements ConfigData {
 
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
-                        ConfigKeyNames.warehouseKey, ConfigKeyNames.produceFarmKey, ConfigKeyNames.treeFarmKey, ConfigKeyNames.chickenCoopKey, ConfigKeyNames.fishFarmKey,
-                        ConfigKeyNames.warehouseUpgradeKey, ConfigKeyNames.advancedWarehouseKey, ConfigKeyNames.monsterMasherKey, ConfigKeyNames.bundleofTimberKey, ConfigKeyNames.horseStableKey,
-                        ConfigKeyNames.netherGateKey, ConfigKeyNames.advancedChickenCoopKey, ConfigKeyNames.advancedHorseStableKey, ConfigKeyNames.barnKey,
+                        ConfigKeyNames.warehouseKey,
+                        ConfigKeyNames.warehouseUpgradeKey, ConfigKeyNames.advancedWarehouseKey, ConfigKeyNames.bundleofTimberKey,
+                        ConfigKeyNames.netherGateKey,
                         ConfigKeyNames.machineryTowerKey, ConfigKeyNames.defenseBunkerKey, ConfigKeyNames.mineshaftEntranceKey, ConfigKeyNames.enderGatewayKey, ConfigKeyNames.magicTempleKey,
                         ConfigKeyNames.instantBridgeKey, ConfigKeyNames.paperLanternKey, ConfigKeyNames.compressedObsidianKey, ConfigKeyNames.villagerHousesKey,
                         ConfigKeyNames.phasicBlockKey, ConfigKeyNames.smartGlassKey, ConfigKeyNames.greenHouseKey, ConfigKeyNames.startingHouseKey, ConfigKeyNames.glassStairsKey,
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
-                        ConfigKeyNames.bulldozerKey, ConfigKeyNames.structurePartKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
-                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.sugarCaneFarmKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey,
+                        ConfigKeyNames.bulldozerKey,ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
+                        ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey,
                         ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey, ConfigKeyNames.DirtRecipesKey, ConfigKeyNames.BunchOfBeetsKey, ConfigKeyNames.BunchOfCarrotsKey, ConfigKeyNames.BunchOfPotatoesKey,
                         ConfigKeyNames.WoodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey};
 
@@ -238,6 +232,10 @@ public class ModConfiguration implements ConfigData {
         static String includeSpawnersInMasherName = "Include Spawners in Monster Masher";
         static String enableStructurePreviewName = "Include Structure Previews";
         static String includeMineshaftChestName = "Include Mineshaft Chest";
+        static String enableAutomationOptionsFromModerateFarmName = "Enable Automation Options For Moderate Farm";
+        static String allowBulldozerToCreateDropsName = "Bulldozer Creates Drops";
+        static String allowWaterInNonOverworldDimensionsName = "Include Water In Overworld Dimension Only";
+
         // Chest content option names.
         static String addSwordName = "Add Sword";
         static String addAxeName = "Add Axe";
@@ -252,6 +250,7 @@ public class ModConfiguration implements ConfigData {
         static String addSaplingsName = "Add Saplings";
         static String addTorchesName = "Add Torches";
         static String startingItemName = "Starting Item";
+
         // Starter House option names.
         static String addBedName = "Add Bed";
         static String addCraftingTableName = "Add Crafting Table";
@@ -259,7 +258,5 @@ public class ModConfiguration implements ConfigData {
         static String addChestsName = "Add Chests";
         static String addChestContentsName = "Add Chest Contents";
         static String addMineshaftName = "Add Mineshaft";
-        static String allowBulldozerToCreateDropsName = "Bulldozer Creates Drops";
-        static String allowWaterInNonOverworldDimensionsName = "Include Water In Overworld Dimension Only";
     }
 }

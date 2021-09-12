@@ -5,6 +5,7 @@
   "text.autoconfig.Prefab.option.enableStructurePreview": "Activer l'aperçu de la structure",
   "text.autoconfig.Prefab.option.allowBulldozerToCreateDrops": "L'excavatrice crée des gouttes",
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "L'eau dans des dimensions hors du monde",
+  "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "options d'automatisation dans une ferme modérée",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Inclure le coffre de puits de mine",
   "text.autoconfig.Prefab.option.startingItem": "Élément de départ",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Ajouter une épée",

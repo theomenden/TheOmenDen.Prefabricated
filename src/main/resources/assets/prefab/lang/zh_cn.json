@@ -5,6 +5,7 @@
   "text.autoconfig.Prefab.option.enableStructurePreview": "启用结构预览",
   "text.autoconfig.Prefab.option.allowBulldozerToCreateDrops": "挖掘机产生水滴",
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "非主世界维度的水",
+  "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "中等农场的自动化选项",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "包括矿井保险箱",
   "text.autoconfig.Prefab.option.startingItem": "起始项目",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "添加剑",

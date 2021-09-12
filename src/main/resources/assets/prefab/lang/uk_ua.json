@@ -5,6 +5,7 @@
     "text.autoconfig.Prefab.option.enableStructurePreview": "Увімкнути перегляд структур",
     "text.autoconfig.Prefab.option.allowBulldozerToCreateDrops": "Випадання блоків у бульдозері",
     "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Дозволяти воду в вимірах крім верхнього світу",
+    "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "варіанти автоматизації в помірних фермах",
     "text.autoconfig.Prefab.option.includeMineshaftChest": "Додати скриню у шахти",
     "text.autoconfig.Prefab.option.startingItem": "Початковий предмет",
     "text.autoconfig.Prefab.option.chestOptions.addSword": "Додати меч",
