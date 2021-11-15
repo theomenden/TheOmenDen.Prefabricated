@@ -21,7 +21,7 @@ public class ItemWoodenCrate extends Item {
         this.crateType = crateType;
     }
 
-    private static ItemBlockWoodenCrate getRecipeRemainderForCrateType(CrateType crateType) {
+    public static ItemBlockWoodenCrate getRecipeRemainderForCrateType(CrateType crateType) {
         if (crateType.isCrateOfFood) {
             return ModRegistry.ItemEmptyCrate;
         }
