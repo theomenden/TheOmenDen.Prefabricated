@@ -4,6 +4,7 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.Utils;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.structures.base.*;
 import com.wuest.prefab.structures.config.HouseConfiguration;
@@ -31,7 +32,6 @@ public class StructureAlternateStart extends Structure {
 	private BlockPos chestPosition = null;
 	private BlockPos furnacePosition = null;
 	private BlockPos trapDoorPosition = null;
-	private BlockPos signPosition = null;
 	private ArrayList<Tuple<BlockPos, BlockPos>> bedPositions = new ArrayList<>();
 
 	public static void ScanBasicHouseStructure(World world, BlockPos originalPos, Direction playerFacing) {
@@ -194,11 +194,6 @@ public class StructureAlternateStart extends Structure {
 					originalPos,
 					this.getClearSpace().getShape().getDirection(),
 					configuration.houseFacing);
-		} else if (foundBlock instanceof SignBlock) {
-			this.signPosition = block.getStartingPosition().getRelativePosition(
-					originalPos,
-					this.getClearSpace().getShape().getDirection(),
-					configuration.houseFacing);
 		} else if (foundBlock == Blocks.SPONGE && houseConfig.addMineShaft) {
 			// Sponges are sometimes used in-place of trapdoors when trapdoors are used for decoration.
 			this.trapDoorPosition = block.getStartingPosition().getRelativePosition(
@@ -213,32 +208,6 @@ public class StructureAlternateStart extends Structure {
 					configuration.houseFacing);
 
 			this.bedPositions.add(new Tuple<>(bedHeadPosition, bedFootPosition));
-			return true;
-		}
-
-		Identifier foundBlockIdentifier = Registry.BLOCK.getId(foundBlock);
-		if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS).getNamespace())
-				&& foundBlockIdentifier.getPath().endsWith("glass")) {
-			blockState = this.getStainedGlassBlock(houseConfig.glassColor);
-
-			block.setBlockState(blockState);
-			this.priorityOneBlocks.add(block);
-
-			return true;
-		} else if (foundBlockIdentifier.getNamespace().equals(Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE).getNamespace())
-				&& foundBlockIdentifier.getPath().endsWith("glass_pane")) {
-			blockState = this.getStainedGlassPaneBlock(houseConfig.glassColor);
-
-			BuildBlock.SetBlockState(
-					configuration,
-					world,
-					originalPos,
-					assumedNorth,
-					block,
-					foundBlock,
-					blockState, this);
-
-			this.priorityOneBlocks.add(block);
 			return true;
 		}
 
@@ -277,23 +246,6 @@ public class StructureAlternateStart extends Structure {
 			BuildingMethods.PlaceMineShaft(world, this.trapDoorPosition.down(), houseConfig.houseFacing, false);
 		}
 
-		if (this.signPosition != null) {
-			BlockEntity tileEntity = world.getBlockEntity(this.signPosition);
-
-			if (tileEntity instanceof SignBlockEntity) {
-				SignBlockEntity signTile = (SignBlockEntity) tileEntity;
-				signTile.setTextOnRow(0, Utils.createTextComponent ("This is"));
-
-				if (player.getDisplayName().getString().length() >= 15) {
-					signTile.setTextOnRow(1, Utils.createTextComponent (player.getDisplayName().getString()));
-				} else {
-					signTile.setTextOnRow(1, Utils.createTextComponent (player.getDisplayName().getString() + "'s"));
-				}
-
-				signTile.setTextOnRow(2, Utils.createTextComponent ("house!"));
-			}
-		}
-
 		if (this.bedPositions.size() > 0 && houseConfig.addBed) {
 			for (Tuple<BlockPos, BlockPos> bedPosition : this.bedPositions) {
 				BuildingMethods.PlaceColoredBed(world, bedPosition.getFirst(), bedPosition.getSecond(), houseConfig.bedColor);
@@ -306,5 +258,16 @@ public class StructureAlternateStart extends Structure {
 		// Make sure to send a message to the client to sync up the server player information and the client player
 		// information.
 		ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ModRegistry.PlayerConfigSync, Utils.createMessageBuffer(playerConfig.createPlayerTag()));
+	}
+
+	@Override
+	protected boolean hasGlassColor(StructureConfiguration configuration) {
+		return true;
+	}
+
+	@Override
+	protected FullDyeColor getGlassColor(StructureConfiguration configuration) {
+		HouseConfiguration houseConfig = (HouseConfiguration) configuration;
+		return houseConfig.glassColor;
 	}
 }

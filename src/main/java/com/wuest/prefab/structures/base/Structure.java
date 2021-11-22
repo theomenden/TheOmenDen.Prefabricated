@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
+import com.wuest.prefab.Tuple;
 import com.wuest.prefab.ZipUtil;
+import com.wuest.prefab.blocks.BlockFlags;
 import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.StructureConfiguration;
@@ -34,6 +36,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
 import java.io.StringWriter;
@@ -390,6 +394,7 @@ public class Structure {
             // First, clear the area where the structure will be built.
             this.ClearSpace(configuration, world, originalPos, assumedNorth);
 
+            ArrayList<Tuple<BlockState, BlockPos>> laterBlocks = new ArrayList<>();
             boolean blockPlacedWithCobbleStoneInstead = false;
 
             // Now place all of the blocks.
@@ -403,7 +408,11 @@ public class Structure {
                     // Check if water should be replaced with cobble.
                     if (!this.WaterReplacedWithCobbleStone(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)
                             && !this.CustomBlockProcessingHandled(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)) {
-                        block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, foundBlock, blockState, this);
+
+                        // Set the glass color if this structure can have the glass configured.
+                        if (!this.processedGlassBlock(configuration, block, world, originalPos, foundBlock)) {
+                            block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, foundBlock, blockState, this);
+                        }
 
                         if (block.getSubBlock() != null) {
                             foundBlock = Registry.BLOCK.get(block.getSubBlock().getResourceLocation());
@@ -412,63 +421,25 @@ public class Structure {
                             subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block.getSubBlock(), foundBlock, blockState, this);
                         }
 
-                        if (subBlock != null) {
-                            block.setSubBlock(subBlock);
+                        BlockPos setBlockPos = block.getStartingPosition().getRelativePosition(originalPos,
+                                this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
+
+                        Block blockToPlace = block.getBlockState().getBlock();
+                        VoxelShape shape = blockToPlace.getCollisionShape(block.getBlockState(), world, setBlockPos, ShapeContext.absent());
+
+                        // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
+                        // Fluid blocks may not have collision but they should always be placed.
+                        if (shape == VoxelShapes.empty() && !(blockToPlace instanceof FluidBlock)) {
+                            laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
+                        } else {
+                            world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
                         }
 
-                        boolean priorityTwoBlock = foundBlock instanceof HopperBlock || foundBlock instanceof LeverBlock;
+                        if (subBlock != null) {
+                            BlockPos subBlockPos = subBlock.getStartingPosition().getRelativePosition(originalPos,
+                                    this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
 
-                        boolean priorityThreeBlock = foundBlock instanceof TorchBlock
-                                || foundBlock instanceof AbstractSignBlock
-                                || foundBlock instanceof AbstractButtonBlock
-                                || foundBlock instanceof BedBlock
-                                || foundBlock instanceof CarpetBlock
-                                || foundBlock instanceof FlowerPotBlock
-                                || foundBlock instanceof SugarCaneBlock
-                                || foundBlock instanceof AbstractPressurePlateBlock
-                                || foundBlock instanceof DoorBlock
-                                || foundBlock instanceof LadderBlock
-                                || foundBlock instanceof VineBlock
-                                || foundBlock instanceof RedstoneWireBlock
-                                || foundBlock instanceof AbstractRedstoneGateBlock
-                                || foundBlock instanceof AbstractBannerBlock
-                                || foundBlock instanceof LanternBlock
-                                || foundBlock instanceof MushroomBlock
-                                || foundBlock instanceof AbstractRailBlock;
-
-                        boolean priorityFourBlock = foundBlock instanceof SandBlock;
-
-                        boolean priorityFiveBlock = foundBlock instanceof SugarCaneBlock ||
-                                foundBlock instanceof CactusBlock
-                                || foundBlock instanceof DeadBushBlock
-                                || foundBlock instanceof CoralBlock
-                                || foundBlock instanceof RedstoneTorchBlock;
-
-                        if (!block.getHasFacing()) {
-                            if (subBlock != null) {
-                                block.setSubBlock(subBlock);
-                            }
-
-                            if (priorityFiveBlock) {
-                                this.priorityFiveBlocks.add(block);
-                            } else if (priorityFourBlock) {
-                                this.priorityFourBlocks.add(block);
-                            } else if (priorityThreeBlock) {
-                                this.priorityThreeBlocks.add(block);
-                            } else if (foundBlock instanceof AirBlock) {
-                                this.airBlocks.add(block);
-                            } else if (foundBlock instanceof BlockEntityProvider || priorityTwoBlock) {
-                                this.priorityTwoBlocks.add(block);
-                            } else {
-                                this.priorityOneBlocks.add(block);
-                            }
-                        } else {
-                            // These blocks may be attached to other facing blocks and must be done later.
-                            if (priorityThreeBlock) {
-                                this.priorityThreeBlocks.add(block);
-                            } else {
-                                this.priorityTwoBlocks.add(block);
-                            }
+                            world.setBlockState(subBlockPos, subBlock.getBlockState(), BlockFlags.DEFAULT);
                         }
                     }
                 } else {
@@ -486,6 +457,10 @@ public class Structure {
                                         + blockTypeNotFound + "]");
                     }
                 }
+            }
+
+            for (Tuple<BlockState, BlockPos> block : laterBlocks) {
+                world.setBlockState(block.getSecond(), block.getFirst(), BlockFlags.DEFAULT);
             }
 
             this.configuration = configuration;
@@ -514,118 +489,6 @@ public class Structure {
     }
 
     public void BeforeHangingEntityRemoved(AbstractDecorationEntity hangingEntity) {
-    }
-
-    public BlockState getStainedGlassBlock(FullDyeColor color) {
-        switch (color) {
-            case BLACK: {
-                return Blocks.BLACK_STAINED_GLASS.getDefaultState();
-            }
-            case BLUE: {
-                return Blocks.BLUE_STAINED_GLASS.getDefaultState();
-            }
-            case BROWN: {
-                return Blocks.BROWN_STAINED_GLASS.getDefaultState();
-            }
-            case GRAY: {
-                return Blocks.GRAY_STAINED_GLASS.getDefaultState();
-            }
-            case GREEN: {
-                return Blocks.GREEN_STAINED_GLASS.getDefaultState();
-            }
-            case LIGHT_BLUE: {
-                return Blocks.LIGHT_BLUE_STAINED_GLASS.getDefaultState();
-            }
-            case LIGHT_GRAY: {
-                return Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState();
-            }
-            case LIME: {
-                return Blocks.LIME_STAINED_GLASS.getDefaultState();
-            }
-            case MAGENTA: {
-                return Blocks.MAGENTA_STAINED_GLASS.getDefaultState();
-            }
-            case ORANGE: {
-                return Blocks.ORANGE_STAINED_GLASS.getDefaultState();
-            }
-            case PINK: {
-                return Blocks.PINK_STAINED_GLASS.getDefaultState();
-            }
-            case PURPLE: {
-                return Blocks.PURPLE_STAINED_GLASS.getDefaultState();
-            }
-            case RED: {
-                return Blocks.RED_STAINED_GLASS.getDefaultState();
-            }
-            case WHITE: {
-                return Blocks.WHITE_STAINED_GLASS.getDefaultState();
-            }
-            case YELLOW: {
-                return Blocks.YELLOW_STAINED_GLASS.getDefaultState();
-            }
-            case CLEAR: {
-                return Blocks.GLASS.getDefaultState();
-            }
-            default: {
-                return Blocks.CYAN_STAINED_GLASS.getDefaultState();
-            }
-        }
-    }
-
-    public BlockState getStainedGlassPaneBlock(FullDyeColor color) {
-        switch (color) {
-            case BLACK: {
-                return Blocks.BLACK_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case BLUE: {
-                return Blocks.BLUE_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case BROWN: {
-                return Blocks.BROWN_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case GRAY: {
-                return Blocks.GRAY_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case GREEN: {
-                return Blocks.GREEN_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case LIGHT_BLUE: {
-                return Blocks.LIGHT_BLUE_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case LIGHT_GRAY: {
-                return Blocks.LIGHT_GRAY_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case LIME: {
-                return Blocks.LIME_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case MAGENTA: {
-                return Blocks.MAGENTA_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case ORANGE: {
-                return Blocks.ORANGE_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case PINK: {
-                return Blocks.PINK_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case PURPLE: {
-                return Blocks.PURPLE_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case RED: {
-                return Blocks.RED_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case WHITE: {
-                return Blocks.WHITE_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case YELLOW: {
-                return Blocks.YELLOW_STAINED_GLASS_PANE.getDefaultState();
-            }
-            case CLEAR: {
-                return Blocks.GLASS_PANE.getDefaultState();
-            }
-            default: {
-                return Blocks.CYAN_STAINED_GLASS_PANE.getDefaultState();
-            }
-        }
     }
 
     /**
@@ -738,5 +601,49 @@ public class Structure {
         }
 
         return false;
+    }
+
+    protected boolean processedGlassBlock(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos, Block foundBlock) {
+        if (!this.hasGlassColor(configuration)) {
+            return false;
+        }
+
+        Identifier blockIdentifier = Registry.BLOCK.getId(foundBlock);
+        Identifier glassIdentifier = Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS);
+        Identifier glassPaneIdentifier = Registry.BLOCK.getId(Blocks.WHITE_STAINED_GLASS_PANE);
+
+        if (blockIdentifier.getNamespace().equals(glassIdentifier.getNamespace())
+                && blockIdentifier.getPath().endsWith("glass")) {
+            BlockState blockState = BuildingMethods.getStainedGlassBlock(this.getGlassColor(configuration));
+
+            block.setBlockState(blockState);
+
+            return true;
+        } else if (blockIdentifier.getNamespace().equals(glassPaneIdentifier.getNamespace())
+                && blockIdentifier.getPath().endsWith("glass_pane")) {
+            BlockState blockState = BuildingMethods.getStainedGlassPaneBlock(this.getGlassColor(configuration));
+
+            BuildBlock.SetBlockState(
+                    configuration,
+                    world,
+                    originalPos,
+                    assumedNorth,
+                    block,
+                    foundBlock,
+                    blockState,
+                    this);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected boolean hasGlassColor(StructureConfiguration configuration) {
+        return false;
+    }
+
+    protected FullDyeColor getGlassColor(StructureConfiguration configuration) {
+        return FullDyeColor.CLEAR;
     }
 }

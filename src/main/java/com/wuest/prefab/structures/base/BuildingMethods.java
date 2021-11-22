@@ -5,6 +5,7 @@ import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Triple;
 import com.wuest.prefab.Tuple;
+import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.config.ModConfiguration;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.*;
@@ -248,7 +249,6 @@ public class BuildingMethods {
 
 		return new Triple<>(true, null, null);
 	}
-
 	/**
 	 * This method places a bed with the specified color and at the specified location.
 	 *
@@ -756,5 +756,116 @@ public class BuildingMethods {
 		}
 
 		return new Tuple<>(originalStacks, torchPositions);
+	}
+	public static BlockState getStainedGlassBlock(FullDyeColor color) {
+		switch (color) {
+			case BLACK: {
+				return Blocks.BLACK_STAINED_GLASS.getDefaultState();
+			}
+			case BLUE: {
+				return Blocks.BLUE_STAINED_GLASS.getDefaultState();
+			}
+			case BROWN: {
+				return Blocks.BROWN_STAINED_GLASS.getDefaultState();
+			}
+			case GRAY: {
+				return Blocks.GRAY_STAINED_GLASS.getDefaultState();
+			}
+			case GREEN: {
+				return Blocks.GREEN_STAINED_GLASS.getDefaultState();
+			}
+			case LIGHT_BLUE: {
+				return Blocks.LIGHT_BLUE_STAINED_GLASS.getDefaultState();
+			}
+			case LIGHT_GRAY: {
+				return Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState();
+			}
+			case LIME: {
+				return Blocks.LIME_STAINED_GLASS.getDefaultState();
+			}
+			case MAGENTA: {
+				return Blocks.MAGENTA_STAINED_GLASS.getDefaultState();
+			}
+			case ORANGE: {
+				return Blocks.ORANGE_STAINED_GLASS.getDefaultState();
+			}
+			case PINK: {
+				return Blocks.PINK_STAINED_GLASS.getDefaultState();
+			}
+			case PURPLE: {
+				return Blocks.PURPLE_STAINED_GLASS.getDefaultState();
+			}
+			case RED: {
+				return Blocks.RED_STAINED_GLASS.getDefaultState();
+			}
+			case WHITE: {
+				return Blocks.WHITE_STAINED_GLASS.getDefaultState();
+			}
+			case YELLOW: {
+				return Blocks.YELLOW_STAINED_GLASS.getDefaultState();
+			}
+			case CLEAR: {
+				return Blocks.GLASS.getDefaultState();
+			}
+			default: {
+				return Blocks.CYAN_STAINED_GLASS.getDefaultState();
+			}
+		}
+	}
+
+	public static BlockState getStainedGlassPaneBlock(FullDyeColor color) {
+		switch (color) {
+			case BLACK: {
+				return Blocks.BLACK_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case BLUE: {
+				return Blocks.BLUE_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case BROWN: {
+				return Blocks.BROWN_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case GRAY: {
+				return Blocks.GRAY_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case GREEN: {
+				return Blocks.GREEN_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case LIGHT_BLUE: {
+				return Blocks.LIGHT_BLUE_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case LIGHT_GRAY: {
+				return Blocks.LIGHT_GRAY_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case LIME: {
+				return Blocks.LIME_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case MAGENTA: {
+				return Blocks.MAGENTA_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case ORANGE: {
+				return Blocks.ORANGE_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case PINK: {
+				return Blocks.PINK_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case PURPLE: {
+				return Blocks.PURPLE_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case RED: {
+				return Blocks.RED_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case WHITE: {
+				return Blocks.WHITE_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case YELLOW: {
+				return Blocks.YELLOW_STAINED_GLASS_PANE.getDefaultState();
+			}
+			case CLEAR: {
+				return Blocks.GLASS_PANE.getDefaultState();
+			}
+			default: {
+				return Blocks.CYAN_STAINED_GLASS_PANE.getDefaultState();
+			}
+		}
 	}
 }
