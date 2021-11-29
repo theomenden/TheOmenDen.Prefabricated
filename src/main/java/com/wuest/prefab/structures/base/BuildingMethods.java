@@ -258,102 +258,108 @@ public class BuildingMethods {
 	 * @param bedColor   The color of the bed to place.
 	 */
 	public static void PlaceColoredBed(World world, BlockPos bedHeadPos, BlockPos bedFootPos, DyeColor bedColor) {
+		Tuple<BlockState, BlockState> bedStates = BuildingMethods.getBedState(bedHeadPos, bedFootPos, bedColor);
+		BuildingMethods.ReplaceBlock(world, bedHeadPos, bedStates.getFirst());
+		BuildingMethods.ReplaceBlock(world, bedFootPos, bedStates.getSecond());
+	}
+
+	public static Tuple<BlockState, BlockState> getBedState(BlockPos bedHeadPos, BlockPos bedFootPos, DyeColor bedColor) {
+		BlockState bedHead = null;
 		BlockState bedFoot = null;
-		BedBlock bedBlock = null;
 
 		switch (bedColor) {
 			case BLACK: {
-				bedBlock = (BedBlock) Blocks.BLACK_BED;
-				bedFoot = Blocks.BLACK_BED.getDefaultState();
+				bedHead = Blocks.BLACK_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.BLACK_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 			case BLUE: {
-				bedBlock = (BedBlock) Blocks.BLUE_BED;
-				bedFoot = Blocks.BLUE_BED.getDefaultState();
+				bedHead = Blocks.BLUE_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.BLUE_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case BROWN: {
-				bedBlock = (BedBlock) Blocks.BROWN_BED;
-				bedFoot = Blocks.BROWN_BED.getDefaultState();
+				bedHead = Blocks.BROWN_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.BROWN_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case CYAN: {
-				bedBlock = (BedBlock) Blocks.CYAN_BED;
-				bedFoot = Blocks.CYAN_BED.getDefaultState();
+				bedHead = Blocks.CYAN_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.CYAN_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case GRAY: {
-				bedBlock = (BedBlock) Blocks.GRAY_BED;
-				bedFoot = Blocks.GRAY_BED.getDefaultState();
+				bedHead = Blocks.GRAY_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.GRAY_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case GREEN: {
-				bedBlock = (BedBlock) Blocks.GREEN_BED;
-				bedFoot = Blocks.GREEN_BED.getDefaultState();
+				bedHead = Blocks.GREEN_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.GREEN_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case LIGHT_BLUE: {
-				bedBlock = (BedBlock) Blocks.LIGHT_BLUE_BED;
-				bedFoot = Blocks.LIGHT_BLUE_BED.getDefaultState();
+				bedHead = Blocks.LIGHT_BLUE_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.LIGHT_BLUE_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case LIGHT_GRAY: {
-				bedBlock = (BedBlock) Blocks.LIGHT_GRAY_BED;
-				bedFoot = Blocks.LIGHT_GRAY_BED.getDefaultState();
+				bedHead = Blocks.LIGHT_GRAY_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.LIGHT_GRAY_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case LIME: {
-				bedBlock = (BedBlock) Blocks.LIME_BED;
-				bedFoot = Blocks.LIME_BED.getDefaultState();
+				bedHead = Blocks.LIME_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.LIME_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case MAGENTA: {
-				bedBlock = (BedBlock) Blocks.MAGENTA_BED;
-				bedFoot = Blocks.MAGENTA_BED.getDefaultState();
+				bedHead = Blocks.MAGENTA_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.MAGENTA_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case ORANGE: {
-				bedBlock = (BedBlock) Blocks.ORANGE_BED;
-				bedFoot = Blocks.ORANGE_BED.getDefaultState();
+				bedHead = Blocks.ORANGE_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.ORANGE_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case PINK: {
-				bedBlock = (BedBlock) Blocks.PINK_BED;
-				bedFoot = Blocks.PINK_BED.getDefaultState();
+				bedHead = Blocks.PINK_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.PINK_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case PURPLE: {
-				bedBlock = (BedBlock) Blocks.PURPLE_BED;
-				bedFoot = Blocks.PURPLE_BED.getDefaultState();
+				bedHead = Blocks.PURPLE_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.PURPLE_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case RED: {
-				bedBlock = (BedBlock) Blocks.RED_BED;
-				bedFoot = Blocks.RED_BED.getDefaultState();
+				bedHead = Blocks.RED_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.RED_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case WHITE: {
-				bedBlock = (BedBlock) Blocks.WHITE_BED;
-				bedFoot = Blocks.WHITE_BED.getDefaultState();
+				bedHead = Blocks.WHITE_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.WHITE_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 
 			case YELLOW: {
-				bedBlock = (BedBlock) Blocks.YELLOW_BED;
-				bedFoot = Blocks.YELLOW_BED.getDefaultState();
+				bedHead = Blocks.YELLOW_BED.getDefaultState().with(BedBlock.PART, BedPart.HEAD);
+				bedFoot = Blocks.YELLOW_BED.getDefaultState().with(BedBlock.PART, BedPart.FOOT);
 				break;
 			}
 		}
@@ -366,16 +372,10 @@ public class BuildingMethods {
 			tempPos = bedHeadPos.offset(direction);
 		}
 
-		Direction facingDirection = direction.getOpposite();
-		bedFoot = bedFoot.with(BedBlock.FACING, facingDirection);
+		bedHead = bedHead.with(BedBlock.FACING, direction.getOpposite());
+		bedFoot = bedFoot.with(BedBlock.FACING, direction.getOpposite());
 
-		// Remove the bed blocks before setting the new color bed bocks.
-		// This way a bed item entity doesn't get generated.
-		world.setBlockState(bedHeadPos, Blocks.AIR.getDefaultState(), 35);
-		world.setBlockState(bedFootPos, Blocks.AIR.getDefaultState(), 35);
-
-		BuildingMethods.ReplaceBlock(world, bedFootPos, bedFoot);
-		bedBlock.onPlaced(world,bedFootPos,bedFoot,null, ItemStack.EMPTY);
+		return new Tuple<>(bedHead, bedFoot);
 	}
 
 	/**

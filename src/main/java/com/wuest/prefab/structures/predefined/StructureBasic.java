@@ -10,19 +10,14 @@ import com.wuest.prefab.structures.config.BasicStructureConfiguration.EnumBasicS
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.config.enums.BaseOption;
 import com.wuest.prefab.structures.config.enums.ModerateFarmOptions;
-import com.wuest.prefab.structures.config.enums.StarterFarmOptions;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
 
 /**
  * This is the basic structure to be used for structures which don't need a lot of configuration or a custom player
@@ -32,7 +27,6 @@ import java.util.ArrayList;
  */
 public class StructureBasic extends Structure {
     private BlockPos customBlockPos = null;
-    private ArrayList<Tuple<BlockPos, BlockPos>> bedPositions = new ArrayList<>();
 
     @Override
     protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos,
@@ -67,8 +61,11 @@ public class StructureBasic extends Structure {
                     this.getClearSpace().getShape().getDirection(),
                     configuration.houseFacing);
 
-            this.bedPositions.add(new Tuple<>(bedHeadPosition, bedFootPosition));
+            Tuple<BlockState, BlockState> blockStateTuple = BuildingMethods.getBedState(bedHeadPosition, bedFootPosition, config.bedColor);
+            block.setBlockState(blockStateTuple.getFirst());
+            block.getSubBlock().setBlockState(blockStateTuple.getSecond());
 
+            this.priorityOneBlocks.add(block);
             return true;
         }
 
@@ -112,19 +109,13 @@ public class StructureBasic extends Structure {
                     entity.setPos(this.customBlockPos.getX(), this.customBlockPos.up().getY(), this.customBlockPos.getZ());
                     world.spawnEntity(entity);
                 }
-            }else if (structureName.equals(EnumBasicStructureName.MineshaftEntrance.getName())
+            } else if (structureName.equals(EnumBasicStructureName.MineshaftEntrance.getName())
                     || structureName.equals(BasicStructureConfiguration.EnumBasicStructureName.WorkShop.getName())) {
                 // Build the mineshaft where the trap door exists.
                 BuildingMethods.PlaceMineShaft(world, this.customBlockPos.down(), configuration.houseFacing, true);
             }
 
             this.customBlockPos = null;
-        }
-
-        if (this.bedPositions.size() > 0) {
-            for (Tuple<BlockPos, BlockPos> bedPosition : this.bedPositions) {
-                BuildingMethods.PlaceColoredBed(world, bedPosition.getFirst(), bedPosition.getSecond(), config.bedColor);
-            }
         }
 
         if (structureName.equals(EnumBasicStructureName.AquaBase.getName())

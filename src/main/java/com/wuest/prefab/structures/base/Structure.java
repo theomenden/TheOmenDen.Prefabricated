@@ -3,10 +3,7 @@ package com.wuest.prefab.structures.base;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
-import com.wuest.prefab.Prefab;
-import com.wuest.prefab.Triple;
-import com.wuest.prefab.Tuple;
-import com.wuest.prefab.ZipUtil;
+import com.wuest.prefab.*;
 import com.wuest.prefab.blocks.BlockFlags;
 import com.wuest.prefab.blocks.FullDyeColor;
 import com.wuest.prefab.gui.GuiLangKeys;
@@ -24,6 +21,7 @@ import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.Style;
@@ -52,12 +50,8 @@ import java.util.Collection;
 @SuppressWarnings({"unchecked", "WeakerAccess", "ConstantConditions"})
 public class Structure {
     public ArrayList<BlockPos> allBlockPositions = new ArrayList<>();
-    public ArrayList<BlockPos> clearedBlockPos = new ArrayList<BlockPos>();
-    public ArrayList<BuildBlock> priorityOneBlocks = new ArrayList<BuildBlock>();
-    public ArrayList<BuildBlock> priorityTwoBlocks = new ArrayList<>();
-    public ArrayList<BuildBlock> priorityThreeBlocks = new ArrayList<>();
-    public ArrayList<BuildBlock> priorityFourBlocks = new ArrayList<>();
-    public ArrayList<BuildBlock> priorityFiveBlocks = new ArrayList<>();
+    public ArrayList<BlockPos> clearedBlockPos = new ArrayList<>();
+    public ArrayList<BuildBlock> priorityOneBlocks = new ArrayList<>();
     public ArrayList<BuildBlock> airBlocks = new ArrayList<>();
     public StructureConfiguration configuration;
     public ServerWorld world;
@@ -67,9 +61,9 @@ public class Structure {
     public boolean entitiesRemoved = false;
 
     @Expose
-    public ArrayList<BuildTileEntity> tileEntities = new ArrayList<BuildTileEntity>();
+    public ArrayList<BuildTileEntity> tileEntities = new ArrayList<>();
     @Expose
-    public ArrayList<BuildEntity> entities = new ArrayList<BuildEntity>();
+    public ArrayList<BuildEntity> entities = new ArrayList<>();
     @Expose
     private String name;
     @Expose
@@ -90,7 +84,7 @@ public class Structure {
      * @return Null if the resource wasn't found or the JSON could not be parsed, otherwise the de-serialized object.
      */
     public static <T extends Structure> T CreateInstance(String resourceLocation, Class<? extends Structure> child) {
-        T structure = null;
+        T structure;
 
         Gson file = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         structure = (T) file.fromJson(ZipUtil.decompressResource(resourceLocation), child);
@@ -219,7 +213,7 @@ public class Structure {
 
             if (entity instanceof AbstractDecorationEntity) {
                 // Use the AbstractDecorationEntity getDecorationBlockPos function instead since it is more accurate for itemframes and paintings.
-                entityPos = ((AbstractDecorationEntity)entity).getDecorationBlockPos();
+                entityPos = ((AbstractDecorationEntity) entity).getDecorationBlockPos();
             }
 
             if (entityPos.getX() >= x_radiusRangeBegin && entityPos.getX() <= x_radiusRangeEnd
@@ -368,7 +362,8 @@ public class Structure {
      */
     public boolean BuildStructure(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
         BlockPos startBlockPos = this.clearSpace.getStartingPosition().getRelativePosition(originalPos, this.clearSpace.getShape().getDirection(), configuration.houseFacing);
-        BlockPos endBlockPos = startBlockPos.offset(configuration.houseFacing.rotateYCounterclockwise(), this.clearSpace.getShape().getWidth() - 1)
+        BlockPos endBlockPos = startBlockPos
+                .offset(configuration.houseFacing.rotateYCounterclockwise(), this.clearSpace.getShape().getWidth() - 1)
                 .offset(configuration.houseFacing.getOpposite(), this.clearSpace.getShape().getWidth() - 1)
                 .offset(Direction.UP, this.clearSpace.getShape().getHeight());
 
@@ -390,91 +385,105 @@ public class Structure {
             return false;
         }
 
+        // Play the building sound.
+        world.playSound(null, originalPos, ModRegistry.BuildingBlueprint, SoundCategory.NEUTRAL, 0.8f, 0.8f);
+
         if (!this.BeforeBuilding(configuration, world, originalPos, assumedNorth, player)) {
-            // First, clear the area where the structure will be built.
-            this.ClearSpace(configuration, world, originalPos, assumedNorth);
+            try {
+                // First, clear the area where the structure will be built.
+                this.ClearSpace(configuration, world, startBlockPos, endBlockPos);
 
-            ArrayList<Tuple<BlockState, BlockPos>> laterBlocks = new ArrayList<>();
-            boolean blockPlacedWithCobbleStoneInstead = false;
+                ArrayList<Tuple<BlockState, BlockPos>> laterBlocks = new ArrayList<>();
+                boolean blockPlacedWithCobbleStoneInstead = false;
 
-            // Now place all of the blocks.
-            for (BuildBlock block : this.getBlocks()) {
-                Block foundBlock = Registry.BLOCK.get(block.getResourceLocation());
+                // Now place all of the blocks.
+                for (BuildBlock block : this.getBlocks()) {
+                    Block foundBlock = Registry.BLOCK.get(block.getResourceLocation());
 
-                if (foundBlock != null) {
-                    BlockState blockState = foundBlock.getDefaultState();
-                    BuildBlock subBlock = null;
+                    if (foundBlock != null) {
+                        BlockState blockState = foundBlock.getDefaultState();
+                        BuildBlock subBlock = null;
 
-                    // Check if water should be replaced with cobble.
-                    if (!this.WaterReplacedWithCobbleStone(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)
-                            && !this.CustomBlockProcessingHandled(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)) {
+                        // Check if water should be replaced with cobble.
+                        if (!this.WaterReplacedWithCobbleStone(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)
+                                && !this.CustomBlockProcessingHandled(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)) {
+                            // Set the glass color if this structure can have the glass configured.
+                            if (!this.processedGlassBlock(configuration, block, world, originalPos, foundBlock)) {
+                                block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, foundBlock, blockState, this);
+                            }
 
-                        // Set the glass color if this structure can have the glass configured.
-                        if (!this.processedGlassBlock(configuration, block, world, originalPos, foundBlock)) {
-                            block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, foundBlock, blockState, this);
-                        }
+                            if (block.getSubBlock() != null) {
+                                foundBlock = Registry.BLOCK.get(block.getSubBlock().getResourceLocation());
+                                blockState = foundBlock.getDefaultState();
 
-                        if (block.getSubBlock() != null) {
-                            foundBlock = Registry.BLOCK.get(block.getSubBlock().getResourceLocation());
-                            blockState = foundBlock.getDefaultState();
+                                subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block.getSubBlock(), foundBlock, blockState, this);
+                            }
 
-                            subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block.getSubBlock(), foundBlock, blockState, this);
-                        }
-
-                        BlockPos setBlockPos = block.getStartingPosition().getRelativePosition(originalPos,
-                                this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
-
-                        Block blockToPlace = block.getBlockState().getBlock();
-                        VoxelShape shape = blockToPlace.getCollisionShape(block.getBlockState(), world, setBlockPos, ShapeContext.absent());
-
-                        // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
-                        // Fluid blocks may not have collision but they should always be placed.
-                        if (shape == VoxelShapes.empty() && !(blockToPlace instanceof FluidBlock)) {
-                            laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
-                        } else {
-                            world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
-                        }
-
-                        if (subBlock != null) {
-                            BlockPos subBlockPos = subBlock.getStartingPosition().getRelativePosition(originalPos,
+                            BlockPos setBlockPos = block.getStartingPosition().getRelativePosition(originalPos,
                                     this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
 
-                            world.setBlockState(subBlockPos, subBlock.getBlockState(), BlockFlags.DEFAULT);
+                            Block blockToPlace = block.getBlockState().getBlock();
+                            VoxelShape shape = blockToPlace.getCollisionShape(block.getBlockState(), world, setBlockPos, ShapeContext.absent());
+
+                            // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
+                            // Fluid blocks may not have collision but they should always be placed.
+                            if (shape == VoxelShapes.empty() && !(blockToPlace instanceof FluidBlock)) {
+                                laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
+                            } else {
+                                world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
+                            }
+
+                            if (subBlock != null) {
+                                BlockPos subBlockPos = subBlock.getStartingPosition().getRelativePosition(originalPos,
+                                        this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
+
+                                world.setBlockState(subBlockPos, subBlock.getBlockState(), BlockFlags.DEFAULT);
+                            }
+                        }
+                    } else {
+                        // Cannot find this block in the registry. This can happen if a structure file has a mod block that
+                        // no longer exists.
+                        // In this case, print an informational message and replace it with cobblestone.
+                        String blockTypeNotFound = block.getResourceLocation().toString();
+                        block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, Blocks.COBBLESTONE, Blocks.COBBLESTONE.getDefaultState(), this);
+                        this.priorityOneBlocks.add(block);
+
+                        if (!blockPlacedWithCobbleStoneInstead) {
+                            blockPlacedWithCobbleStoneInstead = true;
+                            Prefab.logger
+                                    .warn("A Block was in the structure, but it is not registered. This block was replaced with vanilla cobblestone instead. Block type not found: ["
+                                            + blockTypeNotFound + "]");
                         }
                     }
-                } else {
-                    // Cannot find this block in the registry. This can happen if a structure file has a mod block that
-                    // no longer exists.
-                    // In this case, print an informational message and replace it with cobblestone.
-                    String blockTypeNotFound = block.getResourceLocation().toString();
-                    block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, Blocks.COBBLESTONE, Blocks.COBBLESTONE.getDefaultState(), this);
-                    this.priorityOneBlocks.add(block);
-
-                    if (!blockPlacedWithCobbleStoneInstead) {
-                        blockPlacedWithCobbleStoneInstead = true;
-                        Prefab.logger
-                                .warn("A Block was in the structure, but it is not registered. This block was replaced with vanilla cobblestone instead. Block type not found: ["
-                                        + blockTypeNotFound + "]");
-                    }
                 }
+
+                for (Tuple<BlockState, BlockPos> block : laterBlocks) {
+                    world.setBlockState(block.getSecond(), block.getFirst(), BlockFlags.DEFAULT);
+                }
+
+                this.configuration = configuration;
+                this.world = world;
+                this.assumedNorth = assumedNorth;
+                this.originalPos = originalPos;
+
+                this.AfterBuilding(this.configuration, this.world, this.originalPos, this.assumedNorth, player);
+            } catch (Exception ex) {
+                Prefab.logger.error(ex);
             }
 
-            for (Tuple<BlockState, BlockPos> block : laterBlocks) {
-                world.setBlockState(block.getSecond(), block.getFirst(), BlockFlags.DEFAULT);
+            for (BlockPos pos : BlockPos.iterate(startBlockPos, endBlockPos)) {
+                Block block = world.getBlockState(pos).getBlock();
+                world.updateNeighbors(pos, block);
             }
-
-            this.configuration = configuration;
-            this.world = world;
-            this.assumedNorth = assumedNorth;
-            this.originalPos = originalPos;
 
             if (StructureEventHandler.structuresToBuild.containsKey(player)) {
                 StructureEventHandler.structuresToBuild.get(player).add(this);
             } else {
-                ArrayList<Structure> structures = new ArrayList<Structure>();
+                ArrayList<Structure> structures = new ArrayList<>();
                 structures.add(this);
                 StructureEventHandler.structuresToBuild.put(player, structures);
             }
+
         }
 
         return true;
@@ -518,23 +527,15 @@ public class Structure {
     public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
     }
 
-    protected void ClearSpace(StructureConfiguration configuration, World world, BlockPos originalPos, Direction assumedNorth) {
+    protected void ClearSpace(StructureConfiguration configuration, World world, BlockPos startBlockPos, BlockPos endBlockPos) {
         if (this.clearSpace.getShape().getWidth() > 0
                 && this.clearSpace.getShape().getLength() > 0) {
-            BlockPos startBlockPos = this.clearSpace.getStartingPosition().getRelativePosition(originalPos, this.clearSpace.getShape().getDirection(), configuration.houseFacing);
-
-            BlockPos endBlockPos = startBlockPos
-                    .offset(configuration.houseFacing.getOpposite().rotateYClockwise(), this.clearSpace.getShape().getWidth() - 1)
-                    .offset(configuration.houseFacing.getOpposite(), this.clearSpace.getShape().getLength() - 1)
-                    .offset(Direction.UP, this.clearSpace.getShape().getHeight());
 
             this.clearedBlockPos = new ArrayList<>();
 
             for (BlockPos pos : BlockPos.iterate(startBlockPos, endBlockPos)) {
-
                 if (this.BlockShouldBeClearedDuringConstruction(configuration, world, originalPos, assumedNorth, pos)) {
-                    this.clearedBlockPos.add(new BlockPos(pos));
-                    this.allBlockPositions.add(new BlockPos(pos));
+                    world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 }
             }
         } else {
@@ -594,8 +595,10 @@ public class Structure {
                 block.setBlockName(cobbleIdentifier.getPath());
                 block.setBlockState(Blocks.COBBLESTONE.getDefaultState());
 
-                // Add this as a priority 3 block since it should be done at the end.
-                this.priorityThreeBlocks.add(block);
+                BlockPos setBlockPos = block.getStartingPosition().getRelativePosition(originalPos,
+                        this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
+
+                world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
                 return true;
             }
         }

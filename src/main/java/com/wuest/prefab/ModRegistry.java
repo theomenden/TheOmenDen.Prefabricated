@@ -24,6 +24,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -196,7 +197,12 @@ public class ModRegistry {
     public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
     public static final RecipeSerializer<ConditionedShaplessRecipe> ConditionedShapelessRecipeSeriaizer = new ConditionedShaplessRecipe.Serializer();
 
+    /* *********************************** Sounds *********************************** */
+    public static final SoundEvent BuildingBlueprint = new SoundEvent(new Identifier(Prefab.MODID, "building_blueprint"));
+
     public static void registerModComponents() {
+        ModRegistry.registerSounds();
+
         ModRegistry.registerBlockEntities();
 
         ModRegistry.registerBlocks();
@@ -210,6 +216,11 @@ public class ModRegistry {
         ModRegistry.RegisterClientToServerMessageHandlers();
 
         ModRegistry.RegisterRecipeSerializers();
+    }
+
+    private static void registerSounds()
+    {
+        Registry.register(Registry.SOUND_EVENT, new Identifier(Prefab.MODID, "building_blueprint"), ModRegistry.BuildingBlueprint);
     }
 
     private static void registerBlockEntities() {
