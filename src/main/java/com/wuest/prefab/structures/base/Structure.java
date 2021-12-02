@@ -364,7 +364,7 @@ public class Structure {
         BlockPos startBlockPos = this.clearSpace.getStartingPosition().getRelativePosition(originalPos, this.clearSpace.getShape().getDirection(), configuration.houseFacing);
         BlockPos endBlockPos = startBlockPos
                 .offset(configuration.houseFacing.rotateYCounterclockwise(), this.clearSpace.getShape().getWidth() - 1)
-                .offset(configuration.houseFacing.getOpposite(), this.clearSpace.getShape().getWidth() - 1)
+                .offset(configuration.houseFacing.getOpposite(), this.clearSpace.getShape().getLength() - 1)
                 .offset(Direction.UP, this.clearSpace.getShape().getHeight());
 
         // Make sure this structure can be placed here.
