@@ -8,6 +8,7 @@
     "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "Увімкнути автоматичні ферми в Невеличких Фермах",
     "text.autoconfig.Prefab.option.includeMineshaftChest": "Додати скриню у шахти",
     "text.autoconfig.Prefab.option.startingItem": "Початковий предмет",
+    "text.autoconfig.Prefab.option.playBuildingSound": "відтворювати звук під час створення плану",
     "text.autoconfig.Prefab.option.chestOptions.addSword": "Додати меч",
     "text.autoconfig.Prefab.option.chestOptions.addAxe": "Додати сокиру",
     "text.autoconfig.Prefab.option.chestOptions.addShovel": "Додати лопату",

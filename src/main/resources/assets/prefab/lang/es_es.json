@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "opciones de automatización en finca moderada",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Incluir cofre de eje de mina",
   "text.autoconfig.Prefab.option.startingItem": "Artículo inicial",
+  "text.autoconfig.Prefab.option.playBuildingSound": "reproducir sonido al generar un plano",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Agregar espada",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "Agregar hacha",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "Agregar pala",

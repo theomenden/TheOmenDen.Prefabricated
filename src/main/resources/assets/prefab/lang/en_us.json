@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "Automation Options In Moderate Farm",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Include Mineshaft Chest",
   "text.autoconfig.Prefab.option.startingItem": "Starting Item",
+  "text.autoconfig.Prefab.option.playBuildingSound": "Play Sound When Generating Blueprint",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Add Sword",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "Add Axe",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "Add Shovel",

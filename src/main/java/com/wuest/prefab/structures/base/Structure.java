@@ -385,8 +385,10 @@ public class Structure {
             return false;
         }
 
-        // Play the building sound.
-        world.playSound(null, originalPos, ModRegistry.BuildingBlueprint, SoundCategory.NEUTRAL, 0.8f, 0.8f);
+        if (Prefab.serverConfiguration.playBuildingSound) {
+            // Play the building sound.
+            world.playSound(null, originalPos, ModRegistry.BuildingBlueprint, SoundCategory.NEUTRAL, 0.8f, 0.8f);
+        }
 
         if (!this.BeforeBuilding(configuration, world, originalPos, assumedNorth, player)) {
             try {

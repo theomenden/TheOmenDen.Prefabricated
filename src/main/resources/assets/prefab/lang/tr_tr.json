@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "orta ölçekli çiftlikte otomasyon seçenekleri",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Mineshaft Kasasını Dahil Et",
   "text.autoconfig.Prefab.option.startingItem": "Başlangıç Öğesi",
+  "text.autoconfig.Prefab.option.playBuildingSound": "plan oluştururken ses çal",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Kılıç ekle",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "Ax ekle",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "Kürek Ekle",

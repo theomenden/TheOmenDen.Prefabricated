@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "Включить автоматические фермы в Небольших Фермах",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Добавлять сундук в шахты",
   "text.autoconfig.Prefab.option.startingItem": "Начальный предмет",
+  "text.autoconfig.Prefab.option.playBuildingSound": "воспроизведение звука при генерации чертежа",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Добавить меч",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "Добавить топор",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "Добавить лопату",

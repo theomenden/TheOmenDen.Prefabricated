@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "中等農場的自動化選項",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "包括礦井保險箱",
   "text.autoconfig.Prefab.option.startingItem": "起始項目",
+  "text.autoconfig.Prefab.option.playBuildingSound": "生成藍圖時播放聲音",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "添加劍",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "加斧",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "添加鏟子",

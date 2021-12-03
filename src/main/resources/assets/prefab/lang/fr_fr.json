@@ -8,6 +8,7 @@
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "options d'automatisation dans une ferme modérée",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Inclure le coffre de puits de mine",
   "text.autoconfig.Prefab.option.startingItem": "Élément de départ",
+  "text.autoconfig.Prefab.option.playBuildingSound": "jouer du son lors de la génération du plan",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Ajouter une épée",
   "text.autoconfig.Prefab.option.chestOptions.addAxe": "Ajouter une hache",
   "text.autoconfig.Prefab.option.chestOptions.addShovel": "Ajouter une pelle",
