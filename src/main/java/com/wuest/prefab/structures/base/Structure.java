@@ -425,11 +425,10 @@ public class Structure {
                                     this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
 
                             Block blockToPlace = block.getBlockState().getBlock();
-                            VoxelShape shape = blockToPlace.getCollisionShape(block.getBlockState(), world, setBlockPos, ShapeContext.absent());
-
+                            
                             // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
                             // Fluid blocks may not have collision but they should always be placed.
-                            if (shape == VoxelShapes.empty() && !(blockToPlace instanceof FluidBlock)) {
+                            if (blockToPlace.collidable && !(blockToPlace instanceof FluidBlock)) {
                                 laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
                             } else {
                                 world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
