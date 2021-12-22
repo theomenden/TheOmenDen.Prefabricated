@@ -20,6 +20,7 @@ import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
@@ -467,6 +468,9 @@ public class Structure {
                 this.assumedNorth = assumedNorth;
                 this.originalPos = originalPos;
 
+                // Set all the tile entities here.
+                this.setBlockEntities();
+
                 this.AfterBuilding(this.configuration, this.world, this.originalPos, this.assumedNorth, player);
             } catch (Exception ex) {
                 Prefab.logger.error(ex);
@@ -649,5 +653,34 @@ public class Structure {
 
     protected FullDyeColor getGlassColor(StructureConfiguration configuration) {
         return FullDyeColor.CLEAR;
+    }
+
+    protected void setBlockEntities() {
+        try {
+            for (BuildTileEntity buildTileEntity : this.tileEntities) {
+                BlockPos tileEntityPos = buildTileEntity.getStartingPosition().getRelativePosition(this.originalPos,
+                        this.getClearSpace().getShape().getDirection(), this.configuration.houseFacing);
+                BlockEntity tileEntity = this.world.getBlockEntity(tileEntityPos);
+                BlockState tileBlock = this.world.getBlockState(tileEntityPos);
+
+                if (tileEntity == null) {
+                    BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+                } else {
+                    this.world.removeBlockEntity(tileEntityPos);
+                    tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+                    this.world.addBlockEntity(tileEntity);
+                    this.world.getChunk(tileEntityPos).setShouldSave(true);
+                    tileEntity.markDirty();
+                    BlockEntityUpdateS2CPacket packet = tileEntity.toUpdatePacket();
+
+                    if (packet != null) {
+                        this.world.getServer().getPlayerManager().sendToAll(packet);
+                    }
+                }
+            }
+        }
+        catch (Exception ex) {
+            Prefab.logger.error(ex);
+        }
     }
 }
