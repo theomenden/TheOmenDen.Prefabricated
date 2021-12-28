@@ -81,7 +81,7 @@ public class StructureRenderHandler {
 
             VertexConsumerProvider.Immediate entityVertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
 
-            Frustum frustum = new Frustum(matrixStack.peek().getModel(), RenderSystem.getProjectionMatrix());
+            Frustum frustum = new Frustum(matrixStack.peek().getPositionMatrix(), RenderSystem.getProjectionMatrix());
             BlockPos cameraPos = player.getCameraBlockPos();
             frustum.setPosition(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 

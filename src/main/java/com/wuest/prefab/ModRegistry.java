@@ -412,7 +412,7 @@ public class ModRegistry {
                         // This is now on the "main" server thread and things can be done in the world!
                         StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundNBT(message.getMessageTag());
 
-                        configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getServerWorld());
+                        configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getWorld());
                     });
                 }
         );
@@ -424,7 +424,7 @@ public class ModRegistry {
             StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
 
             server.execute(() -> {
-                BlockEntity blockEntity = player.getServerWorld().getBlockEntity(config.blockPos);
+                BlockEntity blockEntity = player.getWorld().getBlockEntity(config.blockPos);
 
                 if (blockEntity instanceof StructureScannerBlockEntity) {
                     StructureScannerBlockEntity actualEntity = (StructureScannerBlockEntity) blockEntity;
@@ -440,7 +440,7 @@ public class ModRegistry {
             StructureScannerConfig config = (new StructureScannerConfig()).ReadFromCompoundNBT(compound);
 
             server.execute(() -> {
-                StructureScannerBlockEntity.ScanShape(config, player, player.getServerWorld());
+                StructureScannerBlockEntity.ScanShape(config, player, player.getWorld());
             });
         });
     }

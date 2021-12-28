@@ -20,7 +20,8 @@ import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
@@ -35,8 +36,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 
 import java.io.StringWriter;
@@ -187,8 +186,7 @@ public class Structure {
                 }
 
                 Identifier resourceLocation = Registry.BLOCK_ENTITY_TYPE.getId(tileEntity.getType());
-                NbtCompound tagCompound = new NbtCompound();
-                tagCompound = tileEntity.writeNbt(tagCompound);
+                NbtCompound tagCompound = tileEntity.createNbt();
 
                 BuildTileEntity buildTileEntity = new BuildTileEntity();
                 assert resourceLocation != null;
@@ -426,7 +424,7 @@ public class Structure {
                                     this.getClearSpace().getShape().getDirection(), configuration.houseFacing);
 
                             Block blockToPlace = block.getBlockState().getBlock();
-                            
+
                             // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
                             // Fluid blocks may not have collision; but they should always be placed.
                             if (!blockToPlace.collidable && !(blockToPlace instanceof FluidBlock)) {
@@ -671,15 +669,14 @@ public class Structure {
                     this.world.addBlockEntity(tileEntity);
                     this.world.getChunk(tileEntityPos).setShouldSave(true);
                     tileEntity.markDirty();
-                    BlockEntityUpdateS2CPacket packet = tileEntity.toUpdatePacket();
+                    Packet<ClientPlayPacketListener> packet = tileEntity.toUpdatePacket();
 
                     if (packet != null) {
                         this.world.getServer().getPlayerManager().sendToAll(packet);
                     }
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Prefab.logger.error(ex);
         }
     }
