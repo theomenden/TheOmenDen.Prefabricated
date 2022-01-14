@@ -1,31 +1,26 @@
 {
-    "conditions": [
-        {
-            "type": "prefab:config_recipe",
-            "recipeKey": "Sickle"
-        }
+  "type": "prefab:condition_crafting_shaped",
+  "config": "Sickle",
+  "group": "Sickle",
+  "pattern": [
+    " a ",
+    "  a",
+    "ba "
+  ],
+  "key": {
+    "a": [
+      {
+        "item": "minecraft:netherite_ingot"
+      }
     ],
-    "type": "minecraft:crafting_shaped",
-    "group": "Sickle",
-    "pattern": [
-        " a ",
-        "  a",
-        "ba "
-    ],
-    "key": {
-        "a": [
-            {
-                "item": "minecraft:netherite_ingot"
-            }
-        ],
-        "b" : [
-            {
-                "item": "minecraft:stick"
-            }
-        ]
-    },
-    "result": {
-        "item": "prefab:item_sickle_netherite",
-        "count": 1
-    }
+    "b": [
+      {
+        "item": "minecraft:stick"
+      }
+    ]
+  },
+  "result": {
+    "item": "prefab:item_sickle_netherite",
+    "count": 1
+  }
 }
