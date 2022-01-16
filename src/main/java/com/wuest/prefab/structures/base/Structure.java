@@ -186,7 +186,7 @@ public class Structure {
                 }
 
                 Identifier resourceLocation = Registry.BLOCK_ENTITY_TYPE.getId(tileEntity.getType());
-                NbtCompound tagCompound = tileEntity.createNbt();
+                NbtCompound tagCompound = tileEntity.createNbtWithId();
 
                 BuildTileEntity buildTileEntity = new BuildTileEntity();
                 assert resourceLocation != null;
