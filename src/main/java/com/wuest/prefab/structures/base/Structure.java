@@ -428,7 +428,7 @@ public class Structure {
                             // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
                             // Fluid blocks may not have collision; but they should always be placed.
                             if ((!blockToPlace.collidable && !(blockToPlace instanceof FluidBlock))
-                            || (blockToPlace instanceof CarpetBlock)){
+                                    || (blockToPlace instanceof CarpetBlock)) {
                                 laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
                             } else {
                                 world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
@@ -655,8 +655,8 @@ public class Structure {
     }
 
     protected void setBlockEntities() {
-        try {
-            for (BuildTileEntity buildTileEntity : this.tileEntities) {
+        for (BuildTileEntity buildTileEntity : this.tileEntities) {
+            try {
                 // Beds are processed separately.
                 if (buildTileEntity.getEntityName().equals("bed")) {
                     continue;
@@ -667,23 +667,27 @@ public class Structure {
                 BlockEntity tileEntity = this.world.getBlockEntity(tileEntityPos);
                 BlockState tileBlock = this.world.getBlockState(tileEntityPos);
 
-                if (tileEntity == null) {
-                    BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
-                } else {
+                if (tileEntity != null) {
                     this.world.removeBlockEntity(tileEntityPos);
-                    tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
-                    this.world.addBlockEntity(tileEntity);
-                    this.world.getChunk(tileEntityPos).setShouldSave(true);
-                    tileEntity.markDirty();
-                    Packet<ClientPlayPacketListener> packet = tileEntity.toUpdatePacket();
-
-                    if (packet != null) {
-                        this.world.getServer().getPlayerManager().sendToAll(packet);
-                    }
                 }
+
+                tileEntity = BlockEntity.createFromNbt(tileEntityPos, tileBlock, buildTileEntity.getEntityDataTag());
+
+                if (tileEntity == null) {
+                    continue;
+                }
+
+                this.world.addBlockEntity(tileEntity);
+                this.world.getChunk(tileEntityPos).setShouldSave(true);
+                tileEntity.markDirty();
+                Packet<ClientPlayPacketListener> packet = tileEntity.toUpdatePacket();
+
+                if (packet != null) {
+                    this.world.getServer().getPlayerManager().sendToAll(packet);
+                }
+            } catch (Exception ex) {
+                Prefab.logger.error(ex);
             }
-        } catch (Exception ex) {
-            Prefab.logger.error(ex);
         }
     }
 }
