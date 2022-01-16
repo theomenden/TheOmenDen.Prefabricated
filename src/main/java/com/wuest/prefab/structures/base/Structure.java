@@ -427,7 +427,8 @@ public class Structure {
 
                             // Some blocks need to happen later because they attach to solid blocks and have no collision logic.
                             // Fluid blocks may not have collision; but they should always be placed.
-                            if (!blockToPlace.collidable && !(blockToPlace instanceof FluidBlock)) {
+                            if ((!blockToPlace.collidable && !(blockToPlace instanceof FluidBlock))
+                            || (blockToPlace instanceof CarpetBlock)){
                                 laterBlocks.add(new Tuple<>(block.getBlockState(), setBlockPos));
                             } else {
                                 world.setBlockState(setBlockPos, block.getBlockState(), BlockFlags.DEFAULT);
