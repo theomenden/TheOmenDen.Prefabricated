@@ -202,6 +202,8 @@
     "prefab.gui.item_modern_cottage": "Котедж",
     "prefab.gui.item_modern_bank": "Банк",
     "prefab.gui.item_modern_tree_house": "Будинок на дереві",
+    "prefab.gui.item_modern_restaurant": "ресторан",
+    "prefab.gui.item_modern_juice_shop": "магазин соків",
 
     "prefab.gui.starter.farm.beef": "Ферма Корів",
     "prefab.gui.starter.farm.berry": "Ферма Ягід",

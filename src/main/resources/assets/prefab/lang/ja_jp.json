@@ -202,6 +202,8 @@
   "prefab.gui.item_modern_cottage": "コテージ",
   "prefab.gui.item_modern_bank": "銀行",
   "prefab.gui.item_modern_tree_house": "樹上の家",
+  "prefab.gui.item_modern_restaurant": "飲食店",
+  "prefab.gui.item_modern_juice_shop": "ジュースショップ",
 
   "prefab.gui.starter.farm.beef": "ビーフファーム",
   "prefab.gui.starter.farm.berry": "ベリーファーム",

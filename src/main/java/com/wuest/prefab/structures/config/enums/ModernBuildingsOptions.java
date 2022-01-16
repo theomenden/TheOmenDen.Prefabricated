@@ -92,6 +92,20 @@ public class ModernBuildingsOptions extends BaseOption{
             true,
             true);
 
+    public static ModernBuildingsOptions Restaurant = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_restaurant",
+            "assets/prefab/structures/modern_restaurant.zip",
+            "textures/gui/modern_restaurant_topdown.png",
+            true,
+            true);
+
+    public static ModernBuildingsOptions JuiceShop = new ModernBuildingsOptions(
+            "prefab.gui.item_modern_juice_shop",
+            "assets/prefab/structures/modern_juice_shop.zip",
+            "textures/gui/modern_juice_shop_topdown.png",
+            true,
+            true);
+
     protected ModernBuildingsOptions(String translationString,
                           String assetLocation,
                           String pictureLocation,

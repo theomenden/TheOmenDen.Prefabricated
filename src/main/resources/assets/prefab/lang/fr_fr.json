@@ -194,6 +194,8 @@
   "prefab.gui.item_modern_cottage": "Cottage",
   "prefab.gui.item_modern_bank": "Banque",
   "prefab.gui.item_modern_tree_house": "Cabane dans les arbres",
+  "prefab.gui.item_modern_restaurant": "le restaurant",
+  "prefab.gui.item_modern_juice_shop": "magasin de jus",
 
   "prefab.gui.starter.farm.beef": "Ferme de boeuf",
   "prefab.gui.starter.farm.berry": "ferme de baies",

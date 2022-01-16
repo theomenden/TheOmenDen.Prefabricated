@@ -202,6 +202,8 @@
   "prefab.gui.item_modern_cottage": "Villetta",
   "prefab.gui.item_modern_bank": "Banca",
   "prefab.gui.item_modern_tree_house": "Casa sull'albero",
+  "prefab.gui.item_modern_restaurant": "ristorante",
+  "prefab.gui.item_modern_juice_shop": "negozio di succhi",
 
   "prefab.gui.starter.farm.beef": "Fattoria di manzo",
   "prefab.gui.starter.farm.berry": "fattoria di bacche",

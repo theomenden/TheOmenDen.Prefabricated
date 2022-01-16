@@ -203,6 +203,8 @@
   "prefab.gui.item_modern_cottage": "Kulübe",
   "prefab.gui.item_modern_bank": "Banka",
   "prefab.gui.item_modern_tree_house": "Ağaç ev",
+  "prefab.gui.item_modern_restaurant": "restoran",
+  "prefab.gui.item_modern_juice_shop": "meyve suyu dükkanı",
 
   "prefab.gui.starter.farm.beef": "sığır çiftliği",
   "prefab.gui.starter.farm.berry": "dut çiftliği",

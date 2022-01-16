@@ -202,6 +202,8 @@
   "prefab.gui.item_modern_cottage": "小屋",
   "prefab.gui.item_modern_bank": "银行",
   "prefab.gui.item_modern_tree_house": "树屋",
+  "prefab.gui.item_modern_restaurant": "餐厅",
+  "prefab.gui.item_modern_juice_shop": "果汁店",
 
   "prefab.gui.starter.farm.beef": "牛肉农场",
   "prefab.gui.starter.farm.berry": "浆果农场",

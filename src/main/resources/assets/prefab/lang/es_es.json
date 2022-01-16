@@ -194,6 +194,8 @@
   "prefab.gui.item_modern_cottage": "Cabaña",
   "prefab.gui.item_modern_bank": "Banco",
   "prefab.gui.item_modern_tree_house": "Casa del árbol",
+  "prefab.gui.item_modern_restaurant": "restaurante",
+  "prefab.gui.item_modern_juice_shop": "tienda de jugos",
 
   "prefab.gui.starter.farm.beef": "Granja de carne",
   "prefab.gui.starter.farm.berry": "granja de bayas",
