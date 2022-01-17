@@ -134,6 +134,18 @@
   "block.prefab.block_dirt_wall": "Mur de terre",
   "block.prefab.block_grass_wall": "Mur d'herbe",
 
+  "block.prefab.block_quartz_crete": "Béton Quartz",
+  "block.prefab.block_quartz_crete_wall": "Mur de quartz en béton",
+  "block.prefab.block_quartz_crete_bricks": "Briques de quartz en bétons",
+  "block.prefab.block_quartz_crete_chiseled": "Quartz Béton Ciselé",
+  "block.prefab.block_quartz_crete_pillar": "Pilier de quartz en béton",
+  "block.prefab.block_quartz_crete_stairs": "Escaliers en béton et quartz",
+  "block.prefab.block_quartz_crete_slab": "Dalle de quartz en béton",
+  "block.prefab.block_quartz_crete_smooth": "Quartz Béton Lisse",
+  "block.prefab.block_quartz_crete_smooth_wall": "Mur de quartz en béton lisse",
+  "block.prefab.block_quartz_crete_smooth_stairs": "Escalier de quartz en béton lisse",
+  "block.prefab.block_quartz_crete_smooth_slab": "Dalle de quartz en béton lisse",
+
   "block.prefab.block_structure_scanner": "Structure Scanner",
 
   "prefab.gui.producefarm.structure.size": "Cette structure est 32x32 blocs de taille.",

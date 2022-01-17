@@ -134,6 +134,18 @@
   "block.prefab.block_dirt_wall": "土牆",
   "block.prefab.block_grass_wall": "草牆",
 
+  "block.prefab.block_quartz_crete": "混凝土石英",
+  "block.prefab.block_quartz_crete_wall": "混凝土石英牆",
+  "block.prefab.block_quartz_crete_bricks": "混凝土石英磚",
+  "block.prefab.block_quartz_crete_chiseled": "鑿刻混凝土石英",
+  "block.prefab.block_quartz_crete_pillar": "混凝土石英柱",
+  "block.prefab.block_quartz_crete_stairs": "混凝土石英樓梯",
+  "block.prefab.block_quartz_crete_slab": "混凝土石英板",
+  "block.prefab.block_quartz_crete_smooth": "光滑混凝土石英",
+  "block.prefab.block_quartz_crete_smooth_wall": "光滑混凝土石英牆",
+  "block.prefab.block_quartz_crete_smooth_stairs": "光滑的混凝土石英樓梯",
+  "block.prefab.block_quartz_crete_smooth_slab": "光滑混凝土石英板",
+
   "block.prefab.block_structure_scanner": "Structure Scanner",
 
   "prefab.gui.cleared_area": "在你朝的方向會有一塊區域被清空。",

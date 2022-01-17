@@ -134,6 +134,18 @@
   "block.prefab.block_dirt_wall": "汚れた壁",
   "block.prefab.block_grass_wall": "草の壁",
 
+  "block.prefab.block_quartz_crete": "コンクリートクォーツ",
+  "block.prefab.block_quartz_crete_wall": "コンクリート石英壁",
+  "block.prefab.block_quartz_crete_bricks": "コンクリートクォーツレンガ",
+  "block.prefab.block_quartz_crete_chiseled": "彫りのあるコンクリートクォーツ",
+  "block.prefab.block_quartz_crete_pillar": "コンクリートクォーツピラー",
+  "block.prefab.block_quartz_crete_stairs": "コンクリートクォーツ階段",
+  "block.prefab.block_quartz_crete_slab": "コンクリートクォーツスラブ",
+  "block.prefab.block_quartz_crete_smooth": "滑らかなコンクリートクォーツ",
+  "block.prefab.block_quartz_crete_smooth_wall": "滑らかなコンクリート石英壁",
+  "block.prefab.block_quartz_crete_smooth_stairs": "滑らかなコンクリートクォーツ階段",
+  "block.prefab.block_quartz_crete_smooth_slab": "滑らかなコンクリートクォーツスラブ",
+
   "block.prefab.block_structure_scanner": "Structure Scanner",
 
   "prefab.gui.cleared_area": "クリアされたエリアは、あなたが向いている方向になります。",

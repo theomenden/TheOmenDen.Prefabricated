@@ -212,11 +212,12 @@ public class ModConfiguration implements ConfigData {
         public static String advancedFarmKey = "Advanced Farm";
         public static String swiftBladeKey = "Swift Blade";
         public static String sickleKey = "Sickle";
-        public static String DirtRecipesKey = "Dirt Recipes";
-        public static String BunchOfBeetsKey = "Bunch Of Beets";
-        public static String BunchOfCarrotsKey = "Bunch Of Carrots";
-        public static String BunchOfPotatoesKey = "Bunch Of Potatoes";
-        public static String WoodenCrateKey = "WoodenCrate";
+        public static String dirtRecipesKey = "Dirt Recipes";
+        public static String bunchOfBeetsKey = "Bunch Of Beets";
+        public static String bunchOfCarrotsKey = "Bunch Of Carrots";
+        public static String bunchOfPotatoesKey = "Bunch Of Potatoes";
+        public static String woodenCrateKey = "WoodenCrate";
+        public static String quartzCreteKey = "Quartz-Crete";
 
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
@@ -229,8 +230,8 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
                         ConfigKeyNames.bulldozerKey,ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
                         ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey,
-                        ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey, ConfigKeyNames.DirtRecipesKey, ConfigKeyNames.BunchOfBeetsKey, ConfigKeyNames.BunchOfCarrotsKey, ConfigKeyNames.BunchOfPotatoesKey,
-                        ConfigKeyNames.WoodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey};
+                        ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey, ConfigKeyNames.dirtRecipesKey, ConfigKeyNames.bunchOfBeetsKey, ConfigKeyNames.bunchOfCarrotsKey, ConfigKeyNames.bunchOfPotatoesKey,
+                        ConfigKeyNames.woodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey, ConfigKeyNames.quartzCreteKey};
 
         // Config file option names.
         static String enableLoftHouseName = "Enable Loft House";

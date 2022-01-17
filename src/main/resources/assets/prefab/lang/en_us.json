@@ -134,6 +134,18 @@
   "block.prefab.block_dirt_wall": "Dirt Wall",
   "block.prefab.block_grass_wall": "Grass Wall",
 
+  "block.prefab.block_quartz_crete": "Quartz-Crete",
+  "block.prefab.block_quartz_crete_wall": "Quartz-Crete Wall",
+  "block.prefab.block_quartz_crete_bricks": "Quartz-Crete Bricks",
+  "block.prefab.block_quartz_crete_chiseled": "Chiseled Quartz-Crete",
+  "block.prefab.block_quartz_crete_pillar": "Quartz-Crete Pillar",
+  "block.prefab.block_quartz_crete_stairs": "Quartz-Crete Stairs",
+  "block.prefab.block_quartz_crete_slab": "Quartz-Crete Slab",
+  "block.prefab.block_quartz_crete_smooth": "Smooth Quartz-Crete",
+  "block.prefab.block_quartz_crete_smooth_wall": "Smooth Quartz-Crete Wall",
+  "block.prefab.block_quartz_crete_smooth_stairs": "Smooth Quartz-Crete Stairs",
+  "block.prefab.block_quartz_crete_smooth_slab": "Smooth Quartz-Crete Slab",
+
   "block.prefab.block_structure_scanner": "Structure Scanner",
 
   "prefab.gui.cleared_area": "The area cleared will be in the direction you are facing.",

@@ -134,6 +134,18 @@
   "block.prefab.block_dirt_wall": "Землянная Ограда",
   "block.prefab.block_grass_wall": "Травяная Ограда",
 
+  "block.prefab.block_quartz_crete": "Бетон Кварц",
+  "block.prefab.block_quartz_crete_wall": "Бетонная кварцевая стена",
+  "block.prefab.block_quartz_crete_bricks": "Бетонные кварцевые кирпичи",
+  "block.prefab.block_quartz_crete_chiseled": "Точеный бетонный кварц",
+  "block.prefab.block_quartz_crete_pillar": "Бетонный кварцевый столб",
+  "block.prefab.block_quartz_crete_stairs": "Бетонные кварцевые лестницы",
+  "block.prefab.block_quartz_crete_slab": "Бетонная кварцевая плита",
+  "block.prefab.block_quartz_crete_smooth": "Гладкий бетонный кварц",
+  "block.prefab.block_quartz_crete_smooth_wall": "Гладкая бетонная кварцевая стена",
+  "block.prefab.block_quartz_crete_smooth_stairs": "Гладкие бетонные кварцевые лестницы",
+  "block.prefab.block_quartz_crete_smooth_slab": "Гладкая бетонная кварцевая плита",
+
   "block.prefab.block_structure_scanner": "Сканер Структур",
 
   "prefab.gui.cleared_area": "Очищенная область будет находиться в направлении, куда вы смотрите",

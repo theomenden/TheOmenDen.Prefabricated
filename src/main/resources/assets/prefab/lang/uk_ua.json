@@ -134,6 +134,18 @@
     "block.prefab.block_dirt_wall": "Ґрунтова Стіна",
     "block.prefab.block_grass_wall": "Трав'яна Стіна",
 
+    "block.prefab.block_quartz_crete": "Бетонний кварц",
+    "block.prefab.block_quartz_crete_wall": "Бетонна кварцова стіна",
+    "block.prefab.block_quartz_crete_bricks": "Бетонна кварцова цегла",
+    "block.prefab.block_quartz_crete_chiseled": "Точений бетон кварц",
+    "block.prefab.block_quartz_crete_pillar": "Бетонний кварцовий стовп",
+    "block.prefab.block_quartz_crete_stairs": "Бетонні кварцові сходи",
+    "block.prefab.block_quartz_crete_slab": "Бетонна кварцова плита",
+    "block.prefab.block_quartz_crete_smooth": "Гладкий бетон кварц",
+    "block.prefab.block_quartz_crete_smooth_wall": "Гладка бетонна кварцова стіна",
+    "block.prefab.block_quartz_crete_smooth_stairs": "Гладкі бетонні кварцові сходи",
+    "block.prefab.block_quartz_crete_smooth_slab": "Гладка бетонна кварцова плита",
+
     "block.prefab.block_structure_scanner": "Сканер Структур",
 
     "prefab.gui.cleared_area": "Очищена зона буде в тому напрямку, в який ви спрямовані.",
