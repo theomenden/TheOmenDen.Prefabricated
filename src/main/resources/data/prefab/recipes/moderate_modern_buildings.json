@@ -9,28 +9,25 @@
   "group": "Modern Buildings",
   "pattern": [
     "a a",
-    "bcb",
-    "ded"
+    "bbb",
+    "cdc"
   ],
   "key": {
     "a": {
-      "tag": "c:compressed_lights"
+      "tag": "c:double_compressed_lights"
     },
     "b": {
-      "tag": "c:compressed_stone"
-    },
-    "c": {
       "tag": "c:double_compressed_stone"
     },
-    "d": {
+    "c": {
       "item": "minecraft:iron_block"
     },
-    "e": {
-      "tag": "c:compressed_quartz_crete"
+    "d": {
+      "tag": "c:double_compressed_quartz_crete"
     }
   },
   "result": {
-    "item": "prefab:item_modern_buildings",
+    "item": "prefab:item_moderate_modern_buildings",
     "count": 1
   }
 }

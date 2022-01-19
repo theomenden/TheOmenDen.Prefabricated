@@ -200,7 +200,9 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         ModernBuildings("modern_buildings", "item.prefab.item_modern_buildings", "item_modern_buildings", ModernBuildingsOptions.Mall),
         StarterFarm("starter_farm", "item.prefab.item_starter_farm", "item_starter_farm", StarterFarmOptions.ElevatedFarm),
         ModerateFarm("moderate_farm", "item.prefab.item_moderate_farm", "item_moderate_farm", ModerateFarmOptions.AutomatedFarm),
-        AdvancedFarm("advanced_farm", "item.prefab.item_advanced_farm", "item_advanced_farm", AdvancedFarmOptions.AutomatedBeeFarm),;
+        AdvancedFarm("advanced_farm", "item.prefab.item_advanced_farm", "item_advanced_farm", AdvancedFarmOptions.AutomatedBeeFarm),
+        ModerateModernBuildings("moderate_modern_buildings", "item.prefab.item_moderate_modern_buildings", "item_moderate_modern_buildings", ModernBuildingsOptions.Mall),
+        AdvancedModernBuildings("advanced_modern_buildings", "item.prefab.item_advanced_modern_buildings", "item_advanced_modern_buildings", ModernBuildingsOptions.Mall),;
 
         private final String name;
         private final String itemTranslationString;
