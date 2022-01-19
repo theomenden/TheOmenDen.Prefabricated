@@ -118,6 +118,8 @@
   "block.prefab.block_double_compressed_glowstone": "Double Compressed Glowstone",
   "block.prefab.block_compressed_dirt": "Compressed Dirt",
   "block.prefab.block_double_compressed_dirt": "Double Compressed Dirt",
+  "block.prefab.block_compressed_quartz_crete": "Compressed Quartz-Crete",
+  "block.prefab.block_double_compressed_quartz_crete": "Double Compressed Quartz-Crete",
   "block.prefab.block_drafter": "Drafter",
   "block.prefab.block_paper_lantern": "Paper Lantern",
   "block.prefab.block_compressed_obsidian": "Compressed Obsidian",
