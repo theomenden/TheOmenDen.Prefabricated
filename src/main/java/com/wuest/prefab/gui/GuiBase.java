@@ -8,7 +8,6 @@ import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
 import com.wuest.prefab.gui.controls.GuiSlider;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -19,6 +18,7 @@ import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.List;
@@ -79,14 +79,6 @@ public abstract class GuiBase extends Screen {
         return this.height / 2;
     }
 
-    /**
-     * Returns true if this GUI should pause the game when it is displayed in single-player
-     */
-    @Override
-    public boolean shouldPause() {
-        return this.pauseGame;
-    }
-
     @Override
     public void render(MatrixStack matrixStack, int x, int y, float f) {
         Tuple<Integer, Integer> adjustedXYValue = this.getAdjustedXYValue();
@@ -120,10 +112,44 @@ public abstract class GuiBase extends Screen {
      * @param width  The width of the button.
      * @param height The height of the button.
      * @param text   The text of the button.
+     * @param label  The label of the button.
+     * @return A new button.
+     */
+    public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text, String label) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, GuiLangKeys.translateToComponent(text), this::buttonClicked, label);
+
+        return this.addDrawableChild(returnValue);
+    }
+
+    /**
+     * Creates a button using the button clicked event as the handler. Then adds it to the buttons list and returns the created object.
+     *
+     * @param x      The x-axis position.
+     * @param y      The y-axis position.
+     * @param width  The width of the button.
+     * @param height The height of the button.
+     * @param text   The text of the button.
+     * @param label  The label of the button.
+     * @return A new button.
+     */
+    public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text, boolean translate, String label) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked, label);
+
+        return this.addDrawableChild(returnValue);
+    }
+
+    /**
+     * Creates a button using the button clicked event as the handler. Then adds it to the buttons list and returns the created object.
+     *
+     * @param x      The x-axis position.
+     * @param y      The y-axis position.
+     * @param width  The width of the button.
+     * @param height The height of the button.
+     * @param text   The text of the button.
      * @return A new button.
      */
     public ExtendedButton createAndAddButton(int x, int y, int width, int height, String text, boolean translate) {
-        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked);
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, translate ? GuiLangKeys.translateToComponent(text) : Utils.createTextComponent(text), this::buttonClicked, null);
 
         return this.addDrawableChild(returnValue);
     }
@@ -146,10 +172,11 @@ public abstract class GuiBase extends Screen {
      * @param width  The width of the button.
      * @param height The height of the button.
      * @param color  The color to describe on the button.
+     * @param label  The label of the button.
      * @return A new button.
      */
-    public ExtendedButton createAndAddDyeButton(int x, int y, int width, int height, DyeColor color) {
-        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateDye(color)), this::buttonClicked);
+    public ExtendedButton createAndAddDyeButton(int x, int y, int width, int height, DyeColor color, @Nullable String label) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateDye(color)), this::buttonClicked, label);
 
         return this.addDrawableChild(returnValue);
     }
@@ -162,10 +189,11 @@ public abstract class GuiBase extends Screen {
      * @param width  The width of the button.
      * @param height The height of the button.
      * @param color  The color to describe on the button.
+     * @param label  The label of the button.
      * @return A new button.
      */
-    public ExtendedButton createAndAddFullDyeButton(int x, int y, int width, int height, FullDyeColor color) {
-        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateFullDye(color)), this::buttonClicked);
+    public ExtendedButton createAndAddFullDyeButton(int x, int y, int width, int height, FullDyeColor color, @Nullable String label) {
+        ExtendedButton returnValue = new ExtendedButton(x, y, width, height, Utils.createTextComponent(GuiLangKeys.translateFullDye(color)), this::buttonClicked, label);
 
         return this.addDrawableChild(returnValue);
     }

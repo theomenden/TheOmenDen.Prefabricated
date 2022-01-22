@@ -1,23 +1,33 @@
 package com.wuest.prefab.gui.controls;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wuest.prefab.Utils;
-import com.wuest.prefab.gui.GuiUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import org.lwjgl.opengl.GL11;
+import org.jetbrains.annotations.Nullable;
 
 public class ExtendedButton extends ButtonWidget {
 	public float fontScale = 1;
+	private final String label;
 
-	public ExtendedButton(int xPos, int yPos, int width, int height, Text displayString, PressAction handler) {
+	public ExtendedButton(int xPos, int yPos, int width, int height, Text displayString, PressAction handler, @Nullable String label) {
 		super(xPos, yPos, width, height, displayString, handler);
+		this.label = label;
+	}
+
+	@Override
+	protected MutableText getNarrationMessage() {
+		if (label == null) {
+			return super.getNarrationMessage();
+		} else {
+			return new LiteralText(label + ": ").append(super.getNarrationMessage());
+		}
 	}
 
 	/**

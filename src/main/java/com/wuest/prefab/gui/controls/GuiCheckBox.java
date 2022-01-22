@@ -7,11 +7,12 @@ import com.wuest.prefab.gui.GuiUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
@@ -146,6 +147,13 @@ public class GuiCheckBox extends PressableWidget {
                 this.mineCraft.textRenderer.drawTrimmed(Utils.createTextComponent(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
             }
         }
+    }
+
+    @Override
+    public MutableText getNarrationMessage() {
+        TranslatableText state = isChecked ? new TranslatableText("options.on") : new TranslatableText("options.off");
+        String msg = displayString + ": ";
+        return new TranslatableText("narration.checkbox", new LiteralText(msg).append(state));
     }
 
     @Override
