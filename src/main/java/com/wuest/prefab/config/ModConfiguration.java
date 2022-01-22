@@ -15,9 +15,6 @@ public class ModConfiguration implements ConfigData {
     @Comment("Item provided to new players when joining a world")
     public StartingItemOptions startingItem = StartingItemOptions.StartingHouse;
 
-    @Comment("Enables the loft starter house")
-    public boolean enableLoftHouse = false;
-
     @Comment("Add spawners to monster masher")
     public boolean includeSpawnersInMasher = true;
 
@@ -60,7 +57,6 @@ public class ModConfiguration implements ConfigData {
         NbtCompound tag = new NbtCompound();
 
         tag.putString(ConfigKeyNames.startingItemName, this.startingItem.toString());
-        tag.putBoolean(ConfigKeyNames.enableLoftHouseName, this.enableLoftHouse);
         tag.putBoolean(ConfigKeyNames.includeSpawnersInMasherName, this.includeSpawnersInMasher);
         tag.putBoolean(ConfigKeyNames.enableStructurePreviewName, this.enableStructurePreview);
         tag.putBoolean(ConfigKeyNames.includeMineshaftChestName, this.includeMineshaftChest);
@@ -99,7 +95,6 @@ public class ModConfiguration implements ConfigData {
     public void readFromTag(NbtCompound tag) {
         this.startingItem = StartingItemOptions.getByName(tag.getString(ConfigKeyNames.startingItemName));
 
-        this.enableLoftHouse = tag.getBoolean(ConfigKeyNames.enableLoftHouseName);
         this.includeSpawnersInMasher = tag.getBoolean(ConfigKeyNames.includeSpawnersInMasherName);
         this.enableStructurePreview = tag.getBoolean(ConfigKeyNames.enableStructurePreviewName);
         this.includeMineshaftChest = tag.getBoolean(ConfigKeyNames.includeMineshaftChestName);
@@ -234,7 +229,6 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.woodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey, ConfigKeyNames.quartzCreteKey};
 
         // Config file option names.
-        static String enableLoftHouseName = "Enable Loft House";
         static String includeSpawnersInMasherName = "Include Spawners in Monster Masher";
         static String enableStructurePreviewName = "Include Structure Previews";
         static String includeMineshaftChestName = "Include Mineshaft Chest";
