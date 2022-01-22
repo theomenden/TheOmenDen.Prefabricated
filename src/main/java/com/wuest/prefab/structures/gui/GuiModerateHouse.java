@@ -14,6 +14,8 @@ import com.wuest.prefab.structures.predefined.StructureModerateHouse;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 /**
@@ -33,6 +35,11 @@ public class GuiModerateHouse extends GuiStructure {
         super("Moderate House");
 
         this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.ModerateHouse;
+    }
+
+    @Override
+    public Text getNarratedTitle() {
+        return new TranslatableText(GuiLangKeys.translateString(GuiLangKeys.TITLE_MODERATE_HOUSE));
     }
 
     @Override

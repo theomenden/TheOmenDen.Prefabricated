@@ -7,6 +7,8 @@ import com.wuest.prefab.structures.config.BulldozerConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 /**
  * @author WuestMan
@@ -22,6 +24,11 @@ public class GuiBulldozer extends GuiStructure {
         super("Bulldozer");
 
         this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.Bulldozer;
+    }
+
+    @Override
+    public Text getNarratedTitle() {
+        return new TranslatableText(GuiLangKeys.translateString(GuiLangKeys.TITLE_BULLDOZER));
     }
 
     @Override

@@ -15,6 +15,8 @@ import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 
 /**
@@ -39,6 +41,11 @@ public class GuiStartHouseChooser extends GuiStructure {
     public GuiStartHouseChooser() {
         super("Starter House");
         this.structureConfiguration = StructureTagMessage.EnumStructureConfiguration.StartHouse;
+    }
+
+    @Override
+    public Text getNarratedTitle() {
+        return new TranslatableText(GuiLangKeys.translateString(GuiLangKeys.TITLE_STARTER_HOUSE));
     }
 
     @Override
