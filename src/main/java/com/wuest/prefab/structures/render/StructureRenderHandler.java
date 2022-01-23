@@ -16,8 +16,10 @@ import net.minecraft.block.Material;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.MessageType;
 import net.minecraft.text.Style;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -121,13 +123,18 @@ public class StructureRenderHandler {
             entityVertexConsumer.draw(RenderLayer.getTranslucent());
 
             if (!StructureRenderHandler.showedMessage) {
+                MinecraftClient mc = MinecraftClient.getInstance();
+
+                // Stop narrator from continuing narrating what was in the structure GUI
+                NarratorManager.INSTANCE.clear();
+
                 TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_NOTICE);
                 message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
-                player.sendMessage(message, false);
+                mc.inGameHud.addChatMessage(MessageType.CHAT, message, null);
 
                 message = new TranslatableText(GuiLangKeys.GUI_BLOCK_CLICKED);
                 message.setStyle(Style.EMPTY.withColor(Formatting.YELLOW));
-                player.sendMessage(message, false);
+                mc.inGameHud.addChatMessage(MessageType.CHAT, message, null);
 
                 StructureRenderHandler.showedMessage = true;
             }

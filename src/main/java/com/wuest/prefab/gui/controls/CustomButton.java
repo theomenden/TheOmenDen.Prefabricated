@@ -16,11 +16,11 @@ public class CustomButton extends ExtendedButton {
     private final Identifier buttonTextureHover = new Identifier("prefab", "textures/gui/prefab_button_highlight.png");
 
     public CustomButton(int xPos, int yPos, Text displayString, PressAction handler) {
-        super(xPos, yPos, 200, 90, displayString, handler);
+        super(xPos, yPos, 200, 90, displayString, handler, null);
     }
 
     public CustomButton(int xPos, int yPos, int width, int height, Text displayString, PressAction handler) {
-        super(xPos, yPos, width, height, displayString, handler);
+        super(xPos, yPos, width, height, displayString, handler, null);
     }
 
     /**

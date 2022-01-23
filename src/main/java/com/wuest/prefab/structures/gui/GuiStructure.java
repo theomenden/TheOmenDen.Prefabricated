@@ -20,8 +20,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-import java.awt.*;
-
 /**
  * Generic GUI for all structures.
  *
