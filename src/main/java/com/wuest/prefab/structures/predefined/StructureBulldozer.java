@@ -64,7 +64,7 @@ public class StructureBulldozer extends Structure {
      *
      */
     @Override
-    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, World world, BlockPos originalPos, Direction assumedNorth, BlockPos blockPos) {
+    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, World world, BlockPos originalPos, BlockPos blockPos) {
         BlockState state = world.getBlockState(blockPos);
         BulldozerConfiguration specificConfiguration = (BulldozerConfiguration) configuration;
 

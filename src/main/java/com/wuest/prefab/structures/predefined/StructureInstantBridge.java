@@ -40,18 +40,17 @@ public class StructureInstantBridge extends Structure {
 	 * @param configuration The configuration the user updated.
 	 * @param world         The current world.
 	 * @param originalPos   The block the user clicked on.
-	 * @param assumedNorth  This should always be "NORTH" when the file is based on a scan.
 	 * @param player        The player requesting the structure.
 	 * @return True if the build can occur, otherwise false.
 	 */
 	@Override
-	public boolean BuildStructure(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
+	public boolean BuildStructure(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, PlayerEntity player) {
 		InstantBridgeConfiguration specificConfig = (InstantBridgeConfiguration) configuration;
 		this.setupClearSpace(specificConfig);
 
 		this.setupStructure(specificConfig, originalPos);
 
-		return super.BuildStructure(specificConfig, world, originalPos, assumedNorth, player);
+		return super.BuildStructure(specificConfig, world, originalPos, player);
 	}
 
 	public void setupStructure(InstantBridgeConfiguration configuration, BlockPos originalPos) {

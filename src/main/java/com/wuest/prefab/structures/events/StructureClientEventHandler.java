@@ -26,7 +26,7 @@ public final class StructureClientEventHandler {
     public static void onPlayerUseBlock() {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if (StructureRenderHandler.currentStructure != null && player == MinecraftClient.getInstance().player) {
-                StructureRenderHandler.setStructure(null, Direction.NORTH, null);
+                StructureRenderHandler.setStructure(null, null);
 
                 return ActionResult.FAIL;
             }
