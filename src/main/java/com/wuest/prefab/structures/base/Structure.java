@@ -56,7 +56,6 @@ public class Structure {
     public StructureConfiguration configuration;
     public ServerWorld world;
     public BlockPos originalPos;
-    public Direction assumedNorth;
     public boolean hasAirBlocks = false;
     public boolean entitiesRemoved = false;
 
@@ -355,11 +354,10 @@ public class Structure {
      * @param configuration The configuration the user updated.
      * @param world         The current world.
      * @param originalPos   The block the user clicked on.
-     * @param assumedNorth  This should always be "NORTH" when the file is based on a scan.
      * @param player        The player requesting the structure.
      * @return True if the build can occur, otherwise false.
      */
-    public boolean BuildStructure(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
+    public boolean BuildStructure(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, PlayerEntity player) {
         BlockPos startBlockPos = this.clearSpace.getStartingPosition().getRelativePosition(originalPos, this.clearSpace.getShape().getDirection(), configuration.houseFacing);
         BlockPos endBlockPos = startBlockPos
                 .offset(configuration.houseFacing.rotateYCounterclockwise(), this.clearSpace.getShape().getWidth() - 1)
@@ -389,7 +387,7 @@ public class Structure {
             world.playSound(null, originalPos, ModRegistry.BuildingBlueprint, SoundCategory.NEUTRAL, 0.8f, 0.8f);
         }
 
-        if (!this.BeforeBuilding(configuration, world, originalPos, assumedNorth, player)) {
+        if (!this.BeforeBuilding(configuration, world, originalPos, player)) {
             try {
                 // First, clear the area where the structure will be built.
                 this.ClearSpace(configuration, world, startBlockPos, endBlockPos);
@@ -406,18 +404,18 @@ public class Structure {
                         BuildBlock subBlock = null;
 
                         // Check if water should be replaced with cobble.
-                        if (!this.WaterReplacedWithCobbleStone(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)
-                                && !this.CustomBlockProcessingHandled(configuration, block, world, originalPos, assumedNorth, foundBlock, blockState, player)) {
+                        if (!this.WaterReplacedWithCobbleStone(configuration, block, world, originalPos, foundBlock, blockState, player)
+                                && !this.CustomBlockProcessingHandled(configuration, block, world, originalPos, foundBlock, blockState, player)) {
                             // Set the glass color if this structure can have the glass configured.
                             if (!this.processedGlassBlock(configuration, block, world, originalPos, foundBlock)) {
-                                block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, foundBlock, blockState, this);
+                                block = BuildBlock.SetBlockState(configuration, world, originalPos, block, foundBlock, blockState, this);
                             }
 
                             if (block.getSubBlock() != null) {
                                 foundBlock = Registry.BLOCK.get(block.getSubBlock().getResourceLocation());
                                 blockState = foundBlock.getDefaultState();
 
-                                subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block.getSubBlock(), foundBlock, blockState, this);
+                                subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, block.getSubBlock(), foundBlock, blockState, this);
                             }
 
                             BlockPos setBlockPos = block.getStartingPosition().getRelativePosition(originalPos,
@@ -446,7 +444,7 @@ public class Structure {
                         // no longer exists.
                         // In this case, print an informational message and replace it with cobblestone.
                         String blockTypeNotFound = block.getResourceLocation().toString();
-                        block = BuildBlock.SetBlockState(configuration, world, originalPos, assumedNorth, block, Blocks.COBBLESTONE, Blocks.COBBLESTONE.getDefaultState(), this);
+                        block = BuildBlock.SetBlockState(configuration, world, originalPos, block, Blocks.COBBLESTONE, Blocks.COBBLESTONE.getDefaultState(), this);
                         this.priorityOneBlocks.add(block);
 
                         if (!blockPlacedWithCobbleStoneInstead) {
@@ -464,13 +462,12 @@ public class Structure {
 
                 this.configuration = configuration;
                 this.world = world;
-                this.assumedNorth = assumedNorth;
                 this.originalPos = originalPos;
 
                 // Set all the tile entities here.
                 this.setBlockEntities();
 
-                this.AfterBuilding(this.configuration, this.world, this.originalPos, this.assumedNorth, player);
+                this.AfterBuilding(this.configuration, this.world, this.originalPos, player);
             } catch (Exception ex) {
                 Prefab.logger.error(ex);
             }
@@ -511,11 +508,10 @@ public class Structure {
      * @param configuration The structure configuration.
      * @param world         The current world.
      * @param originalPos   The original position clicked on.
-     * @param assumedNorth  The assumed northern direction.
      * @param player        The player which initiated the construction.
      * @return False if processing should continue, otherwise true to cancel processing.
      */
-    protected boolean BeforeBuilding(StructureConfiguration configuration, World world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
+    protected boolean BeforeBuilding(StructureConfiguration configuration, World world, BlockPos originalPos, PlayerEntity player) {
         return false;
     }
 
@@ -525,10 +521,9 @@ public class Structure {
      * @param configuration The structure configuration.
      * @param world         The current world.
      * @param originalPos   The original position clicked on.
-     * @param assumedNorth  The assumed northern direction.
      * @param player        The player which initiated the construction.
      */
-    public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
+    public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, PlayerEntity player) {
     }
 
     protected void ClearSpace(StructureConfiguration configuration, World world, BlockPos startBlockPos, BlockPos endBlockPos) {
@@ -538,7 +533,7 @@ public class Structure {
             this.clearedBlockPos = new ArrayList<>();
 
             for (BlockPos pos : BlockPos.iterate(startBlockPos, endBlockPos)) {
-                if (this.BlockShouldBeClearedDuringConstruction(configuration, world, originalPos, assumedNorth, pos)) {
+                if (this.BlockShouldBeClearedDuringConstruction(configuration, world, originalPos, pos)) {
                     world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 }
             }
@@ -548,11 +543,11 @@ public class Structure {
     }
 
     protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos,
-                                                   Direction assumedNorth, Block foundBlock, BlockState blockState, PlayerEntity player) {
+                                                   Block foundBlock, BlockState blockState, PlayerEntity player) {
         return false;
     }
 
-    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, World world, BlockPos originalPos, Direction assumedNorth, BlockPos blockPos) {
+    protected Boolean BlockShouldBeClearedDuringConstruction(StructureConfiguration configuration, World world, BlockPos originalPos, BlockPos blockPos) {
         return true;
     }
 
@@ -562,16 +557,15 @@ public class Structure {
      *
      * @param configuration The structure configuration.
      * @param block         The build block object.
-     * @param world         The workd object.
+     * @param world         The world object.
      * @param originalPos   The original block position this structure was built on.
-     * @param assumedNorth  The assumed north direction (typically north).
      * @param foundBlock    The actual block found at the current location.
      * @param blockState    The block state to set for the current block.
      * @param player        The player requesting this build.
      * @return Returns true if the water block was replaced by cobblestone, otherwise false.
      */
     protected Boolean WaterReplacedWithCobbleStone(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos,
-                                                   Direction assumedNorth, Block foundBlock, BlockState blockState, PlayerEntity player) {
+                                                   Block foundBlock, BlockState blockState, PlayerEntity player) {
         // Replace water blocks and waterlogged blocks with cobblestone when this is not an ultra warm world type.
         // Also check a configuration value to determine if water blocks are allowed in other non-overworld dimensions such as The End.
         boolean isOverworld = World.OVERWORLD.getValue().toString().equals(world.getRegistryKey().getValue().toString());
@@ -634,7 +628,6 @@ public class Structure {
                     configuration,
                     world,
                     originalPos,
-                    assumedNorth,
                     block,
                     foundBlock,
                     blockState,

@@ -31,7 +31,7 @@ public class StructureAlternateStart extends Structure {
 
     @Override
     protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, World world, BlockPos originalPos,
-                                                   Direction assumedNorth, Block foundBlock, BlockState blockState, PlayerEntity player) {
+                                                   Block foundBlock, BlockState blockState, PlayerEntity player) {
         HouseConfiguration houseConfig = (HouseConfiguration) configuration;
 
         if ((!houseConfig.addBed && foundBlock instanceof BedBlock) || (!houseConfig.addChest && foundBlock instanceof ChestBlock)
@@ -95,11 +95,10 @@ public class StructureAlternateStart extends Structure {
      * @param configuration The structure configuration.
      * @param world         The current world.
      * @param originalPos   The original position clicked on.
-     * @param assumedNorth  The assumed northern direction.
      * @param player        The player which initiated the construction.
      */
     @Override
-    public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, Direction assumedNorth, PlayerEntity player) {
+    public void AfterBuilding(StructureConfiguration configuration, ServerWorld world, BlockPos originalPos, PlayerEntity player) {
         HouseConfiguration houseConfig = (HouseConfiguration) configuration;
         EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
 

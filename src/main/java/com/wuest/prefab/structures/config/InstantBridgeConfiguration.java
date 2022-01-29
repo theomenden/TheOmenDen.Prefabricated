@@ -63,7 +63,7 @@ public class InstantBridgeConfiguration extends StructureConfiguration {
 	protected void ConfigurationSpecificBuildStructure(PlayerEntity player, ServerWorld world, BlockPos hitBlockPos) {
 		StructureInstantBridge structure = StructureInstantBridge.CreateInstance();
 
-		if (structure.BuildStructure(this, world, hitBlockPos, Direction.NORTH, player)) {
+		if (structure.BuildStructure(this, world, hitBlockPos, player)) {
 			this.DamageHeldItem(player, ModRegistry.InstantBridge);
 		}
 	}

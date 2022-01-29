@@ -44,7 +44,6 @@ public class StructureRenderHandler {
     // player's overlapping on structures and other things.
     public static StructureConfiguration currentConfiguration;
     public static Structure currentStructure;
-    public static Direction assumedNorth;
     public static boolean rendering = false;
     public static boolean showedMessage = false;
     private static int dimension;
@@ -53,12 +52,10 @@ public class StructureRenderHandler {
      * Resets the structure to show in the world.
      *
      * @param structure     The structure to show in the world, pass null to clear out the client.
-     * @param assumedNorth  The assumed norther facing for this structure.
      * @param configuration The configuration for this structure.
      */
-    public static void setStructure(Structure structure, Direction assumedNorth, StructureConfiguration configuration) {
+    public static void setStructure(Structure structure, StructureConfiguration configuration) {
         StructureRenderHandler.currentStructure = structure;
-        StructureRenderHandler.assumedNorth = assumedNorth;
         StructureRenderHandler.currentConfiguration = configuration;
         StructureRenderHandler.showedMessage = false;
 
@@ -110,7 +107,6 @@ public class StructureRenderHandler {
                             StructureRenderHandler.currentConfiguration,
                             player.world,
                             StructureRenderHandler.currentConfiguration.pos,
-                            StructureRenderHandler.assumedNorth,
                             buildBlock,
                             foundBlock,
                             blockState,
@@ -158,7 +154,6 @@ public class StructureRenderHandler {
             BuildBlock subBlock = BuildBlock.SetBlockState(
                     StructureRenderHandler.currentConfiguration,
                     world, StructureRenderHandler.currentConfiguration.pos,
-                    assumedNorth,
                     buildBlock.getSubBlock(),
                     foundBlock,
                     blockState,
