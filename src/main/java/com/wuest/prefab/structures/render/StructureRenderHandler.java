@@ -23,6 +23,7 @@ import net.minecraft.network.MessageType;
 import net.minecraft.text.Style;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -130,11 +131,11 @@ public class StructureRenderHandler {
 
                 TranslatableText message = new TranslatableText(GuiLangKeys.GUI_PREVIEW_NOTICE);
                 message.setStyle(Style.EMPTY.withColor(Formatting.GREEN));
-                mc.inGameHud.addChatMessage(MessageType.CHAT, message, null);
+                mc.inGameHud.addChatMessage(MessageType.CHAT, message, Util.NIL_UUID);
 
                 message = new TranslatableText(GuiLangKeys.GUI_BLOCK_CLICKED);
                 message.setStyle(Style.EMPTY.withColor(Formatting.YELLOW));
-                mc.inGameHud.addChatMessage(MessageType.CHAT, message, null);
+                mc.inGameHud.addChatMessage(MessageType.CHAT, message, Util.NIL_UUID);
 
                 StructureRenderHandler.showedMessage = true;
             }
