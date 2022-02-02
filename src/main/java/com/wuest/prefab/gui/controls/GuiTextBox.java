@@ -3,6 +3,7 @@ package com.wuest.prefab.gui.controls;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;
@@ -268,7 +269,7 @@ public class GuiTextBox extends ClickableWidget implements Drawable, Element {
                 return true;
             } else if (Screen.isPaste(keyCode)) {
                 if (this.editable) {
-                    this.write(MinecraftClient.getInstance().keyboard.getClipboard());
+                    this.write(Minecraft.getInstance().keyboard.getClipboard());
                 }
 
                 return true;

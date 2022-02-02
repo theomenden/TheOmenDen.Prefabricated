@@ -11,14 +11,7 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.render.StructureRenderHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.PressableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.BlockPos;
 
 /**
  * Generic GUI for all structures.
