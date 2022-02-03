@@ -40,7 +40,7 @@ public class BlockPhasic extends Block {
     /**
      * The phasing progress property.
      */
-    private static final EnumProperty<EnumPhasingProgress> Phasing_Progress = EnumProperty.create("phasing_progress", EnumPhasingProgress.class);
+    private static final EnumProperty<EnumPhasingProgress> Phasing_Progress = EnumProperty.create("phasic_progress", EnumPhasingProgress.class);
 
     /**
      * The phasing out block property.
