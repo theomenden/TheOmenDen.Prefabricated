@@ -7,7 +7,10 @@ import com.wuest.prefab.Utils;
 import com.wuest.prefab.config.EntityPlayerConfiguration;
 import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.network.message.PlayerEntityTagMessage;
-import com.wuest.prefab.structures.base.*;
+import com.wuest.prefab.structures.base.BuildBlock;
+import com.wuest.prefab.structures.base.BuildEntity;
+import com.wuest.prefab.structures.base.BuildingMethods;
+import com.wuest.prefab.structures.base.Structure;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -37,7 +40,6 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
-
 
 import java.util.*;
 

@@ -65,10 +65,8 @@ public class BulldozerConfiguration extends StructureConfiguration {
 
             if (stack.getItem() == ModRegistry.Bulldozer) {
                 InteractionHand hand1 = hand;
-                stack.hurtAndBreak(1, player, (player1) ->
-                {
-                    player1.broadcastBreakEvent(hand1);
-                });
+
+                stack.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(hand1));
 
                 player.containerMenu.broadcastChanges();
             }
