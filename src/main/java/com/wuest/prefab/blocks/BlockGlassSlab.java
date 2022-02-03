@@ -56,7 +56,7 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     @Override
     @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-        Tag<Block> tags = BlockTags.getAllTags().getTag(new ResourceLocation("forge", "glass"));
+        Tag<Block> tags = BlockTags.getAllTags().getTag(new ResourceLocation("c", "glass"));
         Block adjacentBlock = adjacentBlockState.getBlock();
 
 		/*
