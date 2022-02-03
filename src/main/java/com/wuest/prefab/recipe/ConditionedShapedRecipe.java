@@ -178,7 +178,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     }
 
     public static ItemStack itemStackFromJson(JsonObject json) {
-        String string = GsonHelper.convertToString(json, "item");
+        String string = GsonHelper.getAsString(json, "item");
 
         Item item = (Item) Registry.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
             return new JsonSyntaxException("Unknown item '" + string + "'");
