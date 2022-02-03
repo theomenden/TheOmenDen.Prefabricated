@@ -200,7 +200,7 @@ public abstract class GuiBase extends Screen {
     }
 
     public GuiCheckBox createAndAddCheckBox(int xPos, int yPos, String displayString, boolean isChecked,
-                                            GuiCheckBox.PressAction handler) {
+                                            GuiCheckBox.IPressable handler) {
         GuiCheckBox checkBox = new GuiCheckBox(xPos, yPos, GuiLangKeys.translateString(displayString), isChecked, handler);
 
         return this.addRenderableWidget(checkBox);

@@ -23,7 +23,7 @@ public class AnvilScreenHandlerMixin {
     @Shadow
     private DataSlot cost;
 
-    @Inject(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isDamageable()Z", ordinal = 0), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isDamageableItem()Z", ordinal = 0), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     public void AnvilUpdate(CallbackInfo ci, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map<Enchantment, Integer> map, boolean bl) {
         // Because this gets injected into the actual class; we can use "this" to represent the AnvilScreenHandler correctly.
         AnvilMenu handler = (AnvilMenu) (Object) this;
@@ -39,7 +39,7 @@ public class AnvilScreenHandlerMixin {
                 itemStack3.setDamageValue(0);
 
                 // In order to get this to work an "accessWidener" is necessary.
-                handler.resultSlots.setStack(0, itemStack3);
+                handler.resultSlots.setItem(0, itemStack3);
 
                 ci.cancel();
             }
