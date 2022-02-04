@@ -156,7 +156,7 @@ public class PositionOffset {
 			pos = pos.relative(configurationFacing, offSetValue);
 
 			originalDirection = originalDirection.getClockWise();
-			configurationFacing = configurationFacing.getCounterClockWise();
+			configurationFacing = configurationFacing.getClockWise();
 		}
 
 		pos = pos.relative(Direction.UP, this.heightOffset);
