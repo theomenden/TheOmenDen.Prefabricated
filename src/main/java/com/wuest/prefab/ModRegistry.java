@@ -517,23 +517,28 @@ public class ModRegistry {
         COPPER("Copper", Tiers.STONE.getLevel(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
                 Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "copper_ingots")));
+                    .of(ItemStack.EMPTY);
+                    // TODO: Figure out how to get this better
+                    //.of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "copper_ingots")));
         }),
         OSMIUM("Osmium", Tiers.IRON.getLevel(), 500, Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "osmium_ingots")));
+                    .of(ItemStack.EMPTY);
+                    //.of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "osmium_ingots")));
         }),
         BRONZE("Bronze", Tiers.IRON.getLevel(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
                 Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "bronze_ingots")));
+                    .of(ItemStack.EMPTY);
+                    //.of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "bronze_ingots")));
         }),
         STEEL("Steel", Tiers.DIAMOND.getLevel(), (int) (Tiers.IRON.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
                 Tiers.DIAMOND.getEnchantmentValue(), () -> {
             return Ingredient
-                    .of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "steel_ingots")));
+                    .of(ItemStack.EMPTY);
+                    //.of(ItemTags.getAllTags().getTag(new ResourceLocation("c", "steel_ingots")));
         }),
         OBSIDIAN("Obsidian", Tiers.DIAMOND.getLevel(), (int) (Tiers.DIAMOND.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),

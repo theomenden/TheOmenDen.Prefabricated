@@ -38,8 +38,9 @@ public class ItemSickle extends TieredItem {
     public static void setEffectiveBlocks() {
         effectiveBlocks.clear();
 
-        effectiveBlocks.addAll(BlockTags.LEAVES.getValues());
-        effectiveBlocks.addAll(BlockTags.SMALL_FLOWERS.getValues());
+        // TODO: Figure out how to get this better
+        //effectiveBlocks.addAll(BlockTags.LEAVES.getValues());
+        //effectiveBlocks.addAll(BlockTags.SMALL_FLOWERS.getValues());
         effectiveBlocks.add(Blocks.TALL_GRASS);
         effectiveBlocks.add(Blocks.DEAD_BUSH);
         effectiveBlocks.add(Blocks.ROSE_BUSH);

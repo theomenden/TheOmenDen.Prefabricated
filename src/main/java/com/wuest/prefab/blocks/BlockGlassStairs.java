@@ -4,9 +4,12 @@ import com.wuest.prefab.ModRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -26,10 +29,21 @@ public class BlockGlassStairs extends StairBlock {
     @Override
     @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-        Tag<Block> tags = BlockTags.getAllTags().getTag(new ResourceLocation("c", "glass"));
-        Block adjacentBlock = adjacentBlockState.getBlock();
+        // TODO: Figure out how to get this better
+        TagKey<Block> tags = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("c", "glass"));
 
-        return tags.contains(adjacentBlock) || adjacentBlock == this
+        Block adjacentBlock = adjacentBlockState.getBlock();
+        ResourceLocation location = Registry.BLOCK.getKey(adjacentBlock);
+        boolean foundBlock = false;
+
+        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tags)) {
+            if (blockHolder.is(location)) {
+                foundBlock = true;
+                break;
+            }
+        }
+
+        return foundBlock || adjacentBlock == this
                 || (adjacentBlock == ModRegistry.GlassSlab
                 && adjacentBlockState.getValue(SlabBlock.TYPE) == SlabType.DOUBLE);
     }
