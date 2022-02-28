@@ -108,6 +108,21 @@ public class Utils {
     }
 
     /**
+     * Gets a collection of all blocks with the associated tag key.
+     * @param tagKey The tagkey to look for.
+     * @return A collection containing the blocks.
+     */
+    public static ArrayList<Block> getBlocksWithTagKey(TagKey<Block> tagKey) {
+        ArrayList<Block> blocks = new ArrayList<>();
+
+        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tagKey)) {
+            blocks.add(blockHolder.value());
+        }
+
+        return blocks;
+    }
+
+    /**
      * Determines if a particular block has a tag.
      * @param block The block to check.
      * @param location The resource location of the tag to check for.

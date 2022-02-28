@@ -1,6 +1,7 @@
 package com.wuest.prefab.blocks;
 
 import com.wuest.prefab.ModRegistry;
+import com.wuest.prefab.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Direction;
@@ -29,19 +30,8 @@ public class BlockGlassStairs extends StairBlock {
     @Override
     @Environment(EnvType.CLIENT)
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-        // TODO: Figure out how to get this better
-        TagKey<Block> tags = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation("c", "glass"));
-
+        boolean foundBlock = Utils.doesBlockStateHaveTag(adjacentBlockState, new ResourceLocation("c", "glass"));
         Block adjacentBlock = adjacentBlockState.getBlock();
-        ResourceLocation location = Registry.BLOCK.getKey(adjacentBlock);
-        boolean foundBlock = false;
-
-        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tags)) {
-            if (blockHolder.is(location)) {
-                foundBlock = true;
-                break;
-            }
-        }
 
         return foundBlock || adjacentBlock == this
                 || (adjacentBlock == ModRegistry.GlassSlab
