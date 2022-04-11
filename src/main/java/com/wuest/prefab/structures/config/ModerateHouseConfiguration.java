@@ -151,7 +151,11 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
         ACACIA_HOME2(6, GuiLangKeys.MODERATE_HOUSE_ACACIA_2, new ResourceLocation("prefab", "textures/gui/moderate_house_acacia_2_topdown.png"),
                 "assets/prefab/structures/moderate_house_acacia_2.zip"),
         MODERN_HOME(7, GuiLangKeys.MODERATE_HOUSE_MODERN, new ResourceLocation("prefab", "textures/gui/moderate_house_modern_topdown.png"),
-                "assets/prefab/structures/moderate_house_modern.zip");
+                "assets/prefab/structures/moderate_house_modern.zip"),
+        CRIMSON_HOME(8, GuiLangKeys.MODERATE_HOUSE_CRIMSON, new ResourceLocation("prefab", "textures/gui/moderate_house_nether_topdown.png"),
+                "assets/prefab/structures/moderate_house_crimson.zip"),
+        TOWER_HOME(9, GuiLangKeys.MODERATE_HOUSE_TOWER, new ResourceLocation("prefab", "textures/gui/moderate_house_acacia_topdown.png"),
+                "assets/prefab/structures/moderate_house_tower.zip");
 
         private final int value;
         private final String displayName;

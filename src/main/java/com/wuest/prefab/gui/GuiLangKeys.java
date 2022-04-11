@@ -81,6 +81,12 @@ public class GuiLangKeys {
     @Unlocalized(name = "Izba Style")
     public static final String STARTER_HOUSE_IZBA_DISPLAY = "prefab.gui.starter.izba.display";
 
+    @Unlocalized(name = "Tower Style")
+    public static final String STARTER_HOUSE_TOWER_DISPLAY = "prefab.gui.starter.tower.display";
+
+    @Unlocalized(name = "Cabin Style")
+    public static final String STARTER_HOUSE_CABIN_DISPLAY = "prefab.gui.starter.cabin.display";
+
     @Unlocalized(name = "Modern Style")
     public static final String STARTER_HOUSE_MODERN_DISPLAY = "prefab.gui.starter.modern.display";
 
@@ -278,6 +284,12 @@ public class GuiLangKeys {
 
     @Unlocalized(name = "Modern House")
     public static final String MODERATE_HOUSE_MODERN = "prefab.gui.item_modern_house";
+
+    @Unlocalized(name = "Crimson House")
+    public static final String MODERATE_HOUSE_CRIMSON = "prefab.gui.item_crimson_house";
+
+    @Unlocalized(name = "Tower House")
+    public static final String MODERATE_HOUSE_TOWER = "prefab.gui.item_tower_house";
 
     @Unlocalized(name = "Earthen Home")
     public static final String MODERATE_EARTHEN_HOME = "prefab.gui.moderate_house.earthen";
