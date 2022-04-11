@@ -155,7 +155,9 @@ public class ModerateHouseConfiguration extends StructureConfiguration {
         CRIMSON_HOME(8, GuiLangKeys.MODERATE_HOUSE_CRIMSON, new ResourceLocation("prefab", "textures/gui/moderate_house_nether_topdown.png"),
                 "assets/prefab/structures/moderate_house_crimson.zip"),
         TOWER_HOME(9, GuiLangKeys.MODERATE_HOUSE_TOWER, new ResourceLocation("prefab", "textures/gui/moderate_house_acacia_topdown.png"),
-                "assets/prefab/structures/moderate_house_tower.zip");
+                "assets/prefab/structures/moderate_house_tower.zip"),
+        HOBBIT_HOME(10, GuiLangKeys.MODERATE_HOUSE_HOBBIT, new ResourceLocation("prefab", "textures/gui/moderate_house_acacia_topdown.png"),
+                "assets/prefab/structures/moderate_house_hobbit.zip");
 
         private final int value;
         private final String displayName;
