@@ -51,7 +51,7 @@ public class ModerateFarmOptions extends BaseOption{
     public static ModerateFarmOptions Barn = new ModerateFarmOptions(
             "prefab.gui.advanced.farm.barn",
             "assets/prefab/structures/moderate_barn.zip",
-            "textures/gui/mushroom_farm_topdown.png",
+            "textures/gui/barn_alternate.png",
             false,
             false);
 
