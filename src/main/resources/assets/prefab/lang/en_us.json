@@ -177,9 +177,9 @@
   "prefab.gui.starter.modern.display": "Modern Style",
   "prefab.gui.starter.camping.display": "Camping Style",
   "prefab.gui.starter.izba.display": "Izba Style",
-  "prefab.gui.starter.cabin.display": "Izba Style",
-  "prefab.gui.starter.tower.display": "Izba Style",
-  "prefab.gui.starter.tree.display": "Izba Style",
+  "prefab.gui.starter.cabin.display": "Cabin Style",
+  "prefab.gui.starter.tower.display": "Tower Style",
+  "prefab.gui.starter.tree.display": "Treehouse Style",
 
   "prefab.gui.starter.addtorches": "Add Torches",
   "prefab.gui.starter.addbed": "Add Bed",
