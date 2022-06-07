@@ -24,9 +24,10 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.ChatSender;
 import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -87,7 +88,7 @@ public class StructureRenderHandler {
             MultiBufferSource.BufferSource entityVertexConsumer = Minecraft.getInstance().renderBuffers().bufferSource();
 
             Frustum frustum = new Frustum(matrixStack.last().pose(), RenderSystem.getProjectionMatrix());
-            BlockPos cameraPos = player.eyeBlockPosition();
+            BlockPos cameraPos = new BlockPos(player.getEyePosition(1.0F));
             frustum.prepare(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 
             for (BuildBlock buildBlock : StructureRenderHandler.currentStructure.getBlocks()) {
@@ -130,17 +131,22 @@ public class StructureRenderHandler {
                 // Stop narrator from continuing narrating what was in the structure GUI
                 Narrator.getNarrator().clear();
 
-                TranslatableComponent message = new TranslatableComponent(GuiLangKeys.GUI_PREVIEW_NOTICE);
-                message.setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
-                mc.gui.handleChat(ChatType.CHAT, message, Util.NIL_UUID);
+                Component message = Component.translatable(GuiLangKeys.GUI_PREVIEW_NOTICE);
+                message.getStyle().withColor(ChatFormatting.GREEN);
+                mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
 
-                message = new TranslatableComponent(GuiLangKeys.GUI_BLOCK_CLICKED);
-                message.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW));
-                mc.gui.handleChat(ChatType.CHAT, message, Util.NIL_UUID);
+                message = Component.translatable(GuiLangKeys.GUI_BLOCK_CLICKED);
+                message.getStyle().withColor(ChatFormatting.GREEN);
+                mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
 
                 StructureRenderHandler.showedMessage = true;
             }
         }
+    }
+
+    private static ChatType getMessageType() {
+        Registry<ChatType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registry.CHAT_TYPE_REGISTRY);
+        return registry.get(ChatType.CHAT);
     }
 
     private static boolean renderComponentInWorld(Level world, BuildBlock buildBlock, MultiBufferSource.BufferSource entityVertexConsumer, PoseStack matrixStack, BlockPos pos) {

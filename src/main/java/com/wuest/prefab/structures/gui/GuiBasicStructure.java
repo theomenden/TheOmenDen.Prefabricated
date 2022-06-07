@@ -13,7 +13,6 @@ import com.wuest.prefab.structures.items.ItemBasicStructure;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureBasic;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +41,7 @@ public class GuiBasicStructure extends GuiStructure {
 
     @Override
     public Component getNarrationMessage() {
-        return new TranslatableComponent(this.specificConfiguration.getDisplayName());
+        return Component.translatable(this.specificConfiguration.getDisplayName());
     }
 
     @Override

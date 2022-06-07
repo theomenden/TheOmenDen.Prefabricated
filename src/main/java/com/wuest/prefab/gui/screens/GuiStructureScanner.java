@@ -15,10 +15,11 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 import java.awt.*;
+
 
 public class GuiStructureScanner extends GuiBase {
     private final BlockPos blockPos;
@@ -82,7 +83,7 @@ public class GuiStructureScanner extends GuiBase {
         this.btnHeightGrow = this.createAndAddButton(adjustedX + 297, adjustedY + 30, 25, 20, "▲", null);
 
         // Zip Text Field
-        this.txtZipName = new GuiTextBox(this.getMinecraft().font, adjustedX + 120, adjustedY + 75, 150, 20, new TextComponent(""));
+        this.txtZipName = new GuiTextBox(this.getMinecraft().font, adjustedX + 120, adjustedY + 75, 150, 20, Component.literal(""));
 
         if (this.config.structureZipName == null || this.config.structureZipName.trim().equals("")) {
             this.txtZipName.setValue("Structure Name Here");

@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public class CustomButton extends ExtendedButton {
@@ -16,11 +15,11 @@ public class CustomButton extends ExtendedButton {
     private final ResourceLocation buttonTexturePressed = new ResourceLocation("prefab", "textures/gui/prefab_button_pressed.png");
     private final ResourceLocation buttonTextureHover = new ResourceLocation("prefab", "textures/gui/prefab_button_highlight.png");
 
-    public CustomButton(int xPos, int yPos, TextComponent displayString, OnPress handler) {
+    public CustomButton(int xPos, int yPos, Component displayString, OnPress handler) {
         super(xPos, yPos, 200, 90, displayString, handler, null);
     }
 
-    public CustomButton(int xPos, int yPos, int width, int height, TextComponent displayString, OnPress handler) {
+    public CustomButton(int xPos, int yPos, int width, int height, Component displayString, OnPress handler) {
         super(xPos, yPos, width, height, displayString, handler, null);
     }
 

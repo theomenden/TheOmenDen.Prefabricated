@@ -15,7 +15,6 @@ import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 
 /**
@@ -44,7 +43,7 @@ public class GuiStartHouseChooser extends GuiStructure {
 
     @Override
     public Component getNarrationMessage() {
-        return new TranslatableComponent(GuiLangKeys.translateString(GuiLangKeys.TITLE_STARTER_HOUSE));
+        return Component.translatable(GuiLangKeys.translateString(GuiLangKeys.TITLE_STARTER_HOUSE));
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.wuest.prefab.structures.events.StructureEventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,8 +50,7 @@ public class ServerEvents {
             if (entity instanceof ServerPlayer) {
                 // Send the message to the client.
                 FriendlyByteBuf messagePacket = Utils.createMessageBuffer(Prefab.serverConfiguration.writeCompoundTag());
-
-                ServerSidePacketRegistry.INSTANCE.sendToPlayer((ServerPlayer) entity, ModRegistry.ConfigSync, messagePacket);
+                ServerPlayNetworking.send((ServerPlayer) entity, ModRegistry.PlayerConfigSync, messagePacket);
             }
         });
     }

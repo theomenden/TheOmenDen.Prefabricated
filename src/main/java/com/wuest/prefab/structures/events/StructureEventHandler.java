@@ -14,7 +14,7 @@ import com.wuest.prefab.structures.base.Structure;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -131,9 +131,8 @@ public final class StructureEventHandler {
         }
 
         // Send the tag to the client.
-        PlayerEntityTagMessage message = new PlayerEntityTagMessage();
         FriendlyByteBuf messagePacket = Utils.createMessageBuffer(playerConfig.createPlayerTag());
-        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ModRegistry.PlayerConfigSync, messagePacket);
+        ServerPlayNetworking.send(player, ModRegistry.PlayerConfigSync, messagePacket);
     }
 
     /**
@@ -430,8 +429,8 @@ public final class StructureEventHandler {
             facing = facing.getCounterClockWise();
         }
 
-        int paintingBlockWidth = entity.motive.getWidth() / 16;
-        int paintingBlockHeight = entity.motive.getHeight() / 16;
+        int paintingBlockWidth = entity.getWidth() / 16;
+        int paintingBlockHeight = entity.getHeight() / 16;
 
         if ((paintingBlockHeight > paintingBlockWidth || paintingBlockHeight > 1)
                 && !(paintingBlockWidth == 4 && paintingBlockHeight == 3)) {

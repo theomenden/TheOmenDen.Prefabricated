@@ -8,12 +8,13 @@ import com.wuest.prefab.network.message.PlayerEntityTagMessage;
 import com.wuest.prefab.structures.base.BuildBlock;
 import com.wuest.prefab.structures.predefined.StructureAlternateStart;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 
@@ -190,7 +191,7 @@ public class HouseConfiguration extends StructureConfiguration {
 
             // Make sure to send a message to the client to sync up the server player information and the client player
             // information.
-            ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, ModRegistry.PlayerConfigSync, byteBuf);
+            ServerPlayNetworking.send((ServerPlayer) player, ModRegistry.PlayerConfigSync, byteBuf);
         }
     }
 

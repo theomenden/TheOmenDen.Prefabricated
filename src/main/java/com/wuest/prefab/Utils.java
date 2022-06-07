@@ -9,7 +9,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -38,7 +39,7 @@ public class Utils {
         return returnValue;
     }
 
-    public static ArrayList<TextComponent> WrapStringToLiterals(String value) {
+    public static ArrayList<Component> WrapStringToLiterals(String value) {
         return Utils.WrapStringToLiterals(value, 50);
     }
 
@@ -48,13 +49,13 @@ public class Utils {
      * @param value The text to create the object from.
      * @return A StringTextComponent object.
      */
-    public static TextComponent createTextComponent(String value) {
-        return new TextComponent(value);
+    public static MutableComponent createTextComponent(String value) {
+        return Component.literal(value);
     }
 
-    public static ArrayList<TextComponent> WrapStringToLiterals(String value, int width) {
+    public static ArrayList<Component> WrapStringToLiterals(String value, int width) {
         String[] values = Utils.WrapString(value, width);
-        ArrayList<TextComponent> returnValue = new ArrayList<>();
+        ArrayList<Component> returnValue = new ArrayList<>();
 
         for (String stringValue : values) {
             returnValue.add(Utils.createTextComponent(stringValue));
@@ -93,6 +94,7 @@ public class Utils {
 
     /**
      * Gets a collection of all blocks with the associated tag.
+     *
      * @param resourceLocation The resource location to check.
      * @return A collection of found blocks.
      */
@@ -109,6 +111,7 @@ public class Utils {
 
     /**
      * Gets a collection of all blocks with the associated tag key.
+     *
      * @param tagKey The tagkey to look for.
      * @return A collection containing the blocks.
      */
@@ -124,7 +127,8 @@ public class Utils {
 
     /**
      * Determines if a particular block has a tag.
-     * @param block The block to check.
+     *
+     * @param block    The block to check.
      * @param location The resource location of the tag to check for.
      * @return True if the tag was found; otherwise false.
      */
@@ -143,8 +147,9 @@ public class Utils {
 
     /**
      * Determines if the current block state has a tag.
+     *
      * @param blockState The block state to check.
-     * @param location The resource location of the tag to check for.
+     * @param location   The resource location of the tag to check for.
      * @return True if the tag exists on the block state; otherwise false.
      */
     public static boolean doesBlockStateHaveTag(BlockState blockState, ResourceLocation location) {
@@ -159,6 +164,7 @@ public class Utils {
 
     /**
      * Gets a collection of all item stacks with the associated tag.
+     *
      * @param resourceLocation The resource location to check.
      * @return A collection of found blocks.
      */
@@ -175,7 +181,8 @@ public class Utils {
 
     /**
      * Determines if the current item has a tag.
-     * @param item The item to check.
+     *
+     * @param item     The item to check.
      * @param location The resource location of the tag to check for.
      * @return True if the tag exists on the item; otherwise false.
      */
@@ -194,8 +201,9 @@ public class Utils {
 
     /**
      * Determines if the current item stack has a tag.
+     *
      * @param itemStack The item stack to check.
-     * @param location The resource location of the tag to check for.
+     * @param location  The resource location of the tag to check for.
      * @return True if the tag exists on the item stack; otherwise false.
      */
     public static boolean doesItemStackHaveTag(ItemStack itemStack, ResourceLocation location) {

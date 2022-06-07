@@ -16,8 +16,8 @@ import net.minecraft.core.Direction;
 
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
@@ -374,15 +374,15 @@ public class Structure {
         if (!checkResult.getFirst()) {
             // Send a message to the player saying that the structure could not
             // be built.
-            TranslatableComponent message = new TranslatableComponent(
+            Component message = Component.translatable(
                     GuiLangKeys.GUI_STRUCTURE_NOBUILD,
                     Registry.BLOCK.getKey(checkResult.getSecond().getBlock()).toString(),
                     checkResult.getThird().getX(),
                     checkResult.getThird().getY(),
                     checkResult.getThird().getZ());
 
-            message.setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
-            player.sendMessage(message, player.getUUID());
+            message.getStyle().withColor(ChatFormatting.GREEN);
+            player.sendSystemMessage(message);
             return false;
         }
 

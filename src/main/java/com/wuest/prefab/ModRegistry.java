@@ -12,7 +12,6 @@ import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.items.*;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.BlockPos;
@@ -21,7 +20,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -463,18 +461,17 @@ public class ModRegistry {
     }
 
     private static void registerStructureBuilderMessageHandler() {
-        ServerSidePacketRegistry.INSTANCE.register(ModRegistry.StructureBuild,
-                (packetContext, attachedData) -> {
+        ServerPlayNetworking.registerGlobalReceiver(ModRegistry.StructureBuild,
+                (server, player, handler, buf, responseSender) -> {
                     // Can only access the "attachedData" on the "network thread" which is here.
-                    StructureTagMessage message = StructureTagMessage.decode(attachedData);
+                    StructureTagMessage message = StructureTagMessage.decode(buf);
                     StructureTagMessage.EnumStructureConfiguration structureConfig = message.getStructureConfig();
 
-                    packetContext.getTaskQueue().execute(() -> {
-                        ServerPlayer serverPlayerEntity = (ServerPlayer) packetContext.getPlayer();
+                    server.execute(() -> {
                         // This is now on the "main" server thread and things can be done in the world!
                         StructureConfiguration configuration = structureConfig.structureConfig.ReadFromCompoundTag(message.getMessageTag());
 
-                        configuration.BuildStructure(serverPlayerEntity, serverPlayerEntity.getLevel());
+                        configuration.BuildStructure(player, player.getLevel());
                     });
                 }
         );
