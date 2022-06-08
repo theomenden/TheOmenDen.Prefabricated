@@ -146,7 +146,7 @@ public class StructureRenderHandler {
 
     private static ChatType getMessageType() {
         Registry<ChatType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registry.CHAT_TYPE_REGISTRY);
-        return registry.get(ChatType.CHAT);
+        return registry.get(ChatType.SYSTEM);
     }
 
     private static boolean renderComponentInWorld(Level world, BuildBlock buildBlock, MultiBufferSource.BufferSource entityVertexConsumer, PoseStack matrixStack, BlockPos pos) {
