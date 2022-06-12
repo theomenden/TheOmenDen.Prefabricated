@@ -25,7 +25,7 @@ public class BlockDirtStairs extends StairBlock implements IGrassSpreadable {
     }
 
     /**
-     * Returns whether or not this block is of a type that needs random ticking.
+     * Returns whether this block is of a type that needs random ticking.
      * Called for ref-counting purposes by ExtendedBlockStorage in order to broadly
      * cull a chunk from the random chunk update list for efficiency's sake.
      */
