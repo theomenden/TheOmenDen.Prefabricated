@@ -133,11 +133,14 @@ public class StructureRenderHandler {
 
                 Component message = Component.translatable(GuiLangKeys.GUI_PREVIEW_NOTICE);
                 message.getStyle().withColor(ChatFormatting.GREEN);
-                mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
+
+                mc.gui.getChat().addMessage(message);
+                //mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
 
                 message = Component.translatable(GuiLangKeys.GUI_BLOCK_CLICKED);
                 message.getStyle().withColor(ChatFormatting.GREEN);
-                mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
+                mc.gui.getChat().addMessage(message);
+                //mc.gui.handlePlayerChat(StructureRenderHandler.getMessageType(), message, ChatSender.system(message));
 
                 StructureRenderHandler.showedMessage = true;
             }
@@ -146,7 +149,7 @@ public class StructureRenderHandler {
 
     private static ChatType getMessageType() {
         Registry<ChatType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registry.CHAT_TYPE_REGISTRY);
-        return registry.get(ChatType.SYSTEM);
+        return registry.get(ChatType.CHAT);
     }
 
     private static boolean renderComponentInWorld(Level world, BuildBlock buildBlock, MultiBufferSource.BufferSource entityVertexConsumer, PoseStack matrixStack, BlockPos pos) {
