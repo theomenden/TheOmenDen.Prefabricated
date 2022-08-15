@@ -49,6 +49,7 @@
   "item.prefab.item_basic_structure": "ベーシックストラクチャー",
   "item.prefab.item_instant_bridge": "インスタントブリッジ",
   "item.prefab.item_moderate_house": "モデレートハウス",
+  "item.prefab.item_advanced_house": "高級住宅",
   "item.prefab.item_bulldozer": "掘削機",
   "item.prefab.item_creative_bulldozer": "クリエイティブショベル",
   "block.prefab.item_heap_of_timber": "木材の山",
@@ -180,6 +181,7 @@
   "prefab.gui.starter.cabin.display": "ログキャビン",
   "prefab.gui.starter.tower.display": "タワー型",
   "prefab.gui.starter.tree.display": "樹上の家",
+  "prefab.gui.starter.mushroom.display": "きのこの家",
 
   "prefab.gui.starter.addtorches": "トーチを追加",
   "prefab.gui.starter.addbed": "ベッドを追加",
@@ -212,6 +214,8 @@
   "prefab.gui.moderate_house.tower_house": "タワー",
   "prefab.gui.moderate_house.hobbit_house": "ホビットハウス",
   "prefab.gui.moderate_house.cottage_house": "コテージ",
+
+  "prefab.gui.advanced_house.Cabin": "キャビン",
 
   "prefab.gui.item_modern_mall_store": "ショッピングセンター",
   "prefab.gui.item_modern_hipster_fruit_stand": "果物店",

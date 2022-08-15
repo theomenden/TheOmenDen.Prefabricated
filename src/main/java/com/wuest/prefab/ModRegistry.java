@@ -184,6 +184,7 @@ public class ModRegistry {
     /* *********************************** Blueprint Items *********************************** */
     public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
     public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
+    public static final ItemAdvancedHouse AdvancedHouse = new ItemAdvancedHouse();
     public static final ItemStartHouse StartHouse = new ItemStartHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
@@ -361,6 +362,7 @@ public class ModRegistry {
         ModRegistry.registerItem("item_start_house", ModRegistry.StartHouse);
         ModRegistry.registerItem("item_instant_bridge", ModRegistry.InstantBridge);
         ModRegistry.registerItem("item_moderate_house", ModRegistry.ModerateHouse);
+        ModRegistry.registerItem("item_advanced_house", ModRegistry.AdvancedHouse);
         ModRegistry.registerItem("item_bulldozer", ModRegistry.Bulldozer);
         ModRegistry.registerItem("item_creative_bulldozer", ModRegistry.CreativeBulldozer);
 

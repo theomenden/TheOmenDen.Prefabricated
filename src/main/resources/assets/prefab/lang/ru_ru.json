@@ -49,6 +49,7 @@
   "item.prefab.item_basic_structure": "Базовая Структура",
   "item.prefab.item_instant_bridge": "Быстрый Мост",
   "item.prefab.item_moderate_house": "Средний Дом",
+  "item.prefab.item_advanced_house": "Расширенный дом",
   "item.prefab.item_bulldozer": "Бульдозер",
   "item.prefab.item_creative_bulldozer": "Творческий Бульдозер",
   "block.prefab.item_heap_of_timber": "Куча Древесины",
@@ -180,6 +181,7 @@
   "prefab.gui.starter.cabin.display": "Бревенчатый домик",
   "prefab.gui.starter.tower.display": "Башенный стиль",
   "prefab.gui.starter.tree.display": "Дом на дереве",
+  "prefab.gui.starter.mushroom.display": "Грибной домик",
 
   "prefab.gui.starter.addtorches": "Добавить Факела",
   "prefab.gui.starter.addbed": "Добавить Кровать",
@@ -212,6 +214,8 @@
   "prefab.gui.moderate_house.tower_house": "Башня",
   "prefab.gui.moderate_house.hobbit_house": "Дом хоббита",
   "prefab.gui.moderate_house.cottage_house": "Коттедж",
+
+  "prefab.gui.advanced_house.Cabin": "Кабина",
 
   "prefab.gui.item_modern_mall_store": "Торговый Центр",
   "prefab.gui.item_modern_hipster_fruit_stand": "Магазин Яблок",

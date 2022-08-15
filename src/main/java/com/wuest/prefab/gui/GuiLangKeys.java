@@ -90,6 +90,9 @@ public class GuiLangKeys {
     @Unlocalized(name = "Treehouse Style")
     public static final String STARTER_HOUSE_TREE_HOUSE_DISPLAY = "prefab.gui.starter.tree.display";
 
+    @Unlocalized(name = "Mushroom Style")
+    public static final String STARTER_HOUSE_MUSHROOM_HOUSE_DISPLAY = "prefab.gui.starter.mushroom.display";
+
     @Unlocalized(name = "Modern Style")
     public static final String STARTER_HOUSE_MODERN_DISPLAY = "prefab.gui.starter.modern.display";
 
@@ -315,6 +318,9 @@ public class GuiLangKeys {
     @Unlocalized(name = "Mountain House")
     public static final String MODERATE_MOUNTAIN_HOME = "prefab.gui.moderate_house.mountain";
 
+    @Unlocalized(name = "Cabin House")
+    public static final String ADVANCED_HOUSE_CABIN = "prefab.gui.advanced_house.cabin";
+
     @Unlocalized(name = "Press§9 Shift §7for more information.")
     public static final String SHIFT_TOOLTIP = "prefab.gui.tooltip.shift";
 
@@ -404,6 +410,9 @@ public class GuiLangKeys {
 
     @Unlocalized(name = "Moderate House")
     public static final String TITLE_MODERATE_HOUSE = "item.prefab.item_moderate_house";
+
+    @Unlocalized(name = "Advanced House")
+    public static final String TITLE_ADVANCED_HOUSE = "item.prefab.item_advanced_house";
 
     @Unlocalized(name = "Bulldozer")
     public static final String TITLE_BULLDOZER = "item.prefab.item_bulldozer";
