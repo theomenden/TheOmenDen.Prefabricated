@@ -1,0 +1,36 @@
+@baseUrl = https://api.curseforge.com
+
+@prefab_mod_id = 246550
+@prefab_fabric_mod_id = 438696
+
+@key = [SOME COOL PLACEHOLDER TEXT BECAUSE I AM NOT AN ID10T ERROR]
+
+###
+// Get all games
+GET {{baseUrl}}/v1/games HTTP/1.1
+x-api-key: {{key}}
+
+###
+// Get minecraft
+GET {{baseUrl}}/v1/games/432 HTTP/1.1
+x-api-key: {{key}}
+
+###
+// search for prefab
+GET {{baseUrl}}/v1/mods/search?gameId=432&slug=prefab HTTP/1.1
+x-api-key: {{key}}
+
+###
+// get mod files for prefab
+GET {{baseUrl}}/v1/mods/{{prefab_mod_id}}/files?gameVersion=1.12.2 HTTP/1.1
+x-api-key: {{key}}
+
+###
+// search for prefab-fabric
+GET {{baseUrl}}/v1/mods/search?gameId=432&slug=prefab-fabric HTTP/1.1
+x-api-key: {{key}}
+
+###
+// get mod files for prefab-fabric
+GET {{baseUrl}}/v1/mods/{{prefab_fabric_mod_id}}/files HTTP/1.1
+x-api-key: {{key}}
