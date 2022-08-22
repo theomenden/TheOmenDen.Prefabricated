@@ -319,7 +319,7 @@ public class GuiLangKeys {
     public static final String MODERATE_MOUNTAIN_HOME = "prefab.gui.moderate_house.mountain";
 
     @Unlocalized(name = "Cabin House")
-    public static final String ADVANCED_HOUSE_CABIN = "prefab.gui.advanced_house.cabin";
+    public static final String ADVANCED_HOUSE_MANOR= "prefab.gui.advanced_house.manor";
 
     @Unlocalized(name = "Press§9 Shift §7for more information.")
     public static final String SHIFT_TOOLTIP = "prefab.gui.tooltip.shift";
