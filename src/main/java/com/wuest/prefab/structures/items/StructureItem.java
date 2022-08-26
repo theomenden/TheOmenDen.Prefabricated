@@ -9,10 +9,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * @author WuestMan
  */
-@SuppressWarnings("NullableProblems")
 public class StructureItem extends Item {
 
     /**
@@ -60,9 +61,9 @@ public class StructureItem extends Item {
 
     protected void RegisterGui(Class<?> classToRegister) {
         try {
-            GuiStructure userInterface = (GuiStructure) classToRegister.newInstance();
+            GuiStructure userInterface = (GuiStructure) classToRegister.getDeclaredConstructor().newInstance();
             ClientModRegistry.ModGuis.put(this, userInterface);
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
@@ -183,9 +182,9 @@ public class ModRegistry {
 
     /* *********************************** Blueprint Items *********************************** */
     public static final ItemInstantBridge InstantBridge = new ItemInstantBridge();
-    public static final ItemModerateHouse ModerateHouse = new ItemModerateHouse();
-    public static final ItemAdvancedHouse AdvancedHouse = new ItemAdvancedHouse();
-    public static final ItemStartHouse StartHouse = new ItemStartHouse();
+    public static final ItemHouseImproved ModerateHouse = new ItemHouseImproved();
+    public static final ItemHouseAdvanced AdvancedHouse = new ItemHouseAdvanced();
+    public static final ItemHouse StartHouse = new ItemHouse();
     public static final ItemBulldozer Bulldozer = new ItemBulldozer();
     public static final ItemBulldozer CreativeBulldozer = new ItemBulldozer(true);
     public static final ItemBasicStructure MachineryTower = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.MachineryTower);

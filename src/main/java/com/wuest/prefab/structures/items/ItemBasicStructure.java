@@ -13,7 +13,6 @@ import net.minecraft.world.item.context.UseOnContext;
  *
  * @author WuestMan
  */
-@SuppressWarnings({"AccessStaticViaInstance", "ConstantConditions"})
 public class ItemBasicStructure extends StructureItem {
     public final BasicStructureConfiguration.EnumBasicStructureName structureType;
 
@@ -33,7 +32,7 @@ public class ItemBasicStructure extends StructureItem {
     public static ItemStack getBasicStructureItemInHand(Player player) {
         ItemStack stack = player.getOffhandItem();
 
-        // Get off hand first since that is the right-click hand if there is
+        // Get off-hand first since that is the right-click hand if there is
         // something in there.
         if (!(stack.getItem() instanceof ItemBasicStructure)) {
             if (player.getMainHandItem().getItem() instanceof ItemBasicStructure) {

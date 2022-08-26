@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -27,7 +28,6 @@ import java.util.List;
 /**
  * @author WuestMan
  */
-@SuppressWarnings("ConstantConditions")
 public class ItemBulldozer extends StructureItem {
 
     private boolean creativePowered = false;
@@ -74,7 +74,7 @@ public class ItemBulldozer extends StructureItem {
      */
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         boolean advancedKeyDown = Screen.hasShiftDown();
@@ -100,7 +100,7 @@ public class ItemBulldozer extends StructureItem {
      */
     @Environment(EnvType.CLIENT)
     @Override
-    public boolean isFoil(ItemStack stack) {
+    public boolean isFoil(@NotNull ItemStack stack) {
         return this.getPoweredValue(stack) || super.isFoil(stack);
     }
 

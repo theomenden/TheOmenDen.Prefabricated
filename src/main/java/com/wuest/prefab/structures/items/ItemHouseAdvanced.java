@@ -1,15 +1,17 @@
 package com.wuest.prefab.structures.items;
 
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.structures.gui.GuiStartHouseChooser;
+import com.wuest.prefab.structures.gui.GuiHouseAdvanced;
 import net.minecraft.world.item.context.UseOnContext;
 
 /**
  * @author WuestMan
  */
-@SuppressWarnings("ALL")
-public class ItemStartHouse extends StructureItem {
-    public ItemStartHouse() {
+public class ItemHouseAdvanced extends StructureItem {
+    /**
+     * Initializes a new instance of the {@link ItemHouseAdvanced} class.
+     */
+    public ItemHouseAdvanced() {
         super();
     }
 
@@ -22,6 +24,6 @@ public class ItemStartHouse extends StructureItem {
      */
     @Override
     protected void Initialize() {
-        ModRegistry.guiRegistrations.add(x -> this.RegisterGui(GuiStartHouseChooser.class));
+        ModRegistry.guiRegistrations.add(x -> this.RegisterGui(GuiHouseAdvanced.class));
     }
 }

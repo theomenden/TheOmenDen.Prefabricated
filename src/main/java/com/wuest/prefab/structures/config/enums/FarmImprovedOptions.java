@@ -5,57 +5,57 @@ import com.wuest.prefab.Prefab;
 import java.util.ArrayList;
 
 @SuppressWarnings({"unchecked", "unused"})
-public class ModerateFarmOptions extends BaseOption{
-    public static ModerateFarmOptions AutomatedChickenCoop = new ModerateFarmOptions(
-            "prefab.gui.moderate.farm.chicken",
-            "assets/prefab/structures/advancedcoop.zip",
-            "textures/gui/advanced_chicken_coop_topdown.png",
+public class FarmImprovedOptions extends BaseOption{
+    public static FarmImprovedOptions AutomatedChickenCoop = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.chicken",
+            "assets/prefab/structures/chicken_coop_improved.zip",
+            "textures/gui/chicken_coop_improved.png",
             false,
             false);
 
-    public static ModerateFarmOptions AutomatedFarm = new ModerateFarmOptions(
-            "prefab.gui.moderate.farm.automated",
+    public static FarmImprovedOptions AutomatedFarm = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.automated",
             "assets/prefab/structures/automated_farm.zip",
-            "textures/gui/automated_farm_topdown.png",
+            "textures/gui/automated_farm.png",
             false,
             false);
 
-    public static ModerateFarmOptions FishPond = new ModerateFarmOptions(
-            "prefab.gui.moderate.farm.fish",
+    public static FarmImprovedOptions FishPond = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.fish",
             "assets/prefab/structures/fishpond.zip",
-            "textures/gui/fish_pond_top_down.png",
+            "textures/gui/fish_pond.png",
             false,
             false);
 
-    public static ModerateFarmOptions BeeFarm = new ModerateFarmOptions(
-            "prefab.gui.moderate.farm.bee",
+    public static FarmImprovedOptions BeeFarm = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.bee",
             "assets/prefab/structures/bee_farm.zip",
-            "textures/gui/bee_farm_topdown.png",
+            "textures/gui/bee_farm.png",
             false,
             false);
 
-    public static ModerateFarmOptions SugarCaneFarm = new ModerateFarmOptions(
-            "prefab.gui.moderate.farm.sugar_cane",
+    public static FarmImprovedOptions SugarCaneFarm = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.sugar_cane",
             "assets/prefab/structures/sugar_cane_farm.zip",
-            "textures/gui/sugar_cane_farm_topdown.png",
+            "textures/gui/sugar_cane_farm.png",
             false,
             true);
 
-    public static ModerateFarmOptions MushroomFarm = new ModerateFarmOptions(
-            "prefab.gui.starter.farm.mushroom",
+    public static FarmImprovedOptions MushroomFarm = new FarmImprovedOptions(
+            "prefab.gui.farm.improved.mushroom",
             "assets/prefab/structures/mushroom_farm.zip",
-            "textures/gui/mushroom_farm_topdown.png",
+            "textures/gui/mushroom_farm.png",
             false,
             false);
 
-    public static ModerateFarmOptions Barn = new ModerateFarmOptions(
-            "prefab.gui.advanced.farm.barn",
-            "assets/prefab/structures/moderate_barn.zip",
-            "textures/gui/barn_alternate.png",
+    public static FarmImprovedOptions Barn = new FarmImprovedOptions(
+            "prefab.gui.farm.advanced.barn",
+            "assets/prefab/structures/barn_improved.zip",
+            "textures/gui/barn_improved.png",
             false,
             false);
 
-    protected ModerateFarmOptions(String translationString,
+    protected FarmImprovedOptions(String translationString,
                                   String assetLocation,
                                   String pictureLocation,
                                   boolean hasBedColor,
@@ -78,9 +78,9 @@ public class ModerateFarmOptions extends BaseOption{
     public ArrayList<BaseOption> filterOptions(ArrayList<BaseOption> originalOptions) {
         if (!Prefab.serverConfiguration.enableAutomationOptionsFromModerateFarm) {
             ArrayList<BaseOption> modifiedList = (ArrayList<BaseOption>)originalOptions.clone();
-            modifiedList.remove(ModerateFarmOptions.SugarCaneFarm);
-            modifiedList.remove(ModerateFarmOptions.AutomatedFarm);
-            modifiedList.remove(ModerateFarmOptions.AutomatedChickenCoop);
+            modifiedList.remove(FarmImprovedOptions.SugarCaneFarm);
+            modifiedList.remove(FarmImprovedOptions.AutomatedFarm);
+            modifiedList.remove(FarmImprovedOptions.AutomatedChickenCoop);
 
             return modifiedList;
         }

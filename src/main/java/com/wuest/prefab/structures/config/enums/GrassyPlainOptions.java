@@ -4,7 +4,7 @@ public class GrassyPlainOptions extends BaseOption {
     public static GrassyPlainOptions Default = new GrassyPlainOptions(
             "item.prefab.grassy_plain",
             "assets/prefab/structures/grassy_plain.zip",
-            "textures/gui/grassy_plain_topdown.png",
+            "textures/gui/grassy_plain.png",
             false,
             false);
 
