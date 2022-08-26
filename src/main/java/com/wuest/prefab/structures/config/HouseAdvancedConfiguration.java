@@ -101,7 +101,7 @@ public class HouseAdvancedConfiguration extends StructureConfiguration {
         StructureAdvancedHouse structure = StructureAdvancedHouse.CreateInstance(this.houseStyle.getStructureLocation(), StructureAdvancedHouse.class);
 
         if (structure.BuildStructure(this, world, hitBlockPos, player)) {
-            this.RemoveStructureItemFromPlayer(player, ModRegistry.AdvancedHouse);
+            this.RemoveStructureItemFromPlayer(player, ModRegistry.HouseAdvanced);
         }
     }
 

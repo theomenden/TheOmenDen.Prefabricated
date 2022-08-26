@@ -178,6 +178,7 @@ public class ClientModRegistry {
     }
 
     private static void registerKeyBindings() {
+        // TODO: Create translation keys.
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "Build Current Structure", // The translation key of the keybinding's name
                 InputConstants.Type.KEYSYM,

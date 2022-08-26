@@ -1,7 +1,7 @@
 {
   "type": "prefab:condition_crafting_shaped",
-  "configName": "Starting House",
-  "group": "Starting House",
+  "configName": "House",
+  "group": "House",
   "pattern": [
     "abc",
     "ded",
@@ -28,7 +28,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_start_house",
+    "item": "prefab:item_house",
     "count": 1
   }
 }

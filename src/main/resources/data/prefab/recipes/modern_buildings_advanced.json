@@ -1,15 +1,10 @@
 {
-  "conditions": [
-    {
-      "type": "prefab:config_recipe",
-      "recipeKey": "Modern Buildings"
-    }
-  ],
-  "type": "minecraft:crafting_shaped",
+  "type": "prefab:condition_crafting_shaped",
+  "configName": "Modern Buildings",
   "group": "Modern Buildings",
   "pattern": [
-    "a a",
-    "bbb",
+    "ada",
+    "beb",
     "cdc"
   ],
   "key": {
@@ -24,10 +19,13 @@
     },
     "d": {
       "tag": "c:double_compressed_quartz_crete"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
     }
   },
   "result": {
-    "item": "prefab:item_moderate_modern_buildings",
+    "item": "prefab:item_modern_buildings_advanced",
     "count": 1
   }
 }

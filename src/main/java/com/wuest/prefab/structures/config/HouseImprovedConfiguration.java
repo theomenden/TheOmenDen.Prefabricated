@@ -126,7 +126,7 @@ public class HouseImprovedConfiguration extends StructureConfiguration {
         StructureModerateHouse structure = StructureModerateHouse.CreateInstance(this.houseStyle.getStructureLocation(), StructureModerateHouse.class);
 
         if (structure.BuildStructure(this, world, hitBlockPos, player)) {
-            this.RemoveStructureItemFromPlayer(player, ModRegistry.ModerateHouse);
+            this.RemoveStructureItemFromPlayer(player, ModRegistry.HouseImproved);
         }
     }
 

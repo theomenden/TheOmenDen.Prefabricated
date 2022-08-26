@@ -1,7 +1,7 @@
 {
   "type": "prefab:condition_crafting_shaped",
-  "configName": "Warehouse Upgrade",
-  "group": "Warehouse Upgrade",
+  "configName": "Upgrade",
+  "group": "Upgrade",
   "pattern": [
     "aba",
     "cdc",
@@ -22,7 +22,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_warehouse_upgrade",
+    "item": "prefab:item_upgrade",
     "count": 1
   }
 }

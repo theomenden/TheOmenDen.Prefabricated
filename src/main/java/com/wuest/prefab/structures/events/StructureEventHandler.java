@@ -107,12 +107,12 @@ public final class StructureEventHandler {
 
             switch (startingItem) {
                 case StartingHouse: {
-                    stack = new ItemStack(ModRegistry.StartHouse);
+                    stack = new ItemStack(ModRegistry.House);
                     break;
                 }
 
                 case ModerateHouse: {
-                    stack = new ItemStack(ModRegistry.ModerateHouse);
+                    stack = new ItemStack(ModRegistry.HouseImproved);
                     break;
                 }
             }

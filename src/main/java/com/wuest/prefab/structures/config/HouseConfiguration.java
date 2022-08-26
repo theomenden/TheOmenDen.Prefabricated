@@ -181,7 +181,7 @@ public class HouseConfiguration extends StructureConfiguration {
             EntityPlayerConfiguration playerConfig = EntityPlayerConfiguration.loadFromEntity(player);
             playerConfig.builtStarterHouse = true;
 
-            this.RemoveStructureItemFromPlayer(player, ModRegistry.StartHouse);
+            this.RemoveStructureItemFromPlayer(player, ModRegistry.House);
 
             PlayerEntityTagMessage message = new PlayerEntityTagMessage();
             message.setMessageTag(playerConfig.createPlayerTag());

@@ -1,7 +1,7 @@
 {
   "type": "prefab:condition_crafting_shaped",
-  "configName": "Starter Farm",
-  "group": "Starter Farm",
+  "configName": "Farm",
+  "group": "Farm",
   "pattern": [
     "aaa",
     "bcb",
@@ -25,7 +25,7 @@
     }
   },
   "result": {
-    "item": "prefab:item_starter_farm",
+    "item": "prefab:item_farm",
     "count": 1
   }
 }
