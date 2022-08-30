@@ -32,7 +32,7 @@ public class FarmAdvancedOptions extends BaseOption {
 
     public static FarmAdvancedOptions GreenHouse = new FarmAdvancedOptions(
             "prefab.gui.farm.advanced.green_house",
-            "assets/prefab/structures/green_house.zip",
+            "assets/prefab/structures/green_house_advanced.zip",
             "textures/gui/green_house.png",
             false,
             false);

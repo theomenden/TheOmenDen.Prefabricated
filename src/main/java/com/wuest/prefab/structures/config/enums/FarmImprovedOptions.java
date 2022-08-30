@@ -55,6 +55,13 @@ public class FarmImprovedOptions extends BaseOption{
             false,
             false);
 
+    public static FarmImprovedOptions GreenHouse = new FarmImprovedOptions(
+            "prefab.gui.farm.advanced.green_house",
+            "assets/prefab/structures/green_house_improved.zip",
+            "textures/gui/green_house.png",
+            false,
+            false);
+
     protected FarmImprovedOptions(String translationString,
                                   String assetLocation,
                                   String pictureLocation,
