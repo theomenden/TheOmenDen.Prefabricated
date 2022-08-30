@@ -22,7 +22,7 @@ public class FarmImprovedOptions extends BaseOption{
 
     public static FarmImprovedOptions FishPond = new FarmImprovedOptions(
             "prefab.gui.farm.improved.fish",
-            "assets/prefab/structures/fishpond.zip",
+            "assets/prefab/structures/fish_pond.zip",
             "textures/gui/fish_pond.png",
             false,
             false);

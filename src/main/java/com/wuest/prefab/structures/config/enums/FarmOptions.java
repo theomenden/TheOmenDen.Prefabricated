@@ -24,14 +24,14 @@ public class FarmOptions extends BaseOption {
 
     public static FarmOptions ChickenCoop = new FarmOptions(
             "prefab.gui.farm.chicken",
-            "assets/prefab/structures/chickencoop.zip",
+            "assets/prefab/structures/chicken_coop.zip",
             "textures/gui/chicken_coop.png",
             false,
             false);
 
     public static FarmOptions HorseStable = new FarmOptions(
             "prefab.gui.farm.horse",
-            "assets/prefab/structures/horsestable.zip",
+            "assets/prefab/structures/horse_stable.zip",
             "textures/gui/horse_stable.png",
             false,
             false);
