@@ -56,6 +56,7 @@ public class StructureInstantBridge extends Structure {
     public void setupStructure(InstantBridgeConfiguration configuration, BlockPos originalPos) {
         ArrayList<BuildBlock> buildingBlocks = new ArrayList<BuildBlock>();
         BlockState materialState = configuration.bridgeMaterial.getBlockType();
+        BlockState wallBlockState = configuration.bridgeMaterial.getWallBlock();
         Direction facing = Direction.SOUTH;
 
         BlockState torchState = Blocks.TORCH.defaultBlockState();
@@ -74,8 +75,8 @@ public class StructureInstantBridge extends Structure {
             buildingBlocks.add(Structure.createBuildBlockFromBlockState(materialState, materialState.getBlock(), currentPos.relative(facing.getClockWise(), 2), originalPos));
 
             // Build the walls.
-            buildingBlocks.add(Structure.createBuildBlockFromBlockState(materialState, materialState.getBlock(), currentPos.relative(facing.getCounterClockWise(), 2).above(), originalPos));
-            buildingBlocks.add(Structure.createBuildBlockFromBlockState(materialState, materialState.getBlock(), currentPos.relative(facing.getClockWise(), 2).above(), originalPos));
+            buildingBlocks.add(Structure.createBuildBlockFromBlockState(wallBlockState, wallBlockState.getBlock(), currentPos.relative(facing.getCounterClockWise(), 2).above(), originalPos));
+            buildingBlocks.add(Structure.createBuildBlockFromBlockState(wallBlockState, wallBlockState.getBlock(), currentPos.relative(facing.getClockWise(), 2).above(), originalPos));
 
             if (configuration.includeRoof) {
                 // Build the roof.
