@@ -102,12 +102,26 @@ public class GuiHouse extends GuiStructure {
         this.selectedStructure = StructureAlternateStart.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureAlternateStart.class);
 
         // Create the buttons.
-        this.btnHouseStyle = this.createAndAddButton(grayBoxX + 8, grayBoxY + 25, 90, 20, this.specificConfiguration.houseStyle.getDisplayName(), false, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE));
-        this.btnBedColor = this.createAndAddDyeButton(grayBoxX + 8, grayBoxY + 60, 90, 20, this.specificConfiguration.bedColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR));
-        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 8, grayBoxY + 95, 90, 20, this.specificConfiguration.glassColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS));
-        this.btnAddChest = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 120, GuiLangKeys.HOUSE_ADD_CHEST, this.specificConfiguration.addChest, this::buttonClicked);
-        this.btnAddMineShaft = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 137, GuiLangKeys.HOUSE_BUILD_MINESHAFT, this.specificConfiguration.addChestContents, this::buttonClicked);
-        this.btnAddChestContents = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 154, GuiLangKeys.HOUSE_ADD_CHEST_CONTENTS, this.specificConfiguration.addMineShaft, this::buttonClicked);
+        int yOffset = 25;
+
+        if (this.availableHouseStyles.size() > 1) {
+            this.btnHouseStyle = this.createAndAddButton(grayBoxX + 8, grayBoxY + yOffset, 90, 20, this.specificConfiguration.houseStyle.getDisplayName(), false, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE));
+            yOffset = yOffset + 35;
+        }
+
+        this.btnBedColor = this.createAndAddDyeButton(grayBoxX + 8, grayBoxY + yOffset, 90, 20, this.specificConfiguration.bedColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR));
+        yOffset = yOffset + 35;
+
+        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 8, grayBoxY + yOffset, 90, 20, this.specificConfiguration.glassColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS));
+        yOffset = yOffset + 35;
+
+        this.btnAddChest = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + yOffset, GuiLangKeys.HOUSE_ADD_CHEST, this.specificConfiguration.addChest, this::buttonClicked);
+        yOffset = yOffset + 17;
+
+        this.btnAddMineShaft = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + yOffset, GuiLangKeys.HOUSE_BUILD_MINESHAFT, this.specificConfiguration.addChestContents, this::buttonClicked);
+        yOffset = yOffset + 17;
+
+        this.btnAddChestContents = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + yOffset, GuiLangKeys.HOUSE_ADD_CHEST_CONTENTS, this.specificConfiguration.addMineShaft, this::buttonClicked);
 
         // Create the standard buttons.
         this.btnVisualize = this.createAndAddCustomButton(grayBoxX + 26, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
@@ -149,11 +163,17 @@ public class GuiHouse extends GuiStructure {
     @Override
     protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
         // Draw the text here.
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + 15, this.textColor);
+        int yOffSet = 15;
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + 50, this.textColor);
+        if (this.availableHouseStyles.size() > 1) {
+            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + yOffSet, this.textColor);
+            yOffSet = yOffSet + 35;
+        }
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + 85, this.textColor);
+        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + yOffSet, this.textColor);
+        yOffSet = yOffSet + 35;
+
+        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + yOffSet, this.textColor);
     }
 
     /**
