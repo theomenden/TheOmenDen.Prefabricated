@@ -50,7 +50,7 @@ public class ServerEvents {
             if (entity instanceof ServerPlayer) {
                 // Send the message to the client.
                 FriendlyByteBuf messagePacket = Utils.createMessageBuffer(Prefab.serverConfiguration.writeCompoundTag());
-                ServerPlayNetworking.send((ServerPlayer) entity, ModRegistry.PlayerConfigSync, messagePacket);
+                ServerPlayNetworking.send((ServerPlayer) entity, ModRegistry.ConfigSync, messagePacket);
             }
         });
     }
