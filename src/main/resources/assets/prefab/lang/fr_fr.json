@@ -334,5 +334,8 @@
   "prefab.gui.length": "Longueur",
   "prefab.gui.stairs_height": "Escaliers Hauteur",
   "prefab.gui.stairs_width": "Escaliers Largeur",
-  "prefab.gui.building_options": "Options de construction"
+  "prefab.gui.building_options": "Options de construction",
+
+  "gui.prefab.no_options_1": "Toutes les options ont été désactivées pour cette structure",
+  "gui.prefab.no_options_2": "Please update your configuration or contact your server administrator"
 }

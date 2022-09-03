@@ -9,12 +9,16 @@ import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
+import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.config.HouseImprovedConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureModerateHouse;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author WuestMan
@@ -29,6 +33,8 @@ public class GuiHouseImproved extends GuiStructure {
     private ExtendedButton btnBedColor;
     private boolean allowItemsInChestAndFurnace = true;
 
+    private ArrayList<HouseImprovedConfiguration.HouseStyle> availableHouseStyles;
+
     public GuiHouseImproved() {
         super("Moderate House");
 
@@ -42,6 +48,8 @@ public class GuiHouseImproved extends GuiStructure {
 
     @Override
     protected void Initialize() {
+        super.Initialize();
+
         this.modifiedInitialXAxis = 215;
         this.modifiedInitialYAxis = 117;
         this.shownImageHeight = 150;
@@ -56,6 +64,30 @@ public class GuiHouseImproved extends GuiStructure {
         this.serverConfiguration = Prefab.serverConfiguration;
         this.configuration = this.specificConfiguration = ClientModRegistry.playerConfig.getClientConfig("Moderate Houses", HouseImprovedConfiguration.class);
         this.configuration.pos = this.pos;
+
+        this.availableHouseStyles = new ArrayList<>();
+        HashMap<String, Boolean> houseConfigurationSettings = this.serverConfiguration.structureOptions.get("item.prefab.item_house_improved");
+        boolean selectedStyleInListOfAvailable = false;
+
+        for (HouseImprovedConfiguration.HouseStyle style : HouseImprovedConfiguration.HouseStyle.values()) {
+            if (houseConfigurationSettings.get(style.getDisplayName())) {
+                this.availableHouseStyles.add(style);
+
+                if (this.specificConfiguration.houseStyle.getDisplayName().equals(style.getDisplayName())) {
+                    selectedStyleInListOfAvailable = true;
+                }
+            }
+        }
+
+        if (this.availableHouseStyles.size() == 0) {
+            // There are no options. Show the no options screen.
+            this.showNoOptionsScreen();
+            return;
+        }
+
+        if (!selectedStyleInListOfAvailable) {
+            this.specificConfiguration.houseStyle = this.availableHouseStyles.get(0);
+        }
 
         this.selectedStructure = StructureModerateHouse.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureModerateHouse.class);
 
@@ -129,10 +161,26 @@ public class GuiHouseImproved extends GuiStructure {
         this.performCancelOrBuildOrHouseFacing(button);
 
         if (button == this.btnHouseStyle) {
-            int id = this.specificConfiguration.houseStyle.getValue() + 1;
-            this.specificConfiguration.houseStyle = HouseImprovedConfiguration.HouseStyle.ValueOf(id);
-            this.selectedStructure = StructureModerateHouse.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureModerateHouse.class);
-            GuiUtils.setButtonText(btnHouseStyle, this.specificConfiguration.houseStyle.getDisplayName());
+            for (int i = 0; i < this.availableHouseStyles.size(); i++) {
+                HouseImprovedConfiguration.HouseStyle option = this.availableHouseStyles.get(i);
+                HouseImprovedConfiguration.HouseStyle chosenOption = null;
+
+                if (this.specificConfiguration.houseStyle.getDisplayName().equals(option.getDisplayName())) {
+                    if (i == this.availableHouseStyles.size() - 1) {
+                        // This is the last option, set the text to the first option.
+                        chosenOption = this.availableHouseStyles.get(0);
+                    } else {
+                        chosenOption = this.availableHouseStyles.get(i + 1);
+                    }
+                }
+
+                if (chosenOption != null) {
+                    this.specificConfiguration.houseStyle = chosenOption;
+                    this.selectedStructure = StructureModerateHouse.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureModerateHouse.class);
+                    GuiUtils.setButtonText(btnHouseStyle, this.specificConfiguration.houseStyle.getDisplayName());
+                    break;
+                }
+            }
         } else if (button == this.btnVisualize) {
             this.performPreview();
         } else if (button == this.btnBedColor) {

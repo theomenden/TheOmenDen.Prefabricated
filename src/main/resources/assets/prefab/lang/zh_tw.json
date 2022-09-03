@@ -335,5 +335,8 @@
   "prefab.gui.length": "長度",
   "prefab.gui.stairs_height": "階梯高度",
   "prefab.gui.stairs_width": "階梯寬度",
-  "prefab.gui.building_options": "建築選擇"
+  "prefab.gui.building_options": "建築選擇",
+
+  "gui.prefab.no_options_1": "此結構的所有選項都已禁用",
+  "gui.prefab.no_options_2": "Please update your configuration or contact your server administrator"
 }

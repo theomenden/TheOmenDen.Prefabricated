@@ -335,5 +335,8 @@
   "prefab.gui.length": "Длина",
   "prefab.gui.stairs_height": "Высота Ступенек",
   "prefab.gui.stairs_width": "Ширина Ступенек",
-  "prefab.gui.building_options": "Вариант Постройки"
+  "prefab.gui.building_options": "Вариант Постройки",
+
+  "gui.prefab.no_options_1": "Все варианты были выключены для этой структуры",
+  "gui.prefab.no_options_2": "Пожалуйста, обновите конфиг или свяжитесь с администрацией сервера"
 }

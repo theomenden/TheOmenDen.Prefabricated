@@ -51,6 +51,7 @@ public abstract class GuiStructure extends GuiBase {
     /**
      * This method is used to initialize GUI specific items.
      */
+    @Override
     protected void Initialize() {
         super.Initialize();
     }
@@ -114,5 +115,9 @@ public abstract class GuiStructure extends GuiBase {
     protected void performPreview() {
         StructureRenderHandler.setStructure(this.selectedStructure, this.configuration);
         this.closeScreen();
+    }
+
+    protected void showNoOptionsScreen() {
+        this.getMinecraft().setScreen(new GuiNoOptions());
     }
 }

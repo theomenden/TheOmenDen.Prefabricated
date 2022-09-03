@@ -335,5 +335,8 @@
 	"prefab.gui.length": "Boy",
 	"prefab.gui.stairs_height": "Merdiven Yüksekliği",
 	"prefab.gui.stairs_width": "Merdiven Uzunluğu",
-	"prefab.gui.building_options": "Bina Seçenekleri"
+	"prefab.gui.building_options": "Bina Seçenekleri",
+
+	"gui.prefab.no_options_1": "Bu yapı için tüm seçenekler devre dışı bırakıldı",
+	"gui.prefab.no_options_2": "Please update your configuration or contact your server administrator"
 }

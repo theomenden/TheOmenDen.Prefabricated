@@ -335,5 +335,8 @@
     "prefab.gui.length": "Довжина",
     "prefab.gui.stairs_height": "Висота Сход",
     "prefab.gui.stairs_width": "Ширина Сход",
-    "prefab.gui.building_options": "Параметри Будівництва"
+    "prefab.gui.building_options": "Параметри Будівництва",
+
+    "gui.prefab.no_options_1": "Усі варіанти були вимкнені для цієї структури",
+    "gui.prefab.no_options_2": "Будь ласка, оновіть конфіг або звʼяжіться з адміністрацією сервера"
 }
