@@ -33,9 +33,6 @@ public class ModConfiguration implements ConfigData {
     @Comment("Allow water in the End or Custom Dimensions")
     public boolean allowWaterInNonOverworldDimensions = true;
 
-    @Comment("Enable Automation Options For Moderate Farm")
-    public boolean enableAutomationOptionsFromModerateFarm = true;
-
     @Comment("Generated mineshafts have chests with materials")
     public boolean includeMineshaftChest = true;
 
@@ -68,7 +65,7 @@ public class ModConfiguration implements ConfigData {
             }
 
             String key = value.getItemTranslationString();
-            ArrayList<BaseOption> options = value.getBaseOption().getSpecificOptions(false);
+            ArrayList<BaseOption> options = value.getBaseOption().getSpecificOptions();
 
             if (options.size() > 1) {
                 HashMap<String, Boolean> structureOptions = new HashMap<>();
@@ -118,7 +115,6 @@ public class ModConfiguration implements ConfigData {
         tag.putBoolean(ConfigKeyNames.includeMineshaftChestName, this.includeMineshaftChest);
         tag.putBoolean(ConfigKeyNames.allowBulldozerToCreateDropsName, this.allowBulldozerToCreateDrops);
         tag.putBoolean(ConfigKeyNames.allowWaterInNonOverworldDimensionsName, this.allowWaterInNonOverworldDimensions);
-        tag.putBoolean(ConfigKeyNames.enableAutomationOptionsFromModerateFarmName, this.enableAutomationOptionsFromModerateFarm);
         tag.putBoolean(ConfigKeyNames.playBuildingSoundName, this.playBuildingSound);
 
         tag.putBoolean(ConfigKeyNames.addSwordName, this.chestOptions.addSword);
@@ -171,7 +167,6 @@ public class ModConfiguration implements ConfigData {
         this.includeMineshaftChest = tag.getBoolean(ConfigKeyNames.includeMineshaftChestName);
         this.allowBulldozerToCreateDrops = tag.getBoolean(ConfigKeyNames.allowBulldozerToCreateDropsName);
         this.allowWaterInNonOverworldDimensions = tag.getBoolean(ConfigKeyNames.allowWaterInNonOverworldDimensionsName);
-        this.enableAutomationOptionsFromModerateFarm = tag.getBoolean(ConfigKeyNames.enableAutomationOptionsFromModerateFarmName);
         this.playBuildingSound = tag.getBoolean(ConfigKeyNames.playBuildingSoundName);
 
         this.chestOptions.addSword = tag.getBoolean(ConfigKeyNames.addSwordName);

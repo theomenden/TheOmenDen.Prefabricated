@@ -78,7 +78,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         this.basicStructureName = EnumBasicStructureName.AquaBase;
         this.bedColor = DyeColor.RED;
         this.glassColor = FullDyeColor.CLEAR;
-        this.chosenOption = this.basicStructureName.baseOption.getSpecificOptions(false).get(0);
+        this.chosenOption = this.basicStructureName.baseOption.getSpecificOptions().get(0);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class BasicStructureConfiguration extends StructureConfiguration {
         SkiLodge("ski_lodge", "item.prefab.item_ski_lodge", "item_ski_lodge", SkiLodgeOptions.Default, false),
         WindMill("wind_mill", "item.prefab.item_wind_mill", "item_wind_mill", WindMillOptions.Default, false),
         TownHall("town_hall", "item.prefab.item_town_hall", "item_town_hall", TownHallOptions.Default, false),
-        NetherGate("nether_gate", "item.prefab.item_nether_gate", "item_nether_gate", NetherGateOptions.AncientSkull, true),
+        NetherGate("nether_gate", "item.prefab.item_nether_gate", "item_nether_gate", NetherGateOptions.AncientSkull, false),
         AquaBaseImproved("aqua_base_improved", "item.prefab.item_aqua_base_improved", "item_aqua_base_improved", AquaBaseImprovedOptions.Default, false),
         VillagerHouses("villager_houses", "item.prefab.item_villager_houses", "item_villager_houses", VillagerHouseOptions.FLAT_ROOF, true),
         WarehouseImproved("warehouse_improved", "item.prefab.item_warehouse_improved", "item_warehouse_improved", WarehouseImprovedOptions.Default, true),

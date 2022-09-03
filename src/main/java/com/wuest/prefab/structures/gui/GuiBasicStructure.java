@@ -2,8 +2,10 @@ package com.wuest.prefab.structures.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wuest.prefab.ClientModRegistry;
+import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.blocks.FullDyeColor;
+import com.wuest.prefab.config.ModConfiguration;
 import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class is used as the gui for all basic structures.
@@ -27,6 +30,8 @@ import java.util.ArrayList;
 @SuppressWarnings({"SpellCheckingInspection"})
 public class GuiBasicStructure extends GuiStructure {
     public BasicStructureConfiguration specificConfiguration;
+    protected ModConfiguration serverConfiguration;
+
     private ExtendedButton btnBedColor = null;
     private ExtendedButton btnGlassColor = null;
     private ExtendedButton btnStructureOptions = null;
@@ -53,18 +58,28 @@ public class GuiBasicStructure extends GuiStructure {
 
         if (stack != null) {
             ItemBasicStructure item = (ItemBasicStructure) stack.getItem();
+            this.serverConfiguration = Prefab.serverConfiguration;
             this.configuration = this.specificConfiguration = ClientModRegistry.playerConfig.getClientConfig(item.structureType.getName(), BasicStructureConfiguration.class);
             this.specificConfiguration.basicStructureName = item.structureType;
 
-            if (this.specificConfiguration.chosenOption.getClass() != item.structureType.getBaseOption().getClass()) {
-                this.availableOptions = item.structureType.getBaseOption().getSpecificOptions(true);
-                this.specificConfiguration.chosenOption = this.availableOptions.get(0);
-            } else {
-                this.availableOptions = this.specificConfiguration.chosenOption.getSpecificOptions(true);
+            HashMap<String, Boolean> configurationSettings = this.serverConfiguration.structureOptions.get(item.structureType.getItemTranslationString());
+            ArrayList<BaseOption> tempOptions = item.structureType.getBaseOption().getSpecificOptions();
+            this.availableOptions = new ArrayList<>();
+
+            for (BaseOption option : tempOptions) {
+                if (configurationSettings == null || configurationSettings.get(option.getTranslationString())) {
+                    this.availableOptions.add(option);
+                }
             }
-            
-            this.structureImageLocation = this.specificConfiguration.chosenOption.getPictureLocation();
         }
+
+        if (this.availableOptions.size() == 0) {
+            this.showNoOptionsScreen();
+            return;
+        }
+
+        this.specificConfiguration.chosenOption = this.availableOptions.get(0);
+        this.structureImageLocation = this.specificConfiguration.chosenOption.getPictureLocation();
 
         this.specificConfiguration.pos = this.pos;
         this.configuration.houseFacing = this.structureFacing;
@@ -72,6 +87,15 @@ public class GuiBasicStructure extends GuiStructure {
 
         if (this.availableOptions.size() > 1 || this.specificConfiguration.basicStructureName.shouldShowConfigurationOptions()) {
             this.showConfigurationOptions = true;
+        }
+
+        if (this.availableOptions.size() == 1 && this.showConfigurationOptions) {
+            // Make sure that the only available option still needs settings to show.
+            BaseOption option = this.availableOptions.get(0);
+
+            if (!option.getHasBedColor() && !option.getHasGlassColor()) {
+                this.showConfigurationOptions = false;
+            }
         }
 
         if (!this.showConfigurationOptions) {
