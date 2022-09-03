@@ -32,6 +32,7 @@
   "text.autoconfig.Prefab.category.recipes": "レシピ",
   "text.autoconfig.Prefab.category.chest_options": "金庫オプション",
   "text.autoconfig.Prefab.category.starter_options": "スタートハウスオプション",
+  "text.autoconfig.Prefab.category.structure_options": "構造オプション",
 
   "itemGroup.prefab.logo": "Prefab",
 

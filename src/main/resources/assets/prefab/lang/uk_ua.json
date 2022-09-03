@@ -32,6 +32,7 @@
     "text.autoconfig.Prefab.category.recipes": "Рецепти",
     "text.autoconfig.Prefab.category.chest_options": "Параметри скрині",
     "text.autoconfig.Prefab.category.starter_options": "Параметри стартового будинку",
+    "text.autoconfig.Prefab.category.structure_options": "Параметри структури",
 
     "itemGroup.prefab.logo": "Prefab",
 

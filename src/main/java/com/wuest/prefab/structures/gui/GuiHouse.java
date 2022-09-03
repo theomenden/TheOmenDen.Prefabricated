@@ -17,6 +17,9 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * @author WuestMan
  */
@@ -35,6 +38,10 @@ public class GuiHouse extends GuiStructure {
     private boolean allowItemsInChestAndFurnace = true;
 
     private HouseConfiguration specificConfiguration;
+
+    private ArrayList<HouseConfiguration.HouseStyle> availableHouseStyles;
+
+    private boolean noStylesAvailable = false;
 
     public GuiHouse() {
         super("Starter House");
@@ -63,24 +70,48 @@ public class GuiHouse extends GuiStructure {
         this.configuration = this.specificConfiguration = ClientModRegistry.playerConfig.getClientConfig("Starter House", HouseConfiguration.class);
         this.configuration.pos = this.pos;
 
-        this.selectedStructure = StructureAlternateStart.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureAlternateStart.class);
+        this.availableHouseStyles = new ArrayList<>();
+        HashMap<String, Boolean> houseConfigurationSettings = this.serverConfiguration.structureOptions.get("item.prefab.item_house");
+        boolean selectedStyleInListOfAvailable = false;
+
+        for (HouseConfiguration.HouseStyle style : HouseConfiguration.HouseStyle.values()) {
+            if (houseConfigurationSettings.get(style.getDisplayName())) {
+                this.availableHouseStyles.add(style);
+
+                if (this.specificConfiguration.houseStyle.getDisplayName().equals(style.getDisplayName())) {
+                    selectedStyleInListOfAvailable = true;
+                }
+            }
+        }
 
         // Get the upper left hand corner of the GUI box.
         Tuple<Integer, Integer> adjustedXYValue = this.getAdjustedXYValue();
         int grayBoxX = adjustedXYValue.getFirst();
         int grayBoxY = adjustedXYValue.getSecond();
 
-        // Create the buttons.
-        this.btnHouseStyle = this.createAndAddButton(grayBoxX + 8, grayBoxY + 25, 90, 20, this.specificConfiguration.houseStyle.getDisplayName(), false, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE));
-        this.btnBedColor = this.createAndAddDyeButton(grayBoxX + 8, grayBoxY + 60, 90, 20, this.specificConfiguration.bedColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR));
-        this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 8, grayBoxY + 95, 90, 20, this.specificConfiguration.glassColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS));
-        this.btnAddChest = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 120, GuiLangKeys.HOUSE_ADD_CHEST, this.specificConfiguration.addChest, this::buttonClicked);
-        this.btnAddMineShaft = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 137, GuiLangKeys.HOUSE_BUILD_MINESHAFT, this.specificConfiguration.addChestContents, this::buttonClicked);
-        this.btnAddChestContents = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 154, GuiLangKeys.HOUSE_ADD_CHEST_CONTENTS, this.specificConfiguration.addMineShaft, this::buttonClicked);
+        if (this.availableHouseStyles.size() > 0) {
+            if (!selectedStyleInListOfAvailable) {
+                this.specificConfiguration.houseStyle = this.availableHouseStyles.get(0);
+            }
 
-        // Create the standard buttons.
-        this.btnVisualize = this.createAndAddCustomButton(grayBoxX + 26, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
-        this.btnBuild = this.createAndAddCustomButton(grayBoxX + 313, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
+            this.selectedStructure = StructureAlternateStart.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureAlternateStart.class);
+
+            // Create the buttons.
+            this.btnHouseStyle = this.createAndAddButton(grayBoxX + 8, grayBoxY + 25, 90, 20, this.specificConfiguration.houseStyle.getDisplayName(), false, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE));
+            this.btnBedColor = this.createAndAddDyeButton(grayBoxX + 8, grayBoxY + 60, 90, 20, this.specificConfiguration.bedColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR));
+            this.btnGlassColor = this.createAndAddFullDyeButton(grayBoxX + 8, grayBoxY + 95, 90, 20, this.specificConfiguration.glassColor, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS));
+            this.btnAddChest = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 120, GuiLangKeys.HOUSE_ADD_CHEST, this.specificConfiguration.addChest, this::buttonClicked);
+            this.btnAddMineShaft = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 137, GuiLangKeys.HOUSE_BUILD_MINESHAFT, this.specificConfiguration.addChestContents, this::buttonClicked);
+            this.btnAddChestContents = this.createAndAddCheckBox(grayBoxX + 8, grayBoxY + 154, GuiLangKeys.HOUSE_ADD_CHEST_CONTENTS, this.specificConfiguration.addMineShaft, this::buttonClicked);
+
+            // Create the standard buttons.
+            this.btnVisualize = this.createAndAddCustomButton(grayBoxX + 26, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_PREVIEW);
+            this.btnBuild = this.createAndAddCustomButton(grayBoxX + 313, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_BUILD);
+        } else {
+            // Show a message when no styles are available.
+            this.noStylesAvailable = true;
+        }
+
         this.btnCancel = this.createAndAddButton(grayBoxX + 165, grayBoxY + 177, 90, 20, GuiLangKeys.GUI_BUTTON_CANCEL);
     }
 
@@ -95,34 +126,38 @@ public class GuiHouse extends GuiStructure {
         this.drawControlLeftPanel(matrixStack, x + 2, y + 10, 141, 190);
         this.drawControlRightPanel(matrixStack, imagePanelUpperLeft, y + 10, imagePanelWidth, 190);
 
-        int middleOfImage = this.shownImageWidth / 2;
-        int imageLocation = imagePanelUpperLeft + (imagePanelMiddle - middleOfImage);
+        if (!this.noStylesAvailable) {
+            int middleOfImage = this.shownImageWidth / 2;
+            int imageLocation = imagePanelUpperLeft + (imagePanelMiddle - middleOfImage);
 
-        GuiUtils.bindAndDrawScaledTexture(
-                this.specificConfiguration.houseStyle.getHousePicture(),
-                matrixStack,
-                imageLocation,
-                y + 15,
-                this.shownImageWidth,
-                this.shownImageHeight,
-                this.shownImageWidth,
-                this.shownImageHeight,
-                this.shownImageWidth,
-                this.shownImageHeight);
+            GuiUtils.bindAndDrawScaledTexture(
+                    this.specificConfiguration.houseStyle.getHousePicture(),
+                    matrixStack,
+                    imageLocation,
+                    y + 15,
+                    this.shownImageWidth,
+                    this.shownImageHeight,
+                    this.shownImageWidth,
+                    this.shownImageHeight,
+                    this.shownImageWidth,
+                    this.shownImageHeight);
 
-        this.btnAddChest.visible = this.serverConfiguration.starterHouseOptions.addChests;
-        this.btnAddChestContents.visible = this.allowItemsInChestAndFurnace && this.serverConfiguration.starterHouseOptions.addChestContents;
-        this.btnAddMineShaft.visible = this.serverConfiguration.starterHouseOptions.addMineshaft;
+            this.btnAddChest.visible = this.serverConfiguration.starterHouseOptions.addChests;
+            this.btnAddChestContents.visible = this.allowItemsInChestAndFurnace && this.serverConfiguration.starterHouseOptions.addChestContents;
+            this.btnAddMineShaft.visible = this.serverConfiguration.starterHouseOptions.addMineshaft;
+        }
     }
 
     @Override
     protected void postButtonRender(PoseStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-        // Draw the text here.
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + 15, this.textColor);
+        if (!this.noStylesAvailable) {
+            // Draw the text here.
+            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.HOUSE_STYLE), x + 8, y + 15, this.textColor);
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + 50, this.textColor);
+            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_BED_COLOR), x + 8, y + 50, this.textColor);
 
-        this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + 85, this.textColor);
+            this.drawString(matrixStack, GuiLangKeys.translateString(GuiLangKeys.GUI_STRUCTURE_GLASS), x + 8, y + 85, this.textColor);
+        }
     }
 
     /**
@@ -130,22 +165,40 @@ public class GuiHouse extends GuiStructure {
      */
     @Override
     public void buttonClicked(AbstractButton button) {
-        this.specificConfiguration.addBed = this.serverConfiguration.starterHouseOptions.addBed;
-        this.specificConfiguration.addChest = this.serverConfiguration.starterHouseOptions.addChests && this.btnAddChest.isChecked();
-        this.specificConfiguration.addChestContents = this.allowItemsInChestAndFurnace && (this.serverConfiguration.starterHouseOptions.addChestContents && this.btnAddChestContents.isChecked());
-        this.specificConfiguration.addCraftingTable = this.serverConfiguration.starterHouseOptions.addCraftingTable;
-        this.specificConfiguration.addFurnace = this.serverConfiguration.starterHouseOptions.addFurnace;
-        this.specificConfiguration.addMineShaft = this.serverConfiguration.starterHouseOptions.addMineshaft && this.btnAddMineShaft.isChecked();
-        this.specificConfiguration.addTorches = this.serverConfiguration.chestOptions.addTorches;
-        this.configuration.houseFacing = this.getMinecraft().player.getDirection().getOpposite();
+        if (!this.noStylesAvailable) {
+            this.specificConfiguration.addBed = this.serverConfiguration.starterHouseOptions.addBed;
+            this.specificConfiguration.addChest = this.serverConfiguration.starterHouseOptions.addChests && this.btnAddChest.isChecked();
+            this.specificConfiguration.addChestContents = this.allowItemsInChestAndFurnace && (this.serverConfiguration.starterHouseOptions.addChestContents && this.btnAddChestContents.isChecked());
+            this.specificConfiguration.addCraftingTable = this.serverConfiguration.starterHouseOptions.addCraftingTable;
+            this.specificConfiguration.addFurnace = this.serverConfiguration.starterHouseOptions.addFurnace;
+            this.specificConfiguration.addMineShaft = this.serverConfiguration.starterHouseOptions.addMineshaft && this.btnAddMineShaft.isChecked();
+            this.specificConfiguration.addTorches = this.serverConfiguration.chestOptions.addTorches;
+            this.configuration.houseFacing = this.getMinecraft().player.getDirection().getOpposite();
+        }
 
         this.performCancelOrBuildOrHouseFacing(button);
 
         if (button == this.btnHouseStyle) {
-            int id = this.specificConfiguration.houseStyle.getValue() + 1;
-            this.specificConfiguration.houseStyle = HouseConfiguration.HouseStyle.ValueOf(id);
-            this.selectedStructure = StructureAlternateStart.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureAlternateStart.class);
-            GuiUtils.setButtonText(btnHouseStyle, this.specificConfiguration.houseStyle.getDisplayName());
+            for (int i = 0; i < this.availableHouseStyles.size(); i++) {
+                HouseConfiguration.HouseStyle option = this.availableHouseStyles.get(i);
+                HouseConfiguration.HouseStyle chosenOption = null;
+
+                if (this.specificConfiguration.houseStyle.getDisplayName().equals(option.getDisplayName())) {
+                    if (i == this.availableHouseStyles.size() - 1) {
+                        // This is the last option, set the text to the first option.
+                        chosenOption = this.availableHouseStyles.get(0);
+                    } else {
+                        chosenOption = this.availableHouseStyles.get(i + 1);
+                    }
+                }
+
+                if (chosenOption != null) {
+                    this.specificConfiguration.houseStyle = chosenOption;
+                    this.selectedStructure = StructureAlternateStart.CreateInstance(this.specificConfiguration.houseStyle.getStructureLocation(), StructureAlternateStart.class);
+                    GuiUtils.setButtonText(btnHouseStyle, this.specificConfiguration.houseStyle.getDisplayName());
+                    break;
+                }
+            }
         } else if (button == this.btnGlassColor) {
             this.specificConfiguration.glassColor = FullDyeColor.byId(this.specificConfiguration.glassColor.getId() + 1);
             GuiUtils.setButtonText(this.btnGlassColor, GuiLangKeys.translateFullDye(this.specificConfiguration.glassColor));

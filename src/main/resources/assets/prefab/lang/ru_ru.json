@@ -32,6 +32,7 @@
   "text.autoconfig.Prefab.category.recipes": "Рецепты",
   "text.autoconfig.Prefab.category.chest_options": "Параметры сундуков",
   "text.autoconfig.Prefab.category.starter_options": "Параметры стартового дома",
+  "text.autoconfig.Prefab.category.structure_options": "Варианты структуры",
 
   "itemGroup.prefab.logo": "Prefab",
 

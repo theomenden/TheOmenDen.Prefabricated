@@ -32,6 +32,7 @@
   "text.autoconfig.Prefab.category.recipes": "Recettes",
   "text.autoconfig.Prefab.category.chest_options": "Options de coffre",
   "text.autoconfig.Prefab.category.starter_options": "Options de la maison de départ",
+  "text.autoconfig.Prefab.category.structure_options": "Options de structure",
 
   "itemGroup.prefab.logo": "Prefab",
 

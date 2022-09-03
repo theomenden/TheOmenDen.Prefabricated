@@ -64,7 +64,6 @@ public class GuiBasicStructure extends GuiStructure {
             }
             
             this.structureImageLocation = this.specificConfiguration.chosenOption.getPictureLocation();
-
         }
 
         this.specificConfiguration.pos = this.pos;

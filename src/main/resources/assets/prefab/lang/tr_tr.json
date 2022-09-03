@@ -32,6 +32,7 @@
 	"text.autoconfig.Prefab.category.recipes": "Tarifler",
 	"text.autoconfig.Prefab.category.chest_options": "Sandık Seçenekleri",
 	"text.autoconfig.Prefab.category.starter_options": "Başlangıç Seçenekleri",
+	"text.autoconfig.Prefab.category.structure_options": "Yapı Seçenekleri",
 
 	"itemGroup.prefab.logo": "Prefab",
 

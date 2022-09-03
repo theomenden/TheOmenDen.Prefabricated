@@ -1,11 +1,17 @@
 package com.wuest.prefab.config;
 
+import com.wuest.prefab.structures.config.BasicStructureConfiguration;
+import com.wuest.prefab.structures.config.HouseAdvancedConfiguration;
+import com.wuest.prefab.structures.config.HouseConfiguration;
+import com.wuest.prefab.structures.config.HouseImprovedConfiguration;
+import com.wuest.prefab.structures.config.enums.BaseOption;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import net.minecraft.nbt.CompoundTag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,10 +53,60 @@ public class ModConfiguration implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject()
     public StarterHouseOptions starterHouseOptions = new StarterHouseOptions();
 
+    @ConfigEntry.Category("structure_options")
+    public HashMap<String, HashMap<String, Boolean>> structureOptions = new HashMap<>();
+
     public ModConfiguration() {
         for (String key : ConfigKeyNames.Keys) {
             this.recipes.put(key, true);
         }
+
+        // Add the Basic structure settings.
+        for (BasicStructureConfiguration.EnumBasicStructureName value : BasicStructureConfiguration.EnumBasicStructureName.values()) {
+            if (value.getName().equals("custom")) {
+                continue;
+            }
+
+            String key = value.getItemTranslationString();
+            ArrayList<BaseOption> options = value.getBaseOption().getSpecificOptions(false);
+
+            if (options.size() > 1) {
+                HashMap<String, Boolean> structureOptions = new HashMap<>();
+
+                for (BaseOption option : options) {
+                    structureOptions.put(option.getTranslationString(), true);
+                }
+
+                this.structureOptions.put(key, structureOptions);
+            }
+        }
+
+        // Add the basic house settings.
+        HashMap<String, Boolean> houseOptions = new HashMap<>();
+
+        for (HouseConfiguration.HouseStyle houseStyle : HouseConfiguration.HouseStyle.values()) {
+            houseOptions.put(houseStyle.getDisplayName(), true);
+        }
+
+        this.structureOptions.put("item.prefab.item_house", houseOptions);
+
+        // Add the Improved house settings.
+        HashMap<String, Boolean> houseImprovedOptions = new HashMap<>();
+
+        for (HouseImprovedConfiguration.HouseStyle houseStyle : HouseImprovedConfiguration.HouseStyle.values()) {
+            houseImprovedOptions.put(houseStyle.getDisplayName(), true);
+        }
+
+        this.structureOptions.put("item.prefab.item_house_improved", houseImprovedOptions);
+
+        // Add the Advanced house settings.
+        HashMap<String, Boolean> houseAdvancedOptions = new HashMap<>();
+
+        for (HouseAdvancedConfiguration.HouseStyle houseStyle : HouseAdvancedConfiguration.HouseStyle.values()) {
+            houseAdvancedOptions.put(houseStyle.getDisplayName(), true);
+        }
+
+        this.structureOptions.put("item.prefab.item_house_advanced", houseAdvancedOptions);
     }
 
     public CompoundTag writeCompoundTag() {
@@ -89,6 +145,21 @@ public class ModConfiguration implements ConfigData {
             tag.putBoolean(entry.getKey(), entry.getValue());
         }
 
+        CompoundTag structureOptionTag = new CompoundTag();
+
+        for (Map.Entry<String, HashMap<String, Boolean>> entry : this.structureOptions.entrySet()) {
+            // Create compound tag for this item.
+            CompoundTag mainItem = new CompoundTag();
+
+            for (Map.Entry<String, Boolean> subEntry : entry.getValue().entrySet()) {
+                mainItem.putBoolean(subEntry.getKey(), subEntry.getValue());
+            }
+
+            structureOptionTag.put(entry.getKey(), mainItem);
+        }
+
+        tag.put(ConfigKeyNames.structureOptionsName, structureOptionTag);
+
         return tag;
     }
 
@@ -124,16 +195,33 @@ public class ModConfiguration implements ConfigData {
         this.starterHouseOptions.addMineshaft = tag.getBoolean(ConfigKeyNames.addMineshaftName);
 
         this.recipes.clear();
+        this.structureOptions.clear();
 
         for (String key : ConfigKeyNames.Keys) {
             this.recipes.put(key, tag.getBoolean(key));
+        }
+
+        CompoundTag structureOptionsTag = tag.getCompound(ConfigKeyNames.structureOptionsName);
+
+        if (structureOptionsTag != null) {
+            for (String key : structureOptionsTag.getAllKeys()) {
+                CompoundTag mainItem = structureOptionsTag.getCompound(key);
+                HashMap<String, Boolean> structureOptions = new HashMap<>();
+
+                for (String subKey : mainItem.getAllKeys()) {
+                    boolean value = mainItem.getBoolean(subKey);
+
+                    structureOptions.put(subKey, value);
+                }
+
+                this.structureOptions.put(key, structureOptions);
+            }
         }
     }
 
     public enum StartingItemOptions {
         StartingHouse("Starting House"),
         ModerateHouse("Moderate House"),
-        StructureParts("Structure Parts"),
         Nothing("Nothing");
 
         private final String name;
@@ -169,9 +257,9 @@ public class ModConfiguration implements ConfigData {
         public static String compressedChestKey = "Compressed Chest";
         public static String pileOfBricksKey = "Pile of Bricks";
         public static String warehouseKey = "Warehouse";
-        public static String warehouseUpgradeKey = "Warehouse Upgrade";
-        public static String advancedWarehouseKey = "Advanced Warehouse";
-        public static String bundleofTimberKey = "Bundle of Timber";
+        public static String warehouseUpgradeKey = "Upgrade";
+        public static String advancedWarehouseKey = "Improved Warehouse";
+        public static String bundleOfTimberKey = "Bundle of Timber";
         public static String netherGateKey = "Nether Gate";
         public static String machineryTowerKey = "Machinery Tower";
         public static String defenseBunkerKey = "Defense Bunker";
@@ -187,7 +275,7 @@ public class ModConfiguration implements ConfigData {
         public static String phasicBlockKey = "Phasic Block";
         public static String smartGlassKey = "Boundary Block";
         public static String greenHouseKey = "Green House";
-        public static String startingHouseKey = "Starting House";
+        public static String startingHouseKey = "House";
         public static String glassStairsKey = "Glass Stairs";
         public static String glassSlabsKey = "Glass Slabs";
         public static String moderateHouseKey = "Moderate House";
@@ -202,8 +290,8 @@ public class ModConfiguration implements ConfigData {
         public static String tonOfTimberKey = "Ton of Timber";
         public static String workshopKey = "Workshop";
         public static String modernBuildingsKey = "Modern Buildings";
-        public static String starterFarmKey = "Starter Farm";
-        public static String moderateFarmKey = "Moderate Farm";
+        public static String starterFarmKey = "Farm";
+        public static String moderateFarmKey = "Improved Farm";
         public static String advancedFarmKey = "Advanced Farm";
         public static String swiftBladeKey = "Swift Blade";
         public static String sickleKey = "Sickle";
@@ -217,7 +305,7 @@ public class ModConfiguration implements ConfigData {
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
                         ConfigKeyNames.warehouseKey,
-                        ConfigKeyNames.warehouseUpgradeKey, ConfigKeyNames.advancedWarehouseKey, ConfigKeyNames.bundleofTimberKey,
+                        ConfigKeyNames.warehouseUpgradeKey, ConfigKeyNames.advancedWarehouseKey, ConfigKeyNames.bundleOfTimberKey,
                         ConfigKeyNames.netherGateKey,
                         ConfigKeyNames.machineryTowerKey, ConfigKeyNames.defenseBunkerKey, ConfigKeyNames.mineshaftEntranceKey, ConfigKeyNames.enderGatewayKey, ConfigKeyNames.magicTempleKey,
                         ConfigKeyNames.instantBridgeKey, ConfigKeyNames.paperLanternKey, ConfigKeyNames.compressedObsidianKey, ConfigKeyNames.villagerHousesKey,
@@ -259,5 +347,8 @@ public class ModConfiguration implements ConfigData {
         static String addChestsName = "Add Chests";
         static String addChestContentsName = "Add Chest Contents";
         static String addMineshaftName = "Add Mineshaft";
+
+        // Structure option names.
+        static String structureOptionsName = "Structure Options";
     }
 }

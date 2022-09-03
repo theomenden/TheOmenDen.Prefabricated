@@ -32,6 +32,7 @@
   "text.autoconfig.Prefab.category.recipes": "菜谱",
   "text.autoconfig.Prefab.category.chest_options": "保险箱选项",
   "text.autoconfig.Prefab.category.starter_options": "起始房屋选项",
+  "text.autoconfig.Prefab.category.structure_options": "结构选项",
 
   "itemGroup.prefab.logo": "Prefab",
 
