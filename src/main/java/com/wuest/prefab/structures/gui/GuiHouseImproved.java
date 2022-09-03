@@ -9,7 +9,6 @@ import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.gui.GuiUtils;
 import com.wuest.prefab.gui.controls.ExtendedButton;
 import com.wuest.prefab.gui.controls.GuiCheckBox;
-import com.wuest.prefab.structures.config.HouseConfiguration;
 import com.wuest.prefab.structures.config.HouseImprovedConfiguration;
 import com.wuest.prefab.structures.messages.StructureTagMessage;
 import com.wuest.prefab.structures.predefined.StructureModerateHouse;
