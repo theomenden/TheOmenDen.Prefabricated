@@ -74,7 +74,6 @@
     "item.prefab.item_ski_lodge": "Лижна База",
     "item.prefab.item_wind_mill": "Вітряк",
     "item.prefab.item_town_hall": "Ратуша",
-    "item.prefab.item_workshop": "Майстерня",
     "item.prefab.item_modern_buildings": "Сучасна будівля",
     "item.prefab.item_modern_buildings_improved": "Покращена сучасна будівля",
     "item.prefab.item_modern_buildings_advanced": "Просунута сучасна будівля",
@@ -191,7 +190,6 @@
     "prefab.gui.house.improved.acacia": "Акацієвий Будинок",
     "prefab.gui.house.improved.earthen": "Земляний Будинок",
     "prefab.gui.house.improved.jungle": "Джунглієвий Будинок",
-    "prefab.gui.house.improved.workshop": "Майстерня",
     "prefab.gui.house.improved.nether": "Адський Будинок",
     "prefab.gui.house.improved.mountain": "Гірський Будинок",
     "prefab.gui.house.improved.acacia_2": "Акацієвий Будинок 2",
@@ -201,6 +199,7 @@
     "prefab.gui.house.improved.cottage_house": "Котедж",
 
     "prefab.gui.house.advanced.manor": "Садиба",
+    "prefab.gui.house.advanced.workshop": "Майстерня",
 
     "prefab.gui.modern.mall_store": "Торговий Центр",
     "prefab.gui.modern.hipster_fruit_stand": "Магазин Яблук",

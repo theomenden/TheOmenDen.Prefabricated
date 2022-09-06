@@ -74,7 +74,6 @@
   "item.prefab.item_ski_lodge": "スキーロッジ",
   "item.prefab.item_wind_mill": "風車",
   "item.prefab.item_town_hall": "町役場",
-  "item.prefab.item_workshop": "ワークショップ",
   "item.prefab.item_modern_buildings": "ベーシックモダン",
   "item.prefab.item_modern_buildings_improved": "改善された現代",
   "item.prefab.item_modern_buildings_advanced": "アドバンスドモダン",
@@ -191,7 +190,6 @@
   "prefab.gui.house.improved.acacia": "アカシアハウス",
   "prefab.gui.house.improved.earthen": "土の家",
   "prefab.gui.house.improved.jungle": "ジャングルハウス",
-  "prefab.gui.house.improved.workshop": "ワークショップ",
   "prefab.gui.house.improved.nether": "ネザーハウス",
   "prefab.gui.house.improved.mountain": "マウンテンハウス",
   "prefab.gui.house.improved.acacia_2": "アカシアハウス2",
@@ -201,6 +199,7 @@
   "prefab.gui.house.improved.cottage_house": "コテージ",
 
   "prefab.gui.house.advanced.manor": "荘園",
+  "prefab.gui.house.advanced.workshop": "ワークショップ",
 
   "prefab.gui.modern.mall_store": "ショッピングセンター",
   "prefab.gui.modern.hipster_fruit_stand": "果物店",
@@ -338,5 +337,5 @@
   "prefab.gui.building_options": "構築オプション",
 
   "gui.prefab.no_options_1": "この構造のすべてのオプションが無効になっています",
-  "gui.prefab.no_options_2": "Please update your configuration or contact your server administrator"
+  "gui.prefab.no_options_2": "構成を更新するか、サーバー管理者に連絡してください"
 }

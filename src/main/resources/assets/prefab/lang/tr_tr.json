@@ -74,7 +74,6 @@
 	"item.prefab.item_ski_lodge": "Kayak emniyeti",
 	"item.prefab.item_wind_mill": "Yel Değirmeni",
 	"item.prefab.item_town_hall": "Belediye Binası",
-	"item.prefab.item_workshop": "Atölye",
 	"item.prefab.item_modern_buildings": "Temel Modern",
 	"item.prefab.item_modern_buildings_improved": "Geliştirilmiş Modern",
 	"item.prefab.item_modern_buildings_advanced": "Gelişmiş Modern",
@@ -191,7 +190,6 @@
 	"prefab.gui.house.improved.acacia": "Akasya Ev",
 	"prefab.gui.house.improved.earthen": "Topraktan Ev",
 	"prefab.gui.house.improved.jungle": "Orman Evi",
-	"prefab.gui.house.improved.workshop": "Atölye Evi",
 	"prefab.gui.house.improved.nether": "Nether Evi",
 	"prefab.gui.house.improved.mountain": "Dağ Evi",
 	"prefab.gui.house.improved.acacia_2": "Akasya Evi 2",
@@ -201,6 +199,7 @@
 	"prefab.gui.house.improved.cottage_house": "Kulübe",
 
 	"prefab.gui.house.advanced.manor": "malikane",
+	"prefab.gui.house.advanced.workshop": "Atölye Evi",
 
 	"prefab.gui.modern.mall_store": "Alışveriş Merkezi",
 	"prefab.gui.modern.hipster_fruit_stand": "Manav",
@@ -338,5 +337,5 @@
 	"prefab.gui.building_options": "Bina Seçenekleri",
 
 	"gui.prefab.no_options_1": "Bu yapı için tüm seçenekler devre dışı bırakıldı",
-	"gui.prefab.no_options_2": "Please update your configuration or contact your server administrator"
+	"gui.prefab.no_options_2": "Lütfen yapılandırmanızı güncelleyin veya sunucu yöneticinize başvurun"
 }
