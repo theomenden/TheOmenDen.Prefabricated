@@ -106,7 +106,9 @@ public class ClientModRegistry {
                 // This is now on the "main" client thread and things can be done in the world!
                 UUID playerUUID = Minecraft.getInstance().player.getUUID();
 
-                ClientModRegistry.playerConfig = EntityPlayerConfiguration.loadFromTag(playerUUID, syncMessage.getMessageTag());
+                EntityPlayerConfiguration playerConfiguration = EntityPlayerConfiguration.loadFromTag(playerUUID, syncMessage.getMessageTag());
+                ClientModRegistry.playerConfig.builtStarterHouse = playerConfiguration.builtStarterHouse;
+                ClientModRegistry.playerConfig.givenHouseBuilder = playerConfiguration.givenHouseBuilder;
             });
         });
     }
