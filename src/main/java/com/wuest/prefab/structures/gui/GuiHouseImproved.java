@@ -69,7 +69,7 @@ public class GuiHouseImproved extends GuiStructure {
         boolean selectedStyleInListOfAvailable = false;
 
         for (HouseImprovedConfiguration.HouseStyle style : HouseImprovedConfiguration.HouseStyle.values()) {
-            if (houseConfigurationSettings.get(style.getDisplayName())) {
+            if (houseConfigurationSettings.get(style.getTranslationString())) {
                 this.availableHouseStyles.add(style);
 
                 if (this.specificConfiguration.houseStyle.getDisplayName().equals(style.getDisplayName())) {
