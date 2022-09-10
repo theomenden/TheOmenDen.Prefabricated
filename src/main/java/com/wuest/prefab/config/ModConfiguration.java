@@ -82,7 +82,7 @@ public class ModConfiguration implements ConfigData {
         HashMap<String, Boolean> houseOptions = new HashMap<>();
 
         for (HouseConfiguration.HouseStyle houseStyle : HouseConfiguration.HouseStyle.values()) {
-            houseOptions.put(houseStyle.getDisplayName(), true);
+            houseOptions.put(houseStyle.getTranslationString(), true);
         }
 
         this.structureOptions.put("item.prefab.item_house", houseOptions);
@@ -91,7 +91,7 @@ public class ModConfiguration implements ConfigData {
         HashMap<String, Boolean> houseImprovedOptions = new HashMap<>();
 
         for (HouseImprovedConfiguration.HouseStyle houseStyle : HouseImprovedConfiguration.HouseStyle.values()) {
-            houseImprovedOptions.put(houseStyle.getDisplayName(), true);
+            houseImprovedOptions.put(houseStyle.getTranslationString(), true);
         }
 
         this.structureOptions.put("item.prefab.item_house_improved", houseImprovedOptions);
@@ -100,7 +100,7 @@ public class ModConfiguration implements ConfigData {
         HashMap<String, Boolean> houseAdvancedOptions = new HashMap<>();
 
         for (HouseAdvancedConfiguration.HouseStyle houseStyle : HouseAdvancedConfiguration.HouseStyle.values()) {
-            houseAdvancedOptions.put(houseStyle.getDisplayName(), true);
+            houseAdvancedOptions.put(houseStyle.getTranslationString(), true);
         }
 
         this.structureOptions.put("item.prefab.item_house_advanced", houseAdvancedOptions);
