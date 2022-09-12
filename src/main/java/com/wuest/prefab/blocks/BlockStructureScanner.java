@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
@@ -35,7 +36,8 @@ public class BlockStructureScanner extends TileBlockBase<StructureScannerBlockEn
     public BlockStructureScanner() {
         super(Block.Properties.of(Material.STONE));
 
-        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(FACING, Direction.NORTH));
     }
 
     @Override

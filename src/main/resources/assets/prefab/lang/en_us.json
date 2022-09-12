@@ -150,6 +150,8 @@
   "block.prefab.block_quartz_crete_smooth_stairs": "Smooth Quartz-Crete Stairs",
   "block.prefab.block_quartz_crete_smooth_slab": "Smooth Quartz-Crete Slab",
 
+  "block.prefab.block_light_switch": "Light Switch",
+
   "block.prefab.block_structure_scanner": "Structure Scanner",
 
   "prefab.gui.cleared_area": "The area cleared will be in the direction you are facing.",

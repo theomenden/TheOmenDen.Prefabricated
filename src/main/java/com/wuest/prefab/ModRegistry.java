@@ -1,6 +1,7 @@
 package com.wuest.prefab;
 
 import com.wuest.prefab.blocks.*;
+import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
 import com.wuest.prefab.blocks.entities.StructureScannerBlockEntity;
 import com.wuest.prefab.config.StructureScannerConfig;
 import com.wuest.prefab.items.*;
@@ -71,6 +72,7 @@ public class ModRegistry {
     public static final BlockDirtStairs DirtStairs = new BlockDirtStairs();
     public static final BlockDirtSlab DirtSlab = new BlockDirtSlab();
     public static BlockStructureScanner StructureScanner = null;
+    public static BlockLightSwitch LightSwitch = new BlockLightSwitch();
     public static final BlockRotatableHorizontalShaped PileOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PileOfBricks, Block.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never));
     public static final BlockRotatableHorizontalShaped PalletOfBricks = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.PalletOfBricks, Block.Properties.of(Material.CLAY, MaterialColor.COLOR_RED).noOcclusion().isViewBlocking(ModRegistry::never));
     public static final BlockRotatableHorizontalShaped BundleOfTimber = new BlockRotatableHorizontalShaped(BlockShaped.BlockShape.BundleOfTimber, Block.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).sound(SoundType.WOOD).noOcclusion().isViewBlocking(ModRegistry::never));
@@ -129,6 +131,7 @@ public class ModRegistry {
     public static final BlockItem DirtStairsItem = new BlockItem(ModRegistry.DirtStairs, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
     public static final BlockItem DirtSlabItem = new BlockItem(ModRegistry.DirtSlab, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
     public static BlockItem StructureScannerItem = null;
+    public static BlockItem LightSwitchItem = new BlockItem(ModRegistry.LightSwitch, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
     public static final BlockItem QuartzCreteItem = new BlockItem(ModRegistry.QuartzCrete, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
     public static final BlockItem QuartzCreteWallItem = new BlockItem(ModRegistry.QuartzCreteWall, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
     public static final BlockItem QuartzCreteBricksItem = new BlockItem(ModRegistry.QuartzCreteBricks, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
@@ -223,6 +226,7 @@ public class ModRegistry {
 
     /* *********************************** Block Entities Types *********************************** */
     public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
+    public static BlockEntityType<LightSwitchBlockEntity> LightSwitchEntityType;
 
     /* *********************************** Block Entities *********************************** */
     public static StructureScannerBlockEntity StructureScannerEntity;
@@ -258,6 +262,13 @@ public class ModRegistry {
                             .create(StructureScannerBlockEntity::new, ModRegistry.StructureScanner)
                             .build(null));
         }
+
+        ModRegistry.LightSwitchEntityType = Registry.register(
+                Registry.BLOCK_ENTITY_TYPE,
+                "prefab:light_switch_entity",
+                FabricBlockEntityTypeBuilder
+                        .create(LightSwitchBlockEntity::new, ModRegistry.LightSwitch)
+                        .build(null));
     }
 
     private static void registerBlocks() {
@@ -300,6 +311,8 @@ public class ModRegistry {
             ModRegistry.StructureScanner = new BlockStructureScanner();
             ModRegistry.registerBlock("block_structure_scanner", ModRegistry.StructureScanner);
         }
+
+        ModRegistry.registerBlock("block_light_switch", ModRegistry.LightSwitch);
 
         ModRegistry.registerBlock("block_quartz_crete", ModRegistry.QuartzCrete);
         ModRegistry.registerBlock("block_quartz_crete_wall", ModRegistry.QuartzCreteWall);
@@ -419,6 +432,8 @@ public class ModRegistry {
             ModRegistry.StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Properties().tab(ModRegistry.PREFAB_GROUP));
             ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
         }
+
+        ModRegistry.registerItem("block_light_switch", ModRegistry.LightSwitchItem);
 
         ModRegistry.registerItem("block_quartz_crete", ModRegistry.QuartzCreteItem);
         ModRegistry.registerItem("block_quartz_crete_wall", ModRegistry.QuartzCreteWallItem);
