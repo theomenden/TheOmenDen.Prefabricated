@@ -8,6 +8,7 @@ import com.wuest.prefab.items.*;
 import com.wuest.prefab.recipe.ConditionedShapedRecipe;
 import com.wuest.prefab.recipe.ConditionedShaplessRecipe;
 import com.wuest.prefab.recipe.ConditionedSmeltingRecipe;
+import com.wuest.prefab.registries.ModRegistries;
 import com.wuest.prefab.structures.config.BasicStructureConfiguration;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.items.*;
@@ -46,6 +47,8 @@ import static net.minecraft.world.level.block.Blocks.QUARTZ_PILLAR;
  */
 public class ModRegistry {
     public static final ArrayList<Consumer<Object>> guiRegistrations = new ArrayList<>();
+
+    public static ModRegistries serverModRegistries;
 
     /* *********************************** Blocks *********************************** */
     public static final BlockCompressedStone CompressedStone = new BlockCompressedStone(BlockCompressedStone.EnumType.COMPRESSED_STONE);

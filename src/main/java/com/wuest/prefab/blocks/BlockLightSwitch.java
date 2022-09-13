@@ -1,11 +1,19 @@
 package com.wuest.prefab.blocks;
 
+import com.wuest.prefab.ModRegistry;
 import com.wuest.prefab.base.TileBlockBase;
 import com.wuest.prefab.blocks.entities.LightSwitchBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
@@ -16,10 +24,14 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
     protected static final VoxelShape NORTH_AABB;
@@ -77,6 +89,42 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
                 .setValue(BlockLightSwitch.FACING, Direction.NORTH)
                 .setValue(BlockLightSwitch.FACE, AttachFace.FLOOR)
                 .setValue(BlockLightSwitch.POWERED, false));
+    }
+
+    @Override
+    public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        if (!level.isClientSide) {
+            // Check to see if the state is just changing.
+            // if the state is just changing, don't remove it from the registry.
+            if (blockState.getBlock() != blockState2.getBlock()) {
+                // Remove this switch from the registry and turn off the registered blocks.
+                ModRegistry.serverModRegistries.getLightSwitchRegistry().remove(Objects.hash(level, blockPos));
+            }
+        }
+    }
+
+    @Override
+    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        if (!level.isClientSide) {
+            BlockState updatedBlockState = this.cycleSwitch(blockState, level, blockPos);
+            float f = updatedBlockState.getValue(POWERED) ? 0.6F : 0.5F;
+            SoundEvent soundEvent = updatedBlockState.getValue(POWERED) ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
+            level.playSound(null, blockPos, soundEvent, SoundSource.BLOCKS, 0.3F, f);
+            level.gameEvent(player, updatedBlockState.getValue(POWERED) ? GameEvent.BLOCK_ACTIVATE : GameEvent.BLOCK_DEACTIVATE, blockPos);
+
+            // Tell registered lights that this switch is on/off.
+            return InteractionResult.CONSUME;
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+
+    public BlockState cycleSwitch(BlockState blockState, Level level, BlockPos blockPos) {
+        blockState = blockState.cycle(POWERED);
+        level.setBlock(blockPos, blockState, 3);
+
+        ModRegistry.serverModRegistries.getLightSwitchRegistry().flipSwitch(Objects.hash(level, blockPos), level, blockState.getValue(POWERED));
+        return blockState;
     }
 
     @Override
