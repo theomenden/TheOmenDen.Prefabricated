@@ -7,8 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Objects;
-
 public class LightSwitchBlockEntity extends TileEntityBase<LightSwitchConfig> {
     public LightSwitchBlockEntity(BlockPos pos, BlockState state) {
         super(ModRegistry.LightSwitchEntityType, pos, state);
@@ -19,9 +17,7 @@ public class LightSwitchBlockEntity extends TileEntityBase<LightSwitchConfig> {
         super.setLevel(level);
 
         if (!level.isClientSide) {
-            int hash = Objects.hash(level, this.worldPosition);
-
-            ModRegistry.serverModRegistries.getLightSwitchRegistry().register(hash, this.worldPosition);
+            ModRegistry.serverModRegistries.getLightSwitchRegistry().register(level, this.worldPosition);
         }
     }
 }

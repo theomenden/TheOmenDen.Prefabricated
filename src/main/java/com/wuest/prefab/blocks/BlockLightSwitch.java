@@ -33,8 +33,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
-
 public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
     protected static final VoxelShape NORTH_AABB;
     protected static final VoxelShape SOUTH_AABB;
@@ -100,7 +98,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
             // if the state is just changing, don't remove it from the registry.
             if (blockState.getBlock() != blockState2.getBlock()) {
                 // Remove this switch from the registry and turn off the registered blocks.
-                ModRegistry.serverModRegistries.getLightSwitchRegistry().remove(Objects.hash(level, blockPos));
+                ModRegistry.serverModRegistries.getLightSwitchRegistry().remove(level, blockPos);
             }
         }
     }
@@ -125,7 +123,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
         blockState = blockState.cycle(POWERED);
         level.setBlock(blockPos, blockState, 3);
 
-        ModRegistry.serverModRegistries.getLightSwitchRegistry().flipSwitch(Objects.hash(level, blockPos), level, blockState.getValue(POWERED));
+        ModRegistry.serverModRegistries.getLightSwitchRegistry().flipSwitch(level, blockPos, blockState.getValue(POWERED));
         return blockState;
     }
 
@@ -190,7 +188,7 @@ public class BlockLightSwitch extends TileBlockBase<LightSwitchBlockEntity> {
     @Override
     public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity livingEntity, ItemStack itemStack) {
         if (!level.isClientSide) {
-            ModRegistry.serverModRegistries.getLightSwitchRegistry().register(Objects.hash(level, blockPos), blockPos);
+            ModRegistry.serverModRegistries.getLightSwitchRegistry().register(level, blockPos);
         }
     }
 
