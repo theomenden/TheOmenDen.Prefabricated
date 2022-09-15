@@ -1,7 +1,6 @@
 package com.wuest.prefab.registries;
 
 import com.wuest.prefab.ModRegistry;
-import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import com.wuest.prefab.blocks.BlockDarkLamp;
 import com.wuest.prefab.blocks.BlockLightSwitch;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 
 public class LightSwitchRegistry {
     private final HashMap<Level, ArrayList<BlockPos>> lightSwitchLocations;
-    private static int SearchBlockRadius = 24;
+    private static final int SearchBlockRadius = 24;
 
     public LightSwitchRegistry() {
         this.lightSwitchLocations = new HashMap<>();
@@ -47,10 +46,12 @@ public class LightSwitchRegistry {
                     BlockPos currentPos = positions.get(i);
 
                     if (currentPos.hashCode() == blockPos.hashCode()) {
+                        // remove the position from the collection to ensure that another player/thread doesn't try to remove the same item.
+                        positions.remove(i);
+
                         // This light switch was removed, turn off any nearby lamps.
                         // This needs to happen even if the lamp would be turned on by another switch.
                         this.setNearbyLights(currentPos, level, false);
-                        positions.remove(i);
                         break;
                     }
                 }
