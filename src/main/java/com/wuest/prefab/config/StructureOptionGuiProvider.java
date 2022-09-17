@@ -19,14 +19,23 @@ public class StructureOptionGuiProvider implements GuiProvider {
             HashMap<String, HashMap<String, Boolean>> savedHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(savedObject);
             HashMap<String, HashMap<String, Boolean>> defaultHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(defaultObject);
 
-            if (savedHashMap.size() != defaultHashMap.size()) {
-                for (Map.Entry<String, HashMap<String, Boolean>> defaultEntry : defaultHashMap.entrySet()) {
-                    // Make sure that the saved hashmap has this entry; if not add it by default.
-                    if (!savedHashMap.containsKey(defaultEntry.getKey())) {
-                        savedHashMap.put(defaultEntry.getKey(), defaultEntry.getValue());
+            for (Map.Entry<String, HashMap<String, Boolean>> defaultEntry : defaultHashMap.entrySet()) {
+                // Make sure that the saved hashmap has this entry; if not add it by default.
+                if (!savedHashMap.containsKey(defaultEntry.getKey())) {
+                    savedHashMap.put(defaultEntry.getKey(), defaultEntry.getValue());
+                }
+
+                // check this saved hashmap value against the default one to make sure that all sub-values are saved.
+                HashMap<String, Boolean> savedSubValues = savedHashMap.get(defaultEntry.getKey());
+                HashMap<String, Boolean> defaultSubValues = defaultEntry.getValue();
+
+                for (Map.Entry<String, Boolean> defaultSubvalue : defaultSubValues.entrySet()) {
+                    if (!savedSubValues.containsKey(defaultSubvalue.getKey())) {
+                        savedSubValues.put(defaultSubvalue.getKey(), defaultSubvalue.getValue());
                     }
                 }
             }
+
 
             ArrayList<AbstractConfigListEntry> entries = new ArrayList<>();
 
