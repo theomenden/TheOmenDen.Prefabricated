@@ -8,66 +8,29 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Vector;
 
-public class LightSwitchRegistry {
-    private final HashMap<Level, ArrayList<BlockPos>> lightSwitchLocations;
+public class LightSwitchRegistry extends ILevelBasedRegistry<BlockPos> {
     private static final int SearchBlockRadius = 24;
 
     public LightSwitchRegistry() {
-        this.lightSwitchLocations = new HashMap<>();
+        super();
     }
 
-    public void register(Level level, BlockPos blockPos) {
-        ArrayList<BlockPos> blockPositions;
-
-        if (!this.lightSwitchLocations.containsKey(level)) {
-            blockPositions = new ArrayList<>();
-            this.lightSwitchLocations.put(level, blockPositions);
-        } else {
-            blockPositions = this.lightSwitchLocations.get(level);
-        }
-
-        // Make sure to check for null in-case the key was removed between the contains check and the get.
-        if (blockPositions != null) {
-            blockPositions.add(blockPos);
-        }
+    @Override
+    protected void onElementRemoved(Level level, BlockPos element) {
+        this.setNearbyLights(element, level, false);
     }
 
-    public void remove(Level level, BlockPos blockPos) {
-        if (this.lightSwitchLocations.containsKey(level)) {
-            ArrayList<BlockPos> positions = this.lightSwitchLocations.get(level);
-
-            // Make sure to check for null in-case the key was removed between the contains check and the get.
-            if (positions != null) {
-                // Try to find this block position in the collection.
-                for (int i = 0; i < positions.size(); i++) {
-                    BlockPos currentPos = positions.get(i);
-
-                    if (currentPos.hashCode() == blockPos.hashCode()) {
-                        // remove the position from the collection to ensure that another player/thread doesn't try to remove the same item.
-                        positions.remove(i);
-
-                        // This light switch was removed, turn off any nearby lamps.
-                        // This needs to happen even if the lamp would be turned on by another switch.
-                        this.setNearbyLights(currentPos, level, false);
-                        break;
-                    }
-                }
-
-                if (positions.size() == 0) {
-                    // No more block positions, remove the level from the array.
-                    this.lightSwitchLocations.remove(level);
-                }
-            }
-        }
+    @Override
+    protected void onElementRegistered(Level level, BlockPos element) {
+        // Do nothing here as it's not necessary.
     }
 
     public void flipSwitch(Level level, BlockPos incomingBlockPos, boolean turnOn) {
         // Don't do anything client-side.
-        if (!level.isClientSide && this.lightSwitchLocations.containsKey(level)) {
-            ArrayList<BlockPos> blockPositions = this.lightSwitchLocations.get(level);
+        if (!level.isClientSide && this.internalRegistry.containsKey(level)) {
+            Vector<BlockPos> blockPositions = this.internalRegistry.get(level);
 
             // Make sure to check for null in-case the key was removed between the contains check and the get.
             if (blockPositions != null) {
