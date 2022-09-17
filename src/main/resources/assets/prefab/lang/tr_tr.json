@@ -68,6 +68,7 @@
 	"item.prefab.item_magic_temple": "Sihirli Tapınak",
 	"item.prefab.item_watch_tower": "Saat Kulesi",
 	"item.prefab.item_watch_tower_2": "Saat Kulesi 2",
+	"item.prefab.item_watch_tower_dark": "karanlık gözetleme kulesi",
 	"item.prefab.item_welcome_center": "Karşılama Merkezi",
 	"item.prefab.item_jail": "Hapishane",
 	"item.prefab.item_saloon": "Salon",
@@ -150,8 +151,8 @@
 	"block.prefab.block_quartz_crete_smooth_stairs": "Pürüzsüz Beton Kuvars Merdivenler",
 	"block.prefab.block_quartz_crete_smooth_slab": "Pürüzsüz Beton Kuvars Döşeme",
 
-	"block.prefab.block_light_switch": "Light Switch",
-	"block.prefab.block_dark_lamp": "Dark Lamp",
+	"block.prefab.block_light_switch": "Işık anahtarı",
+	"block.prefab.block_dark_lamp": "Karanlık Lamba",
 
 	"block.prefab.block_structure_scanner": "Yapı Tarayıcısı",
 
@@ -203,6 +204,7 @@
 
 	"prefab.gui.house.advanced.manor": "malikane",
 	"prefab.gui.house.advanced.workshop": "Atölye Evi",
+	"prefab.gui.house.advanced.estate": "Arazi",
 
 	"prefab.gui.modern.mall_store": "Alışveriş Merkezi",
 	"prefab.gui.modern.hipster_fruit_stand": "Manav",
