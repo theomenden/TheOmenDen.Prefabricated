@@ -115,7 +115,7 @@ public class HouseAdvancedConfiguration extends StructureConfiguration {
                 "assets/prefab/structures/house_advanced_manor.zip"),
         WORKSHOP(1, GuiLangKeys.ADVANCED_HOUSE_WORKSHOP, new ResourceLocation("prefab", "textures/gui/house_advanced_workshop.png"),
                 "assets/prefab/structures/house_advanced_workshop.zip"),
-        ESTATE(1, GuiLangKeys.ADVANCED_HOUSE_ESTATE, new ResourceLocation("prefab", "textures/gui/house_advanced_estate.png"),
+        ESTATE(2, GuiLangKeys.ADVANCED_HOUSE_ESTATE, new ResourceLocation("prefab", "textures/gui/house_advanced_estate.png"),
                 "assets/prefab/structures/house_advanced_estate.zip");
 
         private final int value;
