@@ -46,16 +46,13 @@ public class LightSwitchRegistry extends ILevelBasedRegistry<BlockPos> {
 
     public boolean checkForNearbyOnSwitch(Level level, BlockPos blockPos) {
         Tuple<BlockPos, BlockPos> searchPositions = this.getSearchStartAndEnd(blockPos);
-        BlockState lampState = level.getBlockState(blockPos);
 
         for (BlockPos worldPos: BlockPos.betweenClosed(searchPositions.getFirst(), searchPositions.getSecond())) {
             BlockState blockState = level.getBlockState(worldPos);
 
             if (blockState.getBlock() == ModRegistry.LightSwitch) {
                 // Always use the first one found.
-                lampState = lampState.setValue(BlockDarkLamp.LIT, blockState.getValue(BlockLightSwitch.POWERED));
-                level.setBlock(worldPos, lampState, 3);
-                break;
+                return blockState.getValue(BlockLightSwitch.POWERED);
             }
         }
 
