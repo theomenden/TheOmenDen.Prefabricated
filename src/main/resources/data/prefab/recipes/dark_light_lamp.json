@@ -1,0 +1,19 @@
+{
+  "type": "prefab:condition_crafting_shapeless",
+  "configName": "Dark Light Lamp",
+  "group": "Dark Light Lamp",
+  "ingredients": [
+    {
+      "item": "minecraft:ink_sac",
+      "count": 1
+    },
+    {
+      "item": "minecraft:redstone_lamp",
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "prefab:block_dark_lamp",
+    "count": 1
+  }
+}

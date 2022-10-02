@@ -298,6 +298,10 @@ public class ModConfiguration implements ConfigData {
         public static String quartzCreteKey = "Quartz-Crete";
         public static String houseAdvancedKey = "Advanced House";
 
+        public static String darkLightLampKey = "Dark Light Lamp";
+
+        public static String lightSwitchKey = "Light Switch";
+
         public static String[] Keys = new String[]
                 {ConfigKeyNames.compressedStoneKey, ConfigKeyNames.compressedGlowStoneKey, ConfigKeyNames.compressedDirtKey, ConfigKeyNames.compressedChestKey, ConfigKeyNames.pileOfBricksKey,
                         ConfigKeyNames.warehouseKey,
@@ -307,10 +311,11 @@ public class ModConfiguration implements ConfigData {
                         ConfigKeyNames.instantBridgeKey, ConfigKeyNames.paperLanternKey, ConfigKeyNames.compressedObsidianKey, ConfigKeyNames.villagerHousesKey,
                         ConfigKeyNames.phasicBlockKey, ConfigKeyNames.smartGlassKey, ConfigKeyNames.greenHouseKey, ConfigKeyNames.startingHouseKey, ConfigKeyNames.glassStairsKey,
                         ConfigKeyNames.glassSlabsKey, ConfigKeyNames.moderateHouseKey, ConfigKeyNames.grassyPlainsKey, ConfigKeyNames.aquaBaseKey, ConfigKeyNames.watchTowerKey,
-                        ConfigKeyNames.bulldozerKey,ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
+                        ConfigKeyNames.bulldozerKey, ConfigKeyNames.jailKey, ConfigKeyNames.saloonKey, ConfigKeyNames.skiLodgeKey, ConfigKeyNames.windMillKey,
                         ConfigKeyNames.townHallKey, ConfigKeyNames.heapOfTimberKey, ConfigKeyNames.tonOfTimberKey, ConfigKeyNames.workshopKey, ConfigKeyNames.modernBuildingsKey,
                         ConfigKeyNames.swiftBladeKey, ConfigKeyNames.sickleKey, ConfigKeyNames.dirtRecipesKey, ConfigKeyNames.bunchOfBeetsKey, ConfigKeyNames.bunchOfCarrotsKey, ConfigKeyNames.bunchOfPotatoesKey,
-                        ConfigKeyNames.woodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey, ConfigKeyNames.quartzCreteKey, ConfigKeyNames.houseAdvancedKey};
+                        ConfigKeyNames.woodenCrateKey, ConfigKeyNames.starterFarmKey, ConfigKeyNames.moderateFarmKey, ConfigKeyNames.advancedFarmKey, ConfigKeyNames.quartzCreteKey, ConfigKeyNames.houseAdvancedKey,
+                        ConfigKeyNames.darkLightLampKey, ConfigKeyNames.lightSwitchKey};
 
         // Config file option names.
         static String includeSpawnersInMasherName = "Include Spawners in Monster Masher";
