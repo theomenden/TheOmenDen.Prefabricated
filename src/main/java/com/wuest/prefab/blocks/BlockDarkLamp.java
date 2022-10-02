@@ -1,19 +1,18 @@
 package com.wuest.prefab.blocks;
 
 import com.wuest.prefab.ModRegistry;
+import com.wuest.prefab.Prefab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.ToIntFunction;
@@ -34,10 +33,11 @@ public class BlockDarkLamp extends Block {
     }
 
     public BlockDarkLamp() {
-        super(BlockBehaviour.Properties.of(Material.BUILDABLE_GLASS)
+        super(BlockBehaviour.Properties.of(Prefab.SeeThroughImmovable)
                 .lightLevel(BlockDarkLamp.litBlockEmission(8))
                 .strength(0.3F)
                 .sound(SoundType.GLASS)
+                .noOcclusion()
                 .isValidSpawn(BlockDarkLamp::always));
 
         this.registerDefaultState(this.defaultBlockState().setValue(BlockDarkLamp.LIT, false));

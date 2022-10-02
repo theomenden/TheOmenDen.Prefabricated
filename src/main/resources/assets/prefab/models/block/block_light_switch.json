@@ -2,7 +2,8 @@
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
         "ds_off": "prefab:blocks/block_light_switch_off",
-        "mcstone": "prefab:blocks/block_light_switch_base"
+        "mcstone": "prefab:blocks/block_light_switch_base",
+        "particle": "prefab:blocks/block_light_switch_off"
     },
     "display": {
         "gui": {
@@ -26,13 +27,13 @@
             "scale": [ 1, 1, 1 ]
         },
         "firstperson_righthand": {
-            "rotation": [ 0, 315, 0 ],
-            "translation": [ 0, 2.5, 0 ],
+            "rotation": [ 75, 0, 90 ],
+            "translation": [ 0, 3, 0 ],
             "scale": [ 0.4, 0.4, 0.4 ]
         },
         "thirdperson_righthand": {
             "rotation": [ 75, 315, 0 ],
-            "translation": [ 0, 2.5, 0 ],
+            "translation": [ 0, 3, 3 ],
             "scale": [ 0.375, 0.375, 0.375 ]
         }
     },

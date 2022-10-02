@@ -127,6 +127,7 @@ public class ClientModRegistry {
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.GrassWall, RenderType.cutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DirtWall, RenderType.cutoutMipped());
         BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.LightSwitch, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModRegistry.DarkLamp, RenderType.cutoutMipped());
     }
 
     /**
