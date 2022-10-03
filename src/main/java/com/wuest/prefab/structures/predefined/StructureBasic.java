@@ -146,8 +146,8 @@ public class StructureBasic extends Structure {
                         }
 
                         case 2: {
-                            // Cave Spider.
-                            spawner.getSpawner().setEntityId(EntityType.CAVE_SPIDER);
+                            // Witch.
+                            spawner.getSpawner().setEntityId(EntityType.WITCH);
                             break;
                         }
 
