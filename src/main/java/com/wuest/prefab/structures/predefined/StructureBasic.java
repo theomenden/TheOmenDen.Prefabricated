@@ -37,7 +37,6 @@ import java.util.ArrayList;
 public class StructureBasic extends Structure {
     private final ArrayList<BlockPos> mobSpawnerPos = new ArrayList<>();
     private BlockPos customBlockPos = null;
-    private BlockPos signPosition = null;
 
     @Override
     protected Boolean CustomBlockProcessingHandled(StructureConfiguration configuration, BuildBlock block, Level world, BlockPos originalPos,
@@ -77,13 +76,7 @@ public class StructureBasic extends Structure {
                     originalPos,
                     this.getClearSpace().getShape().getDirection(),
                     configuration.houseFacing));
-        } else if (foundBlock instanceof SignBlock && structureName.equals(EnumBasicStructureName.FarmAdvanced.getName()) && chosenOption == FarmAdvancedOptions.MonsterMasher) {
-            this.signPosition = block.getStartingPosition().getRelativePosition(
-                    originalPos,
-                    this.getClearSpace().getShape().getDirection(),
-                    configuration.houseFacing);
         }
-
 
         return false;
     }
@@ -153,8 +146,8 @@ public class StructureBasic extends Structure {
                         }
 
                         case 2: {
-                            // Spider.
-                            spawner.getSpawner().setEntityId(EntityType.SPIDER);
+                            // Cave Spider.
+                            spawner.getSpawner().setEntityId(EntityType.CAVE_SPIDER);
                             break;
                         }
 
@@ -166,17 +159,6 @@ public class StructureBasic extends Structure {
                     }
 
                     monstersPlaced++;
-                }
-            }
-
-            if (this.signPosition != null) {
-                BlockEntity tileEntity = world.getBlockEntity(this.signPosition);
-
-                if (tileEntity instanceof SignBlockEntity) {
-                    SignBlockEntity signTile = (SignBlockEntity) tileEntity;
-                    signTile.setMessage(0, Component.literal("Lamp On=Mobs"));
-
-                    signTile.setMessage(2, Component.literal("Lamp Off=No Mobs"));
                 }
             }
         }
