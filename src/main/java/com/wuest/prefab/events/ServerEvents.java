@@ -28,11 +28,20 @@ public class ServerEvents {
     }
 
     public static void registerServerEvents() {
+        ServerEvents.serverStarting();
+
         ServerEvents.serverStarted();
 
         ServerEvents.playerJoinedServer();
 
         StructureEventHandler.registerStructureServerSideEvents();
+    }
+
+    private static void serverStarting() {
+        ServerLifecycleEvents.SERVER_STARTING.register((server -> {
+            // Only do this for server-side.
+            ModRegistry.serverModRegistries = new ModRegistries();
+        }));
     }
 
     private static void serverStarted() {
@@ -43,9 +52,6 @@ public class ServerEvents {
 
             // Do this when the server starts so that all appropriate tags are used.
             ItemSickle.setEffectiveBlocks();
-
-            // Only do this for server-side.
-            ModRegistry.serverModRegistries = new ModRegistries();
         });
     }
 
