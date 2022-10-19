@@ -54,8 +54,19 @@ public class ModConfiguration implements ConfigData {
     public HashMap<String, HashMap<String, Boolean>> structureOptions = new HashMap<>();
 
     public ModConfiguration() {
+        this.initialize();
+    }
+
+    @Override
+    public void validatePostLoad() {
+        this.initialize();
+    }
+
+    protected void initialize() {
         for (String key : ConfigKeyNames.Keys) {
-            this.recipes.put(key, true);
+            if (!this.recipes.containsKey(key)) {
+                this.recipes.put(key, true);
+            }
         }
 
         // Add the Basic structure settings.
@@ -68,42 +79,80 @@ public class ModConfiguration implements ConfigData {
             ArrayList<BaseOption> options = value.getBaseOption().getSpecificOptions();
 
             if (options.size() > 1) {
-                HashMap<String, Boolean> structureOptions = new HashMap<>();
+                HashMap<String, Boolean> structureOptions;
 
-                for (BaseOption option : options) {
-                    structureOptions.put(option.getTranslationString(), true);
+                if (this.structureOptions.containsKey(key)) {
+                    structureOptions = this.structureOptions.get(key);
+                }
+                else {
+                    structureOptions = new HashMap<>();
                 }
 
-                this.structureOptions.put(key, structureOptions);
+                for (BaseOption option : options) {
+                    if (!structureOptions.containsKey(option.getTranslationString())) {
+                        structureOptions.put(option.getTranslationString(), true);
+                    }
+                }
+
+                if (!this.structureOptions.containsKey(key)) {
+                    this.structureOptions.put(key, structureOptions);
+                }
             }
         }
 
         // Add the basic house settings.
-        HashMap<String, Boolean> houseOptions = new HashMap<>();
+        String structureOptionsKey = "item.prefab.item_house";
+        HashMap<String, Boolean> houseOptions;
+
+        if (this.structureOptions.containsKey(structureOptionsKey)) {
+            houseOptions = this.structureOptions.get(structureOptionsKey);
+        }
+        else {
+            houseOptions = new HashMap<>();
+            this.structureOptions.put(structureOptionsKey, houseOptions);
+        }
 
         for (HouseConfiguration.HouseStyle houseStyle : HouseConfiguration.HouseStyle.values()) {
-            houseOptions.put(houseStyle.getTranslationString(), true);
+            if (!houseOptions.containsKey(houseStyle.getTranslationString())) {
+                houseOptions.put(houseStyle.getTranslationString(), true);
+            }
         }
-
-        this.structureOptions.put("item.prefab.item_house", houseOptions);
 
         // Add the Improved house settings.
-        HashMap<String, Boolean> houseImprovedOptions = new HashMap<>();
+        structureOptionsKey = "item.prefab.item_house_improved";
+        HashMap<String, Boolean> houseImprovedOptions;
+
+        if (this.structureOptions.containsKey(structureOptionsKey)) {
+            houseImprovedOptions = this.structureOptions.get(structureOptionsKey);
+        }
+        else {
+            houseImprovedOptions = new HashMap<>();
+            this.structureOptions.put(structureOptionsKey, houseImprovedOptions);
+        }
 
         for (HouseImprovedConfiguration.HouseStyle houseStyle : HouseImprovedConfiguration.HouseStyle.values()) {
-            houseImprovedOptions.put(houseStyle.getTranslationString(), true);
+            if (!houseImprovedOptions.containsKey(houseStyle.getTranslationString())) {
+                houseImprovedOptions.put(houseStyle.getTranslationString(), true);
+            }
         }
-
-        this.structureOptions.put("item.prefab.item_house_improved", houseImprovedOptions);
 
         // Add the Advanced house settings.
-        HashMap<String, Boolean> houseAdvancedOptions = new HashMap<>();
+        structureOptionsKey = "item.prefab.item_house_advanced";
+        HashMap<String, Boolean> houseAdvancedOptions;
 
-        for (HouseAdvancedConfiguration.HouseStyle houseStyle : HouseAdvancedConfiguration.HouseStyle.values()) {
-            houseAdvancedOptions.put(houseStyle.getTranslationString(), true);
+        if (this.structureOptions.containsKey(structureOptionsKey)) {
+            houseAdvancedOptions = this.structureOptions.get(structureOptionsKey);
+        }
+        else {
+            houseAdvancedOptions = new HashMap<>();
+            this.structureOptions.put(structureOptionsKey, houseAdvancedOptions);
         }
 
-        this.structureOptions.put("item.prefab.item_house_advanced", houseAdvancedOptions);
+        for (HouseAdvancedConfiguration.HouseStyle houseStyle : HouseAdvancedConfiguration.HouseStyle.values()) {
+            if (!houseAdvancedOptions.containsKey(houseStyle.getTranslationString())) {
+                houseAdvancedOptions.put(houseStyle.getTranslationString(), true);
+            }
+        }
     }
 
     public CompoundTag writeCompoundTag() {

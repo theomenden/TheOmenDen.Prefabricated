@@ -67,7 +67,8 @@ public class GuiBasicStructure extends GuiStructure {
             this.availableOptions = new ArrayList<>();
 
             for (BaseOption option : tempOptions) {
-                if (configurationSettings == null || configurationSettings.get(option.getTranslationString())) {
+                if (configurationSettings == null || (configurationSettings.containsKey(option.getTranslationString())
+                        && configurationSettings.get(option.getTranslationString()))) {
                     this.availableOptions.add(option);
                 }
             }
