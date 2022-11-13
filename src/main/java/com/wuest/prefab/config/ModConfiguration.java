@@ -21,6 +21,9 @@ public class ModConfiguration implements ConfigData {
     @Comment("Item provided to new players when joining a world")
     public StartingItemOptions startingItem = StartingItemOptions.StartingHouse;
 
+    @Comment("Can new players for a world receive a starting item?")
+    public boolean newPlayersGetStartingItem = true;
+
     @Comment("Add spawners to monster masher")
     public boolean includeSpawnersInMasher = true;
 
@@ -159,6 +162,7 @@ public class ModConfiguration implements ConfigData {
         CompoundTag tag = new CompoundTag();
 
         tag.putString(ConfigKeyNames.startingItemName, this.startingItem.toString());
+        tag.putBoolean(ConfigKeyNames.newPlayersGetStartingItemName, this.newPlayersGetStartingItem);
         tag.putBoolean(ConfigKeyNames.includeSpawnersInMasherName, this.includeSpawnersInMasher);
         tag.putBoolean(ConfigKeyNames.enableStructurePreviewName, this.enableStructurePreview);
         tag.putBoolean(ConfigKeyNames.includeMineshaftChestName, this.includeMineshaftChest);
@@ -211,6 +215,7 @@ public class ModConfiguration implements ConfigData {
     public void readFromTag(CompoundTag tag) {
         this.startingItem = StartingItemOptions.getByName(tag.getString(ConfigKeyNames.startingItemName));
 
+        this.newPlayersGetStartingItem = tag.getBoolean(ConfigKeyNames.newPlayersGetStartingItemName);
         this.includeSpawnersInMasher = tag.getBoolean(ConfigKeyNames.includeSpawnersInMasherName);
         this.enableStructurePreview = tag.getBoolean(ConfigKeyNames.enableStructurePreviewName);
         this.includeMineshaftChest = tag.getBoolean(ConfigKeyNames.includeMineshaftChestName);
@@ -389,6 +394,8 @@ public class ModConfiguration implements ConfigData {
         static String addSaplingsName = "Add Saplings";
         static String addTorchesName = "Add Torches";
         static String startingItemName = "Starting Item";
+
+        static String newPlayersGetStartingItemName = "New Players Get Starting Item";
 
         // Starter House option names.
         static String addBedName = "Add Bed";

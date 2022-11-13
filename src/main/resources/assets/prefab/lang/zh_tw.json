@@ -6,6 +6,7 @@
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "非主世界維度的水",
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "中等農場的自動化選項",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "包括礦井保險箱",
+  "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "新玩家獲得起始物品",
   "text.autoconfig.Prefab.option.startingItem": "起始項目",
   "text.autoconfig.Prefab.option.playBuildingSound": "生成藍圖時播放聲音",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "添加劍",

@@ -6,6 +6,7 @@
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "非世界的な次元の水",
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "中程度の農場での自動化オプション",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "マインシャフト金庫を含む",
+  "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "新規プレイヤーはスターティングアイテムを獲得",
   "text.autoconfig.Prefab.option.startingItem": "開始アイテム",
   "text.autoconfig.Prefab.option.playBuildingSound": "ブループリントを生成するときにサウンドを再生する",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "剣を追加する",

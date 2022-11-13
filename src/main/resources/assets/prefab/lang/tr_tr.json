@@ -6,6 +6,7 @@
 	"text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Dünya dışı boyutlarda su",
 	"text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "orta ölçekli çiftlikte otomasyon seçenekleri",
 	"text.autoconfig.Prefab.option.includeMineshaftChest": "Mineshaft Kasasını Dahil Et",
+	"text.autoconfig.Prefab.option.newPlayersGetStartingItem": "Yeni oyuncular başlangıç öğesini alır",
 	"text.autoconfig.Prefab.option.startingItem": "Başlangıç Öğesi",
 	"text.autoconfig.Prefab.option.playBuildingSound": "plan oluştururken ses çal",
 	"text.autoconfig.Prefab.option.chestOptions.addSword": "Kılıç ekle",

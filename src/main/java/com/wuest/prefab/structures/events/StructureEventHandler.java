@@ -102,7 +102,8 @@ public final class StructureEventHandler {
 
         ModConfiguration.StartingItemOptions startingItem = Prefab.serverConfiguration.startingItem;
 
-        if (!playerConfig.givenHouseBuilder && startingItem != null) {
+        if (!playerConfig.givenHouseBuilder && startingItem != null
+            && Prefab.serverConfiguration.newPlayersGetStartingItem) {
             ItemStack stack = ItemStack.EMPTY;
 
             switch (startingItem) {

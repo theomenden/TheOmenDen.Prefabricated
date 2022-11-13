@@ -6,6 +6,7 @@
     "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Дозволяти воду в вимірах крім верхнього світу",
     "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "Увімкнути автоматичні ферми в Середніх Фермах",
     "text.autoconfig.Prefab.option.includeMineshaftChest": "Додати скриню у шахти",
+    "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "Нові гравці отримують стартовий предмет",
     "text.autoconfig.Prefab.option.startingItem": "Початковий предмет",
     "text.autoconfig.Prefab.option.playBuildingSound": "відтворювати звук під час створення плану",
     "text.autoconfig.Prefab.option.chestOptions.addSword": "Додати меч",

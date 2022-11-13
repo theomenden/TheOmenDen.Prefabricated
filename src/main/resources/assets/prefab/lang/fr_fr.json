@@ -6,6 +6,7 @@
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "L'eau dans des dimensions hors du monde",
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "options d'automatisation dans une ferme modérée",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Inclure le coffre de puits de mine",
+  "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "Les nouveaux joueurs obtiennent l'élément de départ",
   "text.autoconfig.Prefab.option.startingItem": "Élément de départ",
   "text.autoconfig.Prefab.option.playBuildingSound": "jouer du son lors de la génération du plan",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Ajouter une épée",

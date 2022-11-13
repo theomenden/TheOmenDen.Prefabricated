@@ -6,6 +6,7 @@
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Wasser in nicht-Oberwelt Dimensionen",
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "Automatisierungsoptionen in einer moderaten Farm",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Truhenlore einbeziehen",
+  "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "Neue Spieler erhalten ein Startobjekt",
   "text.autoconfig.Prefab.option.startingItem": "Startgegenstand",
   "text.autoconfig.Prefab.option.playBuildingSound": "Geräuch abspielen, wenn eine Blaupause generiert wurde",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Schwert hinzufügen",

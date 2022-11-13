@@ -6,6 +6,7 @@
   "text.autoconfig.Prefab.option.allowWaterInNonOverworldDimensions": "Acqua in dimensioni non ultraterrene",
   "text.autoconfig.Prefab.option.enableAutomationOptionsFromModerateFarm": "opzioni di automazione in fattoria moderata",
   "text.autoconfig.Prefab.option.includeMineshaftChest": "Includere il forziere dell'albero di miniera",
+  "text.autoconfig.Prefab.option.newPlayersGetStartingItem": "I nuovi giocatori ottengono l'oggetto iniziale",
   "text.autoconfig.Prefab.option.startingItem": "Oggetto iniziale",
   "text.autoconfig.Prefab.option.playBuildingSound": "riprodurre il suono durante la generazione del progetto",
   "text.autoconfig.Prefab.option.chestOptions.addSword": "Aggiungi la spada",
