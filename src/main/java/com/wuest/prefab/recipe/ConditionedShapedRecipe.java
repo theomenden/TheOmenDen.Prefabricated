@@ -10,6 +10,7 @@ import com.wuest.prefab.Prefab;
 import com.wuest.prefab.Tuple;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -191,7 +192,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     public static ItemStack itemStackFromJson(JsonObject json) {
         String string = GsonHelper.getAsString(json, "item");
 
-        Item item = Registry.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
+        Item item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
             return new JsonSyntaxException("Unknown item '" + string + "'");
         });
 

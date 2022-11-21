@@ -81,11 +81,11 @@ public class GuiSlider extends Button {
     protected void renderBg(PoseStack mStack, Minecraft par1Minecraft, int par2, int par3) {
         if (this.visible) {
             if (this.dragging) {
-                this.sliderValue = (par2 - (this.x + 4)) / (float) (this.width - 8);
+                this.sliderValue = (par2 - (this.getX() + 4)) / (float) (this.width - 8);
                 updateSlider();
             }
 
-            GuiUtils.drawContinuousTexturedBox(WIDGETS_LOCATION, this.x + (int) (this.sliderValue * (float) (this.width - 8)), this.y, 0, 66, 8, this.height, 200, 20, 2, 3, 2, 2, 0);
+            GuiUtils.drawContinuousTexturedBox(WIDGETS_LOCATION, this.getX() + (int) (this.sliderValue * (float) (this.width - 8)), this.getY(), 0, 66, 8, this.height, 200, 20, 2, 3, 2, 2, 0);
         }
     }
 
@@ -95,7 +95,7 @@ public class GuiSlider extends Button {
      */
     @Override
     public void onClick(double mouseX, double mouseY) {
-        this.sliderValue = (mouseX - (this.x + 4)) / (this.width - 8);
+        this.sliderValue = (mouseX - (this.getX() + 4)) / (this.width - 8);
         updateSlider();
         this.dragging = true;
     }

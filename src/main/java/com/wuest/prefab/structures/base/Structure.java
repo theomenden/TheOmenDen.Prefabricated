@@ -10,11 +10,14 @@ import com.wuest.prefab.gui.GuiLangKeys;
 import com.wuest.prefab.structures.config.StructureConfiguration;
 import com.wuest.prefab.structures.events.StructureEventHandler;
 
+import net.fabricmc.fabric.impl.biome.modification.BuiltInRegistryKeys;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -188,7 +191,7 @@ public class Structure {
                     continue;
                 }
 
-                ResourceLocation resourceLocation = Registry.BLOCK_ENTITY_TYPE.getKey(tileEntity.getType());
+                ResourceLocation resourceLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(tileEntity.getType());
                 CompoundTag tagCompound = tileEntity.saveWithFullMetadata();
 
                 BuildTileEntity buildTileEntity = new BuildTileEntity();
@@ -222,7 +225,7 @@ public class Structure {
                     && entityPos.getZ() >= z_radiusRangeBegin && entityPos.getZ() <= z_radiusRangeEnd
                     && entityPos.getY() >= y_radiusRangeBegin && entityPos.getY() <= y_radiusRangeEnd) {
                 BuildEntity buildEntity = new BuildEntity();
-                buildEntity.setEntityResourceString(Registry.ENTITY_TYPE.getKey(entity.getType()));
+                buildEntity.setEntityResourceString(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()));
                 buildEntity.setStartingPosition(Structure.getStartingPositionFromOriginalAndCurrentPosition(entityPos, originalPos));
 
                 // The function calls below get the following fields from the "entity" class. posX, posY, posZ.
@@ -260,7 +263,7 @@ public class Structure {
      */
     public static BuildBlock createBuildBlockFromBlockState(BlockState currentState, Block currentBlock, BlockPos currentPos, BlockPos originalPos) {
         BuildBlock buildBlock = new BuildBlock();
-        ResourceLocation blockIdentifier = Registry.BLOCK.getKey(currentBlock);
+        ResourceLocation blockIdentifier = BuiltInRegistries.BLOCK.getKey(currentBlock);
         buildBlock.setBlockDomain(blockIdentifier.getNamespace());
         buildBlock.setBlockName(blockIdentifier.getPath());
         buildBlock.setStartingPosition(Structure.getStartingPositionFromOriginalAndCurrentPosition(currentPos, originalPos));
@@ -376,7 +379,7 @@ public class Structure {
             // be built.
             Component message = Component.translatable(
                     GuiLangKeys.GUI_STRUCTURE_NOBUILD,
-                    Registry.BLOCK.getKey(checkResult.getSecond().getBlock()).toString(),
+                    BuiltInRegistries.BLOCK.getKey(checkResult.getSecond().getBlock()).toString(),
                     checkResult.getThird().getX(),
                     checkResult.getThird().getY(),
                     checkResult.getThird().getZ());
@@ -401,7 +404,7 @@ public class Structure {
 
                 // Now place all of the blocks.
                 for (BuildBlock block : this.getBlocks()) {
-                    Block foundBlock = Registry.BLOCK.get(block.getResourceLocation());
+                    Block foundBlock = BuiltInRegistries.BLOCK.get(block.getResourceLocation());
 
                     if (foundBlock != null) {
                         BlockState blockState = foundBlock.defaultBlockState();
@@ -416,7 +419,7 @@ public class Structure {
                             }
 
                             if (block.getSubBlock() != null) {
-                                foundBlock = Registry.BLOCK.get(block.getSubBlock().getResourceLocation());
+                                foundBlock = BuiltInRegistries.BLOCK.get(block.getSubBlock().getResourceLocation());
                                 blockState = foundBlock.defaultBlockState();
 
                                 subBlock = BuildBlock.SetBlockState(configuration, world, originalPos, block.getSubBlock(), foundBlock, blockState, this);
@@ -592,7 +595,7 @@ public class Structure {
             }
 
             if (foundWaterLikeBlock) {
-                ResourceLocation cobbleIdentifier = Registry.BLOCK.getKey(Blocks.COBBLESTONE);
+                ResourceLocation cobbleIdentifier = BuiltInRegistries.BLOCK.getKey(Blocks.COBBLESTONE);
                 block.setBlockDomain(cobbleIdentifier.getNamespace());
                 block.setBlockName(cobbleIdentifier.getPath());
                 block.setBlockState(Blocks.COBBLESTONE.defaultBlockState());
@@ -613,9 +616,9 @@ public class Structure {
             return false;
         }
 
-        ResourceLocation blockIdentifier = Registry.BLOCK.getKey(foundBlock);
-        ResourceLocation glassIdentifier = Registry.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS);
-        ResourceLocation glassPaneIdentifier = Registry.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS_PANE);
+        ResourceLocation blockIdentifier = BuiltInRegistries.BLOCK.getKey(foundBlock);
+        ResourceLocation glassIdentifier = BuiltInRegistries.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS);
+        ResourceLocation glassPaneIdentifier = BuiltInRegistries.BLOCK.getKey(Blocks.WHITE_STAINED_GLASS_PANE);
 
         if (blockIdentifier.getNamespace().equals(glassIdentifier.getNamespace())
                 && blockIdentifier.getPath().endsWith("glass")) {

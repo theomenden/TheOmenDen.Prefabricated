@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -89,7 +90,7 @@ public class StructureRenderHandler {
             frustum.prepare(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 
             for (BuildBlock buildBlock : StructureRenderHandler.currentStructure.getBlocks()) {
-                Block foundBlock = Registry.BLOCK.get(buildBlock.getResourceLocation());
+                Block foundBlock = BuiltInRegistries.BLOCK.get(buildBlock.getResourceLocation());
 
                 if (foundBlock != null) {
                     // In order to get the proper relative position I also need the structure's original facing.
@@ -159,7 +160,7 @@ public class StructureRenderHandler {
         StructureRenderHandler.doRenderComponent(world, buildBlock, pos, entityVertexConsumer, matrixStack);
 
         if (buildBlock.getSubBlock() != null) {
-            Block foundBlock = Registry.BLOCK.get(buildBlock.getSubBlock().getResourceLocation());
+            Block foundBlock = BuiltInRegistries.BLOCK.get(buildBlock.getSubBlock().getResourceLocation());
             BlockState blockState = foundBlock.defaultBlockState();
 
             BuildBlock subBlock = BuildBlock.SetBlockState(

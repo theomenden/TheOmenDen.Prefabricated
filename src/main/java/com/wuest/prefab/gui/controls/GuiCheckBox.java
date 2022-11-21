@@ -120,7 +120,7 @@ public class GuiCheckBox extends AbstractButton {
         if (this.visible) {
             ResourceLocation resourceLocation = GuiCheckBox.buttonTexture;
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.boxWidth && mouseY < this.y + this.height;
+            this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.boxWidth && mouseY < this.getY() + this.height;
 
             if (this.isChecked()) {
                 resourceLocation = GuiCheckBox.buttonTexturePressed;
@@ -134,14 +134,14 @@ public class GuiCheckBox extends AbstractButton {
 
             GuiUtils.bindTexture(resourceLocation);
 
-            GuiUtils.drawTexture(matrixStack, this.x, this.y, 1, 11, 11, 11, 11);
+            GuiUtils.drawTexture(matrixStack, this.getX(), this.getY(), 1, 11, 11, 11, 11);
 
             int color = this.stringColor;
 
             if (this.withShadow) {
-                this.drawString(matrixStack, this.mineCraft.font, displayString, x + this.boxWidth + 2, y + 4, color);
+                this.drawString(matrixStack, this.mineCraft.font, displayString, this.getX() + this.boxWidth + 2, this.getY() + 4, color);
             } else {
-                this.mineCraft.font.drawWordWrap(Utils.createTextComponent(displayString), x + this.boxWidth + 2, y + 2, this.labelWidth, color);
+                this.mineCraft.font.drawWordWrap(Utils.createTextComponent(displayString), this.getX() + this.boxWidth + 2, this.getY() + 2, this.labelWidth, color);
             }
         }
     }
@@ -154,7 +154,7 @@ public class GuiCheckBox extends AbstractButton {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput builder) {
+    public void updateWidgetNarration(NarrationElementOutput builder) {
         builder.add(NarratedElementType.TITLE, this.createNarrationMessage());
         if (this.active) {
             if (this.isFocused()) {

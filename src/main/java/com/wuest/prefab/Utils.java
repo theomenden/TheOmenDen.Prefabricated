@@ -7,6 +7,7 @@ import io.netty.util.internal.StringUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -99,10 +100,10 @@ public class Utils {
      * @return A collection of found blocks.
      */
     public static ArrayList<Block> getBlocksWithTagLocation(ResourceLocation resourceLocation) {
-        TagKey<Block> tags = TagKey.create(Registry.BLOCK_REGISTRY, resourceLocation);
+        TagKey<Block> tags = TagKey.create(BuiltInRegistries.BLOCK_REGISTRY, resourceLocation);
         ArrayList<Block> blocks = new ArrayList<>();
 
-        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tags)) {
+        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(tags)) {
             blocks.add(blockHolder.value());
         }
 
@@ -118,7 +119,7 @@ public class Utils {
     public static ArrayList<Block> getBlocksWithTagKey(TagKey<Block> tagKey) {
         ArrayList<Block> blocks = new ArrayList<>();
 
-        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tagKey)) {
+        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(tagKey)) {
             blocks.add(blockHolder.value());
         }
 
@@ -133,10 +134,10 @@ public class Utils {
      * @return True if the tag was found; otherwise false.
      */
     public static boolean doesBlockHaveTag(Block block, ResourceLocation location) {
-        ResourceLocation blockKey = Registry.BLOCK.getKey(block);
+        ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(block);
         TagKey<Block> tags = TagKey.create(Registry.BLOCK_REGISTRY, location);
 
-        for (Holder<Block> blockHolder : Registry.BLOCK.getTagOrEmpty(tags)) {
+        for (Holder<Block> blockHolder : BuiltInRegistries.BLOCK.getTagOrEmpty(tags)) {
             if (blockHolder.is(blockKey)) {
                 return true;
             }
@@ -172,7 +173,7 @@ public class Utils {
         TagKey<Item> tags = TagKey.create(Registry.ITEM_REGISTRY, resourceLocation);
         ArrayList<ItemStack> itemStacks = new ArrayList<>();
 
-        for (Holder<Item> holder : Registry.ITEM.getTagOrEmpty(tags)) {
+        for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(tags)) {
             itemStacks.add(new ItemStack(holder.value()));
         }
 
@@ -187,10 +188,10 @@ public class Utils {
      * @return True if the tag exists on the item; otherwise false.
      */
     public static boolean doesItemHaveTag(Item item, ResourceLocation location) {
-        ResourceLocation blockKey = Registry.ITEM.getKey(item);
-        TagKey<Item> tags = TagKey.create(Registry.ITEM_REGISTRY, location);
+        ResourceLocation blockKey = BuiltInRegistries.ITEM.getKey(item);
+        TagKey<Item> tags = TagKey.create(BuiltInRegistries.ITEM_REGISTRY, location);
 
-        for (Holder<Item> blockHolder : Registry.ITEM.getTagOrEmpty(tags)) {
+        for (Holder<Item> blockHolder : BuiltInRegistries.ITEM.getTagOrEmpty(tags)) {
             if (blockHolder.is(blockKey)) {
                 return true;
             }
