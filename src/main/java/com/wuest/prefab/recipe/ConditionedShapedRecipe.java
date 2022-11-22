@@ -17,6 +17,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -39,8 +40,8 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     private ItemStack output;
     private boolean reloadedTags;
 
-    public ConditionedShapedRecipe(ResourceLocation id, String group, int width, int height, NonNullList<Ingredient> ingredients, ItemStack output, String configName, boolean recipeHasTags) {
-        super(id, group, width, height, ingredients, output);
+    public ConditionedShapedRecipe(ResourceLocation id, String group, CraftingBookCategory craftingBookCategory, int width, int height, NonNullList<Ingredient> ingredients, ItemStack output, String configName, boolean recipeHasTags) {
+        super(id, group, craftingBookCategory, width, height, ingredients, output);
 
         this.id = id;
         this.group = group;
@@ -355,7 +356,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
                 Prefab.logger.info("Processed EMPTY recipe for location: {}", identifier.toString());
 
                 // This is just an empty recipe. return empty recipe.
-                return new ConditionedShapedRecipe(identifier, groupName, 3, 3, NonNullList.withSize(3 * 3, Ingredient.EMPTY), ItemStack.EMPTY, configName, ingredientResult.getFirst());
+                return new ConditionedShapedRecipe(identifier, groupName, CraftingBookCategory.MISC, 3, 3, NonNullList.withSize(3 * 3, Ingredient.EMPTY), ItemStack.EMPTY, configName, ingredientResult.getFirst());
             }
 
             String[] strings = ConditionedShapedRecipe.combinePattern(ConditionedShapedRecipe.getPattern(GsonHelper.getAsJsonArray(jsonObject, "pattern")));
@@ -364,7 +365,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             NonNullList<Ingredient> defaultedList = ConditionedShapedRecipe.dissolvePattern(strings, map, width, height);
             ItemStack itemStack = ConditionedShapedRecipe.Serializer.validateRecipeOutput(ConditionedShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result")), configName);
 
-            return new ConditionedShapedRecipe(identifier, groupName, width, height, defaultedList, itemStack, configName, ingredientResult.getFirst());
+            return new ConditionedShapedRecipe(identifier, groupName, CraftingBookCategory.MISC, width, height, defaultedList, itemStack, configName, ingredientResult.getFirst());
         }
 
         public ConditionedShapedRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf packetByteBuf) {
@@ -381,7 +382,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             }
 
             ItemStack itemStack = ConditionedShapedRecipe.Serializer.validateRecipeOutput(packetByteBuf.readItem(), configName);
-            return new ConditionedShapedRecipe(identifier, groupName, width, height, defaultedList, itemStack, configName, recipeHasTags);
+            return new ConditionedShapedRecipe(identifier, groupName, CraftingBookCategory.MISC, width, height, defaultedList, itemStack, configName, recipeHasTags);
         }
 
         public void toNetwork(FriendlyByteBuf packetByteBuf, ConditionedShapedRecipe shapedRecipe) {

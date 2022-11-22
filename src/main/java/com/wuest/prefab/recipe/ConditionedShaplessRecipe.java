@@ -16,6 +16,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -30,8 +31,8 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 	private final NonNullList<Ingredient> input;
 	private final String configName;
 
-	public ConditionedShaplessRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> input, String configName) {
-	    super(id, group, output, input);
+	public ConditionedShaplessRecipe(ResourceLocation id, String group, CraftingBookCategory craftingBookCategory, ItemStack output, NonNullList<Ingredient> input, String configName) {
+	    super(id, group, craftingBookCategory, output, input);
 
 		this.id = id;
 		this.group = group;
@@ -97,7 +98,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 				throw new JsonParseException("Too many ingredients for shapeless recipe");
 			} else {
 				ItemStack itemStack = this.validateRecipeOutput(ConditionedShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result")), configName);
-				return new ConditionedShaplessRecipe(identifier, groupName, itemStack, defaultedList, configName);
+				return new ConditionedShaplessRecipe(identifier, groupName, CraftingBookCategory.MISC, itemStack, defaultedList, configName);
 			}
 		}
 
@@ -125,7 +126,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 			}
 
 			ItemStack itemStack = this.validateRecipeOutput(packetByteBuf.readItem(), configName);
-			return new ConditionedShaplessRecipe(identifier, groupName, itemStack, defaultedList, configName);
+			return new ConditionedShaplessRecipe(identifier, groupName, CraftingBookCategory.MISC, itemStack, defaultedList, configName);
 		}
 
 		public void toNetwork(FriendlyByteBuf packetByteBuf, ConditionedShaplessRecipe shapelessRecipe) {
