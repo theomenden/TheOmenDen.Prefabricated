@@ -344,7 +344,6 @@ public class ModRegistry {
                 entries.accept(ModRegistry.FarmAdvanced);
 
                 if (Prefab.isDebug) {
-                    ModRegistry.StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Properties());
                     entries.accept(ModRegistry.StructureScannerItem);
                 }
             })
@@ -549,6 +548,7 @@ public class ModRegistry {
         ModRegistry.registerItem("block_dirt_slab", ModRegistry.DirtSlabItem);
 
         if (Prefab.isDebug) {
+            ModRegistry.StructureScannerItem = new BlockItem(ModRegistry.StructureScanner, new Item.Properties());
             ModRegistry.registerItem("block_structure_scanner", ModRegistry.StructureScannerItem);
         }
 
