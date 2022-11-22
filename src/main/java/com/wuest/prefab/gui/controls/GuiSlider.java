@@ -36,7 +36,7 @@ public class GuiSlider extends Button {
     }
 
     public GuiSlider(int xPos, int yPos, int width, int height, Component prefix, Component suf, double minVal, double maxVal, double currentVal, boolean showDec, boolean drawStr, OnPress handler, ISlider par) {
-        super(xPos, yPos, width, height, prefix, handler);
+        super(xPos, yPos, width, height, prefix, handler, Button.DEFAULT_NARRATION);
         minValue = minVal;
         maxValue = maxVal;
         sliderValue = (currentVal - minValue) / (maxValue - minValue);

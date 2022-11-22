@@ -25,6 +25,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -146,7 +147,7 @@ public class StructureRenderHandler {
     }
 
     private static ChatType getMessageType() {
-        Registry<ChatType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registry.CHAT_TYPE_REGISTRY);
+        Registry<ChatType> registry = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.CHAT_TYPE);
         return registry.get(ChatType.CHAT);
     }
 
