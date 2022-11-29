@@ -226,7 +226,7 @@ public class ModRegistry {
     public static final RecipeSerializer<ConditionedSmeltingRecipe> ConditionedSmeltingRecipeSeriaizer = new ConditionedSmeltingRecipe.Serializer();
 
     /* *********************************** Sounds *********************************** */
-    public static final SoundEvent BuildingBlueprint = new SoundEvent(new ResourceLocation(Prefab.MODID, "building_blueprint"));
+    public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(new ResourceLocation(Prefab.MODID, "building_blueprint"));
 
     /* *********************************** Block Entities Types *********************************** */
     public static BlockEntityType<StructureScannerBlockEntity> StructureScannerEntityType;
