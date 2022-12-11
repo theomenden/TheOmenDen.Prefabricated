@@ -236,8 +236,8 @@ public class ModRegistry {
     public static StructureScannerBlockEntity StructureScannerEntity;
 
     /* *********************************** Item Group *********************************** */
-    private static final CreativeModeTab ITEM_GROUP = FabricItemGroup.builder(new ResourceLocation(Prefab.MODID, "test_group"))
-            .icon(() -> new ItemStack(Items.DIAMOND))
+    private static final CreativeModeTab ITEM_GROUP = FabricItemGroup.builder(new ResourceLocation(Prefab.MODID, "logo"))
+            .icon(() -> new ItemStack(ModRegistry.LogoItem))
             .displayItems((enabledFeatures, entries, operatorEnabled) -> {
                 entries.accept(ModRegistry.CompressedStoneItem);
                 entries.accept(ModRegistry.DoubleCompressedStoneItem);
@@ -321,7 +321,6 @@ public class ModRegistry {
                 entries.accept(ModRegistry.DefenseBunker);
                 entries.accept(ModRegistry.MineshaftEntrance);
                 entries.accept(ModRegistry.EnderGateway);
-                entries.accept(ModRegistry.AquaBase);
                 entries.accept(ModRegistry.GrassyPlain);
                 entries.accept(ModRegistry.MagicTemple);
                 entries.accept(ModRegistry.WatchTower);
@@ -332,6 +331,7 @@ public class ModRegistry {
                 entries.accept(ModRegistry.WindMill);
                 entries.accept(ModRegistry.TownHall);
                 entries.accept(ModRegistry.NetherGate);
+                entries.accept(ModRegistry.AquaBase);
                 entries.accept(ModRegistry.AquaBaseImproved);
                 entries.accept(ModRegistry.Warehouse);
                 entries.accept(ModRegistry.WareHouseImproved);
