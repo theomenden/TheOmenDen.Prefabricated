@@ -66,7 +66,6 @@ public class ClientEvents {
 
     public static boolean checkIfStackIsCorrectGui(StructureTagMessage.EnumStructureConfiguration currentConfiguration, ItemStack stack) {
         GuiStructure mainHandGui = ClientModRegistry.ModGuis.get(stack.getItem());
-        mainHandGui.init();
 
         if (currentConfiguration == mainHandGui.structureConfiguration) {
             if (currentConfiguration == StructureTagMessage.EnumStructureConfiguration.Basic) {
