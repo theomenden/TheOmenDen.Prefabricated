@@ -51,7 +51,6 @@ public class ModRegistryGroups {
                                                                                   entries.accept(ModRegistry.GrassSlab);
                                                                                   entries.accept(ModRegistry.GrassStairs);
                                                                                   entries.accept(ModRegistry.GrassWall);
-                                                                                  entries.accept(ModRegistry.PaperLantern);
                                                                                   entries.accept(ModRegistry.QuartzCrete);
                                                                                   entries.accept(ModRegistry.QuartzCreteSlab);
                                                                                   entries.accept(ModRegistry.ChiseledQuartzCrete);
@@ -63,6 +62,10 @@ public class ModRegistryGroups {
                                                                                   entries.accept(ModRegistry.SmoothQuartzCreteWall);
                                                                                   entries.accept(ModRegistry.SmoothQuartzCreteStairs);
                                                                                   entries.accept(ModRegistry.SmoothQuartzCreteSlab);
+                                                                                  entries.accept(ModRegistry.Phasic);
+                                                                                  entries.accept(ModRegistry.Boundary);
+                                                                                  entries.accept(ModRegistry.DarkLamp);
+                                                                                  entries.accept(ModRegistry.PaperLantern);
                                                                               })
                                                                               .build();
 
@@ -131,6 +134,10 @@ public class ModRegistryGroups {
             entries.accept(ModRegistry.SmoothQuartzCreteWall);
             entries.accept(ModRegistry.SmoothQuartzCreteStairs);
             entries.accept(ModRegistry.SmoothQuartzCreteSlab);
+            entries.accept(ModRegistry.Phasic);
+            entries.accept(ModRegistry.Boundary);
+            entries.accept(ModRegistry.DarkLamp);
+            entries.accept(ModRegistry.PaperLantern);
         });
 
         ItemGroupEvents.modifyEntriesEvent(PREFABRICATED_UTILITY_BLOCKS).register(entries -> {
