@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "prefabricated:block/block_grass_slab_half" },
+        "type=top": { "model": "prefabricated:block/block_grass_slab_upper" },
+        "type=double": { "model": "minecraft:block/grass_block" }
+    }
+}

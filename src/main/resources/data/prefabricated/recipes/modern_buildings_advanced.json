@@ -1,0 +1,31 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Modern Buildings",
+  "group": "Modern Buildings",
+  "pattern": [
+    "ada",
+    "beb",
+    "cdc"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:double_compressed_lights"
+    },
+    "b": {
+      "tag": "c:double_compressed_stone"
+    },
+    "c": {
+      "item": "minecraft:iron_block"
+    },
+    "d": {
+      "tag": "c:double_compressed_quartz_crete"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_modern_buildings_advanced",
+    "count": 1
+  }
+}

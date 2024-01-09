@@ -1,0 +1,14 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Bundle of Timber",
+  "group": "Bundle of Timber",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_bundle_of_timber"
+    }
+  ],
+  "result": {
+    "item": "minecraft:oak_log",
+    "count": 9
+  }
+}

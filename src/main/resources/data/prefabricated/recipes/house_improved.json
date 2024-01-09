@@ -1,0 +1,20 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Improved House",
+  "group": "Improved House",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_house"
+    },
+    {
+      "item": "prefabricated:item_house"
+    },
+    {
+      "item": "prefabricated:item_house"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_house_improved",
+    "count": 1
+  }
+}

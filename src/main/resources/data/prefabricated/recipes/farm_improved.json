@@ -1,0 +1,31 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Moderate Farm",
+  "group": "Moderate Farm",
+  "pattern": [
+    "aba",
+    "cdc",
+    "ebe"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_heap_of_timber"
+    },
+    "b": {
+      "tag": "c:compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "d": {
+      "item": "minecraft:water_bucket"
+    },
+    "e": {
+      "item": "prefabricated:item_pile_of_bricks"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_farm_improved",
+    "count": 1
+  }
+}

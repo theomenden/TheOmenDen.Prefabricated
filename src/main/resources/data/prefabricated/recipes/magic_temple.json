@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Magic Temple",
+  "group": "Magic Temple",
+  "pattern": [
+    "aaa",
+    "bcd",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_bundle_of_timber"
+    },
+    "b": {
+      "item": "minecraft:brewing_stand"
+    },
+    "c": {
+      "item": "minecraft:enchanting_table"
+    },
+    "d": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_magic_temple",
+    "count": 1
+  }
+}

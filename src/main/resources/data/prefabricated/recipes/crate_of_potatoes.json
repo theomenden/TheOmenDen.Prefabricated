@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Bunch of Potatoes",
+  "group": "Bunch of Potatoes",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "prefabricated:item_bunch_of_potatoes"
+    },
+    "B": {
+      "item": "prefabricated:item_wooden_crate"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_crate_of_potatoes",
+    "count": 1
+  }
+}

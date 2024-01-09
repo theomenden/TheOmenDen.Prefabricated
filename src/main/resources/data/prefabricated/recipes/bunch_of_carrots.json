@@ -1,0 +1,19 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Bunch of Carrots",
+  "group": "Bunch of Carrots",
+  "pattern": [
+    "AAA",
+    "A A",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:carrot"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_bunch_of_carrots",
+    "count": 1
+  }
+}

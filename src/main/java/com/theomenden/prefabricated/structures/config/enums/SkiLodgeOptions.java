@@ -1,0 +1,23 @@
+package com.theomenden.prefabricated.structures.config.enums;
+
+public class SkiLodgeOptions extends BaseOption {
+    public static SkiLodgeOptions Default = new SkiLodgeOptions(
+            "item.prefabricated.ski_lodge",
+            "assets/prefabricated/structures/ski_lodge.zip",
+            "textures/gui/ski_lodge.png",
+            false,
+            false);
+
+    protected SkiLodgeOptions(String translationString,
+                              String assetLocation,
+                              String pictureLocation,
+                              boolean hasBedColor,
+                              boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                hasBedColor,
+                hasGlassColor);
+    }
+}

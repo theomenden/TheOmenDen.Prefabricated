@@ -1,0 +1,23 @@
+package com.theomenden.prefabricated.structures.config.enums;
+
+public class AquaBaseOptions extends BaseOption {
+    public static AquaBaseOptions Default = new AquaBaseOptions(
+            "item.prefabricated.aqua_base",
+            "assets/prefabricated/structures/aqua_base.zip",
+            "textures/gui/aqua_base.png",
+            false,
+            false);
+
+    protected AquaBaseOptions(String translationString,
+                              String assetLocation,
+                              String pictureLocation,
+                              boolean hasBedColor,
+                              boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                hasBedColor,
+                hasGlassColor);
+    }
+}

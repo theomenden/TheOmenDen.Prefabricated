@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Villager Houses",
+  "group": "Villager Houses",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "bbb"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_bundle_of_timber"
+    },
+    "b": {
+      "tag": "c:compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_villager_houses",
+    "count": 1
+  }
+}

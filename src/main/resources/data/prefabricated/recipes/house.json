@@ -1,0 +1,34 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "House",
+  "group": "House",
+  "pattern": [
+    "abc",
+    "ded",
+    "fff"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:crafting_table"
+    },
+    "b": {
+      "item": "minecraft:clock"
+    },
+    "c": {
+      "item": "minecraft:furnace"
+    },
+    "d": {
+      "tag": "c:compressed_stone"
+    },
+    "e": {
+      "tag": "minecraft:beds"
+    },
+    "f": {
+      "item": "prefabricated:item_bundle_of_timber"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_house",
+    "count": 1
+  }
+}

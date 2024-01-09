@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "prefabricated:block/block_structure_scanner",
+    "up": "prefabricated:block/block_structure_scanner",
+    "down": "prefabricated:block/block_structure_scanner",
+    "north": "prefabricated:block/block_structure_scanner_blank",
+    "south": "prefabricated:block/block_structure_scanner_blank",
+    "east": "prefabricated:block/block_structure_scanner_side_east",
+    "west": "prefabricated:block/block_structure_scanner_side"
+  }
+}

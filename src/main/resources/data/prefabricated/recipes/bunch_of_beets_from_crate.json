@@ -1,0 +1,16 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "configName": "Bunch of Beets",
+  "group": "Bunch of Beets",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_crate_of_beets",
+      "count": 1,
+      "data": 8
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_bunch_of_beets",
+    "count": 8
+  }
+}

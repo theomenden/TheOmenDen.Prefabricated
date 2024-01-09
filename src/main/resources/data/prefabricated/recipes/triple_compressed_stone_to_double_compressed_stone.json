@@ -1,0 +1,17 @@
+{
+  "_comment": [
+    "Triple compressed Stone to double compressed stone"
+  ],
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Compressed Stone",
+  "group": "Compressed Stone",
+  "ingredients": [
+    {
+      "tag": "c:triple_compressed_stone"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:block_double_compressed_stone",
+    "count": 9
+  }
+}

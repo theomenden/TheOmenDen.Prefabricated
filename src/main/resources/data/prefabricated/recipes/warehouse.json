@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Warehouse",
+  "group": "Warehouse",
+  "pattern": [
+    "a a",
+    "aba",
+    "cdc"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:double_compressed_stone"
+    },
+    "b": {
+      "item": "prefabricated:item_compressed_chest"
+    },
+    "c": {
+      "tag": "c:double_compressed_lights"
+    },
+    "d": {
+      "tag": "c:triple_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_warehouse",
+    "count": 1
+  }
+}

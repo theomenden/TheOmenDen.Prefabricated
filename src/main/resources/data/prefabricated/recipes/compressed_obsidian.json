@@ -1,0 +1,19 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Obsidian",
+  "group": "Compressed Obsidian",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_compressed_obsidian",
+    "count": 1
+  }
+}

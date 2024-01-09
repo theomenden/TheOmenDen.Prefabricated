@@ -1,10 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "prefab",
+  "id": "prefabricated",
   "version": "${version}",
-
-  "name": "Prefab",
-  "description": "Prefab is a mod which contains multiple pre-designed building for you to place in the world",
+  "name": "Prefabricated",
+  "description": "Prefabricated is a mod which contains multiple pre-designed building for you to place in the world",
   "authors": [
     "WuestMan",
     "Kaojinn",
@@ -15,31 +14,29 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab-fabric",
     "sources": "https://github.com/Brian-Wuest/MC-Prefab-Fabric"
   },
-
   "license": "MIT",
-  "icon": "assets/prefab/prefabthumb.png",
-
+  "icon": "assets/prefabricated/prefabthumb.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.wuest.prefab.Prefab"
+      "com.theomenden.prefabricated.Prefab"
     ],
     "client": [
-      "com.wuest.prefab.PrefabClient"
+      "com.theomenden.prefabricated.PrefabClient"
     ],
     "modmenu": [
-      "com.wuest.prefab.config.PrefabModMenuIntegration"
+      "com.theomenden.prefabricated.config.PrefabModMenuIntegration"
     ]
   },
-  "accessWidener": "prefab.accesswidener",
+  "accessWidener": "prefabricated.accesswidener",
   "mixins": [
-    "prefab.mixins.json"
+    "prefabricated.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.11",
+    "fabricloader": ">=0.15.3",
     "fabric": "*",
-    "minecraft": "1.19.x",
+    "minecraft": "1.20.x",
     "java": ">=17"
   },
   "suggests": {

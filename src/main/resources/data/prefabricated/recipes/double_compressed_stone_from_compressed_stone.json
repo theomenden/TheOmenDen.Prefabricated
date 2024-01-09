@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "double compressed stone from compressed stone"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Stone",
+  "group": "Compressed Stone",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_double_compressed_stone",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Paper Lantern",
+  "group": "Paper Lantern",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_string_of_lanterns"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_coil_of_lanterns",
+    "count": 1
+  }
+}

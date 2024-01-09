@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Any Stone to Compressed Stone"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Stone",
+  "group": "Compressed Stone",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_compressed_stone",
+    "count": 1
+  }
+}

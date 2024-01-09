@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "prefabricated:block/block_dark_lamp"
+    },
+    "lit=true": {
+      "model": "prefabricated:block/block_dark_lamp_on"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "prefabricated:block/item_pile_of_bricks" },
+    "facing=east": { "model": "prefabricated:block/item_pile_of_bricks", "y": 90 },
+    "facing=south": { "model": "prefabricated:block/item_pile_of_bricks", "y": 180 },
+    "facing=west": { "model": "prefabricated:block/item_pile_of_bricks", "y": 270 }
+  }
+}

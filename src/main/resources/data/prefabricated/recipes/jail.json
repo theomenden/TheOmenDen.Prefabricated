@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Jail",
+  "group": "Jail",
+  "pattern": [
+    "aaa",
+    "aba",
+    "cdc"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:iron_bars"
+    },
+    "b": {
+      "tag": "c:triple_compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "d": {
+      "tag": "c:double_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_jail",
+    "count": 1
+  }
+}

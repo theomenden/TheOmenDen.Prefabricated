@@ -1,0 +1,25 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Bunch of Eggs",
+  "group": "Bunch of Eggs",
+  "pattern": [
+    "CCC",
+    "ABA",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "prefabricated:item_clutch_of_eggs"
+    },
+    "B": {
+      "item": "prefabricated:item_wooden_crate"
+    },
+    "C": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_carton_of_eggs",
+    "count": 1
+  }
+}

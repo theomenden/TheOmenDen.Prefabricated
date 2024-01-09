@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "prefabricated:block/item_ton_of_timber" },
+    "facing=east": { "model": "prefabricated:block/item_ton_of_timber", "y": 90 },
+    "facing=south": { "model": "prefabricated:block/item_ton_of_timber", "y": 180 },
+    "facing=west": { "model": "prefabricated:block/item_ton_of_timber", "y": 270 }
+  }
+}

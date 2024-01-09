@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Watch Tower",
+  "group": "Watch Tower",
+  "pattern": [
+    "bbb",
+    "cbd",
+    "cad"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:compressed_stone"
+    },
+    "b": {
+      "tag": "c:double_compressed_stone"
+    },
+    "c": {
+      "tag": "c:iron_blocks"
+    },
+    "d": {
+      "tag": "c:copper_blocks"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_watch_tower",
+    "count": 1
+  }
+}

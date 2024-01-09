@@ -1,0 +1,31 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Improved Warehouse",
+  "group": "Improved Warehouse",
+  "pattern": [
+    "aba",
+    "aca",
+    "ded"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:double_compressed_stone"
+    },
+    "b": {
+      "item": "prefabricated:item_upgrade"
+    },
+    "c": {
+      "item": "prefabricated:item_compressed_chest"
+    },
+    "d": {
+      "tag": "c:double_compressed_lights"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_warehouse_improved",
+    "count": 1
+  }
+}

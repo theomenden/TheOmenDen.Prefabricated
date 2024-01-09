@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Instant Bridge",
+  "group": "Instant Bridge",
+  "pattern": [
+    "aba",
+    "aba",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:torch"
+    },
+    "b": {
+      "tag": "c:double_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_instant_bridge",
+    "count": 1
+  }
+}

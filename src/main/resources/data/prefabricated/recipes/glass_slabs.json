@@ -1,0 +1,18 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Glass Slabs",
+  "group": "Glass Slabs",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:glass"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_glass_slab",
+    "count": 2
+  }
+}

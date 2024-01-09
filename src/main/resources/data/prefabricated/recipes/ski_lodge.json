@@ -1,0 +1,34 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Ski Lodge",
+  "group": "Ski Lodge",
+  "pattern": [
+    "aca",
+    "cfc",
+    "bed"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:snow_block"
+    },
+    "b": {
+      "tag": "c:double_compressed_lights"
+    },
+    "c": {
+      "item": "prefabricated:item_bundle_of_timber"
+    },
+    "d": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
+    },
+    "f": {
+      "item": "minecraft:blue_ice"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_ski_lodge",
+    "count": 1
+  }
+}

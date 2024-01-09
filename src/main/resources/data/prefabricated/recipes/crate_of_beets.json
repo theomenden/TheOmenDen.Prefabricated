@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Bunch of Beets",
+  "group": "Bunch of Beets",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "prefabricated:item_bunch_of_beets"
+    },
+    "B": {
+      "item": "prefabricated:item_wooden_crate"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_crate_of_beets",
+    "count": 1
+  }
+}

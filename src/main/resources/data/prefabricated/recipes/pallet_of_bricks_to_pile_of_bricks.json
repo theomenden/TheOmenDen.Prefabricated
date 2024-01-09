@@ -1,0 +1,14 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Pile of Bricks",
+  "group": "Pile of Bricks",
+  "ingredients": [
+    {
+      "tag": "c:pallet_of_bricks"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_pile_of_bricks",
+    "count": 9
+  }
+}

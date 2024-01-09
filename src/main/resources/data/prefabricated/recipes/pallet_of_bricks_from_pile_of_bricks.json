@@ -1,0 +1,19 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Pile of Bricks",
+  "group": "Pile of Bricks",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:pile_of_bricks"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_pallet_of_bricks",
+    "count": 1
+  }
+}

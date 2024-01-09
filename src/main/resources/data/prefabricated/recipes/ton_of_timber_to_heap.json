@@ -1,0 +1,17 @@
+{
+  "_comment": [
+    "Ton of timber to heap of timber"
+  ],
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Ton of Timber",
+  "group": "Ton of Timber",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_ton_of_timber"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_heap_of_timber",
+    "count": 9
+  }
+}

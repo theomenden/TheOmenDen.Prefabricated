@@ -1,0 +1,19 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Bundle of Timber",
+  "group": "Bundle of Timber",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_bundle_of_timber",
+    "count": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "double compressed glowstone from compressed glowstone"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Glowstone",
+  "group": "Compressed Glowstone",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:compressed_glow_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_double_compressed_glowstone",
+    "count": 1
+  }
+}

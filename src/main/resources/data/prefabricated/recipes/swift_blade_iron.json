@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Swift Blade",
+  "group": "Swift Blade",
+  "pattern": [
+    "  a",
+    " a ",
+    "b  "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:iron_ingot"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_swift_blade_iron",
+    "count": 1
+  }
+}

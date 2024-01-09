@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Windmill",
+  "group": "Windmill",
+  "pattern": [
+    " a ",
+    "aba",
+    "cad"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_bundle_of_timber"
+    },
+    "b": {
+      "tag": "c:triple_compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "d": {
+      "item": "minecraft:hay_block"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_wind_mill",
+    "count": 1
+  }
+}

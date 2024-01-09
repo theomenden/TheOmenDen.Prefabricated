@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Double Compressed Dirt from compressed dirt"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Dirt",
+  "group": "Compressed Dirt",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:compressed_dirt"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_double_compressed_dirt",
+    "count": 1
+  }
+}

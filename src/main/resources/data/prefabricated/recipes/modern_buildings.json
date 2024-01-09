@@ -1,0 +1,36 @@
+{
+  "conditions": [
+    {
+      "type": "prefabricated:config_recipe",
+      "recipeKey": "Modern Buildings"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "group": "Modern Buildings",
+  "pattern": [
+    "a a",
+    "bcb",
+    "ded"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:compressed_lights"
+    },
+    "b": {
+      "tag": "c:compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_stone"
+    },
+    "d": {
+      "item": "minecraft:iron_block"
+    },
+    "e": {
+      "tag": "c:compressed_quartz_crete"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_modern_buildings",
+    "count": 1
+  }
+}

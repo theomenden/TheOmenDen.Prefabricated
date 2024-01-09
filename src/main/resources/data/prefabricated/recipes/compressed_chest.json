@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Chest",
+  "group": "Compressed Chest",
+  "pattern": [
+    "###",
+    "#a#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:chest"
+    },
+    "a": {
+      "item": "minecraft:ender_chest"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_compressed_chest",
+    "count": 1
+  }
+}

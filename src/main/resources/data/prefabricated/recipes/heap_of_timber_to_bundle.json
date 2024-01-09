@@ -1,0 +1,17 @@
+{
+  "_comment": [
+    "Heap of timber to bundle of timber"
+  ],
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Heap of Timber",
+  "group": "Heap of Timber",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_heap_of_timber"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_bundle_of_timber",
+    "count": 9
+  }
+}

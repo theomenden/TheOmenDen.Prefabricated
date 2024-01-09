@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "prefabricated:block/item_carton_of_eggs" },
+    "facing=down": { "model": "prefabricated:block/item_carton_of_eggs", "x": 180 },
+    "facing=north": { "model": "prefabricated:block/item_carton_of_eggs", "x": 90 },
+    "facing=east": { "model": "prefabricated:block/item_carton_of_eggs", "x": 90, "y": 90 },
+    "facing=south": { "model": "prefabricated:block/item_carton_of_eggs", "x": 90, "y": 180 },
+    "facing=west": { "model": "prefabricated:block/item_carton_of_eggs", "x": 90, "y": 270 }
+  }
+}

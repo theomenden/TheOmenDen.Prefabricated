@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "prefab:block_grass_wall",
-    "prefab:block_dirt_wall",
-    "prefab:block_quartz_crete_wall",
-    "prefab:block_quartz_crete_smooth_wall"
+    "prefabricated:block_grass_wall",
+    "prefabricated:block_dirt_wall",
+    "prefabricated:block_quartz_crete_wall",
+    "prefabricated:block_quartz_crete_smooth_wall"
   ]
 }

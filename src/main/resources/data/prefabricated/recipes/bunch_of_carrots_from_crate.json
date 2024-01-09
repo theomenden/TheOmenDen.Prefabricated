@@ -1,0 +1,16 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "configName": "Bunch of Carrots",
+  "group": "Bunch of Carrots",
+  "ingredients": [
+    {
+      "item": "prefabricated:item_crate_of_carrots",
+      "count": 1,
+      "data": 6
+    }
+  ],
+  "result": {
+    "item": "prefabricated:item_bunch_of_carrots",
+    "count": 8
+  }
+}

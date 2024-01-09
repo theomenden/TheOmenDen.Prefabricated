@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Compressed Dirt from dirt"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Quartz-Crete",
+  "group": "Quartz-Crete",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "prefabricated:block_quartz_crete"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_compressed_quartz_crete",
+    "count": 1
+  }
+}

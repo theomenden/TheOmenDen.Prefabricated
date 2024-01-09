@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Glowstone to Compressed Glowstone"
+  ],
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Compressed Glowstone",
+  "group": "Compressed Glowstone",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_compressed_glowstone",
+    "count": 1
+  }
+}

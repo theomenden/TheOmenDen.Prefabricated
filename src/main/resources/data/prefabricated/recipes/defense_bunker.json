@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Defense Bunker",
+  "group": "Defense Bunker",
+  "pattern": [
+    "aba",
+    "cdc",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:iron_block"
+    },
+    "b": {
+      "item": "prefabricated:item_coil_of_lanterns"
+    },
+    "c": {
+      "tag": "c:triple_compressed_stone"
+    },
+    "d": {
+      "tag": "c:double_compressed_obsidian"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_defense_bunker",
+    "count": 1
+  }
+}

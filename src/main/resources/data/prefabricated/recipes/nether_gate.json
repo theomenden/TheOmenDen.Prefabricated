@@ -1,0 +1,25 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Nether Gate",
+  "group": "Nether Gate",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:double_compressed_stone"
+    },
+    "b": {
+      "tag": "c:compressed_obsidian"
+    },
+    "c": {
+      "item": "minecraft:flint_and_steel"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_nether_gate",
+    "count": 1
+  }
+}

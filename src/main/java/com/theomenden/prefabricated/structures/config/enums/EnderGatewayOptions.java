@@ -1,0 +1,23 @@
+package com.theomenden.prefabricated.structures.config.enums;
+
+public class EnderGatewayOptions extends BaseOption {
+    public static EnderGatewayOptions Default = new EnderGatewayOptions(
+            "item.prefabricated.ender_gateway",
+            "assets/prefabricated/structures/ender_gateway.zip",
+            "textures/gui/ender_gateway.png",
+            false,
+            false);
+
+    protected EnderGatewayOptions(String translationString,
+                                  String assetLocation,
+                                  String pictureLocation,
+                                  boolean hasBedColor,
+                                  boolean hasGlassColor) {
+        super(
+                translationString,
+                assetLocation,
+                pictureLocation,
+                hasBedColor,
+                hasGlassColor);
+    }
+}

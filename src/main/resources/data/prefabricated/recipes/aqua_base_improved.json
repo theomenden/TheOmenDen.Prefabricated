@@ -1,0 +1,31 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Aqua Base",
+  "group": "Aqua Base",
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ede"
+  ],
+  "key": {
+    "a": {
+      "tag": "c:glass"
+    },
+    "b": {
+      "item": "minecraft:conduit"
+    },
+    "c": {
+      "item": "minecraft:sea_lantern"
+    },
+    "d": {
+      "item": "prefabricated:item_coil_of_lanterns"
+    },
+    "e": {
+      "tag": "c:triple_compressed_stone"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_aqua_base_improved",
+    "count": 1
+  }
+}

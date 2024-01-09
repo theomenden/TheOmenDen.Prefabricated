@@ -1,0 +1,31 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Town Hall",
+  "group": "Town Hall",
+  "pattern": [
+    "bab",
+    "ded",
+    "c c"
+  ],
+  "key": {
+    "a": {
+      "item": "prefabricated:item_ton_of_timber"
+    },
+    "b": {
+      "tag": "c:double_compressed_stone"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    },
+    "d": {
+      "item": "prefabricated:item_coil_of_lanterns"
+    },
+    "e": {
+      "item": "prefabricated:item_heap_of_timber"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_town_hall",
+    "count": 1
+  }
+}

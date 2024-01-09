@@ -1,0 +1,14 @@
+{
+  "type": "prefabricated:condition_crafting_shapeless",
+  "config": "Compressed Obsidian",
+  "group": "Compressed Obsidian",
+  "ingredients": [
+    {
+      "tag": "c:double_compressed_obsidian"
+    }
+  ],
+  "result": {
+    "item": "prefabricated:block_compressed_obsidian",
+    "count": 9
+  }
+}

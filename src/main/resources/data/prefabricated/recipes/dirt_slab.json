@@ -1,0 +1,17 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "config": "Dirt Recipes",
+  "group": "Dirt Recipes",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "prefabricated:block_dirt_slab",
+    "count": 6
+  }
+}

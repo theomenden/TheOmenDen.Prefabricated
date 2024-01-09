@@ -1,6 +1,6 @@
 {
 	"replace": false,
 	"values": [
-		"prefab:item_pallet_of_bricks"
+		"prefabricated:item_pallet_of_bricks"
 	]
 }

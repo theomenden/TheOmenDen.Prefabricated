@@ -1,0 +1,26 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Grassy Plains",
+  "group": "Grassy Plains",
+  "pattern": [
+    "aaa",
+    "bbb",
+    "ccc"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:grass",
+      "data": 1
+    },
+    "b": {
+      "tag": "c:compressed_dirt"
+    },
+    "c": {
+      "tag": "c:double_compressed_dirt"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_grassy_plain",
+    "count": 1
+  }
+}

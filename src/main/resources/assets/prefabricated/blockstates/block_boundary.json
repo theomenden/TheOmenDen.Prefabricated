@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "prefabricated:block/block_phasic_transparent"
+    },
+    "powered=true": {
+      "model": "prefabricated:block/block_boundary"
+    }
+  }
+}

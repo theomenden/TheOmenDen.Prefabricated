@@ -1,0 +1,22 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Sickle",
+  "group": "Sickle",
+  "pattern": [
+    " a ",
+    "  a",
+    "ba "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:gold_ingot"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_sickle_gold",
+    "count": 1
+  }
+}

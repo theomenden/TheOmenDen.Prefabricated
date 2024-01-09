@@ -1,0 +1,28 @@
+{
+  "type": "prefabricated:condition_crafting_shaped",
+  "configName": "Mineshaft Entrance",
+  "group": "Mineshaft Entrance",
+  "pattern": [
+    "aba",
+    "cdc",
+    "bbb"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "b": {
+      "item": "prefabricated:item_bundle_of_timber"
+    },
+    "c": {
+      "tag": "c:compressed_stone"
+    },
+    "d": {
+      "tag": "minecraft:beds"
+    }
+  },
+  "result": {
+    "item": "prefabricated:item_mineshaft_entrance",
+    "count": 1
+  }
+}
