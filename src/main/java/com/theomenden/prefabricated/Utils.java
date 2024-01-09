@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Utils {
@@ -36,13 +37,10 @@ public class Utils {
         String result = WordUtils.wrap(value, width);
         String[] results = result.split("\n");
 
-        String[] returnValue = new String[results.length];
-
-        for (int i = 0; i < results.length; i++) {
-            returnValue[i] = results[i].trim();
-        }
-
-        return returnValue;
+        return Arrays
+                .stream(results)
+                .map(String::trim)
+                .toArray(String[]::new);
     }
 
     public static ArrayList<Component> WrapStringToLiterals(String value) {
@@ -88,11 +86,13 @@ public class Utils {
 
     public static Direction getDirectionByName(String name) {
         if (!StringUtil.isNullOrEmpty(name)) {
-            for (Direction direction : Direction.values()) {
-                if (direction.toString().equalsIgnoreCase(name)) {
-                    return direction;
-                }
-            }
+            return Arrays
+                    .stream(Direction.values())
+                    .filter(direction -> direction
+                            .toString()
+                            .equalsIgnoreCase(name))
+                    .findFirst()
+                    .orElse(Direction.NORTH);
         }
 
         return Direction.NORTH;
@@ -159,13 +159,14 @@ public class Utils {
      * @return True if the tag exists on the block state; otherwise false.
      */
     public static boolean doesBlockStateHaveTag(BlockState blockState, ResourceLocation location) {
-        for (TagKey<Block> tagKey : blockState.getTags().toList()) {
-            if (tagKey.location().toString().equalsIgnoreCase(location.toString())) {
-                return true;
-            }
-        }
-
-        return false;
+        return blockState
+                .getTags()
+                .toList()
+                .stream()
+                .anyMatch(tagKey -> tagKey
+                        .location()
+                        .toString()
+                        .equalsIgnoreCase(location.toString()));
     }
 
     /**

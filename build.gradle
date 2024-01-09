@@ -49,8 +49,6 @@ dependencies {
     }
 
     implementation 'org.apache.commons:commons-text:1.11.0'
-    //include "com.terraformersmc:modmenu:${project.mod_menu_version}"
-    //include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 }
 
 processResources {

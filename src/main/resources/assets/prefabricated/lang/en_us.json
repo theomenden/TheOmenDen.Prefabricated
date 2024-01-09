@@ -37,6 +37,8 @@
 
   "itemGroup.prefabricated.building_blocks": "Building Blocks",
   "itemGroup.prefabricated.utility_blocks": "Functional Items",
+  "itemGroup.prefabricated.weapons": "Combat",
+  "itemGroup.prefabricated.tools": "Tools",
   "itemGroup.prefabricated.logo": "Prefabricated",
 
   "item.prefabricated.item_house": "House",
