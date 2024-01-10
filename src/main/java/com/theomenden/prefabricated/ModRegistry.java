@@ -230,9 +230,9 @@ public class ModRegistry {
     public static final ItemBasicStructure FarmAdvanced = new ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName.FarmAdvanced);
 
     /* *********************************** Recipe Serializers *********************************** */
-    public static final RecipeSerializer<ConditionedShapedRecipe> ConditionedShapedRecipeSeriaizer = new ConditionedShapedRecipe.Serializer();
-    public static final RecipeSerializer<ConditionedShaplessRecipe> ConditionedShapelessRecipeSeriaizer = new ConditionedShaplessRecipe.Serializer();
-    public static final RecipeSerializer<ConditionedSmeltingRecipe> ConditionedSmeltingRecipeSeriaizer = new ConditionedSmeltingRecipe.Serializer();
+    public static final RecipeSerializer<ConditionedShapedRecipe> CONDITIONED_SHAPED_RECIPE_RECIPE_SERIALIZER = new ConditionedShapedRecipe.Serializer();
+    public static final RecipeSerializer<ConditionedShaplessRecipe> CONDITIONED_SHAPLESS_RECIPE_RECIPE_SERIALIZER = new ConditionedShaplessRecipe.Serializer();
+    public static final RecipeSerializer<ConditionedSmeltingRecipe> CONDITIONED_SMELTING_RECIPE_RECIPE_SERIALIZER = new ConditionedSmeltingRecipe.Serializer();
 
     /* *********************************** Sounds *********************************** */
     public static final SoundEvent BuildingBlueprint = SoundEvent.createVariableRangeEvent(new ResourceLocation(Prefab.MODID, "building_blueprint"));
@@ -478,9 +478,9 @@ public class ModRegistry {
     }
 
     private static void RegisterRecipeSerializers() {
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.ConditionedShapedRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.ConditionedShapelessRecipeSeriaizer);
-        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_smelting"), ModRegistry.ConditionedSmeltingRecipeSeriaizer);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shaped"), ModRegistry.CONDITIONED_SHAPED_RECIPE_RECIPE_SERIALIZER);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_crafting_shapeless"), ModRegistry.CONDITIONED_SHAPLESS_RECIPE_RECIPE_SERIALIZER);
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, new ResourceLocation(Prefab.MODID, "condition_smelting"), ModRegistry.CONDITIONED_SMELTING_RECIPE_RECIPE_SERIALIZER);
     }
 
     private static void registerBlock(String registryName, Block block) {

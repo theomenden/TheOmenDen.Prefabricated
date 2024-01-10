@@ -22,11 +22,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class ConditionedShapedRecipe extends ShapedRecipe {
 
@@ -117,7 +119,9 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 
     private static int findNextIngredient(String pattern) {
         int i;
-        for (i = 0; i < pattern.length() && pattern.charAt(i) == ' '; ++i) {
+        i = 0;
+        while (i < pattern.length() && pattern.charAt(i) == ' ') {
+            ++i;
         }
 
         return i;
@@ -125,7 +129,9 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 
     private static int findNextIngredientReverse(String pattern) {
         int i;
-        for (i = pattern.length() - 1; i >= 0 && pattern.charAt(i) == ' '; --i) {
+        i = pattern.length() - 1;
+        while (i >= 0 && pattern.charAt(i) == ' ') {
+            --i;
         }
 
         return i;
@@ -138,18 +144,18 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
         } else if (strings.length == 0) {
             throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
         } else {
-            for (int i = 0; i < strings.length; ++i) {
-                String string = GsonHelper.convertToString(json.get(i), "pattern[" + i + "]");
-                if (string.length() > 3) {
-                    throw new JsonSyntaxException("Invalid pattern: too many columns, 3 is maximum");
-                }
-
-                if (i > 0 && strings[0].length() != string.length()) {
-                    throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
-                }
-
-                strings[i] = string;
-            }
+            IntStream
+                    .range(0, strings.length)
+                    .forEach(i -> {
+                        String string = GsonHelper.convertToString(json.get(i), "pattern[" + i + "]");
+                        if (string.length() > 3) {
+                            throw new JsonSyntaxException("Invalid pattern: too many columns, 3 is maximum");
+                        }
+                        if (i > 0 && strings[0].length() != string.length()) {
+                            throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
+                        }
+                        strings[i] = string;
+                    });
 
             return strings;
         }
@@ -211,27 +217,27 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return this.id;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return ModRegistry.ConditionedShapedRecipeSeriaizer;
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return ModRegistry.CONDITIONED_SHAPED_RECIPE_RECIPE_SERIALIZER;
     }
 
     @Override
-    public String getGroup() {
+    public @NotNull String getGroup() {
         return this.group;
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public @NotNull ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.output;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public @NotNull NonNullList<Ingredient> getIngredients() {
         return this.inputs;
     }
 
@@ -265,7 +271,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer craftingContainer, RegistryAccess registryAccess) {
+    public @NotNull ItemStack assemble(CraftingContainer craftingContainer, RegistryAccess registryAccess) {
         return this.getResultItem(registryAccess).copy();
     }
 
@@ -346,7 +352,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             return originalOutput;
         }
 
-        public ConditionedShapedRecipe fromJson(ResourceLocation identifier, JsonObject jsonObject) {
+        public @NotNull ConditionedShapedRecipe fromJson(ResourceLocation identifier, JsonObject jsonObject) {
             String groupName = GsonHelper.getAsString(jsonObject, "group", "");
             String configName = GsonHelper.getAsString(jsonObject, "configName", "");
             BooleanReferencePair<Map<String, Ingredient>> ingredientResult = ConditionedShapedRecipe.keyFromJson(GsonHelper.getAsJsonObject(jsonObject, "key"));
@@ -368,7 +374,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             return new ConditionedShapedRecipe(identifier, groupName, CraftingBookCategory.MISC, width, height, defaultedList, itemStack, configName, ingredientResult.leftBoolean());
         }
 
-        public ConditionedShapedRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf packetByteBuf) {
+        public @NotNull ConditionedShapedRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf packetByteBuf) {
             int width = packetByteBuf.readVarInt();
             int height = packetByteBuf.readVarInt();
             String groupName = packetByteBuf.readUtf(32767);

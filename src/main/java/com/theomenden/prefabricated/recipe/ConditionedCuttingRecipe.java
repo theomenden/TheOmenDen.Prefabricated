@@ -10,18 +10,16 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
-public class ConditionedSmeltingRecipe extends SmeltingRecipe {
+public final class ConditionedCuttingRecipe extends StonecutterRecipe {
     private final String configName;
-
-    public ConditionedSmeltingRecipe(ResourceLocation id, String group, Ingredient input, ItemStack output, float experience, int cookTime, String configName) {
-        super(id, group, CookingBookCategory.MISC, input, output, experience, cookTime);
+    public ConditionedCuttingRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, String configName) {
+        super(id, group, ingredient, result);
 
         this.configName = configName;
     }
@@ -34,8 +32,8 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
         return ModRegistry.CONDITIONED_SMELTING_RECIPE_RECIPE_SERIALIZER;
     }
 
-    public static class Serializer implements RecipeSerializer<ConditionedSmeltingRecipe> {
-        public @NotNull ConditionedSmeltingRecipe fromJson(ResourceLocation identifier, JsonObject jsonObject) {
+    public static class Serializer implements RecipeSerializer<ConditionedCuttingRecipe> {
+        public @NotNull ConditionedCuttingRecipe fromJson(ResourceLocation identifier, JsonObject jsonObject) {
             String string = GsonHelper.getAsString(jsonObject, "group", "");
             String configName = GsonHelper.getAsString(jsonObject, "configName", "");
             JsonElement jsonElement = GsonHelper.isArrayNode(jsonObject, "ingredient") ?  GsonHelper.getAsJsonArray(jsonObject, "ingredient") : GsonHelper.getAsJsonObject(jsonObject, "ingredient");
@@ -50,26 +48,24 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
 
             float experience = GsonHelper.getAsFloat(jsonObject, "experience", 0.0F);
             int cookingtime = GsonHelper.getAsInt(jsonObject, "cookingtime", 200);
-            return new ConditionedSmeltingRecipe(identifier, string, ingredient, itemStack, experience, cookingtime, configName);
+            return new ConditionedCuttingRecipe(identifier, string, ingredient, itemStack, configName);
         }
 
-        public @NotNull ConditionedSmeltingRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf packetByteBuf) {
+        public @NotNull ConditionedCuttingRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf packetByteBuf) {
             String group = packetByteBuf.readUtf();
             String configName = packetByteBuf.readUtf() ;
             Ingredient ingredient = Ingredient.fromNetwork(packetByteBuf);
             ItemStack itemStack = this.validateRecipeOutput(packetByteBuf.readItem(), configName);
             float experience = packetByteBuf.readFloat();
             int cookTime = packetByteBuf.readVarInt();
-            return new ConditionedSmeltingRecipe(identifier, group, ingredient, itemStack, experience, cookTime, configName);
+            return new ConditionedCuttingRecipe(identifier, group, ingredient, itemStack, configName);
         }
 
-        public void toNetwork(FriendlyByteBuf packetByteBuf, ConditionedSmeltingRecipe abstractCookingRecipe) {
-            packetByteBuf.writeUtf(abstractCookingRecipe.group);
-            packetByteBuf.writeUtf(abstractCookingRecipe.configName);
-            abstractCookingRecipe.ingredient.toNetwork(packetByteBuf);
-            packetByteBuf.writeItem(abstractCookingRecipe.result);
-            packetByteBuf.writeFloat(abstractCookingRecipe.experience);
-            packetByteBuf.writeVarInt(abstractCookingRecipe.cookingTime);
+        public void toNetwork(FriendlyByteBuf packetByteBuf, ConditionedCuttingRecipe abstractCuttingRecipe) {
+            packetByteBuf.writeUtf(abstractCuttingRecipe.group);
+            packetByteBuf.writeUtf(abstractCuttingRecipe.configName);
+            abstractCuttingRecipe.ingredient.toNetwork(packetByteBuf);
+            packetByteBuf.writeItem(abstractCuttingRecipe.result);
         }
 
         public ItemStack validateRecipeOutput(ItemStack originalOutput, String configName) {
@@ -88,5 +84,4 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
             return originalOutput;
         }
     }
-
 }

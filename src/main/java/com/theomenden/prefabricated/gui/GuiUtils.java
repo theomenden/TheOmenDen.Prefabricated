@@ -146,7 +146,10 @@ public class GuiUtils {
         GuiUtils.bindTexture(resourceLocation);
         guiGraphics.blit(resourceLocation, x, y, width, height, 0, 0, regionWidth, regionHeight, textureWidth, textureHeight);
     }
-
+    public static void bindAndDrawScaledTextureZ(ResourceLocation resourceLocation, GuiGraphics guiGraphics, int x, int y, int width, int height, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
+        GuiUtils.bindTexture(resourceLocation);
+        guiGraphics.blit(resourceLocation, x, y, width, height, 1, 1, regionWidth, regionHeight, textureWidth, textureHeight);
+    }
     private static void bindTexture(ResourceLocation atlasLocation){
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

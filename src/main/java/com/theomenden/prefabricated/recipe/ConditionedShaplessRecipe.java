@@ -47,7 +47,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 	}
 
 	public @NotNull RecipeSerializer<?> getSerializer() {
-		return ModRegistry.ConditionedShapelessRecipeSeriaizer;
+		return ModRegistry.CONDITIONED_SHAPLESS_RECIPE_RECIPE_SERIALIZER;
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -59,7 +59,7 @@ public class ConditionedShaplessRecipe extends ShapelessRecipe {
 		return this.output;
 	}
 
-	public NonNullList<Ingredient> getIngredients() {
+	public @NotNull NonNullList<Ingredient> getIngredients() {
 		return this.input;
 	}
 
