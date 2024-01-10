@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+      "item": "minecraft:glass"
+    },
+    "result": "prefabricated:block_glass_stairs",
+    "count": 1
+  }

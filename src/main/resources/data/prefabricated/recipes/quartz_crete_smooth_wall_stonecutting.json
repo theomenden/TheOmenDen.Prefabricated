@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+      "item": "prefabricated:block_quartz_crete"
+    },
+    "result": "prefabricated:block_quartz_crete_smooth_wall",
+    "count": 1
+  }

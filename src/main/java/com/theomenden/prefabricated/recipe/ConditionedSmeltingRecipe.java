@@ -42,9 +42,7 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
             Ingredient ingredient = Ingredient.fromJson((JsonElement)jsonElement);
             String string2 = GsonHelper.getAsString(jsonObject, "result");
             ResourceLocation identifier2 = new ResourceLocation(string2);
-            ItemStack itemStack = new ItemStack(BuiltInRegistries.ITEM.getOptional(identifier2).orElseThrow(() -> {
-                return new IllegalStateException("Item: " + string2 + " does not exist");
-            }));
+            ItemStack itemStack = new ItemStack(BuiltInRegistries.ITEM.getOptional(identifier2).orElseThrow(() -> new IllegalStateException("Item: " + string2 + " does not exist")));
 
             itemStack = this.validateRecipeOutput(itemStack, configName);
 

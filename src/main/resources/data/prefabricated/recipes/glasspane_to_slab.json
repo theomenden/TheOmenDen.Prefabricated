@@ -1,0 +1,19 @@
+{
+    "type": "prefabricated:condition_crafting_shaped",
+    "config": "Glass Recipes",
+    "group": "Glass Recipes",
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:glass_pane"
+      }
+    },
+    "result": {
+      "item": "prefabricated:block_glass_slab",
+      "count": 1
+    }
+  }
+  

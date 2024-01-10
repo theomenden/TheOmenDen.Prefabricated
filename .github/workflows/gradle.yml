@@ -1,41 +1,33 @@
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
-
 on:
+  workflow_dispatch:
   push:
-    paths-ignore:
-      - '.github/**'
-      - '**.md'
-      - '.gitignore'
-      - 'LICENSE'
-  pull_request:
-    paths-ignore:
-      - '.github/**'
-      - '**.md'
-      - '.gitignore'
-      - 'LICENSE'
-      
+    branches: [ "main" ]
+
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  gradle:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-        cache: gradle
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Publish artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: Package
-        path: build/libs
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Execute Gradle build
+        run: ./gradlew build
+      - name: 'MC Publish'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: McLbj2dz
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: true
+          curseforge-id: 960132
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-generate-changelog: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
