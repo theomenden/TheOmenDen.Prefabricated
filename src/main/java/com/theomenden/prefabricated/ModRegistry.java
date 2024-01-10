@@ -1,10 +1,11 @@
 package com.theomenden.prefabricated;
 
+import com.google.common.base.Suppliers;
 import com.theomenden.prefabricated.blocks.*;
-import com.theomenden.prefabricated.items.*;
 import com.theomenden.prefabricated.blocks.entities.LightSwitchBlockEntity;
 import com.theomenden.prefabricated.blocks.entities.StructureScannerBlockEntity;
 import com.theomenden.prefabricated.config.StructureScannerConfig;
+import com.theomenden.prefabricated.items.*;
 import com.theomenden.prefabricated.recipe.ConditionedShapedRecipe;
 import com.theomenden.prefabricated.recipe.ConditionedShaplessRecipe;
 import com.theomenden.prefabricated.recipe.ConditionedSmeltingRecipe;
@@ -23,7 +24,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -535,31 +535,21 @@ public class ModRegistry {
 
     public enum CustomItemTier implements Tier {
         COPPER("Copper", Tiers.STONE.getLevel(), Tiers.STONE.getUses(), Tiers.STONE.getSpeed(),
-                Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> {
-            return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "copper_ingots")).stream());
-        }),
+                Tiers.STONE.getAttackDamageBonus(), Tiers.STONE.getEnchantmentValue(), () -> Ingredient
+                        .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "copper_ingots")).stream())),
         OSMIUM("Osmium", Tiers.IRON.getLevel(), 500, Tiers.IRON.getSpeed(),
-                Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> {
-            return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "osmium_ingots")).stream());
-        }),
+                Tiers.IRON.getAttackDamageBonus() + .5f, Tiers.IRON.getEnchantmentValue(), () -> Ingredient
+                        .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "osmium_ingots")).stream())),
         BRONZE("Bronze", Tiers.IRON.getLevel(), Tiers.IRON.getUses(), Tiers.IRON.getSpeed(),
-                Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> {
-            return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "bronze_ingots")).stream());
-        }),
+                Tiers.IRON.getAttackDamageBonus(), Tiers.IRON.getEnchantmentValue(), () -> Ingredient
+                        .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "bronze_ingots")).stream())),
         STEEL("Steel", Tiers.DIAMOND.getLevel(), (int) (Tiers.IRON.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
-                Tiers.DIAMOND.getEnchantmentValue(), () -> {
-            return Ingredient
-                    .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "steel_ingots")).stream());
-        }),
+                Tiers.DIAMOND.getEnchantmentValue(), () -> Ingredient
+                        .of(Utils.getItemStacksWithTag(new ResourceLocation("c", "steel_ingots")).stream())),
         OBSIDIAN("Obsidian", Tiers.DIAMOND.getLevel(), (int) (Tiers.DIAMOND.getUses() * 1.5),
                 Tiers.DIAMOND.getSpeed(), Tiers.DIAMOND.getAttackDamageBonus(),
-                Tiers.DIAMOND.getEnchantmentValue(), () -> {
-            return Ingredient.of(Items.OBSIDIAN);
-        });
+                Tiers.DIAMOND.getEnchantmentValue(), () -> Ingredient.of(Items.OBSIDIAN));
 
         @Getter
         private final String name;
@@ -568,8 +558,7 @@ public class ModRegistry {
         private final float efficiency;
         private final float attackDamage;
         private final int enchantability;
-        private final LazyLoadedValue<Ingredient> repairMaterial;
-
+        private final Supplier<Ingredient> repairMaterial;
         CustomItemTier(String name, int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn,
                        int enchantability, Supplier<Ingredient> repairMaterialIn) {
             this.name = name;
@@ -578,7 +567,7 @@ public class ModRegistry {
             this.efficiency = efficiencyIn;
             this.attackDamage = attackDamageIn;
             this.enchantability = enchantability;
-            this.repairMaterial = new LazyLoadedValue<>(repairMaterialIn);
+            this.repairMaterial = Suppliers.memoize(repairMaterialIn::get);
         }
 
         public static CustomItemTier getByName(String name) {

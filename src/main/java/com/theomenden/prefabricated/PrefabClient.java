@@ -15,7 +15,7 @@ public class PrefabClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		Prefab.logger.info("Registering client-side components");
+		Prefab.logger.info("Templating client-side components");
 		ClientModRegistry.registerModComponents();
 
 		GuiRegistry registry = AutoConfig.getGuiRegistry(ModConfiguration.class);

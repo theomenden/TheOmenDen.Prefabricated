@@ -39,7 +39,7 @@ public class ConditionedSmeltingRecipe extends SmeltingRecipe {
             String string = GsonHelper.getAsString(jsonObject, "group", "");
             String configName = GsonHelper.getAsString(jsonObject, "configName", "");
             JsonElement jsonElement = GsonHelper.isArrayNode(jsonObject, "ingredient") ?  GsonHelper.getAsJsonArray(jsonObject, "ingredient") : GsonHelper.getAsJsonObject(jsonObject, "ingredient");
-            Ingredient ingredient = Ingredient.fromJson((JsonElement)jsonElement);
+            Ingredient ingredient = Ingredient.fromJson(jsonElement);
             String string2 = GsonHelper.getAsString(jsonObject, "result");
             ResourceLocation identifier2 = new ResourceLocation(string2);
             ItemStack itemStack = new ItemStack(BuiltInRegistries.ITEM.getOptional(identifier2).orElseThrow(() -> new IllegalStateException("Item: " + string2 + " does not exist")));

@@ -5,6 +5,7 @@
   "name": "Prefabricated",
   "description": "Prefabricated is a mod which contains multiple pre-designed building for you to place in the world",
   "authors": [
+    "Andy (Alu)",
     "WuestMan",
     "Kaojinn",
     "NerdySpider",
@@ -12,7 +13,15 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/prefab-fabric",
-    "sources": "https://github.com/Brian-Wuest/MC-Prefab-Fabric"
+    "sources": "https://github.com/theomenden/TheOmenDen.Prefabricated"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/GWshtCqEx4"
+      },
+      "update_checker": true
+    }
   },
   "license": "MIT",
   "icon": "assets/prefabricated/prefabthumb.png",
@@ -36,7 +45,8 @@
   "depends": {
     "fabricloader": ">=0.15.3",
     "fabric": "*",
-    "minecraft": "1.20.x",
+    "minecraft": "${minecraft_version}",
+    "cloth-config": ">=11.1.118",
     "java": ">=17"
   },
   "suggests": {
