@@ -10,7 +10,7 @@ import net.minecraft.world.item.Tier;
  *
  * @author WuestMan
  */
-public class ItemSwiftBlade extends SwordItem {
+public final class ItemSwiftBlade extends SwordItem {
     /*
      * Initializes a new instance of the ItemSwiftBlade class.
      */

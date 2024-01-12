@@ -32,8 +32,8 @@ public class ClientEvents {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (ClientModRegistry.keyBinding.isDown()) {
                 if (StructureRenderHandler.currentStructure != null) {
-                    ItemStack mainHandStack = Minecraft.getInstance().player.getMainHandItem();
-                    ItemStack offHandStack = Minecraft.getInstance().player.getOffhandItem();
+                    var mainHandStack = Minecraft.getInstance().player.getMainHandItem();
+                    var offHandStack = Minecraft.getInstance().player.getOffhandItem();
                     boolean foundCorrectStructureItem = false;
 
                     if (mainHandStack != ItemStack.EMPTY || offHandStack != ItemStack.EMPTY) {
@@ -65,7 +65,8 @@ public class ClientEvents {
     }
 
     public static boolean checkIfStackIsCorrectGui(StructureTagMessage.EnumStructureConfiguration currentConfiguration, ItemStack stack) {
-        GuiStructure mainHandGui = ClientModRegistry.ModGuis.get(stack.getItem());
+        var currentItem = stack.getItem();
+        GuiStructure mainHandGui = ClientModRegistry.ModGuis.get(currentItem);
 
         if (currentConfiguration == mainHandGui.structureConfiguration) {
             if (currentConfiguration == StructureTagMessage.EnumStructureConfiguration.Basic) {

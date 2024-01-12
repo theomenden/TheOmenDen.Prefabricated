@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Vector;
 
-public class LightSwitchRegistry extends ILevelBasedRegistry<BlockPos> {
+public final class LightSwitchRegistry extends ILevelBasedRegistry<BlockPos> {
     private static final int SearchBlockRadius = 24;
 
     public LightSwitchRegistry() {

@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -32,7 +33,7 @@ public class StructureItem extends Item {
      * Does something when the item is right-clicked.
      */
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         if (context.getLevel().isClientSide) {
             if (context.getClickedFace() == Direction.UP) {
                 if (Prefab.useScanningMode) {
@@ -63,7 +64,7 @@ public class StructureItem extends Item {
             GuiStructure userInterface = (GuiStructure) classToRegister.getDeclaredConstructor().newInstance();
             ClientModRegistry.ModGuis.put(this, userInterface);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
+            Prefab.logger.error(e.getLocalizedMessage(), e.getCause());
         }
     }
 }

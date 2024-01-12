@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
-public class ConditionedSmeltingRecipe extends SmeltingRecipe {
+public final class ConditionedSmeltingRecipe extends SmeltingRecipe {
     private final String configName;
 
     public ConditionedSmeltingRecipe(ResourceLocation id, String group, Ingredient input, ItemStack output, float experience, int cookTime, String configName) {

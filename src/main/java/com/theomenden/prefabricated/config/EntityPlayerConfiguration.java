@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EntityPlayerConfiguration {
+public final class EntityPlayerConfiguration {
     public static final String Prefab_Player_Key = "Prefab_Data";
     public static final String PLAYER_ENTITY_TAG = "IsPlayerNew";
     public static final String GIVEN_HOUSEBUILDER_TAG = "givenHousebuilder";

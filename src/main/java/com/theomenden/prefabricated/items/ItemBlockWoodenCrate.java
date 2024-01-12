@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block;
 /**
  * @author WuestMan
  */
-public class ItemBlockWoodenCrate extends BlockItem {
+public final class ItemBlockWoodenCrate extends BlockItem {
     public final ItemWoodenCrate.CrateType crateType;
 
     /**

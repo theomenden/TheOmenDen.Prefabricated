@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Config(name = Prefab.MODID)
-public class ModConfiguration implements ConfigData {
+public final class ModConfiguration implements ConfigData {
 
     @Comment("Item provided to new players when joining a world")
     public StartingItemOptions startingItem = StartingItemOptions.StartingHouse;

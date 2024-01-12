@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Comparator;
 
-public class ModRegistryGroups {
+public final class ModRegistryGroups {
 
     public static final ResourceKey<CreativeModeTab> PREFABRICATED_ITEM_GROUP = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(Prefab.MODID, "logo"));
     public static final ResourceKey<CreativeModeTab> PREFABRICATED_BUILDING_BLOCKS = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(Prefab.MODID, "prefabricated_building_blocks"));

@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author WuestMan
  */
-public class ItemCompressedChest extends Item {
+public final class ItemCompressedChest extends Item {
     /**
      * Initializes a new instance of the ItemCondensedChest class.
      */

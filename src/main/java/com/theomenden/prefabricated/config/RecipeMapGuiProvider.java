@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * This class is used to create GUI mappings for the recipe listings.
  */
-public class RecipeMapGuiProvider implements GuiProvider {
+public final class RecipeMapGuiProvider implements GuiProvider {
 
     @Override
     public List<AbstractConfigListEntry> get(String s, Field field, Object savedObject, Object defaultObject, GuiRegistryAccess guiRegistryAccess) {

@@ -13,12 +13,12 @@ import net.minecraft.network.chat.Component;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class StructureOptionGuiProvider implements GuiProvider {
+public final class StructureOptionGuiProvider implements GuiProvider {
     @Override
     public List<AbstractConfigListEntry> get(String s, Field field, Object savedObject, Object defaultObject, GuiRegistryAccess guiRegistryAccess) {
         try {
-            HashMap<String, HashMap<String, Boolean>> savedHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(savedObject);
-            HashMap<String, HashMap<String, Boolean>> defaultHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(defaultObject);
+            var savedHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(savedObject);
+            var defaultHashMap = (HashMap<String, HashMap<String, Boolean>>) field.get(defaultObject);
 
             for (Map.Entry<String, HashMap<String, Boolean>> defaultEntry : defaultHashMap.entrySet()) {
                 // Make sure that the saved hashmap has this entry; if not add it by default.
@@ -30,11 +30,11 @@ public class StructureOptionGuiProvider implements GuiProvider {
                 HashMap<String, Boolean> savedSubValues = savedHashMap.get(defaultEntry.getKey());
                 HashMap<String, Boolean> defaultSubValues = defaultEntry.getValue();
 
-                for (Map.Entry<String, Boolean> defaultSubvalue : defaultSubValues.entrySet()) {
-                    if (!savedSubValues.containsKey(defaultSubvalue.getKey())) {
-                        savedSubValues.put(defaultSubvalue.getKey(), defaultSubvalue.getValue());
-                    }
-                }
+                defaultSubValues
+                        .entrySet()
+                        .stream()
+                        .filter(defaultSubvalue -> !savedSubValues.containsKey(defaultSubvalue.getKey()))
+                        .forEach(defaultSubvalue -> savedSubValues.put(defaultSubvalue.getKey(), defaultSubvalue.getValue()));
             }
 
 
@@ -47,7 +47,7 @@ public class StructureOptionGuiProvider implements GuiProvider {
                 SortedMap<String, Boolean> sortedChildEntries = new TreeMap<>(map.getValue());
 
                 for (Map.Entry<String, Boolean> childMap : sortedChildEntries.entrySet()) {
-                    BooleanListEntry entry = new BooleanListEntry(
+                    var entry = new BooleanListEntry(
                             // Field Name
                             GuiLangKeys.translateToComponent(childMap.getKey()),
                             // Value

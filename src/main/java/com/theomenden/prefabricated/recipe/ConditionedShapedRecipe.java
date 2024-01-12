@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -163,11 +164,11 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 
     private static BooleanReferencePair<Map<String, Ingredient>> keyFromJson(JsonObject json) {
         Map<String, Ingredient> map = Maps.newHashMap();
-        Iterator var2 = json.entrySet().iterator();
+        var var2 = json.entrySet().iterator();
         boolean hasTags = false;
 
         while (var2.hasNext()) {
-            Map.Entry<String, JsonElement> entry = (Map.Entry) var2.next();
+            Entry<String, JsonElement> entry = var2.next();
             if ((entry.getKey()).length() != 1) {
                 throw new JsonSyntaxException("Invalid key entry: '" + (String) entry.getKey() + "' is an invalid symbol (must be 1 character only).");
             }
@@ -199,9 +200,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
     public static ItemStack itemStackFromJson(JsonObject json) {
         String string = GsonHelper.getAsString(json, "item");
 
-        Item item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> {
-            return new JsonSyntaxException("Unknown item '" + string + "'");
-        });
+        Item item = BuiltInRegistries.ITEM.getOptional(new ResourceLocation(string)).orElseThrow(() -> new JsonSyntaxException("Unknown item '" + string + "'"));
 
         int stackCount = 1;
 
@@ -383,9 +382,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
 
             NonNullList<Ingredient> defaultedList = NonNullList.withSize(width * height, Ingredient.EMPTY);
 
-            for (int k = 0; k < defaultedList.size(); ++k) {
-                defaultedList.set(k, Ingredient.fromNetwork(packetByteBuf));
-            }
+            defaultedList.replaceAll(ignored -> Ingredient.fromNetwork(packetByteBuf));
 
             ItemStack itemStack = ConditionedShapedRecipe.Serializer.validateRecipeOutput(packetByteBuf.readItem(), configName);
             return new ConditionedShapedRecipe(identifier, groupName, CraftingBookCategory.MISC, width, height, defaultedList, itemStack, configName, recipeHasTags);
@@ -398,9 +395,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
             packetByteBuf.writeUtf(shapedRecipe.configName);
             packetByteBuf.writeBoolean(shapedRecipe.recipeHasTags);
 
-            for (Ingredient ingredient : shapedRecipe.inputs) {
-                ingredient.toNetwork(packetByteBuf);
-            }
+            shapedRecipe.inputs.forEach(ingredient -> ingredient.toNetwork(packetByteBuf));
 
             packetByteBuf.writeItem(shapedRecipe.output);
         }

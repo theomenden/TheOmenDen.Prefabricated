@@ -3,7 +3,7 @@ package com.theomenden.prefabricated.config;
 
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
-public class StarterHouseOptions {
+public final class StarterHouseOptions {
 
 	@Comment("Adds a bed to the starter/moderate house.")
 	public boolean addBed = true;

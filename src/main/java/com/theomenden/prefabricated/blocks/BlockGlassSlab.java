@@ -1,5 +1,6 @@
 package com.theomenden.prefabricated.blocks;
 
+import com.google.common.collect.ImmutableMap;
 import com.theomenden.prefabricated.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -7,15 +8,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GlassBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -30,11 +29,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("NullableProblems")
-public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock {
+import java.util.function.Function;
 
-    private static final VoxelShape BOTTOM_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
-    private static final VoxelShape TOP_SHAPE = Block.box(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+@SuppressWarnings("NullableProblems")
+public class BlockGlassSlab extends AbstractGlassBlock implements SimpleWaterloggedBlock {
+
+    private static final VoxelShape BOTTOM_SHAPE = net.minecraft.world.level.block.Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+    private static final VoxelShape TOP_SHAPE = net.minecraft.world.level.block.Block.box(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public BlockGlassSlab(Block.Properties properties) {
@@ -72,9 +73,9 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        SlabType slabtype = state.getValue(SlabBlock.TYPE);
-        return switch (slabtype) {
+    public VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        SlabType slabType = state.getValue(SlabBlock.TYPE);
+        return switch(slabType) {
             case DOUBLE -> Shapes.block();
             case TOP -> BlockGlassSlab.TOP_SHAPE;
             default -> BlockGlassSlab.BOTTOM_SHAPE;
@@ -97,6 +98,7 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
     }
 
 
+
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
         ItemStack itemstack = useContext.getItemInHand();
@@ -110,12 +112,10 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
                 } else {
                     return direction == Direction.DOWN || !flag && direction.getAxis().isHorizontal();
                 }
-            } else {
-                return true;
             }
-        } else {
-            return false;
+            return true;
         }
+        return false;
     }
 
 
@@ -146,9 +146,8 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
             }
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -159,6 +158,11 @@ public class BlockGlassSlab extends GlassBlock implements SimpleWaterloggedBlock
         } else {
             return ItemStack.EMPTY;
         }
+    }
+
+    @Override
+    public void updateEntityAfterFallOn(BlockGetter level, Entity entity) {
+        super.updateEntityAfterFallOn(level, entity);
     }
 
     /**

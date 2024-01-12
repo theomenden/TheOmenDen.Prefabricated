@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-public class ConditionedShaplessRecipe extends ShapelessRecipe {
+public final class ConditionedShaplessRecipe extends ShapelessRecipe {
 	private final ResourceLocation id;
 	private final String group;
 	private final ItemStack output;

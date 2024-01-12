@@ -2,7 +2,7 @@ package com.theomenden.prefabricated.config;
 
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
-public class ChestOptions {
+public final class ChestOptions {
 
 	@Comment("Include a stone sword in the chest")
 	public boolean addSword = true;

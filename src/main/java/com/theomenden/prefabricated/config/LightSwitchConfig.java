@@ -3,7 +3,7 @@ package com.theomenden.prefabricated.config;
 import com.theomenden.prefabricated.base.BaseConfig;
 import net.minecraft.nbt.CompoundTag;
 
-public class LightSwitchConfig extends BaseConfig {
+public final class LightSwitchConfig extends BaseConfig {
     @Override
     public void WriteToNBTCompound(CompoundTag compound) {
 
