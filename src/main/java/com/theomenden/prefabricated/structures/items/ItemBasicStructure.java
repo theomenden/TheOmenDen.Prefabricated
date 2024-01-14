@@ -13,7 +13,7 @@ import net.minecraft.world.item.context.UseOnContext;
  *
  * @author WuestMan
  */
-public class ItemBasicStructure extends StructureItem {
+public final class ItemBasicStructure extends StructureItem {
     public final BasicStructureConfiguration.EnumBasicStructureName structureType;
 
     public ItemBasicStructure(BasicStructureConfiguration.EnumBasicStructureName structureType) {

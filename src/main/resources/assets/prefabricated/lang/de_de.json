@@ -264,8 +264,8 @@
   "prefabricated.wall.block.type.acacia": "Akazie",
   "prefabricated.wall.block.type.darkoak": "Schwarzeiche",
 
-  "prefabricated.gui.structure.glass": "Glasfarbe",
-  "prefabricated.gui.structure.bed_color": "Bettenfarbe",
+  "prefabricated.gui.structure.glass.tooltip": "Glasfarbe",
+  "prefabricated.gui.structure.bed_color.tooltip": "Bettenfarbe",
 
   "prefabricated.gui.structure.block.clicked": "Die Gelbe Outline makiert, wo du den Block makiert hast.",
   "prefabricated.gui.structure.nobuild": "Stuktur kann nicht gebaut werden, da geschütze Blöcke/Bereiche oder unzerbrechliche Blöcke im Bereich sind. Blockname: %1$s Block Position: x=%2$s, y=%3$s, z=%4$s",

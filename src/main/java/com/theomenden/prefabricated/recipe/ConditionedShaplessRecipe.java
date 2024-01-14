@@ -23,8 +23,6 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
-
 public final class ConditionedShaplessRecipe extends ShapelessRecipe {
 	private final ResourceLocation id;
 	private final String group;
@@ -75,7 +73,7 @@ public final class ConditionedShaplessRecipe extends ShapelessRecipe {
 			}
 		}
 
-		return i == this.input.size() && recipeFinder.canCraft(this, (IntList) null);
+		return i == this.input.size() && recipeFinder.canCraft(this, null);
 	}
 
 	public ItemStack craft(CraftingContainer craftingInventory) {

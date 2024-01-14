@@ -264,8 +264,8 @@
   "prefabricated.wall.block.type.acacia": "Akaasiapuu",
   "prefabricated.wall.block.type.darkoak": "Tumma Tammipuu",
 
-  "prefabricated.gui.structure.glass": "Lasin Väri",
-  "prefabricated.gui.structure.bed_color": "Sängyn Väri",
+  "prefabricated.gui.structure.glass.tooltip": "Lasin Väri",
+  "prefabricated.gui.structure.bed_color.tooltip": "Sängyn Väri",
 
   "prefabricated.gui.structure.block.clicked": "Keltainen ääriviiva on kuutio, jota napsautit.",
   "prefabricated.gui.structure.nobuild": "Rakennusta ei voi rakentaa koska kuutio/alue on suojattu tai tai rikkoutumattomia palikoita on alueella. Kuution nimi: %1$s Kuution sijainti: x=%2$s, y=%3$s, z=%4$s",

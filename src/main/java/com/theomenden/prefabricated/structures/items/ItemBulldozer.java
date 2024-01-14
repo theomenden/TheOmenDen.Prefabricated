@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author WuestMan
  */
-public class ItemBulldozer extends StructureItem {
+public final class ItemBulldozer extends StructureItem {
 
     private boolean creativePowered = false;
 
@@ -55,7 +55,7 @@ public class ItemBulldozer extends StructureItem {
      * Does something when the item is right-clicked.
      */
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         if (context.getLevel().isClientSide()) {
             if (context.getClickedFace() == Direction.UP && this.getPoweredValue(context.getPlayer(), context.getHand())) {
                 // Open the client side gui to determine the house options.

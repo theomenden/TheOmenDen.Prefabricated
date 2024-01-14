@@ -63,7 +63,7 @@ public class GuiTextBox extends AbstractWidget implements Renderable, GuiEventLi
     private BiFunction<String, Integer, FormattedCharSequence> formatter;
 
     public GuiTextBox(net.minecraft.client.gui.Font textRenderer, int x, int y, int width, int height, net.minecraft.network.chat.Component text) {
-        this(textRenderer, x, y, width, height, (EditBox) null, text);
+        this(textRenderer, x, y, width, height, null, text);
     }
 
     public GuiTextBox(Font textRenderer, int x, int y, int width, int height, EditBox copyFrom, net.minecraft.network.chat.Component text) {

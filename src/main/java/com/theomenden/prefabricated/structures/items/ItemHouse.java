@@ -8,7 +8,7 @@ import net.minecraft.world.item.context.UseOnContext;
  * @author WuestMan
  */
 @SuppressWarnings("ALL")
-public class ItemHouse extends StructureItem {
+public final class ItemHouse extends StructureItem {
     public ItemHouse() {
         super();
     }

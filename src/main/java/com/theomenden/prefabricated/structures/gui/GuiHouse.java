@@ -24,7 +24,7 @@ import java.util.HashMap;
 /**
  * @author WuestMan
  */
-public class GuiHouse extends GuiStructure {
+public final class GuiHouse extends GuiStructure {
     protected ModConfiguration serverConfiguration;
 
     // General:

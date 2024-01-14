@@ -268,8 +268,8 @@
   "prefabricated.wall.block.type.acacia": "Acacia",
   "prefabricated.wall.block.type.darkoak": "Dark Oak",
 
-  "prefabricated.gui.structure.glass": "Glass Color",
-  "prefabricated.gui.structure.bed_color": "Bed Color",
+  "prefabricated.gui.structure.glass.tooltip": "Glass Color",
+  "prefabricated.gui.structure.bed_color.tooltip": "Bed Color",
 
   "prefabricated.gui.structure.block.clicked": "The yellow outline is the block you clicked on.",
   "prefabricated.gui.structure.nobuild": "Cannot build structure due to protected blocks/area or unbreakable blocks are in the area. Block Name: %1$s Block Position: x=%2$s, y=%3$s, z=%4$s",

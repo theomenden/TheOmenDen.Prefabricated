@@ -5,6 +5,8 @@ import com.theomenden.prefabricated.structures.config.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 
+import java.util.Arrays;
+
 /**
  * @author WuestMan
  */
@@ -74,23 +76,23 @@ public class StructureTagMessage extends TagMessage {
         }
 
         public static EnumStructureConfiguration getFromIdentifier(int identifier) {
-            for (EnumStructureConfiguration config : EnumStructureConfiguration.values()) {
-                if (config.identifier == identifier) {
-                    return config;
-                }
-            }
+            return Arrays
+                    .stream(EnumStructureConfiguration.values())
+                    .filter(config -> config.identifier == identifier)
+                    .findFirst()
+                    .orElse(EnumStructureConfiguration.Basic);
 
-            return EnumStructureConfiguration.Basic;
         }
 
         public static EnumStructureConfiguration getByConfigurationInstance(StructureConfiguration structureConfig) {
-            for (EnumStructureConfiguration configuration : EnumStructureConfiguration.values()) {
-                if (configuration.structureConfig.getClass().equals(structureConfig.getClass())) {
-                    return configuration;
-                }
-            }
+            return Arrays
+                    .stream(EnumStructureConfiguration.values())
+                    .filter(configuration -> configuration.structureConfig
+                            .getClass()
+                            .equals(structureConfig.getClass()))
+                    .findFirst()
+                    .orElse(null);
 
-            return null;
         }
     }
 }

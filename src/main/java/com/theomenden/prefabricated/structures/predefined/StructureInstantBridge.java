@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * @author WuestMan
  */
-public class StructureInstantBridge extends Structure {
+public final class StructureInstantBridge extends Structure {
     /*
      * Initializes a new instance of the StructureInstantBridge class.
      */

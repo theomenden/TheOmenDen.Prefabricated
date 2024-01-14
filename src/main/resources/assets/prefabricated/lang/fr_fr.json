@@ -263,8 +263,8 @@
   "prefabricated.wall.block.type.acacia": "Acacia",
   "prefabricated.wall.block.type.darkoak": "Chêne foncé",
 
-  "prefabricated.gui.structure.glass": "Couleur de verre",
-  "prefabricated.gui.structure.bed_color": "Couleur du lit",
+  "prefabricated.gui.structure.glass.tooltip": "Couleur de verre",
+  "prefabricated.gui.structure.bed_color.tooltip": "Couleur du lit",
 
   "prefabricated.gui.structure.block.clicked": "Le contour jaune est le bloc sur lequel vous avez cliqué.",
   "prefabricated.gui.structure.nobuild": "Impossible de construire une structure en raison de blocs protégés / zone ou blocs incassables dans la zone. Nom du bloc: %1$s Position du bloc: x=%2$s, y=%3$s, z=%4$s.",

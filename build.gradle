@@ -24,9 +24,6 @@ loom {
     accessWidenerPath = file("src/main/resources/prefabricated.accesswidener")
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
 archivesBaseName = project.archives_base_name
 group = project.maven_group
 
@@ -51,18 +48,20 @@ dependencies {
     implementation 'org.apache.commons:commons-text:1.11.0'
 }
 
+def projectVersion = project.version.toString();
+
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", projectVersion
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
+        expand "version": projectVersion,
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version
     }
 }
 
-def targetJavaVersion = 17;
+def targetJavaVersion = 17
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = 'UTF-8'

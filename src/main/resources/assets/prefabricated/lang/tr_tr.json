@@ -264,8 +264,8 @@
 	"prefabricated.wall.block.type.acacia": "Akasya",
 	"prefabricated.wall.block.type.darkoak": "Koyu Meşe",
 
-	"prefabricated.gui.structure.glass": "Cam Rengi",
-	"prefabricated.gui.structure.bed_color": "Yatak Rengi",
+	"prefabricated.gui.structure.glass.tooltip": "Cam Rengi",
+	"prefabricated.gui.structure.bed_color.tooltip": "Yatak Rengi",
 
 	"prefabricated.gui.structure.block.clicked": "Sarı anahat, tıkladığınız bloktur.",
 	"prefabricated.gui.structure.nobuild": "Etrafta koruma bulunan bloklar veya kırılamayan bloklar olduğu için yapı inşa edilemiyor. Blok Adı: %1$s Blok Konumu: x=%2$s, y=%3$s, z=%4$s.",

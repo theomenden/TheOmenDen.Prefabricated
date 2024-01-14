@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class GuiHouseImproved extends GuiStructure {
     }
 
     @Override
-    public Component getNarrationMessage() {
+    public @NotNull Component getNarrationMessage() {
         return Component.translatable(GuiLangKeys.translateString(GuiLangKeys.TITLE_MODERATE_HOUSE));
     }
 

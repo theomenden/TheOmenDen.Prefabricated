@@ -2,21 +2,16 @@ package com.theomenden.prefabricated.structures.items;
 
 import com.theomenden.prefabricated.ModRegistry;
 import com.theomenden.prefabricated.structures.gui.GuiHouseAdvanced;
-import net.minecraft.world.item.context.UseOnContext;
 
 /**
  * @author WuestMan
  */
-public class ItemHouseAdvanced extends StructureItem {
+public final class ItemHouseAdvanced extends StructureItem {
     /**
      * Initializes a new instance of the {@link ItemHouseAdvanced} class.
      */
     public ItemHouseAdvanced() {
         super();
-    }
-
-    @Override
-    public void scanningMode(UseOnContext context) {
     }
 
     /**

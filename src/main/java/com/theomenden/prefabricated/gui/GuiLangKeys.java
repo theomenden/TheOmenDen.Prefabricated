@@ -119,10 +119,10 @@ public class GuiLangKeys {
     public static final String GUI_STRUCTURE_FACING = "prefabricated.gui.structure.facing";
 
     @Unlocalized(name = "Glass Color")
-    public static final String GUI_STRUCTURE_GLASS = "prefabricated.gui.structure.glass";
+    public static final String GUI_STRUCTURE_GLASS = "prefabricated.gui.structure.glass.tooltip";
 
     @Unlocalized(name = "Bed Color")
-    public static final String GUI_STRUCTURE_BED_COLOR = "prefabricated.gui.structure.bed_color";
+    public static final String GUI_STRUCTURE_BED_COLOR = "prefabricated.gui.structure.bed_color.tooltip";
 
     @Unlocalized(name = "The red box in the image on the right shows the block you clicked on.")
     public static final String GUI_BLOCK_CLICKED = "prefabricated.gui.structure.block.clicked";

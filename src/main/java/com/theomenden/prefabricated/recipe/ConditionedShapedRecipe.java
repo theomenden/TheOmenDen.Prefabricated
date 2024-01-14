@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -170,7 +169,7 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
         while (var2.hasNext()) {
             Entry<String, JsonElement> entry = var2.next();
             if ((entry.getKey()).length() != 1) {
-                throw new JsonSyntaxException("Invalid key entry: '" + (String) entry.getKey() + "' is an invalid symbol (must be 1 character only).");
+                throw new JsonSyntaxException("Invalid key entry: '" + entry.getKey() + "' is an invalid symbol (must be 1 character only).");
             }
 
             if (" ".equals(entry.getKey())) {
@@ -315,9 +314,8 @@ public class ConditionedShapedRecipe extends ShapedRecipe {
         boolean invalidRecipe = false;
         for (Ingredient ingredient : this.getIngredients()) {
             if (ingredient.getItems().length == 0) {
-                ingredient.itemStacks = Arrays.stream(ingredient.values).flatMap((value) -> {
-                    return value.getItems().stream();
-                }).distinct().toArray(ItemStack[]::new);
+                ingredient.itemStacks = Arrays.stream(ingredient.values)
+                                              .flatMap((value) -> value.getItems().stream()).distinct().toArray(ItemStack[]::new);
 
                 if (ingredient.itemStacks.length == 0) {
                     // There are no items associated with this tag; mark this recipe as invalid.

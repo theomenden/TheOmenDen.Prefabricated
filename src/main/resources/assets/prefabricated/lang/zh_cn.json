@@ -264,8 +264,8 @@
   "prefabricated.wall.block.type.acacia": "金合欢木",
   "prefabricated.wall.block.type.darkoak": "深色橡木",
 
-  "prefabricated.gui.structure.glass": "玻璃颜色",
-  "prefabricated.gui.structure.bed_color": "床的颜色",
+  "prefabricated.gui.structure.glass.tooltip": "玻璃颜色",
+  "prefabricated.gui.structure.bed_color.tooltip": "床的颜色",
 
   "prefabricated.gui.structure.block.clicked": "黄色轮廓是您单击的块。",
   "prefabricated.gui.structure.nobuild": "区域内有被保护的或无法破坏的方块，无法建造结构。方块名：%1$s 方块位置：x=%2$s, y=%3$s, z=%4$s。",

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * @author WuestMan
  */
-public class StructureHouseAdvanced extends Structure {
+public final class StructureHouseAdvanced extends Structure {
     private BlockPos chestPosition = null;
     private ArrayList<BlockPos> furnacePosition = null;
     private BlockPos trapDoorPosition = null;

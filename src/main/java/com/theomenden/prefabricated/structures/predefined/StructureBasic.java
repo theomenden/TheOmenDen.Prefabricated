@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
  *
  * @author WuestMan
  */
-public class StructureBasic extends Structure {
+public final class StructureBasic extends Structure {
     private final ArrayList<BlockPos> mobSpawnerPos = new ArrayList<>();
     private BlockPos customBlockPos = null;
 

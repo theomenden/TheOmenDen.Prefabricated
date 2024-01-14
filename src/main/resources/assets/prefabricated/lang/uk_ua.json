@@ -264,8 +264,8 @@
     "prefabricated.wall.block.type.acacia": "Акація",
     "prefabricated.wall.block.type.darkoak": "Темний Дуб",
 
-    "prefabricated.gui.structure.glass": "Колір Скла",
-    "prefabricated.gui.structure.bed_color": "Колір Ліжка",
+    "prefabricated.gui.structure.glass.tooltip": "Колір Скла",
+    "prefabricated.gui.structure.bed_color.tooltip": "Колір Ліжка",
 
     "prefabricated.gui.structure.block.clicked": "Жовтий контур - це блок, на який ви натиснули.",
     "prefabricated.gui.structure.nobuild": "Неможливо побудувати структуру через захищенні блоки/область або неруйнівні блоки у області. Блок: %1$s Координати: x=%2$s, y=%3$s, z=%4$s",

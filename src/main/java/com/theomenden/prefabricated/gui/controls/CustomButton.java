@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-public class CustomButton extends ExtendedButton {
+public final class CustomButton extends ExtendedButton {
     private final ResourceLocation buttonTexture = new ResourceLocation(Prefab.MODID, "textures/gui/prefab_button.png");
     private final ResourceLocation buttonTexturePressed = new ResourceLocation(Prefab.MODID, "textures/gui/prefab_button_pressed.png");
     private final ResourceLocation buttonTextureHover = new ResourceLocation(Prefab.MODID, "textures/gui/prefab_button_highlight.png");

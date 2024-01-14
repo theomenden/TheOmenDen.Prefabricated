@@ -25,9 +25,9 @@ import java.util.ArrayList;
  * @author WuestMan
  */
 @SuppressWarnings({"unused", "ConstantConditions", "UnusedAssignment"})
-public class StructureHouse extends Structure {
+public final class StructureHouse extends Structure {
     private BlockPos chestPosition = null;
-    private ArrayList<BlockPos> furnacePositions = new ArrayList<>();
+    private final ArrayList<BlockPos> furnacePositions = new ArrayList<>();
     private BlockPos trapDoorPosition = null;
 
     @Override

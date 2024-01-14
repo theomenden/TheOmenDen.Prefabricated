@@ -264,8 +264,8 @@
   "prefabricated.wall.block.type.acacia": "アカシア",
   "prefabricated.wall.block.type.darkoak": "ダークオーク",
 
-  "prefabricated.gui.structure.glass": "ガラス色",
-  "prefabricated.gui.structure.bed_color": "ベッド色",
+  "prefabricated.gui.structure.glass.tooltip": "ガラス色",
+  "prefabricated.gui.structure.bed_color.tooltip": "ベッド色",
 
   "prefabricated.gui.structure.block.clicked": "黄色のアウトラインは、クリックしたブロックです。",
   "prefabricated.gui.structure.nobuild": "保護されたブロック/エリアのために構造を構築できないか、そのエリアに破損しないブロックがあります。 ブロック名：%1$s ブロック位置：x=%2$s, y=%3$s, z=%4$s。",
