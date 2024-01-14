@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup Git environment
-      - uses: actions4git/setup-git@v1.0.3
+        uses: actions4git/setup-git@v1.0.3
         with:
           user-name: 'Andy (Alu)'
           user-email: 'support@theomenden.com'
