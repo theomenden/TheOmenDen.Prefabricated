@@ -13,8 +13,7 @@ jobs:
       - name: Setup Git environment
         uses: actions4git/setup-git@v1.0.3
         with:
-          user-name: 'Andy (Alu)'
-          user-email: 'support@theomenden.com'
+          user: 'me'
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
