@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class LightSwitchBlockEntity extends TileEntityBase<LightSwitchConfig> {
+public final class LightSwitchBlockEntity extends TileEntityBase<LightSwitchConfig> {
     public LightSwitchBlockEntity(BlockPos pos, BlockState state) {
         super(ModRegistry.LightSwitchEntityType, pos, state);
     }

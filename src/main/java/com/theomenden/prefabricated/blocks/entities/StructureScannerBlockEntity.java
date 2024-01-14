@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class StructureScannerBlockEntity extends TileEntityBase<StructureScannerConfig> {
+public final class StructureScannerBlockEntity extends TileEntityBase<StructureScannerConfig> {
     public StructureScannerBlockEntity(BlockPos pos, BlockState state) {
         super(ModRegistry.StructureScannerEntityType, pos, state);
 
