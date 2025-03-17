@@ -5,7 +5,7 @@ plugins {
     id 'com.modrinth.minotaur' version '2.+'
     id 'io.freefair.lombok' version '8.+'
     id "com.github.johnrengelman.shadow" version '8.1.+'
-    id "nebula.release" version "19.0.+"
+    id "nebula.release" version "20.2.+"
 }
 
 repositories {
