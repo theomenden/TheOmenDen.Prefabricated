@@ -3,7 +3,7 @@ plugins {
     id 'fabric-loom' version '1.15.+'
     id 'idea'
     id 'com.modrinth.minotaur' version '2.+'
-    id 'io.freefair.lombok' version '8.+'
+    id 'io.freefair.lombok' version '9.+'
     id "com.github.johnrengelman.shadow" version '8.1.+'
     id "nebula.release" version "19.0.+"
 }
